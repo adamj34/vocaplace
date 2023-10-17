@@ -1,14 +1,19 @@
 import './style.scss';
+import { Routes, Route } from 'react-router-dom';
+
+import { NotFound } from './components/NotFound';
+import { Home } from './components/Home/Home';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          tu bedzie duolingo
-        </p>
-      </header>
+    <div id="App">
+     <Routes>
+          <Route path='' element={<Home/>}/>
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+          <Route path='*' element={<NotFound/>}/>
+        </Routes>
     </div>
+    
   );
 }
 
