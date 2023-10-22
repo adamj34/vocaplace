@@ -1,10 +1,16 @@
-const express = require("express");
-const bodyparser = require('body-parser');
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
+const PORT = process.env.PORT || 3000;
+
 const app = express();
-app.use(bodyparser.json())
-app.set("port", 3001);
+
+app.use(express.json( {limit: '10mb'} ));
+app.use(cors());
 
 
-app.listen(app.get("port"), () => {
-    console.log(`Backend server running: http://localhost:${app.get("port")}/`)
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
