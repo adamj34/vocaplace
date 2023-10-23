@@ -1,13 +1,20 @@
+$themecolor: #923b2f;
+$themecolorgradientbottom: #7b2e24;
+$maingray: #303641;
+$maingraygradientbottom: #1f2229;
+$darkgray: #1d2026;
+$darkgraygradientbottom: #12151a;
+
 body {
   color: white;
   margin: 0;
-  background-color: #303641;
-  background-image: linear-gradient(to bottom right, #444c5b, #252931);
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: $maingray;
+  background-image: linear-gradient(to bottom right, $maingray, $maingraygradientbottom);
+  font-family: 'Gill Sans MT';
   letter-spacing: 1px;
   button {
     font-family: inherit;
-    font-size: 80%;
+    font-size: 90%;
     cursor: pointer;
   }
 }
@@ -16,14 +23,17 @@ body {
   padding: 12px;
   border: none;
   text-transform: uppercase;
-  border-radius: 8px;
-  background-color: #303641;
+  border-radius: 5px;
+  background-color: $themecolor;
+  background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
   color: white;
   transition: 0.4s;
+  letter-spacing: 1px;
   &:hover {
     background-color: white;
-    color: #303641;
+    background-image: none;
+    color: $themecolor;
   }
 }
 
@@ -33,7 +43,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1d2026;
+  background-color: $darkgray;
+  background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
   position: fixed;
   width: 100%;
@@ -55,7 +66,7 @@ body {
   align-items: center;
   padding-top: 40px;
   #welcome {
-    width: 100%;
+    width: calc(100% - 160px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,16 +77,25 @@ body {
     background-image: url("components/Home/HomeBackground.jpg");
     background-size:cover;
     box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+    color: white;
 
     h1 {
       margin-bottom: 10px;
       font-size: 300%;
       font-weight: normal;
-      text-shadow: 0px 3px 2px rgb(0, 0, 0, 0.8);
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+      border-radius: 12px;
+      padding: 20px 10%;
     }
     .subtitle {
       font-size: 110%;
-      text-shadow: 0px 2px 2px rgb(0, 0, 0, 0.8);
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+      border-radius: 12px;
+      padding: 15px;
     }
   }
 
@@ -83,19 +103,22 @@ body {
     margin-top: 50px;
     display: grid;
     grid-template-columns: 50% 50%;
-    gap: 30px;
+    gap: 20px;
     >div {
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-      background-color: #1d2026;
+      background-color: $darkgray;
       padding: 40px;
       border-radius: 12px;
-      background-image: linear-gradient( #1d2026, #12151a);
+      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
       #title {
         display: flex;
         gap: 12px;
         align-items: center;
+        border-bottom: 3px solid $themecolor;
+        text-transform: uppercase;
+        font-size: 120%;
         #icon {
-          font-size: 200%;
+          font-size: 150%;
         }
       }
     }

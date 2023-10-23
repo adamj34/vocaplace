@@ -12,7 +12,7 @@ export function Home() {
                 <div id='tasks'>
                     <div id='title'>
                         <FaGlobeAmericas id='icon'/>
-                        <h2>Learn English</h2>
+                        <p>Learn English</p>
                     </div>
                     <p>Complete tasks, gather points and review your mistakes.</p>
                 </div>
@@ -20,7 +20,7 @@ export function Home() {
                 <div id='friends'>
                     <div id='title'>
                         <FaHandsHelping id='icon'/>
-                        <h2>Add Friends</h2>
+                        <p>Add Friends</p>
                     </div>
                     <p>Add other users to your friend list and share your progress.</p>
                 </div>
@@ -28,7 +28,7 @@ export function Home() {
                 <div id='groups'>
                     <div id='title'>
                         <FaUserFriends id='icon'/>
-                        <h2>Join Groups</h2>
+                        <p>Join Groups</p>
                     </div>
                     <p>Get together with other users and study together.</p>
                 </div>
@@ -36,7 +36,7 @@ export function Home() {
                 <div id='ranking'>
                     <div id='title'>
                         <FaMedal id='icon'/>
-                        <h2>Advance</h2>
+                        <p>Advance</p>
                     </div>
                 </div>
             </div>
