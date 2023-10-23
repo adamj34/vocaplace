@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
-import db from "./db.js";
+import db from "./db_connection/db.js";
+import testConnection from "./db_connection/testConnection.js";
 
 const app = express();
 
-await db.testConnection();
-const dbConnection = await db.getConection();
+await testConnection(db);
 
 // try {
 //     const createTableQuery = `
