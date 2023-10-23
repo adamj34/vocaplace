@@ -6,10 +6,12 @@ import { Home } from './components/Home/Home';
 import { Profile } from './components/Profile/Profile';
 import { Group } from'./components/Group/Group'
 import { SubmitTask } from './components/SubmitTask/SubmitTask';
+import { Nav } from './components/Nav/Nav';
 
 function App() {
   return (
     <div id="App">
+      <Nav/>
      <Routes>
           <Route path='' element={<Home/>}/>
           <Route path='profile/:id' element={<Profile/>}/>
