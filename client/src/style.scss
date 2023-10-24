@@ -19,6 +19,10 @@ body {
   }
 }
 
+#profilepic {
+  border-radius: 50%;
+}
+
 .button {
   padding: 12px;
   border: none;
@@ -37,6 +41,16 @@ body {
   }
 }
 
+.hovertext {
+  transition: 0.4s;
+  &:hover {
+    color: $themecolor;
+  }
+}
+
+#Profile, #Home, #Group { // because navbar is fixed
+  padding-top: 60px;
+}
 
 #Nav {
   padding: 10px 2%;
@@ -49,9 +63,26 @@ body {
   position: fixed;
   width: 100%;
   box-sizing: border-box;
+  #websitelogo {
+    height: 36px;
+  }
   #right {
     display: flex;
     gap: 20px;
+    align-items: center;
+    #profile {
+      color: white;
+      display: flex;
+      gap: 10px;
+      text-decoration: none;
+      transition: 0.4s;
+        &:hover {
+          color: $themecolor;
+        }
+      #username {
+        font-size: 100%;
+      }
+    }
   }
   p {
     margin: auto;
@@ -64,7 +95,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
   #welcome {
     width: calc(100% - 160px);
     display: flex;
@@ -124,3 +154,4 @@ body {
     }
   }
 }
+
