@@ -17,6 +17,9 @@ body {
     font-size: 90%;
     cursor: pointer;
   }
+  h1 {
+    font-weight: normal;
+  }
 }
 
 #profilepic {
@@ -42,6 +45,8 @@ body {
 }
 
 .hovertext {
+  color: white;
+  text-decoration: none;
   transition: 0.4s;
   &:hover {
     color: $themecolor;
@@ -71,14 +76,8 @@ body {
     gap: 20px;
     align-items: center;
     #profile {
-      color: white;
       display: flex;
       gap: 10px;
-      text-decoration: none;
-      transition: 0.4s;
-        &:hover {
-          color: $themecolor;
-        }
       #username {
         font-size: 100%;
       }
@@ -90,6 +89,16 @@ body {
     font-size: 80%;
   }
 }
+
+#footer {
+  background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+  padding: 20px;
+  margin-top: 50px;
+  width: 100%;
+  text-align: center;
+  color: gray;
+}
+
  
 #Home {
   display: flex;
@@ -112,7 +121,6 @@ body {
     h1 {
       margin-bottom: 10px;
       font-size: 300%;
-      font-weight: normal;
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       background-color: $darkgray;
       background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
@@ -132,8 +140,9 @@ body {
   #offering {
     margin-top: 50px;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 60% 60%;
     gap: 20px;
+    justify-content: center;
     >div {
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       background-color: $darkgray;
@@ -155,3 +164,66 @@ body {
   }
 }
 
+#Profile {
+  #banner {
+    padding: 60px 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    #left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      #profilepic {
+        border: 6px solid $themecolor;
+      }
+      #username {
+        text-transform: uppercase;
+      }
+    }
+  }
+  #data {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    gap: 20px;
+    justify-content: center;
+    >div {
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      padding: 40px;
+      border-radius: 12px;
+      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+      #title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        border-bottom: 3px solid $themecolor;
+        text-transform: uppercase;
+        font-size: 120%;
+        #icon {
+          font-size: 150%;
+        }
+      }
+    }
+    #content {
+      margin-top: 20px;
+      list-style: none;
+      li {
+        display: flex;
+        align-items: center;
+        &:before {
+          content: "•";
+          font-size: 120%;
+          padding-right: 10px;
+        }
+        div {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 110%;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
