@@ -8,8 +8,16 @@ function Welcome() {
     const C = useContext(AppContext);
     return (
         <div id='welcome'>
-            <h1 className="title">Welcome, {C.UserData.username || 'guest'}</h1>
+            <h1 className="title">Welcome, {C.UserData.username || 'guest'}!</h1>
             <p className="subtitle">Let's learn some English together :)</p>
+        </div>
+    )
+}
+
+function Footer() {
+    return (
+        <div id='footer'>
+            bajojajo
         </div>
     )
 }
@@ -53,13 +61,14 @@ export function Home() {
                         </div>
                     </div>
                 </div>
-
+                <Footer/>
             </div>
         )
     } else {
         return (
             <div id="Home">
                 <Welcome/>
+                <Footer/>
             </div>
         )
     }
