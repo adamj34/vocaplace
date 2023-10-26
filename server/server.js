@@ -1,34 +1,33 @@
 import express from "express";
 import cors from "cors";
-import db from "./db_connection/db.js";
-import testConnection from "./db_connection/testConnection.js";
+import db  from "./db/connection/db.js";
+import testConnection from "./db/connection/testConnection.js";
 
 const app = express();
 
 await testConnection(db);
 
-// try {
-//     const createTableQuery = `
-//         CREATE TABLE IF NOT EXISTS example_table (
-//             id SERIAL PRIMARY KEY,
-//             name VARCHAR(100),
-//             email VARCHAR(100)
-//         )
-//     `;
-
-//     await dbConnection.none(createTableQuery);
-//     console.log("Table created successfully");
-// } catch (error) {
-//     console.error("Error creating table: ", error);
-// }
-
-
 app.use(express.json( {limit: '10mb'} ));
 app.use(cors());
 
-
-app.get("/", (req, res) => {
-    res.send("Hello World!!!");
+app.get("/", (_req, res) => {
+    // db.one(`
+    //     CREATE TABLE IF NOT EXISTS questions (
+    //         id SERIAL PRIMARY KEY,
+    //         question TEXT NOT NULL,
+    //         possible_answers TEXT[] NOT NULL,
+    //         answer TEXT NOT NULL,
+    //         category TEXT NOT NULL,
+    //         difficulty INTEGER NOT NULL
+    //     );
+    // `)
+    db.question.create()
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.error(err)
+        })
 });
 
 
