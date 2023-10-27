@@ -6,9 +6,9 @@ import QuestionsRepository from "../repos/questions.js"
 const initOptions = {
     extend(obj) {
 
-        obj.question = new QuestionsRepository(obj, pgp);
+        obj.questions = new QuestionsRepository(obj, pgp);
     }
-}
+};
 
 const pgp = pgPromise(initOptions);
 

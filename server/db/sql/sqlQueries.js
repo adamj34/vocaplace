@@ -21,6 +21,6 @@ const queries = {
         findAll: sql('questions/findAll.sql'),
     }
     
-}
+};
 
 export default queries;

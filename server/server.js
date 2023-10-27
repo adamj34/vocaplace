@@ -4,7 +4,7 @@ import db  from "./db/connection/db.js";
 import testConnection from "./db/connection/testConnection.js";
 
 const app = express();
-
+ 
 await testConnection(db);
 
 app.use(express.json( {limit: '10mb'} ));
@@ -21,15 +21,19 @@ app.get("/", (_req, res) => {
     //         difficulty INTEGER NOT NULL
     //     );
     // `)
-    db.question.create()
+    db.questions.create()
         .then(res => {
-            console.log(res);
+            res.json({
+                message: "Table created successfully",
+                data: res
+            })
         })
         .catch(err => {
             console.error(err)
+            res.send(err)
         })
 });
-
+  
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

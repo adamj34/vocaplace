@@ -5,7 +5,6 @@ class QuestionsRepository {
     constructor(db, pgp) {
         this.db = db;
         this.pgp = pgp;
-
     }
 
     create() {
