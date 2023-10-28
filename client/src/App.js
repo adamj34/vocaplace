@@ -19,8 +19,7 @@ function App() {
   useEffect(() => {
     if (keycloak.authenticated) {
       keycloak.loadUserProfile().then((data) => {
-       SetUserData({username:data.username})
-       console.log(data.username)
+       SetUserData({userid:data.id, username:data.username})
       })}
     } ,[initialized])
 

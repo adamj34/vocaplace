@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
 import {FaHandsHelping, FaUserFriends} from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 
 function ListElement(p) {
@@ -19,8 +20,18 @@ function ListElement(p) {
 
 export function Profile() {
     const { id } = useParams()
+    const [ProfileData, SetProfileData] = useState([]);
     const groups = [{name:'group1', pic:null}, {name:'group2', pic:null}]
     const friends = [{name:'friend1', pic:null}, {name:'friend2', pic:null}, {name:'friend3', pic:null}]
+
+    // tu musi isc fetch do servera, server wysyla zapytanie do keycloaka o username (bo ma uprawnienia)
+    // useEffect(() => {
+    //     fetch(`http://localhost:3001/getuserdata?username=${data.username}`, 
+    //     {method: 'GET',  headers: {Authorization: `Bearer ${keycloak.token}`}})
+    //         .then(response => response.json())
+    //         .then(data => {SetUserData(data)})
+    //     }).catch((err) => console.log(err))
+          
  
     return (
         <div id="Profile">
