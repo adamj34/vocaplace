@@ -9,28 +9,20 @@ await testConnection(db);
 
 app.use(express.json( {limit: '10mb'} ));
 app.use(cors());
-
+ 
 app.get("/", (_req, res) => {
-    // db.one(`
-    //     CREATE TABLE IF NOT EXISTS questions (
-    //         id SERIAL PRIMARY KEY,
-    //         question TEXT NOT NULL,
-    //         possible_answers TEXT[] NOT NULL,
-    //         answer TEXT NOT NULL,
-    //         category TEXT NOT NULL,
-    //         difficulty INTEGER NOT NULL
-    //     );
-    // `)
     db.questions.create()
-        .then(res => {
+        .then(() => {
             res.json({
-                message: "Table created successfully",
-                data: res
+                'success': true,
+                'message': 'Questions table created successfully'
             })
         })
         .catch(err => {
-            console.error(err)
-            res.send(err)
+            res.json({
+                'success': false,
+                'message': err.message
+            })
         })
 });
   

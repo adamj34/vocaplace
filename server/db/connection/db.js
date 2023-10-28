@@ -4,6 +4,9 @@ import QuestionsRepository from "../repos/questions.js"
 
 
 const initOptions = {
+    query(e) {
+        console.log('QUERY:', e.query);
+    },
     extend(obj) {
 
         obj.questions = new QuestionsRepository(obj, pgp);
