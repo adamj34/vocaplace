@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useKeycloak } from "@react-keycloak/web";
 import { AppContext } from '../../App';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaGlobeAmericas, FaHandsHelping, FaUserFriends, FaMedal, FaBook, FaPen, FaBrain } from 'react-icons/fa';
 
 
