@@ -7,8 +7,8 @@
 
 #### Wykorzystane technologie:
 * Frontend - React.js + SCSS
-* Backend - JavaScript
-* Baza danych - PostgreSQL [wersja?]
+* Backend - Node.js
+* Baza danych - PostgreSQL 16
 * Autoryzacja - Keycloak [insert wersja here]
 
 #### Funkcjonalności:
