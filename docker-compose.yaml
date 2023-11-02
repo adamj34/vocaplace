@@ -38,5 +38,6 @@ services:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     volumes:
-      - ./keycloak:/opt/keycloak/data/h2
+      - ./keycloak/data:/opt/keycloak/data/h2
+      - ./keycloak/theme:/opt/keycloak/themes/custom
     command: start-dev

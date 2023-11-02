@@ -33,7 +33,7 @@ export function Nav() {
                     </Link>
                 </div>
                 <div id='right'>
-                    <Link to={"/profile/"+C.UserData.username} id='profile' className='hovertext'>
+                    <Link to={"/profile/"+C.UserData.userid} id='profile' className='hovertext'>
                         <p id='username' >{C.UserData.username}</p>
                         <img src={C.UserData.pfp || placeholderpfp} height={33} id='profilepic'></img>
                     </Link>
