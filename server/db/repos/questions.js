@@ -6,25 +6,22 @@ class QuestionsRepository {
         this.pgp = pgp;
     }
 
-    create() {
-        return this.db.none(queries.questions.create);
-    }
-
-    add({ question, answer, possible_answers, category, difficulty }) {
-        return this.db.none(queries.questions.add, {question, answer, possible_answers, category, difficulty});
-    }
-
-    delete(id) {
-        return this.db.none(queries.questions.delete, {id});
+    add(values) {
+        return this.db.one(queries.questions.add, {
+            categoryId: +values.categoryId,
+            polishQuestionBody: values.polishQuestionBody,
+            polishPossibleAnswers: values.polishPossibleAnswers,
+            polishCorrectAnswers: values.polishCorrectAnswers,
+            englishQuestionBody: values.englishQuestionBody,
+            englishPossibleAnswers: values.englishPossibleAnswers,
+            englishCorrectAnswers: values.englishCorrectAnswers,
+            difficulty: +values.difficulty,
+        });
     }
 
     findAll() {
         return this.db.any(queries.questions.findAll);
-    }
-
-    drop() {
-        return this.db.none(queries.questions.drop);
-    }
+    } 
 }
 
 

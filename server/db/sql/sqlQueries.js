@@ -13,15 +13,19 @@ function sql(file) {
 }
 
 const queries = {
-
     questions: {
-        create: sql('questions/create.sql'),
         add: sql('questions/add.sql'),
-        delete: sql('questions/delete.sql'),
         findAll: sql('questions/findAll.sql'),
-        drop: sql('questions/drop.sql'),
-    }
-    
+    },
+    users: {
+        add: sql('users/add.sql'),
+    },
+    categories: {
+        add: sql('categories/add.sql'),
+    },
+    subcategories: {
+        add: sql('subcategories/add.sql'),
+    },
 };
 
 export default queries;

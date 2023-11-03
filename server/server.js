@@ -9,7 +9,7 @@ await testConnection(db);
 
 app.use(express.json( {limit: '10mb'} ));
 app.use(cors());
- 
+
 app.get("/", (_req, res) => {
     db.questions.create()
         .then(() => {
