@@ -9,7 +9,7 @@
 * Frontend - React.js + SCSS
 * Backend - Node.js
 * Baza danych - PostgreSQL 16
-* Autoryzacja - Keycloak [insert wersja here]
+* Autoryzacja - Keycloak 18.0.2
 
 #### Funkcjonalności:
 * bajojajo
