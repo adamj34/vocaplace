@@ -312,6 +312,9 @@ body {
     grid-template-columns: 45% 45%;
     justify-content: space-around;
     #unitbutton {
+      a {
+        text-decoration: none;
+      }
       #title {
         margin-left: 15px;
         display: flex;
