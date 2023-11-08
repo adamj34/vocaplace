@@ -1,1 +1,1 @@
-SELECT * FROM questions
+SELECT * FROM questions;

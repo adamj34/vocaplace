@@ -21,10 +21,14 @@ services:
   db:
     image: postgres:16-alpine3.18
     volumes:
-      - ./db/data:/var/lib/postgresql/data/
+      - zesp-postgres:/var/lib/postgresql/data/
+      - ./db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432:5432'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=duolingo
+
+volumes:
+  zesp-postgres:

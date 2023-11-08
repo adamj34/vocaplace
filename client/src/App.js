@@ -9,6 +9,7 @@ import { Profile } from './components/Profile/Profile';
 import { Group } from'./components/Group/Group'
 import { SubmitTask } from './components/SubmitTask/SubmitTask';
 import { Nav } from './components/Nav/Nav';
+import { Units } from './components/Units/Units'
 
 export const AppContext = createContext();
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='profile/:id' element={<Profile/>}/>
           <Route path='group/:id' element={<Group/>}/>
           <Route path='task/submit' element={<SubmitTask/>}/>
+          <Route path='units' element={<Units/>}/>
 
           <Route path='*' element={<NotFound/>}/>
         </Routes>

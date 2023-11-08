@@ -4,8 +4,9 @@ export function NotFound() {
   document.title = `Duolingo | 404`
     return (
       <div id="NotFound"> 
-        <h2>Error 404 - Page not found</h2>
-        <Link to='..' className='hover'>Return to the Home Page</Link>
+        <h2>Error 404</h2>
+        <h1>Page not found.</h1>
+        <Link to='..' className='hovertext'>Return to the Home Page</Link>
       </div>
     )
   }

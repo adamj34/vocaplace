@@ -6,5 +6,4 @@ const dbConfig = {
     "password": process.env.DB_PASSWORD
 };
 
-console.log(dbConfig);
 export default dbConfig;
