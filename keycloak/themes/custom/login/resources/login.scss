@@ -1,0 +1,95 @@
+$themecolor: #923b2f;
+$themecolorgradientbottom: #7b2e24;
+$maingray: #303641;
+$maingraygradientbottom: #1f2229;
+$darkgray: #1d2026;
+$darkgraygradientbottom: #12151a;
+
+body {
+    color: white;
+    margin: 0;
+    background-color: $maingray;
+    background-image: linear-gradient(to bottom right, $maingray, $maingraygradientbottom);
+    background-repeat: none;
+    background-attachment: fixed;
+    font-family: 'Gill Sans MT';
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+
+    button, input {
+      font-family: inherit;
+      font-size: 90%;
+      cursor: pointer;
+    }
+    h1, h2 {
+      font-weight: normal;
+    }
+
+    #kc-header {
+        padding: 50px 30%;
+        background-image: url("Background.jpg");
+        background-size:cover;
+        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+        #kc-header-wrapper {
+            font-size: 200%;
+            box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+            background-color: $darkgray;
+            background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+            border-radius: 12px;
+            padding: 20px 1%;
+        }
+    }
+
+    #kc-form-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+    
+}
+
+input#kc-login, input#kc-register {
+    padding: 12px;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background-color: $themecolor;
+    background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
+    box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+    color: white;
+    transition: 0.4s;
+    letter-spacing: 1px;
+    &:hover {
+      background-color: white;
+      background-image: none;
+      color: $themecolor;
+    }
+}
+
+hr {
+    display: none;
+} 
+
+input#username, input#password {
+    background-color: $darkgray;
+    color: white;
+    padding: 6px 30px;
+    font-size: 110%;
+    border-radius: 20px;
+    border: 3px solid $darkgraygradientbottom;
+    text-align: center;
+    outline: none;
+    transition: 0.3s;
+    &:focus {
+        border: 3px solid $themecolor;
+    }
+}
