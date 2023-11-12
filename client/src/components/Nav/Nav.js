@@ -14,7 +14,7 @@ export function Nav() {
             <nav id ="Nav">
                 <div id='left'>
                     <Link to="">
-                        <img id='websitelogo' src={websitelogo}></img>
+                        <img id='websitelogo' src={websitelogo} alt='logo'></img>
                     </Link>
                 </div>
                 <div id='right'>
@@ -35,7 +35,7 @@ export function Nav() {
                 <div id='right'>
                     <Link to={"/profile/"+C.UserData.userid} id='profile' className='hovertext'>
                         <p id='username' >{C.UserData.username}</p>
-                        <img src={C.UserData.pfp || placeholderpfp} height={33} id='profilepic'></img>
+                        <img src={C.UserData.pfp || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
                     </Link>
                     <button className="button" onClick={keycloak.logout}>Log out</button>
                 </div>
