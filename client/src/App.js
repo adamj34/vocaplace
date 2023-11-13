@@ -9,6 +9,7 @@ import { Profile } from './components/Profile/Profile';
 import { Group } from'./components/Group/Group'
 import { SubmitTask } from './components/SubmitTask/SubmitTask';
 import { Nav } from './components/Nav/Nav';
+import { Footer } from './components/Nav/Footer'
 import { Units } from './components/Units/Units'
 
 export const AppContext = createContext();
@@ -37,6 +38,7 @@ function App() {
 
           <Route path='*' element={<NotFound/>}/>
         </Routes>
+        <Footer/>
       </AppContext.Provider>
     </div>
     

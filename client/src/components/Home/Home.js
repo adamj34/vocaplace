@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { useKeycloak } from "@react-keycloak/web";
 import { AppContext } from '../../App';
 import { Link } from 'react-router-dom';
@@ -15,15 +15,8 @@ function Welcome() {
     )
 }
 
-function Footer() {
-    return (
-        <div id='footer'>
-            bajojajo
-        </div>
-    )
-}
-
 export function Home() {
+    document.title = `Duolingo | Home`
     const C = useContext(AppContext);
     const { keycloak } = useKeycloak();
     if (!keycloak.authenticated) {
@@ -52,7 +45,7 @@ export function Home() {
                             <FaUserFriends id='icon'/>
                             <p>Join Groups</p>
                         </div>
-                        <p>Get together with other users and study together.</p>
+                        <p>Get in touch with other users and study together.</p>
                     </div>
 
                     <div id='ranking'>
@@ -60,9 +53,9 @@ export function Home() {
                             <FaMedal id='icon'/>
                             <p>Advance</p>
                         </div>
+                        <p>Climb up the ranking to become the very best.</p>
                     </div>
                 </div>
-                <Footer/>
             </div>
         )
     } else {
@@ -106,7 +99,7 @@ export function Home() {
                                 <FaUserFriends id='icon'/>
                                 <p>Groups</p>
                             </div>
-                            <p>Get together with other users and study together.</p>
+                            <p>Get in touch with other users and study together.</p>
                         </div>
                     </Link>
 
@@ -116,6 +109,7 @@ export function Home() {
                                 <FaMedal id='icon'/>
                                 <p>Ranking</p>
                             </div>
+                            <p>Climb up the ranking to become the very best.</p>
                         </div>
                     </Link>
 
@@ -125,10 +119,10 @@ export function Home() {
                                 <FaPen id='icon'/>
                                 <p>Profile</p>
                             </div>
+                            <p>View and customize your profile.</p>
                         </div>
                     </Link>
                 </div>
-                <Footer/>
             </div>
         )
     }

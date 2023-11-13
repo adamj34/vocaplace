@@ -55,10 +55,6 @@ body {
   }
 }
 
-#Profile, #Home, #Group, #NotFound, #Units, #LoginRequired { // because navbar is fixed
-  padding-top: 60px;
-}
-
 #Nav {
   padding: 10px 2%;
   display: flex;
@@ -67,7 +63,8 @@ body {
   background-color: $darkgray;
   background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-  position: fixed;
+  position: sticky;
+  top: 0;
   width: 100%;
   box-sizing: border-box;
   #websitelogo {
@@ -272,6 +269,10 @@ body {
 #NotFound, #LoginRequired {
   padding-top: 100px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+  text-transform: uppercase;
   a {
     text-decoration: none;
   }
@@ -301,7 +302,10 @@ body {
 }
 
 #Units {
-  padding: 60px 20px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   h1 {
     padding: 10px;
     text-transform: uppercase;

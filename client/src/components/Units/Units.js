@@ -10,7 +10,7 @@ function UnitButton(p) {
     const Icon = IconMapping[p.data.name] || FaBook
     return (
         <div id='unitbutton'>
-            <Link to={p.data.name}>
+            <Link to={p.data.id}>
                 <div id='title' className="hovertext">
                     <Icon id='icon'/>
                     <p>{p.data.name}</p>
@@ -41,16 +41,17 @@ function ProgressBar(p) {
 }
 
 export function Units() {
+    document.title = `Duolingo | Units`
     const { keycloak } = useKeycloak();
     if (!keycloak.authenticated) {return <LoginRequired/>}
 
-    const units = [{name:'Basic Vocabulary', completion:'38'}, {name:'Grammar', completion:'58'}, {name:'Conversation', completion:'1'}, {name:'Culture', completion:'0'}]
+    const units = [{id:'1', name:'Basic Vocabulary', completion:'38'}, {id:'2', name:'Grammar', completion:'58'}, {id:'3', name:'Conversation', completion:'1'}, {id:'4', name:'Culture', completion:'0'}]
 
     return (
         <div id="Units">
-            <h1>Choose a Unit</h1>
+            <h1>Units</h1>
             <div id="unitlist">
-                {units.map((x) => {return <UnitButton data={x}/>})}
+                {units.map((x) => {return <UnitButton data={x} key={x.id}/>})}
             </div>
         </div>
         

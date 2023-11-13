@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
 import {FaHandsHelping, FaUserFriends} from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 
 function ListElement(p) {
@@ -10,7 +10,7 @@ function ListElement(p) {
         <li>
             <Link to={"../"+p.page+"/"+"321"} className='hovertext'>
                 <div id='listitem'>
-                    <img src={p.data.pic || placeholderpfp} height={33} id='profilepic'></img>
+                    <img src={p.data.pic || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
                     <p>{p.data.name || 'undefined'}</p>
                 </div>
             </Link>
@@ -23,8 +23,9 @@ export function Profile() {
     const [ProfileData, SetProfileData] = useState([]);
     const groups = [{name:'group1', pic:null}, {name:'group2', pic:null}]
     const friends = [{name:'friend1', pic:null}, {name:'friend2', pic:null}, {name:'friend3', pic:null}]
+    document.title = `Duolingo | username`
 
-    // tu musi isc fetch do servera, server wysyla zapytanie do keycloaka o username (bo ma uprawnienia)
+    // tu musi isc fetch do servera, server wysyla zapytanie do keycloaka o username (bo ma uprawnienia) ???????
     // useEffect(() => {
     //     fetch(`http://localhost:3001/getuserdata?username=${data.username}`, 
     //     {method: 'GET',  headers: {Authorization: `Bearer ${keycloak.token}`}})
@@ -37,7 +38,7 @@ export function Profile() {
         <div id="Profile">
             <div id='banner'>
                 <div id='left'>
-                    <img src={placeholderpfp} height={120} id='profilepic'></img>
+                    <img src={placeholderpfp} height={120} id='profilepic' alt='profilepicture'></img>
                     <div id='side'>
                         <h1 id='username'>uzytkownik o id: {id}</h1>
                         <p>Member since [DATE]</p>
