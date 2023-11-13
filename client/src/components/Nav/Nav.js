@@ -4,6 +4,16 @@ import { useKeycloak } from "@react-keycloak/web";
 import { AppContext } from '../../App';
 import placeholderpfp from './PlaceholderProfilePic.png'
 import websitelogo from './Logo.png'
+import {FaSearch} from 'react-icons/fa';
+
+function SearchBar() {
+    return (
+        <div id='SearchBar'>
+            <FaSearch id='icon'/>
+            <input id='search' className='input' placeholder='Search...'></input>
+        </div>
+    )
+}
 
 export function Nav() {
     const C = useContext(AppContext);
@@ -31,6 +41,7 @@ export function Nav() {
                     <Link to="">
                         <img id='websitelogo' src={websitelogo}></img>
                     </Link>
+                    <SearchBar/>
                 </div>
                 <div id='right'>
                     <Link to={"/profile/"+C.UserData.userid} id='profile' className='hovertext'>

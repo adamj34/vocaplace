@@ -46,6 +46,21 @@ body {
   }
 }
 
+.input {
+  background-color: $maingray;
+  font-family: inherit;
+  color: white;
+  padding: 6px 10px;
+  font-size: 110%;
+  border-radius: 5px;
+  border: 2px solid $darkgraygradientbottom;
+  outline: none;
+  transition: 0.3s;
+  &:focus {
+      border: 2px solid $themecolor;
+  }
+}
+
 .hovertext {
   color: white;
   text-decoration: none;
@@ -67,8 +82,16 @@ body {
   top: 0;
   width: 100%;
   box-sizing: border-box;
-  #websitelogo {
-    height: 36px;
+  #left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    a {
+      display: flex;
+      #websitelogo {
+        height: 36px;
+      }
+    }
   }
   #right {
     display: flex;
@@ -86,6 +109,15 @@ body {
     margin: auto;
     text-transform: uppercase;
     font-size: 80%;
+  }
+  #SearchBar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    #icon {
+      color: $themecolor;
+      font-size: 110%;
+    }
   }
 }
 
@@ -209,15 +241,22 @@ body {
     align-items: center;
     justify-content: space-between;
     #left {
+      width: 80%;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 30px;
       #profilepic {
         border: 6px solid $themecolor;
+        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       }
       #username {
         text-transform: uppercase;
       }
+    }
+    #buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
   }
   #data {
@@ -332,4 +371,16 @@ body {
       }
     }
   }
+}
+
+::-webkit-scrollbar {
+  width:10px;
+}
+::-webkit-scrollbar-track {
+  background-color: $darkgraygradientbottom;
+
+}
+::-webkit-scrollbar-thumb {
+  background-color: $darkgray; 
+  border-radius: 5px;
 }
