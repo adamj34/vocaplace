@@ -22,7 +22,7 @@ body {
       font-size: 90%;
       cursor: pointer;
     }
-    h1, h2 {
+    h1, h2, h4 {
       font-weight: normal;
     }
 
@@ -41,7 +41,7 @@ body {
         }
     }
 
-    #kc-form-login {
+    #kc-form-login, #kc-register-form {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -57,7 +57,7 @@ body {
     
 }
 
-input#kc-login, input#kc-register {
+input#kc-login, input#kc-register, #kc-info a, #kc-form-buttons>input {
     padding: 12px;
     border: none;
     text-transform: uppercase;
@@ -68,6 +68,7 @@ input#kc-login, input#kc-register {
     color: white;
     transition: 0.4s;
     letter-spacing: 1px;
+    font-size: 100%;
     &:hover {
       background-color: white;
       background-image: none;
@@ -79,17 +80,93 @@ hr {
     display: none;
 } 
 
-input#username, input#password {
-    background-color: $darkgray;
+input#username, input#password, input#firstName, input#lastName, input#email, input#password-confirm {
+    background-color: $maingray;
+    font-family: inherit;
     color: white;
-    padding: 6px 30px;
+    padding: 6px 10px;
     font-size: 110%;
-    border-radius: 20px;
-    border: 3px solid $darkgraygradientbottom;
-    text-align: center;
+    border-radius: 5px;
+    border: 2px solid $darkgraygradientbottom;
     outline: none;
     transition: 0.3s;
+    box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
+    cursor: text;
     &:focus {
-        border: 3px solid $themecolor;
+        border: 2px solid $themecolor;
+    }
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    transition: 0.4s;
+    &:hover {
+        color: $themecolor;
+    }
+}
+
+#kc-social-providers {
+    padding: 20px;
+    ul {
+        font-size: 150%;
+        padding-inline: 0;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+    }
+}
+
+#kc-info {
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    a {
+        margin-left: 20px;
+    }
+}
+
+::-webkit-scrollbar {
+    width:10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: $darkgraygradientbottom;
+  
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $darkgray; 
+    border-radius: 5px;
+  }
+
+#kc-register-form>div:last-child {
+    margin-top: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
+    padding: 10px;
+}
+
+[id^=input-error] {
+    font-size: 70%;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
+.checkbox>label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    #rememberMe {
+        border: none;
+        height: 16px;
+        width: 16px;
+        accent-color: $themecolor;
+        transition: 0.4s;
+        box-shadow: none;
+        &:checked {
+            background-color: red;
+            color: green;
+        }
     }
 }
