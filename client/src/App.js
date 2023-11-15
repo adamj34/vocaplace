@@ -11,6 +11,7 @@ import { SubmitTask } from './components/SubmitTask/SubmitTask';
 import { Nav } from './components/Nav/Nav';
 import { Footer } from './components/Nav/Footer'
 import { Units } from './components/Units/Units'
+import { EditProfile } from './components/Profile/EditProfile'
 
 export const AppContext = createContext();
 
@@ -32,6 +33,7 @@ function App() {
         <Routes>
           <Route path='' element={<Home/>}/>
           <Route path='profile/:id' element={<Profile/>}/>
+          <Route path='profile/:id/edit' element={<EditProfile/>}/>
           <Route path='group/:id' element={<Group/>}/>
           <Route path='task/submit' element={<SubmitTask/>}/>
           <Route path='units' element={<Units/>}/>

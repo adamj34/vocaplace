@@ -50,7 +50,7 @@ export function Profile() {
                     </div>
                 </div>
                 {(id == C.UserData.userid) ? 
-                    <div id='buttons'><button className='button'>Edit Profile</button></div> : 
+                    <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
                         <button className='button'>Add Friend</button>
                         <button className='button'>Invite to Group</button>

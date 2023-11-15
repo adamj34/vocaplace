@@ -4,7 +4,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { AppContext } from '../../App';
 import placeholderpfp from './PlaceholderProfilePic.png'
 import websitelogo from './Logo.png'
-import {FaSearch} from 'react-icons/fa';
+import {FaSearch, FaBell} from 'react-icons/fa';
 
 function SearchBar() {
     return (
@@ -15,9 +15,21 @@ function SearchBar() {
     )
 }
 
+function Notifications(p) {
+    return (
+        <div id='notifications'>
+            <FaBell id='icon'/>
+            {p.count == 0 ? null :
+                <p id='count'>{p.count}</p>
+            }
+        </div>
+    )
+}
+
 export function Nav() {
     const C = useContext(AppContext);
     const { keycloak } = useKeycloak();
+    const notificationcount = 3 // placeholder
 
     if (!keycloak.authenticated) {
         return (
@@ -44,6 +56,7 @@ export function Nav() {
                     <SearchBar/>
                 </div>
                 <div id='right'>
+                    <Notifications count={notificationcount}/>
                     <Link to={"/profile/"+C.UserData.userid} id='profile' className='hovertext'>
                         <p id='username' >{C.UserData.username}</p>
                         <img src={C.UserData.pfp || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
