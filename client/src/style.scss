@@ -120,7 +120,7 @@ input[type="file"] {
       cursor: pointer;
       position: relative;
       margin-right: 4px;
-      #count {
+      #messages {
         background-color: $themecolor;
         background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
         border: 2px solid $darkgray;
@@ -138,10 +138,10 @@ input[type="file"] {
         transition: 0.4s;
       }
       &:hover {
-        #icon {
+      #icon {
           color: $themecolor;
         }
-        #count {
+        #messages {
           background-color: white;
           color: $themecolor;
           background-image: none;
@@ -154,6 +154,44 @@ input[type="file"] {
     text-transform: uppercase;
     font-size: 80%;
   }
+  #messageWindow {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: rgb(100, 100, 100);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1;
+    min-width: 200px;
+
+
+    #alerts {
+        border-bottom: 2px solid black;
+        padding-bottom: 10px; 
+        margin-bottom: 5px; 
+        color: $themecolor;
+        font-weight: bold;
+    }
+    #message-scroll{
+      max-height: 300px; /* Set your preferred max height */
+      overflow-y: auto; /* Enable vertical scrolling */
+      
+      #message {
+        margin-bottom: 5px;
+        padding-bottom: 5px; 
+        border-bottom: 2px solid black;
+        
+        &:hover {
+          background-color: rgb(100, 100, 100);
+          color: $themecolor; 
+          background-image: none;
+        }
+      }
+    }
+}
+
+}
   #SearchBar {
     display: flex;
     align-items: center;
@@ -165,9 +203,10 @@ input[type="file"] {
       font-size: 110%;
     }
   }
-}
+
 
 #footer {
+  position: relative;
   background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
   padding: 20px;
   margin-top: 50px;

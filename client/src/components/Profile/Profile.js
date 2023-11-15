@@ -49,7 +49,7 @@ export function Profile() {
                         <p>[BIO] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus sem urna, sed imperdiet arcu aliquet sit amet. Integer sed metus hendrerit, iaculis nunc eget, porttitor nisl. Donec lacinia elit sem, in venenatis lectus sollicitudin sed. Mauris vulputate scelerisque enim, nec scelerisque lectus elementum ac.</p>
                     </div>
                 </div>
-                {(id == C.UserData.userid) ? 
+                {(id === C.UserData.userid) ? 
                     <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
                         <button className='button'>Add Friend</button>
