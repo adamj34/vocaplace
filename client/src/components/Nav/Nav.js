@@ -51,7 +51,9 @@ export function Nav() {
                     <Notifications messages={notifications}/>
                     <Link to={"/profile/"+C.UserData.userid} id='profile' className='hovertext'>
                         <p id='username' >{C.UserData.username}</p>
-                        <img src={C.UserData.pfp || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
+                        <div id='profilepic'>
+                            <div id='pfp' style={{ backgroundImage: `url(${C.UserData.pfp || placeholderpfp})`, height: 30, width:30 }}></div>
+                        </div>
                     </Link>
                     <button className="button" onClick={keycloak.logout}>Log out</button>
                 </div>

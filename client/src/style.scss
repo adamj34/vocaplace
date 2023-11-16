@@ -26,6 +26,11 @@ body {
 
 #profilepic, #editprofilepic {
   border-radius: 50%;
+  #pfp {
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+  }
 }
 
 .button {
@@ -120,12 +125,12 @@ input[type="file"] {
       cursor: pointer;
       position: relative;
       margin-right: 4px;
-      #messages {
+      #count {
         background-color: $themecolor;
         background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
         border: 2px solid $darkgray;
         padding: 2px 6px;
-        border-radius: 50%;
+        border-radius: 12px;
         text-align: center;
         position: absolute;
         left: 14px;
@@ -158,34 +163,31 @@ input[type="file"] {
     position: absolute;
     top: 40px;
     right: 0;
-    background-color: rgb(100, 100, 100);
+    background-color:$maingray;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 10px;
-    z-index: 1;
     min-width: 200px;
 
-
-    #alerts {
-        border-bottom: 2px solid black;
-        padding-bottom: 10px; 
-        margin-bottom: 5px; 
-        color: $themecolor;
-        font-weight: bold;
+    #title {
+        border-bottom: 3px solid $darkgray;
+        padding: 5px;
+        text-transform: uppercase;
+        font-size: 110%;
+        margin-bottom: 10px;
     }
     #message-scroll{
       max-height: 300px; /* Set your preferred max height */
       overflow-y: auto; /* Enable vertical scrolling */
       
       #message {
-        margin-bottom: 5px;
-        padding-bottom: 5px; 
-        border-bottom: 2px solid black;
+        padding: 6px;
+        margin-right: 10px;
+        border-bottom: 2px solid $darkgray;
+        transition: 0.4s;
         
         &:hover {
-          background-color: rgb(100, 100, 100);
           color: $themecolor; 
-          background-image: none;
         }
       }
     }
@@ -340,10 +342,9 @@ input[type="file"] {
         box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
         position: relative;
         margin-top: 30px;
-        img {
+        #pfp {
           cursor: pointer;
           border-radius: 50%;
-          display: block;
           transition: 0.2s;
         }
         label {
@@ -359,7 +360,7 @@ input[type="file"] {
           }
         }
         &:hover {
-          img {
+          #pfp {
             filter:brightness(0.3);
           }
           #icon {
