@@ -4,19 +4,17 @@ import { useKeycloak } from "@react-keycloak/web";
 import { AppContext } from '../../App';
 import placeholderpfp from './PlaceholderProfilePic.png'
 import websitelogo from './Logo.png'
-import {FaSearch, FaBell} from 'react-icons/fa';
 import Notifications from './Notifications';
+import { FaSearch, FaHandsHelping, FaUserFriends, FaMedal, FaBook, FaBrain } from 'react-icons/fa';
 
 function SearchBar() {
     return (
         <div id='SearchBar'>
             <FaSearch id='icon'/>
-            <input id='search' className='input' placeholder='Search...'></input>
+            <input id='search' placeholder='Search...'></input>
         </div>
     )
 }
-
-
 
 export function Nav() {
     const C = useContext(AppContext);
@@ -45,6 +43,13 @@ export function Nav() {
                     <Link to="">
                         <img id='websitelogo' src={websitelogo}></img>
                     </Link>
+                    <div id='links'>
+                        <Link to='units'><FaBook id='icon'/></Link>
+                        <Link to='revisions'><FaBrain id='icon'/></Link>
+                        <Link to='friends'><FaHandsHelping id='icon'/></Link>
+                        <Link to='groups'><FaUserFriends id='icon'/></Link>
+                        <Link to='ranking'><FaMedal id='icon'/></Link>
+                    </div>
                     <SearchBar/>
                 </div>
                 <div id='right'>
