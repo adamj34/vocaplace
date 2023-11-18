@@ -8,7 +8,7 @@ class QuestionsRepository {
 
     add(values) {
         return this.db.one(queries.questions.add, {
-            categoryId: +values.categoryId,
+            unitId: +values.unitId,
             polishQuestionBody: values.polishQuestionBody,
             polishPossibleAnswers: values.polishPossibleAnswers,
             polishCorrectAnswers: values.polishCorrectAnswers,
@@ -20,7 +20,7 @@ class QuestionsRepository {
     }
 
     findAll() {
-        return this.db.any(queries.questions.findAll);
+        return this.db.any('SELECT * FROM questions');
     } 
 }
 

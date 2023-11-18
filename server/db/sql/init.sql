@@ -7,14 +7,14 @@ CREATE TABLE IF NOT EXISTS topics (
 
 CREATE TABLE IF NOT EXISTS units (
   id SMALLSERIAL PRIMARY KEY,
-  topic_id INTEGER NOT NULL REFERENCES question_subcategories(id),
+  topic_id INTEGER NOT NULL REFERENCES topics(id),
   unit TEXT UNIQUE NOT NULL, 
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS questions (
   id SERIAL PRIMARY KEY,
-  unit_id INTEGER NOT NULL REFERENCES question_categories(id),
+  unit_id INTEGER NOT NULL REFERENCES units(id),
   polish_question_body TEXT NOT NULL,
   polish_possible_answers TEXT[] NOT NULL,
   polish_correct_answers TEXT NOT NULL,
@@ -24,21 +24,20 @@ CREATE TABLE IF NOT EXISTS questions (
   difficulty INTEGER NOT NULL CHECK (difficulty >= 1 AND difficulty <= 3)
 );
 
-CREATE TABLE IF NOT EXISTS profile_pictures (
-  id SERIAL PRIMARY KEY,
-  picture BYTEA NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS users (
-  id UUID PRIMARY KEY,
-  profile_picture_id INTEGER REFERENCES profile_pictures(id),
+  id UUID PRIMARY KEY ,
   points INTEGER NOT NULL DEFAULT 0,
   ongoing_streak INTEGER NOT NULL DEFAULT 0,
-  nickname TEXT NOT NULL,
+  nickname TEXT,
   bio TEXT,
   private_profile BOOLEAN NOT NULL DEFAULT false,
   last_active TIMESTAMPTZ NOT NULL DEFAULT NOW()
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS profile_pictures (
+  id UUID PRIMARY KEY REFERENCES users(id),
+  picture BYTEA NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS friends (
@@ -58,16 +57,15 @@ CREATE TABLE IF NOT EXISTS answered_questions (
   user_id UUID NOT NULL REFERENCES users(id)
 );
 
-CREATE TABLE IF NOT EXISTS group_pictures (
-  id SERIAL PRIMARY KEY,
-  picture BYTEA NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS groups (
   id SERIAL PRIMARY KEY,
-  group_picture_id INTEGER REFERENCES group_pictures(id),
   name TEXT NOT NULL,
   bio TEXT
+);
+
+CREATE TABLE IF NOT EXISTS group_pictures (
+  id INTEGER PRIMARY KEY REFERENCES groups(id),
+  picture BYTEA NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS group_membership (
