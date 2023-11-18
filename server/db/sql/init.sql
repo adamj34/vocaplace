@@ -1,40 +1,48 @@
 SET TIME ZONE 'EUROPE/WARSAW';
 
-CREATE TABLE IF NOT EXISTS question_subcategories (
+CREATE TABLE IF NOT EXISTS topics (
   id SMALLSERIAL PRIMARY KEY,
-  subcategory TEXT UNIQUE NOT NULL
+  topic TEXT UNIQUE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS question_categories (
+CREATE TABLE IF NOT EXISTS units (
   id SMALLSERIAL PRIMARY KEY,
-  subcategory_id INTEGER NOT NULL REFERENCES question_subcategories(id),
-  category TEXT UNIQUE NOT NULL, 
+  topic_id INTEGER NOT NULL REFERENCES topics(id),
+  unit TEXT UNIQUE NOT NULL, 
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS questions (
   id SERIAL PRIMARY KEY,
-  category_id INTEGER NOT NULL REFERENCES question_categories(id),
+  unit_id INTEGER NOT NULL REFERENCES units(id),
   polish_question_body TEXT NOT NULL,
-  polish_possible_answers TEXT[],
-  polish_correct_answers TEXT,
-  english_question_body TEXT,
-  english_possible_answers TEXT[],
-  english_correct_answers TEXT,
+  polish_possible_answers TEXT[] NOT NULL,
+  polish_correct_answers TEXT NOT NULL,
+  english_question_body TEXT NOT NULL,
+  english_possible_answers TEXT[] NOT NULL,
+  english_correct_answers TEXT NOT NULL,
   difficulty INTEGER NOT NULL CHECK (difficulty >= 1 AND difficulty <= 3)
 );
 
+CREATE TABLE IF NOT EXISTS users (
+  id UUID PRIMARY KEY ,
+  points INTEGER NOT NULL DEFAULT 0,
+  ongoing_streak INTEGER NOT NULL DEFAULT 0,
+  nickname TEXT,
+  bio TEXT,
+  private_profile BOOLEAN NOT NULL DEFAULT false,
+  last_active TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE IF NOT EXISTS profile_pictures (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY REFERENCES users(id),
   picture BYTEA NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS users (
-  id UUID PRIMARY KEY,
-  profile_picture_id INTEGER REFERENCES profile_pictures(id),
-  points INTEGER NOT NULL DEFAULT 0,
-  ongoing_streak INTEGER NOT NULL DEFAULT 0,
-  last_active TIMESTAMPTZ NOT NULL DEFAULT NOW()
+CREATE TABLE IF NOT EXISTS friends (
+  user_id UUID NOT NULL REFERENCES users(id),
+  friend_id UUID NOT NULL REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS repetitions (
@@ -51,13 +59,20 @@ CREATE TABLE IF NOT EXISTS answered_questions (
 
 CREATE TABLE IF NOT EXISTS groups (
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL
+  name TEXT NOT NULL,
+  bio TEXT
+);
+
+CREATE TABLE IF NOT EXISTS group_pictures (
+  id INTEGER PRIMARY KEY REFERENCES groups(id),
+  picture BYTEA NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS group_membership (
   id SERIAL PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id),
   group_id INTEGER NOT NULL REFERENCES groups(id)
+  admin BOOLEAN NOT NULL DEFAULT false
 );
 
 
@@ -65,36 +80,36 @@ CREATE TABLE IF NOT EXISTS group_membership (
 INSERTS
 */
 
--- Insert subcategories of English language questions
-INSERT INTO question_subcategories (id, subcategory) VALUES
-  (1, 'Vocabulary'),
-  (2, 'Grammar'),
-  (3, 'Reading Comprehension'),
-  (4, 'Listening Comprehension'),
-  (5, 'Phonetics'),
-  (6, 'Writing Practice');
+-- -- Insert subcategories of English language questions
+-- INSERT INTO question_subcategories (id, subcategory) VALUES
+--   (1, 'Vocabulary'),
+--   (2, 'Grammar'),
+--   (3, 'Reading Comprehension'),
+--   (4, 'Listening Comprehension'),
+--   (5, 'Phonetics'),
+--   (6, 'Writing Practice');
 
--- Insert English language question categories
-INSERT INTO question_categories (id, subcategory_id, category) VALUES
-  (1, 1, 'Vocabulary Fill-in-the-Blanks'),
-  (2, 1, 'Grammar Exercises'),
-  (3, 2, 'Reading Comprehension'),
-  (4, 3, 'Listening Practice'),
-  (5, 4, 'Pronunciation'),
-  (6, 5, 'Sentence Writing');
+-- -- Insert English language question categories
+-- INSERT INTO question_categories (id, subcategory_id, category) VALUES
+--   (1, 1, 'Vocabulary Fill-in-the-Blanks'),
+--   (2, 1, 'Grammar Exercises'),
+--   (3, 2, 'Reading Comprehension'),
+--   (4, 3, 'Listening Practice'),
+--   (5, 4, 'Pronunciation'),
+--   (6, 5, 'Sentence Writing');
 
--- Insert sample English language learning questions
-INSERT INTO questions (id, category_id, polish_question_body, polish_possible_answers, polish_correct_answers, english_question_body, english_possible_answers, english_correct_answers, difficulty) VALUES
-  (1, 1, 'Fill in the blank: The ____ is red.', ARRAY['cat', 'dog', 'apple'], 'apple', 'Fill in the blank: The ____ is red.', ARRAY['cat', 'dog', 'apple'], 'apple', 1),
-  (2, 1, 'Choose the correct word to fill in the blank: She has a lovely _____.', ARRAY['friend', 'pizza', 'garden'], 'garden', 'Choose the correct word to fill in the blank: She has a lovely _____.', ARRAY['friend', 'pizza', 'garden'], 'garden', 2),
-  (3, 2, 'Select the correct form of the verb: She _____ (eat) breakfast every morning.', ARRAY['eats', 'ate', 'eating'], 'eats', 'Select the correct form of the verb: She _____ (eat) breakfast every morning.', ARRAY['eats', 'ate', 'eating'], 'eats', 2),
-  (4, 2, 'Fill in the blank with the appropriate pronoun: ____ (He/She) is my best friend.', ARRAY['He', 'She', 'They'], 'He', 'Fill in the blank with the appropriate pronoun: ____ (He/She) is my best friend.', ARRAY['He', 'She', 'They'], 'He', 1),
-  (5, 2, 'Complete the sentence with the correct preposition: The book is ____ (on/in/under) the table.', ARRAY['on', 'in', 'under'], 'on', 'Complete the sentence with the correct preposition: The book is ____ (on/in/under) the table.', ARRAY['on', 'in', 'under'], 'on', 3),
-  (6, 3, 'Read the following passage and answer the question: John loves to ____ (read/write) stories.', ARRAY['read', 'write'], 'write', 'Read the following passage and answer the question: John loves to ____ (read/write) stories.', ARRAY['read', 'write'], 'write', 2),
-  (7, 4, 'Listen to the audio and fill in the blank: "I ____ to the store yesterday."', ARRAY['went', 'go', 'will go'], 'went', 'Listen to the audio and fill in the blank: "I ____ to the store yesterday."', ARRAY['went', 'go', 'will go'], 'went', 1),
-  (8, 5, 'Identify the correct pronunciation of the word: "schedule."', ARRAY['sked-jool', 'sheh-dool', 'sked-yool'], 'sked-jool', 'Identify the correct pronunciation of the word: "schedule."', ARRAY['sked-jool', 'sheh-dool', 'sked-yool'], 'sked-jool', 2),
-  (9, 6, 'Write a sentence about your favorite hobby.', NULL, NULL, 'Write a sentence about your favorite hobby.', NULL, NULL, 1),
-  (10, 6, 'Compose a short paragraph about a memorable vacation.', NULL, NULL, 'Compose a short paragraph about a memorable vacation.', NULL, NULL, 3);
+-- -- Insert sample English language learning questions
+-- INSERT INTO questions (id, category_id, polish_question_body, polish_possible_answers, polish_correct_answers, english_question_body, english_possible_answers, english_correct_answers, difficulty) VALUES
+--   (1, 1, 'Fill in the blank: The ____ is red.', ARRAY['cat', 'dog', 'apple'], 'apple', 'Fill in the blank: The ____ is red.', ARRAY['cat', 'dog', 'apple'], 'apple', 1),
+--   (2, 1, 'Choose the correct word to fill in the blank: She has a lovely _____.', ARRAY['friend', 'pizza', 'garden'], 'garden', 'Choose the correct word to fill in the blank: She has a lovely _____.', ARRAY['friend', 'pizza', 'garden'], 'garden', 2),
+--   (3, 2, 'Select the correct form of the verb: She _____ (eat) breakfast every morning.', ARRAY['eats', 'ate', 'eating'], 'eats', 'Select the correct form of the verb: She _____ (eat) breakfast every morning.', ARRAY['eats', 'ate', 'eating'], 'eats', 2),
+--   (4, 2, 'Fill in the blank with the appropriate pronoun: ____ (He/She) is my best friend.', ARRAY['He', 'She', 'They'], 'He', 'Fill in the blank with the appropriate pronoun: ____ (He/She) is my best friend.', ARRAY['He', 'She', 'They'], 'He', 1),
+--   (5, 2, 'Complete the sentence with the correct preposition: The book is ____ (on/in/under) the table.', ARRAY['on', 'in', 'under'], 'on', 'Complete the sentence with the correct preposition: The book is ____ (on/in/under) the table.', ARRAY['on', 'in', 'under'], 'on', 3),
+--   (6, 3, 'Read the following passage and answer the question: John loves to ____ (read/write) stories.', ARRAY['read', 'write'], 'write', 'Read the following passage and answer the question: John loves to ____ (read/write) stories.', ARRAY['read', 'write'], 'write', 2),
+--   (7, 4, 'Listen to the audio and fill in the blank: "I ____ to the store yesterday."', ARRAY['went', 'go', 'will go'], 'went', 'Listen to the audio and fill in the blank: "I ____ to the store yesterday."', ARRAY['went', 'go', 'will go'], 'went', 1),
+--   (8, 5, 'Identify the correct pronunciation of the word: "schedule."', ARRAY['sked-jool', 'sheh-dool', 'sked-yool'], 'sked-jool', 'Identify the correct pronunciation of the word: "schedule."', ARRAY['sked-jool', 'sheh-dool', 'sked-yool'], 'sked-jool', 2),
+--   (9, 6, 'Write a sentence about your favorite hobby.', NULL, NULL, 'Write a sentence about your favorite hobby.', NULL, NULL, 1),
+--   (10, 6, 'Compose a short paragraph about a memorable vacation.', NULL, NULL, 'Compose a short paragraph about a memorable vacation.', NULL, NULL, 3);
 
 -- -- Insert more user data
 -- INSERT INTO users (id, profile_picture_id, points, ongoing_streak, last_active) VALUES
