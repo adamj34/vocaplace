@@ -1,4 +1,4 @@
-import queries from "../sql/sqlQueries";
+import queries from "../sql/sqlQueries.js";
 
 class ProfilePicturesRepository {
     constructor(db, pgp) {

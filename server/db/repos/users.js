@@ -15,12 +15,23 @@ class UsersRepository {
     }
 
     update(values) {
-        return this.db.one(queries.users.update, {
+        const p = {
             id: values.id || '',
             bio: values.bio || '',
             nickname: values.nickname || '',
-            private_profile: values.privatProfile || '',
+            private_profile: values.privateProfile || '',
+        };
+        console.log(p);
+        return this.db.one(queries.users.update, {
+            id: values.id || null,
+            bio: values.bio || null,
+            nickname: values.nickname || null,
+            privateProfile: values.privateProfile || null,
         });
+    }
+
+    find(value) {
+        return this.db.one(queries.users.find, value);
     }
 }
 

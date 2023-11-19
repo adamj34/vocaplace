@@ -17,10 +17,10 @@ const queries = {
         add: sql('users/add.sql'),
         delete: sql('users/delete.sql'),
         update: sql('users/update.sql'),
+        find: sql('users/find.sql'),
     },
     questions: {
         add: sql('questions/add.sql'),
-        findAll: sql('questions/findAll.sql'),
     },
     units: {
         add: sql('units/add.sql'),

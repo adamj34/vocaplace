@@ -1,5 +1,5 @@
 INSERT INTO users(id)
 VALUES (
-    ${id},
+    ${id}
 )
 RETURNING id;
