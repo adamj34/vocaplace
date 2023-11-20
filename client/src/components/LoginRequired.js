@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export function LoginRequired() {
-  document.title = `Duolingo | 403`
+  document.title = `VocaPlace | 403`
     return (
       <div id="LoginRequired">
         <h2>Error 403</h2> 

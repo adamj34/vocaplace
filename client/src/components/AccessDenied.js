@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export function AccessDenied() {
-  document.title = `Duolingo | 403`
+  document.title = `VocaPlace | 403`
     return (
       <div id="AccessDenied">
         <h2>Error 403</h2> 

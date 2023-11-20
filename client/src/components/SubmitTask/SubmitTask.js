@@ -1,6 +1,6 @@
 
 export function SubmitTask() {
-    document.title = `Duolingo | Submit`
+    document.title = `VocaPlace | Submit`
 
     return (
         <div id="SubmitTask">

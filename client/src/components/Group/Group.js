@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 export function Group() {
     const { id } = useParams()
-    document.title = `Duolingo | Group name`
+    document.title = `VocaPlace | Group name`
 
     return (
         <div id="Group">

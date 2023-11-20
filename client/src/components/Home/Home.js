@@ -16,7 +16,7 @@ function Welcome() {
 }
 
 export function Home() {
-    document.title = `Duolingo | Home`
+    document.title = `VocaPlace | Home`
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     const C = useContext(AppContext);
     const { keycloak } = useKeycloak();

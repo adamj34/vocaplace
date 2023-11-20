@@ -46,7 +46,7 @@ export function Topics() {
     if (!keycloak.authenticated) {return <LoginRequired/>}
 
     const unitname = 'unitname'
-    document.title = `Duolingo | ${unitname}`
+    document.title = `VocaPlace | ${unitname}`
     const units = [{id:'1', name:'Animals', completion:'38'}, {id:'2', name:'Plants', completion:'58'}, {id:'3', name:'Food', completion:'1'}, {id:'4', name:'Furniture', completion:'0'}]
 
     return (

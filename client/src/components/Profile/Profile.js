@@ -25,7 +25,7 @@ export function Profile() {
     const [ProfileData, SetProfileData] = useState([]);
     const groups = [{name:'group1', pic:null}, {name:'group2', pic:null}]
     const friends = [{name:'friend1', pic:null}, {name:'friend2', pic:null}, {name:'friend3', pic:null}]
-    document.title = `Duolingo | username`
+    document.title = `VocaPlace | username`
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
     // tu musi isc fetch do servera, server wysyla zapytanie do keycloaka o username (bo ma uprawnienia) ???????

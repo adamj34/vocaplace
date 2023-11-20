@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export function NotFound() {
-  document.title = `Duolingo | 404`
+  document.title = `VocaPlace | 404`
     return (
       <div id="NotFound"> 
         <h2>Error 404</h2>
