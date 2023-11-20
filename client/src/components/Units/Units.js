@@ -42,6 +42,7 @@ function ProgressBar(p) {
 
 export function Units() {
     document.title = `Duolingo | Units`
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     const { keycloak } = useKeycloak();
     if (!keycloak.authenticated) {return <LoginRequired/>}
 

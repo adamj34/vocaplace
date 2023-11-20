@@ -5,12 +5,8 @@ export default function Notifications({ messages }) {
     const [showMessages, setShowMessages] = useState(false);
 
     return (
-        <div id='notifications' >
-            
-            <div onClick={()=>setShowMessages(!showMessages)}>
-                <FaBell id='icon' />
-            </div>
-            
+        <div id='notifications' onClick={()=>setShowMessages(!showMessages)} style={{marginRight:`${messages.length}px`}}>
+            <FaBell id='icon' />
             {!showMessages && messages.length > 0 && (
                 <p id='count'>{messages.length}</p>
             )}
