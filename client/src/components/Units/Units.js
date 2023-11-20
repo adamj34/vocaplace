@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 
 const IconMapping = {'Basic Vocabulary':FaBook, 'Conversation':FaComments, 'Grammar':FaSpellCheck, 'Culture':FaFlag}
 
-function UnitButton(p) {
+function Button(p) {
     const Icon = IconMapping[p.data.name] || FaBook
     return (
-        <div id='unitbutton'>
+        <div id='button'>
             <Link to={p.data.id}>
                 <div id='title' className="hovertext">
                     <Icon id='icon'/>
@@ -49,9 +49,12 @@ export function Units() {
 
     return (
         <div id="Units">
-            <h1>Units</h1>
-            <div id="unitlist">
-                {units.map((x) => {return <UnitButton data={x} key={x.id}/>})}
+            <div id='header'>
+                <h1>Units</h1>
+                <p>Here's your progress so far.</p>
+            </div>
+            <div id="list">
+                {units.map((x) => {return <Button data={x} key={x.id}/>})}
             </div>
         </div>
         

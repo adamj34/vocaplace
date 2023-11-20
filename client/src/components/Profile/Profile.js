@@ -40,7 +40,9 @@ export function Profile() {
         <div id="Profile">
             <div id='banner'>
                 <div id='left'>
-                    <img src={placeholderpfp} height={200} id='profilepic' alt='profilepicture'></img>
+                    <div id='profilepic'>
+                        <div id='pfp' style={{ backgroundImage: `url(${C.UserData.pfp || placeholderpfp})`, height: 200, width:200 }}></div>
+                    </div>
                     <div id='side'>
                         <h1 id='username'>uzytkownik o id: {id}</h1>
                         <p>Member since [DATE]</p>

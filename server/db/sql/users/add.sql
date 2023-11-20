@@ -1,5 +1,5 @@
-INSERT INTO users(id, profile_picture_id) VALUES
-(
-    ${id},
-    ${profilePictureId},
+INSERT INTO users(id)
+VALUES (
+    ${id}
 )
+RETURNING id;

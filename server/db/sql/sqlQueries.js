@@ -13,18 +13,24 @@ function sql(file) {
 }
 
 const queries = {
-    questions: {
-        add: sql('questions/add.sql'),
-        findAll: sql('questions/findAll.sql'),
-    },
     users: {
         add: sql('users/add.sql'),
+        delete: sql('users/delete.sql'),
+        update: sql('users/update.sql'),
+        find: sql('users/find.sql'),
     },
-    categories: {
-        add: sql('categories/add.sql'),
+    questions: {
+        add: sql('questions/add.sql'),
     },
-    subcategories: {
-        add: sql('subcategories/add.sql'),
+    units: {
+        add: sql('units/add.sql'),
+    },
+    topics: {
+        add: sql('topics/add.sql'),
+    },
+    profile_pictures: {
+        upsert: sql('profile_pictures/upsert.sql'),
+        delete: sql('profile_pictures/delete.sql'),
     },
 };
 

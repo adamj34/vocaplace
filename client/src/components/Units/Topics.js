@@ -4,12 +4,12 @@ import { FaBook, FaComments, FaSpellCheck, FaFlag } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 
 
-const IconMapping = {'Basic Vocabulary':FaBook, 'Conversation':FaComments, 'Grammar':FaSpellCheck, 'Culture':FaFlag}
+const IconMapping = {'Animals':FaBook, 'Plants':FaComments, 'Food':FaSpellCheck, 'Furniture':FaFlag}
 
-function UnitButton(p) {
+function Button(p) {
     const Icon = IconMapping[p.data.name] || FaBook
     return (
-        <div id='unitbutton'>
+        <div id='button'>
             <Link to={p.data.id}>
                 <div id='title' className="hovertext">
                     <Icon id='icon'/>
@@ -41,17 +41,22 @@ function ProgressBar(p) {
 }
 
 export function Topics() {
-    document.title = `Duolingo | Units`
     const { keycloak } = useKeycloak();
+    
     if (!keycloak.authenticated) {return <LoginRequired/>}
 
-    const units = [{id:'1', name:'Basic Vocabulary', completion:'38'}, {id:'2', name:'Grammar', completion:'58'}, {id:'3', name:'Conversation', completion:'1'}, {id:'4', name:'Culture', completion:'0'}]
+    const unitname = 'unitname'
+    document.title = `Duolingo | ${unitname}`
+    const units = [{id:'1', name:'Animals', completion:'38'}, {id:'2', name:'Plants', completion:'58'}, {id:'3', name:'Food', completion:'1'}, {id:'4', name:'Furniture', completion:'0'}]
 
     return (
-        <div id="Units">
-            <h1>Units</h1>
-            <div id="unitlist">
-                {units.map((x) => {return <UnitButton data={x} key={x.id}/>})}
+        <div id="Topics">
+            <div id='header'>
+                <h1>{unitname}</h1>
+                <p>Choose a topic to generate a quiz.</p>
+            </div>
+            <div id="list">
+                {units.map((x) => {return <Button data={x} key={x.id}/>})}
             </div>
         </div>
         

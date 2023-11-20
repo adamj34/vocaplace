@@ -12,6 +12,7 @@ import { Nav } from './components/Nav/Nav';
 import { Footer } from './components/Nav/Footer'
 import { Units } from './components/Units/Units'
 import { EditProfile } from './components/Profile/EditProfile'
+import { Topics } from './components/Units/Topics';
 
 export const AppContext = createContext();
 
@@ -36,6 +37,7 @@ function App() {
           <Route path='profile/:id/edit' element={<EditProfile/>}/>
           <Route path='group/:id' element={<Group/>}/>
           <Route path='task/submit' element={<SubmitTask/>}/>
+          <Route path='units/:unitid' element={<Topics/>}/>
           <Route path='units' element={<Units/>}/>
 
           <Route path='*' element={<NotFound/>}/>
