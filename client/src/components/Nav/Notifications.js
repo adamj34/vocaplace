@@ -15,11 +15,11 @@ export default function Notifications({ messages }) {
                 <div id="messageWindow">
                     <p id="title">Notifications</p>
                     <div id="message-scroll">
-                    {messages.map((message, index) => (
-                        <div key={index} id='message'>
-                            {message}
-                        </div>
-                    ))}
+                        {messages.map((message, index) => (
+                            <div key={index} id='message'>
+                                {message}
+                            </div>
+                        ))}
                     </div>
                 </div>
             )}

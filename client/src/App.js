@@ -13,6 +13,10 @@ import { Footer } from './components/Nav/Footer'
 import { Units } from './components/Units/Units'
 import { EditProfile } from './components/Profile/EditProfile'
 import { Topics } from './components/Units/Topics';
+import { Admin } from './components/Admin/Admin'
+import { Revisions } from './components/Revisions/Revisions';
+import { Friends } from './components/Friends/Friends';
+import { Groups } from './components/Groups/Groups';
 
 export const AppContext = createContext();
 
@@ -39,6 +43,11 @@ function App() {
           <Route path='task/submit' element={<SubmitTask/>}/>
           <Route path='units/:unitid' element={<Topics/>}/>
           <Route path='units' element={<Units/>}/>
+          <Route path='admin' element={<Admin/>}/>
+          <Route path='revisions' element={<Revisions/>}/>
+          <Route path='friends' element={<Friends/>}/>
+          <Route path='groups' element={<Groups/>}/>
+
 
           <Route path='*' element={<NotFound/>}/>
         </Routes>

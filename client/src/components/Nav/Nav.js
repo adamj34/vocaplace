@@ -5,14 +5,16 @@ import { AppContext } from '../../App';
 import placeholderpfp from './PlaceholderProfilePic.png'
 import websitelogo from './Logo.png'
 import Notifications from './Notifications';
-import { FaSearch, FaHandsHelping, FaUserFriends, FaMedal, FaBook, FaBrain } from 'react-icons/fa';
+import { FaSearch, FaHandsHelping, FaUserFriends, FaMedal, FaBook, FaBrain, FaIdBadge } from 'react-icons/fa';
 
 function SearchBar() {
+    const navigate = useNavigate()
+    const [SearchQuery, SetQuery] = useState("");
     return (
-        <div id='SearchBar'>
+        <form id='SearchBar' onSubmit={(e)=>{e.preventDefault(); if (SearchQuery.length > 0) {navigate({pathname:`/search`,search:`?q=${SearchQuery}`})}}}>
             <FaSearch id='icon'/>
-            <input id='search' placeholder='Search...'></input>
-        </div>
+            <input id='search' placeholder='Search...' value={SearchQuery} onChange={(e)=>{SetQuery(e.target.value)}}></input>
+        </form>
     )
 }
 
@@ -49,6 +51,7 @@ export function Nav() {
                         <Link to='friends'><FaHandsHelping id='icon'/></Link>
                         <Link to='groups'><FaUserFriends id='icon'/></Link>
                         <Link to='ranking'><FaMedal id='icon'/></Link>
+                        <Link to='admin'><FaIdBadge id='icon'/></Link>
                     </div>
                     <SearchBar/>
                 </div>
