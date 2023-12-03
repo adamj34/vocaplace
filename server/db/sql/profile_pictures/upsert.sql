@@ -1,7 +1,7 @@
 INSERT INTO profile_pictures (id, picture)
 VALUES (
     ${id},
-    ${picture},
+    ${picture}
 )
 ON CONFLICT(id) DO UPDATE SET picture = ${picture}
 RETURNING id;

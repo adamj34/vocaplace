@@ -11,7 +11,7 @@ import userRouter from "./api/userRouter.js";
 const app = express(); 
  
 await testConnection(db); 
-  
+
 const memoryStore = new session.MemoryStore();
 const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Specify the path to your keycloak.json file
  

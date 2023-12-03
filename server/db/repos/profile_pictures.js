@@ -6,8 +6,8 @@ class ProfilePicturesRepository {
         this.pgp = pgp;
     }
 
-    upsert(value) {
-        return this.db.one(queries.profile_pictures.upsert, value);
+    upsert(values) {
+        return this.db.one(queries.profile_pictures.upsert, values);
     }
 
     delete(value) {

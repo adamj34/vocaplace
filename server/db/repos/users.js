@@ -15,13 +15,6 @@ class UsersRepository {
     }
 
     update(values) {
-        const p = {
-            id: values.id || '',
-            bio: values.bio || '',
-            nickname: values.nickname || '',
-            private_profile: values.privateProfile || '',
-        };
-        console.log(p);
         return this.db.one(queries.users.update, {
             id: values.id || null,
             bio: values.bio || null,

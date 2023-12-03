@@ -1,0 +1,56 @@
+API
+
+/user
+GET:
+expects: keycloak token in header
+returns: 
+{
+    "success": true,
+    "data": {
+        "id": "223e4567-e89b-12d3-a456-426614174005",
+        "points": 0,
+        "ongoing_streak": 0,
+        "nickname": null,
+        "bio": null,
+        "private_profile": false,
+        "last_active": "2023-12-03T20:35:44.437Z",
+        "created_at": "2023-12-03T20:35:44.437Z",
+        "picture": {
+            "type": "Buffer",
+            "data": [
+                222,
+                173,
+                190,
+                239
+            ]
+        }
+    }
+}
+
+PATCH:
+expects: keycloak token in header, body {nickname, bio, private_profile, picture}
+e.g.
+{
+    "bio": "new bio :/",
+    "nickname": "veery cool",
+    "picture": "\\xDEADBEEF"
+}
+returns: 
+{
+    "success": true,
+    "data": {
+        "id": "223e4567-e89b-12d3-a456-426614174005"
+    }
+}
+
+
+/user/profilePicture
+DELETE:
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": {
+        "id": "223e4567-e89b-12d3-a456-426614174005"
+    }
+}

@@ -115,6 +115,11 @@ INSERT INTO users (id, points, ongoing_streak, nickname, bio, private_profile, l
   ('123e4567-e89b-12d3-a456-426614174001', 100, 5, 'JohnDoe', 'I love learning!', false, NOW(), NOW()),
   ('223e4567-e89b-12d3-a456-426614174002', 50, 2, 'JaneSmith', 'Passionate about science.', true, NOW(), NOW());
 
+-- Inserting profile pictures
+INSERT INTO profile_pictures (id, picture)
+VALUES 
+  ('123e4567-e89b-12d3-a456-426614174001',  E'\\xDEADBEEF');
+
 -- Inserting friends
 INSERT INTO friends (user_id, friend_id) VALUES
   ('123e4567-e89b-12d3-a456-426614174001', '223e4567-e89b-12d3-a456-426614174002');
