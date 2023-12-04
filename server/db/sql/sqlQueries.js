@@ -33,6 +33,11 @@ const queries = {
         upsert: sql('profile_pictures/upsert.sql'),
         delete: sql('profile_pictures/delete.sql'),
     },
+    user_relationships: {
+        addFriend: sql('user_relationships/add_friend.sql'),
+        acceptFriend: sql('user_relationships/accept_friend.sql'),
+        checkRelationship: sql('user_relationships/check_relationship.sql'),
+    },
 };
 
 export default queries;

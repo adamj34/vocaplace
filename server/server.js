@@ -8,6 +8,7 @@ import { db } from "./db/connection/db.js";
 import testConnection from "./db/connection/testConnection.js";
 import userRouter from "./api/userRouter.js";
 import unitRouter from "./api/unitRouter.js";
+import userRelationsRouter from "./api/userRelationsRouter.js";
 
 const app = express(); 
   
@@ -41,6 +42,7 @@ app.use(cors());
 
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
+app.use("/relationships", userRelationsRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

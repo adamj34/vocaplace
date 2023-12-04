@@ -40,9 +40,20 @@ CREATE TABLE IF NOT EXISTS profile_pictures (
   picture BYTEA NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS friends (
-  user_id UUID NOT NULL REFERENCES users(id),
-  friend_id UUID NOT NULL REFERENCES users(id)
+CREATE TYPE relationship_state AS ENUM (
+  'pending_user1_user2',
+  'pending_user2_user1',
+  'friends',
+  'block_user1_user2',
+  'block_user2_user1',
+  'block_both'
+);
+CREATE TABLE IF NOT EXISTS user_relationships (
+  user1_id UUID REFERENCES users(id),
+  user2_id UUID REFERENCES users(id),
+  relationship relationship_state NOT NULL,
+  PRIMARY KEY (user1_id, user2_id),
+  CHECK (user1_id < user2_id)
 );
 
 CREATE TABLE IF NOT EXISTS repetitions (
@@ -116,12 +127,20 @@ INSERT INTO questions (unit_id,
   (5, 'In which era did the Roman Empire exist?', '{"Medieval", "Ancient", "Renaissance", "Industrial"}', '{"Ancient"}',
       'During which historical period did the Roman Empire thrive?', '{"Medieval", "Ancient", "Renaissance", "Industrial"}', '{"Ancient"}', 1),
   (7, 'Who wrote the play "Romeo and Juliet"?', '{"William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"}', '{"William Shakespeare"}',
-      'Which playwright is the author of "Romeo and Juliet"?', '{"William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"}', '{"William Shakespeare"}', 2);
+      'Which playwright is the author of "Romeo and Juliet"?', '{"William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"}', '{"William Shakespeare"}', 2),
+  (2, 'What is the Pythagorean theorem?', '{"A", "B", "C", "D"}', '{"C"}',
+      'Which theorem relates the lengths of the sides of a right triangle?', '{"A", "B", "C", "D"}', '{"C"}', 2),
+  (4, 'What is the chemical symbol for gold?', '{"Au", "Ag", "Fe", "Cu"}', '{"Au"}',
+      'Which chemical symbol represents the element gold?', '{"Au", "Ag", "Fe", "Cu"}', '{"Au"}', 1),
+  (6, 'Who was the leader of the Soviet Union during World War II?', '{"Stalin", "Lenin", "Khrushchev", "Gorbachev"}', '{"Stalin"}',
+      'Who led the Soviet Union during the Second World War?', '{"Stalin", "Lenin", "Khrushchev", "Gorbachev"}', '{"Stalin"}', 3);
 
 -- Inserting users
 INSERT INTO users (id, points, ongoing_streak, nickname, bio, private_profile, last_active, created_at) VALUES
   ('123e4567-e89b-12d3-a456-426614174001', 100, 5, 'JohnDoe', 'I love learning!', false, NOW(), NOW()),
   ('223e4567-e89b-12d3-a456-426614174002', 50, 2, 'JaneSmith', 'Passionate about science.', true, NOW(), NOW()),
+  ('423e4567-e89b-12d3-a456-426614174004', 75, 3, 'MathGeek', 'Passionate about mathematics.', false, NOW(), NOW()),
+  ('523e4567-e89b-12d3-a456-426614174005', 30, 1, 'SciEnthusiast', 'Love exploring the wonders of science.', false, NOW(), NOW()),
   ('323e4567-e89b-12d3-a456-426614174003', 0, 0, 'Anonymous', 'I am a mystery.', false, NOW(), NOW());
 
 -- Inserting profile pictures
@@ -130,13 +149,18 @@ VALUES
   ('123e4567-e89b-12d3-a456-426614174001',  E'\\xDEADBEEF');
 
 -- Inserting friends
-INSERT INTO friends (user_id, friend_id) VALUES
-  ('123e4567-e89b-12d3-a456-426614174001', '223e4567-e89b-12d3-a456-426614174002');
+INSERT INTO user_relationships (user1_id, user2_id, relationship) VALUES
+  ('123e4567-e89b-12d3-a456-426614174001', '223e4567-e89b-12d3-a456-426614174002', 'friends'),
+  ('123e4567-e89b-12d3-a456-426614174001', '423e4567-e89b-12d3-a456-426614174004', 'block_user1_user2'),
+  ('223e4567-e89b-12d3-a456-426614174002', '423e4567-e89b-12d3-a456-426614174004', 'block_both');
 
 -- Inserting repetitions
 INSERT INTO repetitions (user_id, question_id) VALUES
   ('123e4567-e89b-12d3-a456-426614174001', 1),
-  ('223e4567-e89b-12d3-a456-426614174002', 3);
+  ('223e4567-e89b-12d3-a456-426614174002', 3),
+  ('123e4567-e89b-12d3-a456-426614174001', 2),
+  ('323e4567-e89b-12d3-a456-426614174003', 1),
+  ('423e4567-e89b-12d3-a456-426614174004', 1);
 
 -- Inserting answered questions
 INSERT INTO answered_questions (question_id, user_id) VALUES
@@ -144,14 +168,22 @@ INSERT INTO answered_questions (question_id, user_id) VALUES
   (3, '223e4567-e89b-12d3-a456-426614174002'),
   (5, '123e4567-e89b-12d3-a456-426614174001'),
   (7, '223e4567-e89b-12d3-a456-426614174002'),
-  (7, '223e4567-e89b-12d3-a456-426614174002');
+  (7, '223e4567-e89b-12d3-a456-426614174002'),
+  (2, '123e4567-e89b-12d3-a456-426614174001'),
+  (4, '423e4567-e89b-12d3-a456-426614174004'),
+  (6, '523e4567-e89b-12d3-a456-426614174005');
 
 -- Inserting groups
 INSERT INTO groups (name, bio) VALUES
   ('Study Group 1', 'A group for studying mathematics'),
+  ('History Buffs', 'Exploring the depths of history'),
   ('Book Club', 'A club for literature enthusiasts');
 
 -- Inserting group membership
 INSERT INTO group_membership (user_id, group_id, admin) VALUES
   ('123e4567-e89b-12d3-a456-426614174001', 1, true),
+  ('223e4567-e89b-12d3-a456-426614174002', 1, false),
+  ('423e4567-e89b-12d3-a456-426614174004', 1, false),
+  ('523e4567-e89b-12d3-a456-426614174005', 1, false),
+  ('123e4567-e89b-12d3-a456-426614174001', 2, true),
   ('223e4567-e89b-12d3-a456-426614174002', 2, false);
