@@ -108,12 +108,21 @@ INSERT INTO questions (unit_id,
   (3, 'What is the atomic number of carbon?', '{"10", "5", "6", "12"}', '{"6"}',
       'How many protons does a carbon atom have?', '{"10", "5", "6", "12"}', '{"6"}', 1),
   (5, 'Who was the first emperor of China?', '{"Mao Zedong", "Qin Shi Huang", "Sun Yat-sen", "Deng Xiaoping"}', '{"Qin Shi Huang"}',
-      'Which historical figure is known as the first emperor of China?', '{"Mao Zedong", "Qin Shi Huang", "Sun Yat-sen", "Deng Xiaoping"}', '{"Qin Shi Huang"}', 3);
+      'Which historical figure is known as the first emperor of China?', '{"Mao Zedong", "Qin Shi Huang", "Sun Yat-sen", "Deng Xiaoping"}', '{"Qin Shi Huang"}', 3),
+  (1, 'Solve the equation: 2x + 5 = 15', '{"5", "7", "8", "10"}', '{"5"}',
+      'What is the solution to the equation 2x + 5 = 15?', '{"5", "7", "8", "10"}', '{"5"}', 1),
+  (3, 'Who discovered the electron?', '{"Isaac Newton", "Marie Curie", "Ernest Rutherford", "Niels Bohr"}', '{"J.J. Thomson"}',
+      'Which scientist is credited with the discovery of the electron?', '{"Isaac Newton", "Marie Curie", "Ernest Rutherford", "Niels Bohr"}', '{"J.J. Thomson"}', 2),
+  (5, 'In which era did the Roman Empire exist?', '{"Medieval", "Ancient", "Renaissance", "Industrial"}', '{"Ancient"}',
+      'During which historical period did the Roman Empire thrive?', '{"Medieval", "Ancient", "Renaissance", "Industrial"}', '{"Ancient"}', 1),
+  (7, 'Who wrote the play "Romeo and Juliet"?', '{"William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"}', '{"William Shakespeare"}',
+      'Which playwright is the author of "Romeo and Juliet"?', '{"William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"}', '{"William Shakespeare"}', 2);
 
 -- Inserting users
 INSERT INTO users (id, points, ongoing_streak, nickname, bio, private_profile, last_active, created_at) VALUES
   ('123e4567-e89b-12d3-a456-426614174001', 100, 5, 'JohnDoe', 'I love learning!', false, NOW(), NOW()),
-  ('223e4567-e89b-12d3-a456-426614174002', 50, 2, 'JaneSmith', 'Passionate about science.', true, NOW(), NOW());
+  ('223e4567-e89b-12d3-a456-426614174002', 50, 2, 'JaneSmith', 'Passionate about science.', true, NOW(), NOW()),
+  ('323e4567-e89b-12d3-a456-426614174003', 0, 0, 'Anonymous', 'I am a mystery.', false, NOW(), NOW());
 
 -- Inserting profile pictures
 INSERT INTO profile_pictures (id, picture)
@@ -132,7 +141,10 @@ INSERT INTO repetitions (user_id, question_id) VALUES
 -- Inserting answered questions
 INSERT INTO answered_questions (question_id, user_id) VALUES
   (1, '123e4567-e89b-12d3-a456-426614174001'),
-  (3, '223e4567-e89b-12d3-a456-426614174002');
+  (3, '223e4567-e89b-12d3-a456-426614174002'),
+  (5, '123e4567-e89b-12d3-a456-426614174001'),
+  (7, '223e4567-e89b-12d3-a456-426614174002'),
+  (7, '223e4567-e89b-12d3-a456-426614174002');
 
 -- Inserting groups
 INSERT INTO groups (name, bio) VALUES

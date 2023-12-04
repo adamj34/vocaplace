@@ -7,9 +7,10 @@ import morgan from "morgan";
 import { db } from "./db/connection/db.js";
 import testConnection from "./db/connection/testConnection.js";
 import userRouter from "./api/userRouter.js";
+import unitRouter from "./api/unitRouter.js";
 
 const app = express(); 
- 
+  
 await testConnection(db); 
 
 const memoryStore = new session.MemoryStore();
@@ -21,7 +22,7 @@ const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Spe
 //     resave: false,
 //     saveUninitialized: true,
 //     store: memoryStore
-// }));
+// })); 
  
 app.use(morgan(":method :url :status :response-time ms"));
 // app.use(keycloak.middleware());  
@@ -39,8 +40,10 @@ app.use(cors());
 // app.use(keycloak.middleware({ logout: '/' }));
 
 app.use('/user', userRouter);
+app.use('/units', unitRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+ 

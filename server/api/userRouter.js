@@ -4,7 +4,7 @@ import getUserId from './getUserIdMiddleware.js';
 
 const router = express.Router();
 
-// router.get('/getData', getUserId, (req, res), getUserId in all routes
+// router.get('/', getUserId, (req, res), getUserId in all routes
 const userId = '223e4567-e89b-12d3-a456-426614174005';
 
 router.get('/', (req, res) => {

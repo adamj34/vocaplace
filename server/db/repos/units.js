@@ -7,7 +7,11 @@ class UnitsRepository {
     }
 
     add(values) {
-        return this.db.one(queries.categories.add, values);
+        return this.db.one(queries.units.add, values);
+    }
+
+    userProgress(value) {
+        return this.db.many(queries.units.userProgress, value);
     }
 }
 

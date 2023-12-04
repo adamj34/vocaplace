@@ -54,3 +54,34 @@ returns:
         "id": "223e4567-e89b-12d3-a456-426614174005"
     }
 }
+
+
+/units/progress
+GET:
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": [
+        {
+            "unit": "Algebra",
+            "completion_ratio": "0.50"
+        },
+        {
+            "unit": "Geometry",
+            "completion_ratio": "0.00"
+        },
+        {
+            "unit": "Physics",
+            "completion_ratio": "0.50"
+        },
+        {
+            "unit": "Chemistry",
+            "completion_ratio": "0.00"
+        },
+        {
+            "unit": "Ancient Civilizations",
+            "completion_ratio": "0.00"
+        }
+    ]
+}
