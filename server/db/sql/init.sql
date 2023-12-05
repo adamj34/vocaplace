@@ -43,10 +43,7 @@ CREATE TABLE IF NOT EXISTS profile_pictures (
 CREATE TYPE relationship_state AS ENUM (
   'pending_user1_user2',
   'pending_user2_user1',
-  'friends',
-  'block_user1_user2',
-  'block_user2_user1',
-  'block_both'
+  'friends'
 );
 CREATE TABLE IF NOT EXISTS user_relationships (
   user1_id UUID REFERENCES users(id),
@@ -151,8 +148,8 @@ VALUES
 -- Inserting friends
 INSERT INTO user_relationships (user1_id, user2_id, relationship) VALUES
   ('123e4567-e89b-12d3-a456-426614174001', '223e4567-e89b-12d3-a456-426614174002', 'friends'),
-  ('123e4567-e89b-12d3-a456-426614174001', '423e4567-e89b-12d3-a456-426614174004', 'block_user1_user2'),
-  ('223e4567-e89b-12d3-a456-426614174002', '423e4567-e89b-12d3-a456-426614174004', 'block_both');
+  ('123e4567-e89b-12d3-a456-426614174001', '423e4567-e89b-12d3-a456-426614174004', 'pending_user1_user2'),
+  ('223e4567-e89b-12d3-a456-426614174002', '423e4567-e89b-12d3-a456-426614174004', 'pending_user2_user1');
 
 -- Inserting repetitions
 INSERT INTO repetitions (user_id, question_id) VALUES

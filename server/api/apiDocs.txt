@@ -56,6 +56,66 @@ returns:
 }
 
 
+/relationships/request/friend/:id
+POST:
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": "pending_user1_user2"
+    }
+}
+
+/relationships/accept/friend/:id
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": "friends"
+    }
+}
+
+/relationships/check/user/:id
+GET:
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "123e4567-e89b-12d3-a456-426614174001",
+        "user2_id": "223e4567-e89b-12d3-a456-426614174002",
+        "relationship": "friends"
+    }
+}
+OR
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": null
+    }
+}
+
+/relationships/friend/:id
+DELETE:
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": "friends"
+    }
+}
+
 /units/progress
 GET:
 expects: keycloak token in header

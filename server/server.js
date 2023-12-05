@@ -42,7 +42,7 @@ app.use(cors());
 
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
-app.use("/relationships", userRelationsRouter);
+app.use('/relationships', userRelationsRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

@@ -17,4 +17,10 @@ class UserRelationshipsRepository {
     checkRelationship(values) {
         return this.db.one(queries.user_relationships.checkRelationship, values);
     }
+
+    deleteFriend(values) {
+        return this.db.one(queries.user_relationships.deleteFriend, values);
+    }
 }
+
+export default UserRelationshipsRepository;

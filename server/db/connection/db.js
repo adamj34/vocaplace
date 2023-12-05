@@ -5,6 +5,7 @@ import UnitsRepository from "../repos/units.js"
 import TopicsRepository from "../repos/topics.js"
 import UsersRepository from '../repos/users.js';
 import ProfilePicturesRepository from '../repos/profile_pictures.js';
+import UserRelationshipsRepository from '../repos/user_relationships.js';
 
 
 const initOptions = {
@@ -17,6 +18,7 @@ const initOptions = {
         obj.topics = new TopicsRepository(obj, pgp);
         obj.questions = new QuestionsRepository(obj, pgp);
         obj.profile_pictures = new ProfilePicturesRepository(obj, pgp);
+        obj.user_relationships = new UserRelationshipsRepository(obj, pgp);
     }
 };
 
