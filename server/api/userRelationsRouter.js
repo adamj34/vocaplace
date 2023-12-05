@@ -111,11 +111,12 @@ router.get('/check/user/:id', (req, res) => {
                     success: true,
                     data
                 });
+            } else {
+                res.status(500).json({
+                    success: false,
+                    err
+                });
             }
-            res.status(500).json({
-                success: false,
-                err
-            });
         });
     }
 });

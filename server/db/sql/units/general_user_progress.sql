@@ -1,12 +1,16 @@
 SELECT
+    u.id,
     u.unit,
     ROUND(COALESCE(
         COUNT(aq.id) FILTER (WHERE aq.user_id = ${id})::numeric / NULLIF(COUNT(DISTINCT q.id), 0), 0
-    ), 2) AS completion_ratio
+    ), 2) AS completion_ratio,
+    u.created_at
 FROM
     units u
+LEFT JOIN 
+    topics t ON u.id = t.unit_id
 LEFT JOIN
-    questions q ON q.unit_id = u.id
+    questions q ON q.topic_id = t.id
 LEFT JOIN 
     answered_questions aq ON aq.question_id = q.id
 GROUP BY

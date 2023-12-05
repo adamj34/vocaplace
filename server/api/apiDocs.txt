@@ -122,26 +122,26 @@ expects: keycloak token in header
 returns:
 {
     "success": true,
-    "data": [
-        {
-            "unit": "Algebra",
-            "completion_ratio": "0.50"
+    "data": {
+        "1": {
+            "unit": "Mathematics",
+            "completion_ratio": "0.33",
+            "created_at": "2023-12-05T13:25:24.422Z"
         },
-        {
-            "unit": "Geometry",
-            "completion_ratio": "0.00"
+        "2": {
+            "unit": "Science",
+            "completion_ratio": "0.67",
+            "created_at": "2023-12-05T13:25:24.422Z"
         },
-        {
-            "unit": "Physics",
-            "completion_ratio": "0.50"
+        "3": {
+            "unit": "History",
+            "completion_ratio": "0.00",
+            "created_at": "2023-12-05T13:25:24.422Z"
         },
-        {
-            "unit": "Chemistry",
-            "completion_ratio": "0.00"
-        },
-        {
-            "unit": "Ancient Civilizations",
-            "completion_ratio": "0.00"
+        "4": {
+            "unit": "Literature",
+            "completion_ratio": "0.00",
+            "created_at": "2023-12-05T13:25:24.422Z"
         }
-    ]
+    }
 }

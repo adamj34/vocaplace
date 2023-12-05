@@ -24,7 +24,8 @@ const queries = {
     },
     units: {
         add: sql('units/add.sql'),
-        userProgress: sql('units/user_progress.sql'),
+        generalUserProgress: sql('units/general_user_progress.sql'),
+        detailedUserProgress: sql('units/detailed_user_progress.sql'),
     },
     topics: {
         add: sql('topics/add.sql'),

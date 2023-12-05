@@ -1,20 +1,21 @@
 SET TIME ZONE 'EUROPE/WARSAW';
 
-CREATE TABLE IF NOT EXISTS topics (
-  id SMALLSERIAL PRIMARY KEY,
-  topic TEXT UNIQUE NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS units (
   id SMALLSERIAL PRIMARY KEY,
-  topic_id INTEGER NOT NULL REFERENCES topics(id),
   unit TEXT UNIQUE NOT NULL, 
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS topics (
+  id SMALLSERIAL PRIMARY KEY,
+  unit_id INTEGER NOT NULL REFERENCES units(id),
+  topic TEXT UNIQUE NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS questions (
   id SERIAL PRIMARY KEY,
-  unit_id INTEGER NOT NULL REFERENCES units(id),
+  topic_id INTEGER NOT NULL REFERENCES topics(id),
   polish_question_body TEXT NOT NULL,
   polish_possible_answers TEXT[] NOT NULL,
   polish_correct_answers TEXT NOT NULL,
@@ -89,14 +90,14 @@ TEST INSERTS
 */
 
 -- Inserting topics
-INSERT INTO topics (topic) VALUES
+INSERT INTO units (unit) VALUES
   ('Mathematics'),
   ('Science'),
   ('History'),
   ('Literature');
 
 -- Inserting units
-INSERT INTO units (topic_id, unit) VALUES
+INSERT INTO topics (unit_id, topic) VALUES
   (1, 'Algebra'),
   (1, 'Geometry'),
   (2, 'Physics'),
@@ -107,7 +108,7 @@ INSERT INTO units (topic_id, unit) VALUES
   (4, 'Modern Literature');
 
 -- Inserting questions
-INSERT INTO questions (unit_id, 
+INSERT INTO questions (topic_id, 
                       polish_question_body, polish_possible_answers, polish_correct_answers,
                       english_question_body, english_possible_answers, english_correct_answers,
                       difficulty) VALUES
@@ -162,11 +163,11 @@ INSERT INTO repetitions (user_id, question_id) VALUES
 -- Inserting answered questions
 INSERT INTO answered_questions (question_id, user_id) VALUES
   (1, '123e4567-e89b-12d3-a456-426614174001'),
-  (3, '223e4567-e89b-12d3-a456-426614174002'),
-  (5, '123e4567-e89b-12d3-a456-426614174001'),
-  (7, '223e4567-e89b-12d3-a456-426614174002'),
-  (7, '223e4567-e89b-12d3-a456-426614174002'),
   (2, '123e4567-e89b-12d3-a456-426614174001'),
+  (5, '123e4567-e89b-12d3-a456-426614174001'),
+  (3, '223e4567-e89b-12d3-a456-426614174002'),
+  (7, '223e4567-e89b-12d3-a456-426614174002'),
+  (7, '223e4567-e89b-12d3-a456-426614174002'),
   (4, '423e4567-e89b-12d3-a456-426614174004'),
   (6, '523e4567-e89b-12d3-a456-426614174005');
 
