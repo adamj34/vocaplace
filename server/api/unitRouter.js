@@ -40,9 +40,25 @@ router.get('/progress/:id', (req, res) => {
 
     db.units.detailedUserProgress({user_id: userId, unit_id: id})
     .then((data) => {
+        const groupedByTopic = data.reduce((acc, curr) => {
+            const topicId = curr.topic_id;
+            if (!(topicId in acc)) {
+                acc[topicId] = {
+                    topic: curr.topic,
+                    topic_created_at: curr.topic_created_at,
+                    questions: []
+                };
+            }
+            acc[topicId].questions.push({
+                question_id: curr.question_id,
+                difficulty: curr.difficulty,
+                is_answered: curr.is_answered,
+            });
+            return acc;
+        }, {});
         res.status(200).json({
             success: true,
-            data
+            data: groupedByTopic
         });
     })
     .catch((err) => {

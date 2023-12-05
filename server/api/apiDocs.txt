@@ -56,7 +56,7 @@ returns:
 }
 
 
-/relationships/request/friend/:id
+/relationships/request/friend/:friendID
 POST:
 expects: keycloak token in header
 returns:
@@ -81,7 +81,7 @@ returns:
     }
 }
 
-/relationships/check/user/:id
+/relationships/check/user/:userID
 GET:
 expects: keycloak token in header
 returns:
@@ -103,7 +103,7 @@ OR
     }
 }
 
-/relationships/friend/:id
+/relationships/friend/:friendId
 DELETE:
 expects: keycloak token in header
 returns:
@@ -142,6 +142,43 @@ returns:
             "unit": "Literature",
             "completion_ratio": "0.00",
             "created_at": "2023-12-05T13:25:24.422Z"
+        }
+    }
+}
+
+/units/progress/:unitId
+GET:
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": {
+        "3": {  // this is the topic id
+            "topic": "Physics",
+            "topic_created_at": "2023-12-05T13:25:24.425Z",
+            "questions": [
+                {
+                    "question_id": 2,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 5,
+                    "difficulty": 2,
+                    "is_answered": true
+                }
+            ]
+        },
+        "4": {
+            "topic": "Chemistry",
+            "topic_created_at": "2023-12-05T13:25:24.425Z",
+            "questions": [
+                {
+                    "question_id": 9,
+                    "difficulty": 1,
+                    "is_answered": false
+                }
+            ]
         }
     }
 }

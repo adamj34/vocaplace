@@ -11,10 +11,10 @@ import unitRouter from "./api/unitRouter.js";
 import userRelationsRouter from "./api/userRelationsRouter.js";
 
 const app = express(); 
-  
+
 await testConnection(db); 
 
-const memoryStore = new session.MemoryStore();
+const memoryStore = new session.MemoryStore(); 
 const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Specify the path to your keycloak.json file
  
 // Session
@@ -23,7 +23,7 @@ const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Spe
 //     resave: false,
 //     saveUninitialized: true,
 //     store: memoryStore
-// })); 
+// }));  
  
 app.use(morgan(":method :url :status :response-time ms"));
 // app.use(keycloak.middleware());  
@@ -48,4 +48,4 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });   
-    
+ 
