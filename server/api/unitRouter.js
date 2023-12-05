@@ -40,25 +40,17 @@ router.get('/progress/:id', (req, res) => {
 
     db.units.detailedUserProgress({user_id: userId, unit_id: id})
     .then((data) => {
-        const groupedByTopic = data.reduce((acc, curr) => {
-            const topicId = curr.topic_id;
-            if (!(topicId in acc)) {
-                acc[topicId] = {
-                    topic: curr.topic,
-                    topic_created_at: curr.topic_created_at,
-                    questions: []
-                };
-            }
-            acc[topicId].questions.push({
-                question_id: curr.question_id,
-                difficulty: curr.difficulty,
-                is_answered: curr.is_answered,
-            });
+        const retrieveIds = data.reduce((acc, curr) => {
+            acc = {...acc, [curr.topic_id]: {
+                topic: curr.topic,
+                created_at: curr.created_at,
+                questions: curr.questions,
+            }};
             return acc;
         }, {});
         res.status(200).json({
             success: true,
-            data: groupedByTopic
+            data: retrieveIds
         });
     })
     .catch((err) => {
@@ -70,5 +62,29 @@ router.get('/progress/:id', (req, res) => {
     });
 });
 
+router.get('/overview', (req, res) => {
+
+    db.units.overview()
+    .then((data) => {
+        const retrieveIds = data.reduce((acc, curr) => {
+            acc = {...acc, [curr.unit_id]: {
+                unit: curr.unit,
+                topics: curr.topics,
+            }};
+            return acc;
+        }, {})
+        res.status(200).json({
+            success: true,
+            data: retrieveIds
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
 
 export default router;

@@ -182,3 +182,53 @@ returns:
         }
     }
 }
+
+/units/overview
+GET:
+expects: keycloak token in header
+returns: 
+{
+    "success": true,
+    "data": {
+        "1": {
+            "unit": "Mathematics",
+            "topics": [
+                {
+                    "topic_id": 1,
+                    "topic": "Algebra",
+                    "question_ids": [
+                        4,
+                        1
+                    ]
+                },
+                {
+                    "topic_id": 2,
+                    "topic": "Geometry",
+                    "question_ids": [
+                        8
+                    ]
+                }
+            ]
+        },
+        "2": {
+            "unit": "Science",
+            "topics": [
+                {
+                    "topic_id": 3,
+                    "topic": "Physics",
+                    "question_ids": [
+                        2,
+                        5
+                    ]
+                },
+                {
+                    "topic_id": 4,
+                    "topic": "Chemistry",
+                    "question_ids": [
+                        9
+                    ]
+                }
+            ]
+        }
+    }
+}

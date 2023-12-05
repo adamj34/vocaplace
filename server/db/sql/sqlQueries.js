@@ -26,6 +26,7 @@ const queries = {
         add: sql('units/add.sql'),
         generalUserProgress: sql('units/general_user_progress.sql'),
         detailedUserProgress: sql('units/detailed_user_progress.sql'),
+        overview: sql('units/overview.sql'),
     },
     topics: {
         add: sql('topics/add.sql'),

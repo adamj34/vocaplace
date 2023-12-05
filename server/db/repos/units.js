@@ -17,6 +17,10 @@ class UnitsRepository {
     detailedUserProgress(values) {
         return this.db.many(queries.units.detailedUserProgress, values);
     }
+
+    overview() {
+        return this.db.many(queries.units.overview);
+    }
 }
 
 export default UnitsRepository;
