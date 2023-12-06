@@ -19,6 +19,10 @@ class QuestionsRepository {
         });
     }
 
+    getQuiz(values) {
+        return this.db.many(queries.questions.getQuiz, values);
+    }
+
     findAll() {
         return this.db.any('SELECT * FROM questions');
     } 

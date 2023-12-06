@@ -21,6 +21,7 @@ const queries = {
     },
     questions: {
         add: sql('questions/add.sql'),
+        getQuiz: sql('questions/get_quiz.sql'),
     },
     units: {
         add: sql('units/add.sql'),
