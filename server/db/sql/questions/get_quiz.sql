@@ -1,13 +1,30 @@
 SELECT
-    q.id AS question_id,
-    q.polish_question_body AS polish_question_body,
-    q.polish_possible_answers AS polish_possible_answers,
-    q.polish_correct_answers AS polish_correct_answers,
-    q.english_question_body AS english_question_body,
-    q.english_possible_answers AS english_possible_answers,
-    q.english_correct_answers AS english_correct_answers,
-    q.difficulty AS difficulty,
-    CASE WHEN aq.question_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_answered
+    json_agg(
+        json_build_object(
+            'question_id', q.id,
+            'polish_question_body', q.polish_question_body,
+            'polish_possible_answers', q.polish_possible_answers,
+            'polish_correct_answers', q.polish_correct_answers,
+            'english_question_body', q.english_question_body,
+            'english_possible_answers', q.english_possible_answers,
+            'english_correct_answers', q.english_correct_answers,
+            'difficulty', q.difficulty,
+            'is_answered', TRUE
+        )
+    ) FILTER (WHERE aq.question_id IS NOT NULL) AS answered_questions,
+    json_agg(
+        json_build_object(
+            'question_id', q.id,
+            'polish_question_body', q.polish_question_body,
+            'polish_possible_answers', q.polish_possible_answers,
+            'polish_correct_answers', q.polish_correct_answers,
+            'english_question_body', q.english_question_body,
+            'english_possible_answers', q.english_possible_answers,
+            'english_correct_answers', q.english_correct_answers,
+            'difficulty', q.difficulty,
+            'is_answered', FALSE
+        )
+    ) FILTER (WHERE aq.question_id IS NULL) AS unanswered_questions
 FROM 
     units u
 LEFT JOIN
@@ -15,8 +32,7 @@ LEFT JOIN
 LEFT JOIN
     questions q ON q.topic_id = t.id
 LEFT JOIN
-    answered_questions aq ON aq.question_id = q.id
+    answered_questions aq ON aq.question_id = q.id AND aq.user_id = ${user_id}
 WHERE
     u.id = ${unit_id}
-    AND aq.user_id = ${user_id}
     AND t.id = ${topic_id}

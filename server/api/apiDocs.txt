@@ -232,3 +232,59 @@ returns:
         }
     }
 }
+
+
+/questions/quiz/?{unitId}=1&{topicId}=1
+expects: keycloak token in header
+returns:
+{
+    "success": true,
+    "data": {
+        "answeredQuestions": [
+            {
+                "question_id": 1,
+                "polish_question_body": "What is the quadratic formula?",
+                "polish_possible_answers": [
+                    "A",
+                    "B",
+                    "C",
+                    "D"
+                ],
+                "polish_correct_answers": "{\"B\"}",
+                "english_question_body": "Which formula is used to find the roots of a quadratic equation?",
+                "english_possible_answers": [
+                    "A",
+                    "B",
+                    "C",
+                    "D"
+                ],
+                "english_correct_answers": "{\"B\"}",
+                "difficulty": 2,
+                "is_answered": true
+            }
+        ],
+        "unansweredQuestions": [
+            {
+                "question_id": 4,
+                "polish_question_body": "Solve the equation: 2x + 5 = 15",
+                "polish_possible_answers": [
+                    "5",
+                    "7",
+                    "8",
+                    "10"
+                ],
+                "polish_correct_answers": "{\"5\"}",
+                "english_question_body": "What is the solution to the equation 2x + 5 = 15?",
+                "english_possible_answers": [
+                    "5",
+                    "7",
+                    "8",
+                    "10"
+                ],
+                "english_correct_answers": "{\"5\"}",
+                "difficulty": 1,
+                "is_answered": false
+            }
+        ]
+    }
+}

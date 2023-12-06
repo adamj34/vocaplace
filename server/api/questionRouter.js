@@ -12,9 +12,16 @@ router.get('/quiz', (req, res) => {
     const topicId = req.query.topicId;
     db.questions.getQuiz({user_id: userId, unit_id: unitId, topic_id: topicId})
     .then((data) => {
+        console.log(data);
+        data = data[0];
+        // validate when either answered_questions or unanswered_questions is null
+        const dataFiltered = {
+            answeredQuestions: (data.answered_questions || []).slice(0, 5),
+            unansweredQuestions: (data.unanswered_questions || []).slice(0, 5)
+        };
         res.status(200).json({
             success: true,
-            data
+            data: dataFiltered
         });
     })
     .catch((err) => {
