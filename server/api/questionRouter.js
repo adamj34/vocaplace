@@ -25,3 +25,6 @@ router.get('/quiz', (req, res) => {
         });
     });
 });
+
+
+export default router;
