@@ -9,10 +9,10 @@ export function Ranking() {
     document.title = `VocaPlace | Revisions`
 
     return (
-        <div id="Revisions">
+        <div id="Ranking">
             <div id='header'>
-                <h1>Revisions</h1>
-                <p>go again</p>
+                <h1>Ranking</h1>
+                <p>whos the best</p>
             </div>
             
         </div>

@@ -1,5 +1,6 @@
 # Projekt: Aplikacja webowa do nauki języka angielskiego
 ### Autorzy: Adam Jemielita, Krystian Betka, Olga Worobjew
+#### Zespół nr 4
 
 ---------------------------------------------------------------------------------
 
@@ -13,7 +14,9 @@
 
 #### Funkcjonalności:
 * Rejestracja i logowanie w serwisie
+  * Logowanie za pomocą zewnętrznych portali społecznościowych (GitHub, Google)
 * Rozwiązywanie quizów o różnych typach pytań i poziomie trudności
+  * Informowanie na bieżąco o stanie nauki
 * Zbieranie punktów za rozwiązywanie zadań i *streak*
 * Możliwość powtarzania błędnych pytań lub określonych słówek
 * Dodawanie użytkowników do znajomych
@@ -23,3 +26,5 @@
 * Panel administratora
   * Tworzenie działów (unit), tematów (topic) i pytań (question)
   * Zarządzanie grupami i użytkownikami
+* Powiadomienia o zaproszeniach do znajomych i grup
+* Wyszukiwanie użytkowników i grup
