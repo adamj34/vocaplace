@@ -12,7 +12,7 @@ router.get('/', keycloak.protect(), (req, res) => {
     // const userId = req.kauth.grant.access_token.content.sub
     const userId = req.kauth.grant.access_token.content.sub
     const username = req.kauth.grant.access_token.content.preferred_username
-    console.log('REQUESTED USERDATA: ',userId, username)
+    console.log('REQUESTED USERDATA: ', userId, username)
 
     db.users.find({id: userId})
     .then((data) => {

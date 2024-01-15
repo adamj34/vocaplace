@@ -1,6 +1,4 @@
 import axios from 'axios'
-import keycloak from "./Keycloak"
-
 const Server = axios.create({
     baseURL: `http://${window.location.hostname}:8000`,
     withCredentials: true,
@@ -9,8 +7,6 @@ const Server = axios.create({
         'Content-Type': 'application/json',
     }
 })
-
-
 
 export default {
 
