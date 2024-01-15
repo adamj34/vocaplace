@@ -26,25 +26,26 @@ function App() {
   const [UserData, SetUserData] = useState({});
   const { keycloak, initialized } = useKeycloak();
 
-  // useEffect(() => {
-  //   if (keycloak.authenticated) {
-  //     keycloak.loadUserProfile().then(async (data) => {
-  //      SetUserData({userid:data.id, username:data.username})
-  //       const d = await DataService.GetUserData()
-  //       console.log(d)
-  //     })}
-  //   } ,[initialized])
-
   useEffect(() => {
     if (keycloak.authenticated) {
-      keycloak.loadUserProfile().then((data) => {
-        fetch(`http://localhost:8000/user`,
-          { method: 'GET', headers: { Authorization: `Bearer ${keycloak.token}` } })
-          .then(response => response.json())
-          .then(data => { console.log(data) })
-      }).catch((err) => console.log(err))
-    }
-  }, [initialized])
+      DataService.SetToken(keycloak.token)
+      console.log(keycloak.token)
+      keycloak.loadUserProfile().then(async (data) => {
+        const d = await DataService.GetUserData()
+        console.log(d)
+      })}
+    } ,[initialized])
+
+  // useEffect(() => {
+  //   if (keycloak.authenticated) {
+  //     keycloak.loadUserProfile().then((data) => {
+  //       fetch(`http://localhost:8000/user`,
+  //         { method: 'GET', headers: { Authorization: `Bearer ${keycloak.token}` } })
+  //         .then(response => response.json())
+  //         .then(data => { console.log(data) })
+  //     }).catch((err) => console.log(err))
+  //   }
+  // }, [initialized])
 
   return (
     <div id="App">

@@ -7,16 +7,23 @@ const Server = axios.create({
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${keycloak.token}`
     }
 })
 
+
+
 export default {
+
+    SetToken(token) {
+        Server.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        console.log('token set')
+    },
+
     async GetUserData() {
         console.log("Fetching userdata")
         const res = await Server.get(`/user`)
-        console.log(res)
         console.log("Userdata fetched")
+        return res.data
     },
 
 }

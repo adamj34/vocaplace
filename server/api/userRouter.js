@@ -6,10 +6,13 @@ import keycloak from '../Keycloak.js';
 const router = express.Router();
 
 // router.get('/', getUserId, (req, res), getUserId in all routes
-const userId = '223e4567-e89b-12d3-a456-426614174005';
+// const userId = '223e4567-e89b-12d3-a456-426614174005';
 
 router.get('/', keycloak.protect(), (req, res) => {
-    // const userId = req.userId;
+    // const userId = req.kauth.grant.access_token.content.sub
+    const userId = req.kauth.grant.access_token.content.sub
+    const username = req.kauth.grant.access_token.content.preferred_username
+    console.log('REQUESTED USERDATA: ',userId, username)
 
     db.users.find({id: userId})
     .then((data) => {
@@ -22,7 +25,7 @@ router.get('/', keycloak.protect(), (req, res) => {
         console.error(err);
         // If no data is returned, add the user to the database
         if (err.code === pgp.errors.queryResultErrorCode.noData) {
-            db.users.add({id: userId})
+            db.users.add({id: userId, nickname:username}) // niech dodaje to bazy danych nickname podczas tworzenia (mozna zmienic nazwe tej zmiennej na 'username'??)
             .then((data) => {
                 res.setHeader('Location', '/user/' + userId);
                 res.status(201).json({
