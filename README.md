@@ -17,6 +17,7 @@
 #### Funkcjonalności:
 * Rejestracja i logowanie w serwisie
   * Logowanie za pomocą zewnętrznych portali społecznościowych (GitHub, Google)
+  * Role użytkowników
 * Rozwiązywanie quizów o różnych typach pytań i poziomie trudności
   * Informowanie na bieżąco o stanie nauki
 * Zbieranie punktów za rozwiązywanie zadań i *streak*

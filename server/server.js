@@ -11,6 +11,8 @@ import userRelationsRouter from "./api/userRelationsRouter.js";
 import questionRouter from "./api/questionRouter.js";   
 
 const app = express(); 
+import keycloak from './Keycloak.js';
+app.use(keycloak.middleware()); 
 
 await testConnection(db); 
 
@@ -31,10 +33,7 @@ app.use(morgan(":method :url :status :response-time ms"));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-}));
+app.use(cors({ credentials: true, origin: ['http://localhost:3000', 'http://localhost:8080'] }))
 
 // app.get('/test', keycloak.protect(), function (req, res) {
 //     res.render(
