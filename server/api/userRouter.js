@@ -25,7 +25,7 @@ router.get('/', keycloak.protect(), (req, res) => {
         console.error(err);
         // If no data is returned, add the user to the database
         if (err.code === pgp.errors.queryResultErrorCode.noData) {
-            db.users.add({id: userId, nickname:username}) // niech dodaje to bazy danych nickname podczas tworzenia (mozna zmienic nazwe tej zmiennej na 'username'??)
+            db.users.add({id: userId, nickname: username}) // niech dodaje to bazy danych nickname podczas tworzenia (mozna zmienic nazwe tej zmiennej na 'username'??)
             .then((data) => {
                 res.setHeader('Location', '/user/' + userId);
                 res.status(201).json({
