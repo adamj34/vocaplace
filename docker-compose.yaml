@@ -10,6 +10,7 @@ services:
       - ./client:/opt/app
     depends_on:
       - server
+
   server:
     build: ./server
     command: npm run start
@@ -23,14 +24,15 @@ services:
       - DB_SERVICE_NAME=db
       - PORT=8000
     volumes:
-      - ./server:/opt/app
+      - ./server/:/opt/app
     depends_on:
       - db
     
   db:
-    image: postgres:16.0-alpine3.18
+    image: postgres:16-alpine3.18
     volumes:
-      - ./db/data:/var/lib/postgresql/data/
+      - zesp-postgres:/var/lib/postgresql/data/
+      - ./server/db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432:5432'
     environment:
@@ -50,3 +52,6 @@ services:
       - ./keycloak/data:/opt/keycloak/data/h2
       - ./keycloak/themes:/opt/keycloak/themes/
     command: start-dev
+
+volumes:
+  zesp-postgres:
