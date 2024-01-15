@@ -6,8 +6,8 @@ class UsersRepository {
         this.pgp = pgp;
     }
 
-    add(value) {
-        return this.db.one(queries.users.add, value);
+    add(values) {
+        return this.db.one(queries.users.add, values);
     }
 
     delete(value) {
