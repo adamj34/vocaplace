@@ -26,15 +26,15 @@ function QuestionManager(p) {
                <div id='right'>
                     <div id='field'>
                         <label>Unit:</label>
-                        <button type='button' className='selectbutton'>Choose</button>
+                        <button type='button' className='selectbutton'>None</button>
                     </div>
                     <div id='field'>
                         <label>Topic:</label>
-                        <button type='button' className='selectbutton'>Choose</button>
+                        <button type='button' className='selectbutton'>None</button>
                     </div>
                     <div id='field'>
                         <label>Difficulty:</label>
-                        <button type='button' className='selectbutton'>Choose</button>
+                        <button type='button' className='selectbutton'>None</button>
                     </div>
                 </div>                        
             </form>
@@ -95,7 +95,7 @@ function TopicCreator(p) {
             <   div id='field'>
                     <label>Unit:</label>
                     <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowUnits(!ShowUnits)}>{(TopicData.unitname) || "Choose"}</button>
+                        <button className='selectbutton' type='button' onClick={()=>SetShowUnits(!ShowUnits)}>{(TopicData.unitname) || "None"}</button>
                         {ShowUnits && <div id='select' onMouseLeave={()=>SetShowUnits(false)}>
                             <div id='select-scroll'>
                                 {Object.keys(p.units).map((u) => {return (<>
@@ -133,7 +133,7 @@ function QuestionCreator(p) {
                 <div id='field'>
                     <label>Unit and Topic:</label>
                     <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowTopics(!ShowTopics)}>{QuestionData.unitname || "Choose"}{QuestionData.topicname && QuestionData.unitname && " | "}{(QuestionData.topicname) || ""}</button>
+                        <button className='selectbutton' type='button' onClick={()=>SetShowTopics(!ShowTopics)}>{QuestionData.unitname || "None"}{QuestionData.topicname && QuestionData.unitname && " | "}{(QuestionData.topicname) || ""}</button>
                         {ShowTopics && <div id='select' onMouseLeave={()=>SetShowTopics(false)}>
                             <div id='select-scroll'>
                                 {Object.keys(p.units).map((u) => {return (<>
@@ -149,10 +149,10 @@ function QuestionCreator(p) {
                 <div id='field'>
                     <label>Type:</label>
                     <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowType(!ShowType)}>{QuestionData.type || "Choose"}</button>
+                        <button className='selectbutton' type='button' onClick={()=>SetShowType(!ShowType)}>{QuestionData.type || "None"}</button>
                         {ShowType && <div id='select' onMouseLeave={()=>SetShowType(false)}>
                             <div id='select-scroll'>
-                                {['Pick', 'Order', 'Connect'].map((t) => {return (<>
+                                {['Pick', 'Order', 'Connect', 'Fill'].map((t) => {return (<>
                                     <div className={t==QuestionData.type && 'chosen'} onClick={()=>{SetShowType(false); SetQuestionData({...QuestionData, type:t,})}}>{t}</div>
                                 </>)})}
                             </div>
@@ -162,33 +162,44 @@ function QuestionCreator(p) {
                 
                 <div id='field'>
                     <label>Question:</label>
-                    <input className='input' placeholder={(QuestionData.type == 'Connect' && "Connect the words with their meaning in English.") || (QuestionData.type == 'Order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || "Which of these are vehicles?"} required onChange={(e)=>{SetQuestionData({...QuestionData, englishquestion:e.target.value})}}/>
+                    <input className='input' placeholder={(QuestionData.type == 'Connect' && "Connect the words with their meaning in English.") || (QuestionData.type == 'Order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (QuestionData.type == 'Pick' && "Which of these are vehicles?") || (QuestionData.type == 'Fill' && 'The dog quickly _ the thief who tried to enter the house.')} required onChange={(e)=>{SetQuestionData({...QuestionData, englishquestion:e.target.value})}}/>
                 </div>
                 {(QuestionData.type == 'Pick') && <div id='field'>
                     <label>Correct Answers:</label>
                     <input className='input' placeholder="Motorcycle, Bus, Car" onChange={(e)=>{SetQuestionData({...QuestionData, englishcorrectanswers:e.target.value})}}/>
                 </div>}
                 {(QuestionData.type == 'Pick') && <div id='field'>
-                    <label>Incorrect Answers:</label>
-                    <input className='input' placeholder="Hospital, Crocodile, Juice, Wardrobe" onChange={(e)=>{SetQuestionData({...QuestionData, englishincorrectanswers:e.target.value})}}/>
+                    <label>Misleading Answers:</label>
+                    <input className='input' placeholder="Hospital, Crocodile, Juice, Wardrobe" onChange={(e)=>{SetQuestionData({...QuestionData, englishmisleadinganswers:e.target.value})}}/>
                 </div>}
                 {(QuestionData.type == 'Order') && <div id='field'>
                     <label>Correct Answers:</label>
-                    <TagsInput
-                        className='wordinput'
-                        value={QuestionData.ordervalues || []}
-                        addKeys={[9,32,188,13]} // tab,space,comma,enter
-                        maxLength={20}
-                        onlyUnique={true}
-                        maxTags={10}
-                        onChange={(t) => SetQuestionData({...QuestionData, ordervalues:t})}
-                    />
-                    {/* <input className='input' placeholder="Oni mają psa," onChange={(e)=>{SetQuestionData({...QuestionData, englishcorrectanswers:e.target.value})}}/> */}
+                    <input className='input' placeholder="She has a dog." onChange={(e)=>{SetQuestionData({...QuestionData, englishcorrectanswers:e.target.value})}}/>
+                </div>}
+                {(QuestionData.type == 'Order') && <div id='field'>
+                    <label>Misleading Answers:</label>
+                    <input className='input' placeholder="He likes have wants an cat. bird." onChange={(e) => { SetQuestionData({ ...QuestionData, englishmisleadinganswers: e.target.value }) }} />
+                </div>}
+                {(QuestionData.type == 'Fill') && <div id='field'>
+                    <label>Correct Answers:</label>
+                    <input className='input' placeholder="chased off" onChange={(e) => { SetQuestionData({ ...QuestionData, englishcorrectanswers: e.target.value }) }} />
+                </div>}
+                {(QuestionData.type == 'Fill') && <div id='field'>
+                    <label>Hint:</label>
+                    <input className='input' placeholder="(idiomatic) to make someone or something go away" onChange={(e) => { SetQuestionData({ ...QuestionData, hint: e.target.value }) }} />
+                </div>}
+                {(QuestionData.type == 'Connect') && <div id='field'>
+                    <label>Correct Answers:</label>
+                    <input className='input' placeholder="Cat+Kot; Dog+Pies; Bird+Ptak; Horse+Koń" onChange={(e) => { SetQuestionData({ ...QuestionData, englishcorrectanswers: e.target.value }) }} />
+                </div>}
+                {(QuestionData.type == 'Connect') && <div id='field'>
+                    <label>Misleading Answers:</label>
+                    <input className='input' placeholder="Fish+Papuga" onChange={(e) => { SetQuestionData({ ...QuestionData, englishmisleadinganswers: e.target.value }) }} />
                 </div>}
                 <div id='field'>
                     <label>Difficulty:</label>
                     <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowDifficulty(!ShowDifficulty)}>{(QuestionData.difficulty == 1 && 'Easy') || (QuestionData.difficulty == 2 && 'Medium') || (QuestionData.difficulty == 3 && 'Hard') || "Choose"}</button>
+                        <button className='selectbutton' type='button' onClick={()=>SetShowDifficulty(!ShowDifficulty)}>{(QuestionData.difficulty == 1 && 'Easy') || (QuestionData.difficulty == 2 && 'Medium') || (QuestionData.difficulty == 3 && 'Hard') || "None"}</button>
                         {ShowDifficulty && <div id='select' onMouseLeave={()=>SetShowDifficulty(false)}>
                             <div id='select-scroll'>
                                 {[1,2,3].map((d) => {return (<>
@@ -285,7 +296,7 @@ export function Admin() {
     return (
         <div id='Admin'>
              <div id='header'>
-                <h1>Admin Page</h1>
+                <h1>Admin Panel</h1>
                 <p>Manage questions, users and groups.</p>
             </div>
 
@@ -293,7 +304,7 @@ export function Admin() {
                 <div id='subheader'>
                     <h3>Add new:</h3>
                     <div id='selectcreated'>
-                        <button className='selectbutton' onClick={()=>SetShowCreate(!ShowCreate)}>{Created.type || "Choose"}</button>
+                        <button className='selectbutton' onClick={()=>SetShowCreate(!ShowCreate)}>{Created.type || "None"}</button>
                         {ShowCreate && <div id='select' onMouseLeave={()=>SetShowCreate(false)}>
                             <div id='select-scroll'>
                                 {['unit', 'topic', 'question'].map((v) => {return (
@@ -313,7 +324,7 @@ export function Admin() {
                 <div id='subheader'>
                     <h3>Manage{Managed.type && " "+Managed.type}:</h3>
                     <div id='selectquestion'>
-                        <button className='selectbutton' onClick={()=>SetShowManageQuestions(!ShowManageQuestions)}>{(Managed.data && Managed.data.name) || Managed.data || "Choose"}</button>
+                        <button className='selectbutton' onClick={()=>SetShowManageQuestions(!ShowManageQuestions)}>{(Managed.data && Managed.data.name) || Managed.data || "None"}</button>
                         {ShowManageQuestions &&
                         <div id='select'>
                             <div id='select-scroll'>

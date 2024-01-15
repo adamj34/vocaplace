@@ -17,6 +17,7 @@ import { Admin } from './components/Admin/Admin'
 import { Revisions } from './components/Revisions/Revisions';
 import { Friends } from './components/Friends/Friends';
 import { Groups } from './components/Groups/Groups';
+import { Ranking } from './components/Ranking/Ranking';
 
 export const AppContext = createContext();
 
@@ -47,6 +48,7 @@ function App() {
           <Route path='revisions' element={<Revisions/>}/>
           <Route path='friends' element={<Friends/>}/>
           <Route path='groups' element={<Groups/>}/>
+          <Route path='ranking' element={<Ranking />} />
 
 
           <Route path='*' element={<NotFound/>}/>
