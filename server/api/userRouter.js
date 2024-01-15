@@ -1,16 +1,16 @@
 import express from 'express';
 import { db, pgp } from "../db/connection/db.js";
 import getUserId from './getUserIdMiddleware.js';
+import keycloak from '../Keycloak.js';
 
 const router = express.Router();
 
 // router.get('/', getUserId, (req, res), getUserId in all routes
 const userId = '223e4567-e89b-12d3-a456-426614174005';
 
-router.get('/', (req, res) => {
+router.get('/', keycloak.protect(), (req, res) => {
     // const userId = req.userId;
-    console.log(req.kauth.grant.access_token.content.sub)
-    
+
     db.users.find({id: userId})
     .then((data) => {
         res.status(200).json({

@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import session from 'express-session';
-import Keycloak from 'keycloak-connect';
 import morgan from "morgan";
 
 import { db } from "./db/connection/db.js";
@@ -15,8 +14,9 @@ const app = express();
 
 await testConnection(db); 
 
-const memoryStore = new session.MemoryStore(); 
-const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Specify the path to your keycloak.json file
+// const memoryStore = new session.MemoryStore(); 
+// const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Specify the path to your keycloak.json file
+// app.use(keycloak.middleware());  
  
 // Session
 // app.use(session({
@@ -27,7 +27,7 @@ const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Spe
 // }));  
  
 app.use(morgan(":method :url :status :response-time ms"));
-// app.use(keycloak.middleware());  
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
