@@ -14,7 +14,7 @@ export function Friends() {
                 <h1>Friends</h1>
                 <p>idk i have none.</p>
             </div>
-            
+            <p>Coming Soon</p>
         </div>
         
     )

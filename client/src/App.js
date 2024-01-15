@@ -18,6 +18,7 @@ import { Revisions } from './components/Revisions/Revisions';
 import { Friends } from './components/Friends/Friends';
 import { Groups } from './components/Groups/Groups';
 import { Ranking } from './components/Ranking/Ranking';
+import DataService from "./DataService.js"
 
 export const AppContext = createContext();
 
@@ -27,8 +28,10 @@ function App() {
 
   useEffect(() => {
     if (keycloak.authenticated) {
-      keycloak.loadUserProfile().then((data) => {
+      keycloak.loadUserProfile().then(async (data) => {
        SetUserData({userid:data.id, username:data.username})
+        const d = await DataService.GetUserData()
+        console.log(d)
       })}
     } ,[initialized])
 

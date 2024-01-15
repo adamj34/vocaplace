@@ -9,6 +9,7 @@ const userId = '223e4567-e89b-12d3-a456-426614174005';
 
 router.get('/', (req, res) => {
     // const userId = req.userId;
+    console.log(req.kauth.grant.access_token.content.sub)
     
     db.users.find({id: userId})
     .then((data) => {

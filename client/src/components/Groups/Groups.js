@@ -14,7 +14,7 @@ export function Groups() {
                 <h1>Groups</h1>
                 <p>groups</p>
             </div>
-            
+            <p>Coming Soon</p>
         </div>
         
     )

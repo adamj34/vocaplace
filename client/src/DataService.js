@@ -1,0 +1,20 @@
+import axios from 'axios'
+
+const Server = axios.create({
+    baseURL: `http://${window.location.hostname}:8000`,
+    withCredentials: true,
+    headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+    }
+})
+
+export default {
+    async GetUserData() {
+        console.log("Fetching userdata")
+        const res = await Server.get(`/user`)
+        console.log(res)
+        console.log("Userdata fetched")
+    },
+
+}
