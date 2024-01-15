@@ -9,6 +9,8 @@
 #### Wykorzystane technologie:
 * Frontend - React.js + SCSS
 * Backend - Node.js
+  * Express
+  * Socket.IO
 * Baza danych - PostgreSQL 16
 * Autoryzacja - Keycloak 18.0.2
 
