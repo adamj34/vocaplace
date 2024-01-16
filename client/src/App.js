@@ -29,7 +29,6 @@ function App() {
   useEffect(() => {
     if (keycloak.authenticated) {
       DataService.SetToken(keycloak.token)
-      console.log(keycloak.token)
       keycloak.loadUserProfile().then(async (data) => {
         const d = await DataService.GetUserData()
         console.log(d)
