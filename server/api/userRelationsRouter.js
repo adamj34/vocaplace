@@ -1,6 +1,5 @@
 import express from 'express';
 import { db, pgp } from "../db/connection/db.js";
-import getUserId from './getUserDataMiddleware.js';
 
 const router = express.Router();
 
@@ -11,10 +10,10 @@ const relationship_state = {
 };
 Object.freeze(relationship_state);
 
-const userId ='223e4567-e89b-12d3-a456-426614174002';
+// const userId ='223e4567-e89b-12d3-a456-426614174002';
 
 router.post('/request/friend/:id', (req, res) => {
-    // const userId = req.userId;
+    const userId = req.userId;
     const friendId = req.params.id;
     // adhere to the constraint that user1_id < user2_id
     if (userId === friendId) {
@@ -55,7 +54,7 @@ router.post('/request/friend/:id', (req, res) => {
 });
 
 router.patch('/accept/friend/:id', (req, res) => {
-    // const userId = req.userId;
+    const userId = req.userId;
     const friendId = req.params.id;
     let users;
     if (userId < friendId) {
@@ -81,7 +80,7 @@ router.patch('/accept/friend/:id', (req, res) => {
 });
 
 router.get('/check/user/:id', (req, res) => {
-    // const userId = req.userId;
+    const userId = req.userId;
     const friendId = req.params.id;
     if (userId === friendId) {
         res.status(400).json({
@@ -122,7 +121,7 @@ router.get('/check/user/:id', (req, res) => {
 });
 
 router.delete('/friend/:id', (req, res) => {
-    // const userId = req.userId;
+    const userId = req.userId;
     const friendId = req.params.id;
     let users;
     if (userId < friendId) {

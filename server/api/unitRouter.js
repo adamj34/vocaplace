@@ -1,14 +1,12 @@
 import express from 'express';
 import { db, pgp } from "../db/connection/db.js";
-import getUserId from './getUserDataMiddleware.js';
 
 const router = express.Router();
 
-// router.get('/getData', getUserId, (req, res), getUserId in all routes
-const userId = '123e4567-e89b-12d3-a456-426614174001';
+// const userId = '123e4567-e89b-12d3-a456-426614174001';
 
 router.get('/progress', (req, res) => {
-    // const userId = req.userId;
+    const userId = req.userId;
 
     db.units.generalUserProgress({id: userId})
     .then((data) => {
@@ -35,7 +33,7 @@ router.get('/progress', (req, res) => {
 });
 
 router.get('/progress/:id', (req, res) => {
-    // const userId = req.userId;
+    const userId = req.userId;
     const id = req.params.id;
 
     db.units.detailedUserProgress({user_id: userId, unit_id: id})

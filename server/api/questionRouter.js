@@ -1,13 +1,12 @@
 import express from 'express';
 import { db, pgp } from "../db/connection/db.js";
-import getUserId from './getUserDataMiddleware.js';
 
 const router = express.Router();
 
-const userId = '123e4567-e89b-12d3-a456-426614174001';
+// const userId = '123e4567-e89b-12d3-a456-426614174001';
 
 router.get('/quiz', (req, res) => {
-    // const userId = req.userId;
+    const userId = req.userId;
     const unitId = req.query.unitId;
     const topicId = req.query.topicId;
     db.questions.getQuiz({user_id: userId, unit_id: unitId, topic_id: topicId})
