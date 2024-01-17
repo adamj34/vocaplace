@@ -94,3 +94,56 @@ CREATE TABLE IF NOT EXISTS group_membership (
 TEST INSERTS
 */
 
+INSERT INTO units (unit) VALUES ('Introduction to English');
+INSERT INTO topics (unit_id, topic) VALUES (1, 'Greetings');
+INSERT INTO topics (unit_id, topic) VALUES (1, 'Numbers and Counting');
+INSERT INTO topics (unit_id, topic) VALUES (1, 'Days of the Week');
+
+INSERT INTO units (unit) VALUES ('Vocabulary Building');
+INSERT INTO topics (unit_id, topic) VALUES (2, 'Travel');
+INSERT INTO topics (unit_id, topic) VALUES (2, 'Food');
+INSERT INTO topics (unit_id, topic) VALUES (2, 'Animals');
+
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'How could you answer this question: How are you?', '{"I am fine.", "I have been better.", "I am great."}', '{"I am bad.", "I am angry."}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'How do you greet someone in the morning', '{"Good morning."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'How do you greet someone in the evening', '{"Good evening."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'How do you greet someone in the afternoon', '{"Good afternoon."}', '{"Good night.", "Good morning.", "Good day."}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'How do you greet someone in the night', '{"Good night."}', '{"Good morning.", "Good afternoon.", "Good day."}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'Put the words in the correct order to translate: "Miło mi cię poznać."', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'Put the words in the correct order to translate: "Miło cię widzieć."', '{"Nice to see you"}', '{"Nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'How are you ...?', '{"doing"}', '{"doing", "going", "feeling", "being"}', 'fill', 1);
+
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (2, 'How do you say 1 in English?', '{"one"}', '{"two", "three", "four", "five"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (2, 'How do you say 2 in English?', '{"two"}', '{"one", "three", "four", "five"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (2, 'How do you say 3 in English?', '{"three"}', '{"two", "one", "four", "five"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (2, 'How do you say 4 in English?', '{"four"}', '{"two", "three", "one", "five"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (2, 'How do you say 45 in English?', '{"forty five"}', '{"forty", "hive", "four", "five"}', 'order', 2);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (2, 'How do you say 100 in English?', '{"one hundred"}', '{"one", "two", "hunded", "four"}', 'order', 2);
+
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (3, 'What is the first day of the week?', '{"Monday"}', '{"Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (3, 'What is the second day of the week?', '{"Tuesday"}', '{"Monday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (3, 'What is the last day of the week?', '{"Friday"}', '{"Tuesday", "Monday", "Thursday", "Friday", "Saturday", "Sunday"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (3, 'Put the words in the correct order to translate: "Jaki jest dzisiaj dzień?"', '{"What day is it today?"}', '{"What", "day", "month", "is", "today?", "yesterday", "it"}', 'order', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (3, 'Put the words in the correct order to translate: "Jaki jest jutro dzień?"', '{"What day is it tomorrow?"}', '{"What", "tomorrow?" "day", "month", "is", "today?", "yesterday", "it"}', 'order', 2);
+
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (4, 'What is your favorite vacation ...?', '{"destination"}', '{"destination", "world", "land", "cottage"}', 'fill', 1);
