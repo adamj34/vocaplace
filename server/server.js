@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     credentials: true,
     origin: ['http://localhost:3000', 'http://localhost:8080']
-})) 
+}))  
 
 // app.get('/test', keycloak.protect(), function (req, res) {
 //     res.render(
@@ -49,6 +49,7 @@ app.use(cors({
 
 app.use(keycloak.middleware()); 
 app.use(keycloak.protect(), getUserData);
+// app.use(getUserData);
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
 app.use('/relationships', userRelationsRouter);

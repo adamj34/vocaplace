@@ -1,6 +1,5 @@
-INSERT INTO unit(topic_id, unit)
+INSERT INTO unit(unit)
 VALUES (
-    ${topicId},
     ${unit},
 )
 RETURNING *;

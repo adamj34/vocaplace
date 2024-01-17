@@ -2,12 +2,10 @@ SELECT
     json_agg(
         json_build_object(
             'question_id', q.id,
-            'polish_question_body', q.polish_question_body,
-            'polish_possible_answers', q.polish_possible_answers,
-            'polish_correct_answers', q.polish_correct_answers,
-            'english_question_body', q.english_question_body,
-            'english_possible_answers', q.english_possible_answers,
-            'english_correct_answers', q.english_correct_answers,
+            'content', q.content,
+            'correct_answers', q.correct_answers,
+            'misleading_answers', q.misleading_answers,
+            'question_type', q.question_type,
             'difficulty', q.difficulty,
             'is_answered', TRUE
         )
@@ -15,12 +13,10 @@ SELECT
     json_agg(
         json_build_object(
             'question_id', q.id,
-            'polish_question_body', q.polish_question_body,
-            'polish_possible_answers', q.polish_possible_answers,
-            'polish_correct_answers', q.polish_correct_answers,
-            'english_question_body', q.english_question_body,
-            'english_possible_answers', q.english_possible_answers,
-            'english_correct_answers', q.english_correct_answers,
+            'content', q.content,
+            'correct_answers', q.correct_answers,
+            'misleading_answers', q.misleading_answers,
+            'question_type', q.question_type,
             'difficulty', q.difficulty,
             'is_answered', FALSE
         )
@@ -34,5 +30,5 @@ LEFT JOIN
 LEFT JOIN
     answered_questions aq ON aq.question_id = q.id AND aq.user_id = ${user_id}
 WHERE
-    u.id = ${unit_id}
-    AND t.id = ${topic_id}
+    u.id = ${unit_id} AND
+    t.id = ${topic_id}

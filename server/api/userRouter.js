@@ -17,8 +17,9 @@ router.get('/', (req, res) => {
         console.error(err);
         // If no data is returned, add the user to the database
         if (err.code === pgp.errors.queryResultErrorCode.noData) {
-            db.users.add({id: userId, username: req.username}) // niech dodaje to bazy danych username podczas tworzenia (mozna zmienic nazwe tej zmiennej na 'username'??)
-            .then((data) => {                                   // zmienione na username
+            db.users.add({id: userId, username: req.username}) 
+            .then((data) => {
+                data.picture = null
                 res.setHeader('Location', '/user/' + userId);
                 res.status(201).json({
                     success: true,

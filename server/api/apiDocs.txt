@@ -2,33 +2,23 @@ API
 
 /user
 GET:
-expects: keycloak token in header
 returns: 
 {
     "success": true,
     "data": {
-        "id": "223e4567-e89b-12d3-a456-426614174005",
-        "points": 0,
-        "ongoing_streak": 0,
-        "username": null,
         "bio": null,
+        "created_at": "2023-12-05T13:25:24.422Z",
+        "id": "223e4567-e89b-12d3-a456-426614174005",
+        "last active": "2023-12-05T13:25:24.422Z",
+        "picture": null,
         "private_profile": false,
-        "last_active": "2023-12-03T20:35:44.437Z",
-        "created_at": "2023-12-03T20:35:44.437Z",
-        "picture": {
-            "type": "Buffer",
-            "data": [
-                222,
-                173,
-                190,
-                239
-            ]
-        }
+        "username": "aaaaa",
+        "points": 0,
+        "ongoing_streak": 0
     }
 }
 
-PATCH:
-expects: keycloak token in header, body {username, bio, private_profile, picture}
+PATCH:, body {username, bio, private_profile, picture}
 e.g.
 {
     "bio": "new bio :/",
@@ -46,7 +36,6 @@ returns:
 
 /user/profilePicture
 DELETE:
-expects: keycloak token in header
 returns:
 {
     "success": true,
@@ -58,7 +47,6 @@ returns:
 
 /relationships/request/friend/:friendID
 POST:
-expects: keycloak token in header
 returns:
 {
     "success": true,
@@ -69,8 +57,7 @@ returns:
     }
 }
 
-/relationships/accept/friend/:id
-expects: keycloak token in header
+/relationships/accept/friend/:id  (id is the id of the friend)
 returns:
 {
     "success": true,
@@ -83,7 +70,6 @@ returns:
 
 /relationships/check/user/:userID
 GET:
-expects: keycloak token in header
 returns:
 {
     "success": true,
@@ -102,10 +88,14 @@ OR
         "relationship": null
     }
 }
+OR
+{
+    "success": false,
+    "err": "Cannot check relationship with yourself"
+}
 
 /relationships/friend/:friendId
 DELETE:
-expects: keycloak token in header
 returns:
 {
     "success": true,
@@ -118,63 +108,129 @@ returns:
 
 /units/progress
 GET:
-expects: keycloak token in header
 returns:
 {
     "success": true,
     "data": {
         "1": {
-            "unit": "Mathematics",
-            "completion_ratio": "0.33",
-            "created_at": "2023-12-05T13:25:24.422Z"
+            "unit": "Introduction to English",
+            "completion_ratio": "0.00",
+            "created_at": "2024-01-17T16:55:24.066Z"
         },
         "2": {
-            "unit": "Science",
-            "completion_ratio": "0.67",
-            "created_at": "2023-12-05T13:25:24.422Z"
-        },
-        "3": {
-            "unit": "History",
+            "unit": "Vocabulary Building",
             "completion_ratio": "0.00",
-            "created_at": "2023-12-05T13:25:24.422Z"
-        },
-        "4": {
-            "unit": "Literature",
-            "completion_ratio": "0.00",
-            "created_at": "2023-12-05T13:25:24.422Z"
+            "created_at": "2024-01-17T16:55:24.089Z"
         }
     }
 }
 
 /units/progress/:unitId
 GET:
-expects: keycloak token in header
 returns:
 {
     "success": true,
     "data": {
-        "3": {  // this is the topic id
-            "topic": "Physics",
-            "topic_created_at": "2023-12-05T13:25:24.425Z",
+        "1": {  // topic id
+            "topic": "Greetings",
             "questions": [
+                {
+                    "question_id": 1,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
                 {
                     "question_id": 2,
                     "difficulty": 1,
                     "is_answered": false
                 },
                 {
+                    "question_id": 3,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 4,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
                     "question_id": 5,
-                    "difficulty": 2,
-                    "is_answered": true
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 6,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 7,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 8,
+                    "difficulty": 1,
+                    "is_answered": false
                 }
             ]
         },
-        "4": {
-            "topic": "Chemistry",
-            "topic_created_at": "2023-12-05T13:25:24.425Z",
+        "2": {
+            "topic": "Numbers and Counting",
             "questions": [
                 {
                     "question_id": 9,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 10,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 11,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 12,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 13,
+                    "difficulty": 2,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 14,
+                    "difficulty": 2,
+                    "is_answered": false
+                }
+            ]
+        },
+        "3": {
+            "topic": "Days of the Week",
+            "questions": [
+                {
+                    "question_id": 15,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 16,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 17,
+                    "difficulty": 1,
+                    "is_answered": false
+                },
+                {
+                    "question_id": 18,
                     "difficulty": 1,
                     "is_answered": false
                 }
@@ -185,48 +241,68 @@ returns:
 
 /units/overview
 GET:
-expects: keycloak token in header
 returns: 
 {
     "success": true,
     "data": {
         "1": {
-            "unit": "Mathematics",
+            "unit": "Introduction to English",
             "topics": [
                 {
                     "topic_id": 1,
-                    "topic": "Algebra",
+                    "topic": "Greetings",
                     "question_ids": [
+                        2,
+                        3,
+                        1,
                         4,
-                        1
+                        5,
+                        6,
+                        7,
+                        8
                     ]
                 },
                 {
                     "topic_id": 2,
-                    "topic": "Geometry",
+                    "topic": "Numbers and Counting",
                     "question_ids": [
-                        8
+                        11,
+                        9,
+                        10,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                {
+                    "topic_id": 3,
+                    "topic": "Days of the Week",
+                    "question_ids": [
+                        18,
+                        16,
+                        17,
+                        15
                     ]
                 }
             ]
         },
         "2": {
-            "unit": "Science",
+            "unit": "Vocabulary Building",
             "topics": [
                 {
-                    "topic_id": 3,
-                    "topic": "Physics",
-                    "question_ids": [
-                        2,
-                        5
-                    ]
+                    "topic_id": 4,
+                    "topic": "Travel",
+                    "question_ids": null
                 },
                 {
-                    "topic_id": 4,
-                    "topic": "Chemistry",
-                    "question_ids": [
-                        9
-                    ]
+                    "topic_id": 5,
+                    "topic": "Food",
+                    "question_ids": null
+                },
+                {
+                    "topic_id": 6,
+                    "topic": "Animals",
+                    "question_ids": null
                 }
             ]
         }
@@ -235,53 +311,85 @@ returns:
 
 
 /questions/quiz/?{unitId}=1&{topicId}=1
-expects: keycloak token in header
 returns:
 {
     "success": true,
     "data": {
-        "answeredQuestions": [
-            {
-                "question_id": 1,
-                "polish_question_body": "What is the quadratic formula?",
-                "polish_possible_answers": [
-                    "A",
-                    "B",
-                    "C",
-                    "D"
-                ],
-                "polish_correct_answers": "{\"B\"}",
-                "english_question_body": "Which formula is used to find the roots of a quadratic equation?",
-                "english_possible_answers": [
-                    "A",
-                    "B",
-                    "C",
-                    "D"
-                ],
-                "english_correct_answers": "{\"B\"}",
-                "difficulty": 2,
-                "is_answered": true
-            }
-        ],
+        "answeredQuestions": [],
         "unansweredQuestions": [
             {
+                "question_id": 1,
+                "content": "How could you answer this question: How are you?",
+                "correct_answers": [
+                    "I am fine.",
+                    "I have been better.",
+                    "I am great."
+                ],
+                "misleading_answers": [
+                    "I am bad.",
+                    "I am angry."
+                ],
+                "question_type": "pick",
+                "difficulty": 1,
+                "is_answered": false
+            },
+            {
+                "question_id": 2,
+                "content": "How do you greet someone in the morning",
+                "correct_answers": [
+                    "Good morning."
+                ],
+                "misleading_answers": [
+                    "Good night.",
+                    "Good afternoon.",
+                    "Good day."
+                ],
+                "question_type": "pick",
+                "difficulty": 1,
+                "is_answered": false
+            },
+            {
+                "question_id": 3,
+                "content": "How do you greet someone in the evening",
+                "correct_answers": [
+                    "Good evening."
+                ],
+                "misleading_answers": [
+                    "Good night.",
+                    "Good afternoon.",
+                    "Good day."
+                ],
+                "question_type": "pick",
+                "difficulty": 1,
+                "is_answered": false
+            },
+            {
                 "question_id": 4,
-                "polish_question_body": "Solve the equation: 2x + 5 = 15",
-                "polish_possible_answers": [
-                    "5",
-                    "7",
-                    "8",
-                    "10"
+                "content": "How do you greet someone in the afternoon",
+                "correct_answers": [
+                    "Good afternoon."
                 ],
-                "polish_correct_answers": "{\"5\"}",
-                "english_question_body": "What is the solution to the equation 2x + 5 = 15?",
-                "english_possible_answers": [
-                    "5",
-                    "7",
-                    "8",
-                    "10"
+                "misleading_answers": [
+                    "Good night.",
+                    "Good morning.",
+                    "Good day."
                 ],
-                "english_correct_answers": "{\"5\"}",
+                "question_type": "pick",
+                "difficulty": 1,
+                "is_answered": false
+            },
+            {
+                "question_id": 5,
+                "content": "How do you greet someone in the night",
+                "correct_answers": [
+                    "Good night."
+                ],
+                "misleading_answers": [
+                    "Good morning.",
+                    "Good afternoon.",
+                    "Good day."
+                ],
+                "question_type": "pick",
                 "difficulty": 1,
                 "is_answered": false
             }
