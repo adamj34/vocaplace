@@ -1,18 +1,19 @@
 import express from "express";
 import cors from "cors";
-import session from 'express-session';
+// import session from 'express-session';
 import morgan from "morgan";
 
 import { db } from "./db/connection/db.js";
+import getUserData from "./api/getUserDataMiddleware.js";
 import testConnection from "./db/connection/testConnection.js";
 import userRouter from "./api/userRouter.js";
 import unitRouter from "./api/unitRouter.js";
 import userRelationsRouter from "./api/userRelationsRouter.js";
 import questionRouter from "./api/questionRouter.js";   
 
-const app = express(); 
 import keycloak from './Keycloak.js';
-app.use(keycloak.middleware()); 
+
+const app = express(); 
 
 await testConnection(db); 
 
@@ -28,12 +29,14 @@ await testConnection(db);
 //     store: memoryStore
 // }));  
  
-app.use(morgan(":method :url :status :response-time ms"));
+app.use(morgan(":method :url :status :response-time ms")); 
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-// app.use(cors());
-app.use(cors({ credentials: true, origin: ['http://localhost:3000', 'http://localhost:8080'] }))
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:3000', 'http://localhost:8080']
+})) 
 
 // app.get('/test', keycloak.protect(), function (req, res) {
 //     res.render(
@@ -44,6 +47,8 @@ app.use(cors({ credentials: true, origin: ['http://localhost:3000', 'http://loca
 
 // app.use(keycloak.middleware({ logout: '/' }));
 
+app.use(keycloak.middleware()); 
+app.use(keycloak.protect(), getUserData);
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
 app.use('/relationships', userRelationsRouter);

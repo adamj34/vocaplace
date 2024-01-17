@@ -18,7 +18,7 @@ class UsersRepository {
         return this.db.one(queries.users.update, {
             id: values.id || null,
             bio: values.bio || null,
-            nickname: values.nickname || null,
+            username: values.username || null,
             privateProfile: values.privateProfile || null,
         });
     }

@@ -1,6 +1,6 @@
-INSERT INTO users(id, nickname)
+INSERT INTO users(id, username)
 VALUES (
     ${id},
-    ${nickname}
+    ${username}
 )
 RETURNING *;

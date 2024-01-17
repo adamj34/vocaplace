@@ -1,6 +1,6 @@
 import express from 'express';
 import { db, pgp } from "../db/connection/db.js";
-import getUserId from './getUserIdMiddleware.js';
+import getUserId from './getUserDataMiddleware.js';
 
 const router = express.Router();
 

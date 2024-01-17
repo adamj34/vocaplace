@@ -10,7 +10,7 @@ returns:
         "id": "223e4567-e89b-12d3-a456-426614174005",
         "points": 0,
         "ongoing_streak": 0,
-        "nickname": null,
+        "username": null,
         "bio": null,
         "private_profile": false,
         "last_active": "2023-12-03T20:35:44.437Z",
@@ -28,11 +28,11 @@ returns:
 }
 
 PATCH:
-expects: keycloak token in header, body {nickname, bio, private_profile, picture}
+expects: keycloak token in header, body {username, bio, private_profile, picture}
 e.g.
 {
     "bio": "new bio :/",
-    "nickname": "veery cool",
+    "username": "veery cool",
     "picture": "\\xDEADBEEF"
 }
 returns: 

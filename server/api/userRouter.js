@@ -1,18 +1,10 @@
 import express from 'express';
 import { db, pgp } from "../db/connection/db.js";
-import getUserId from './getUserIdMiddleware.js';
-import keycloak from '../Keycloak.js';
 
 const router = express.Router();
 
-// router.get('/', getUserId, (req, res), getUserId in all routes
-// const userId = '223e4567-e89b-12d3-a456-426614174005';
-
-router.get('/', keycloak.protect(), (req, res) => {
-    // const userId = req.kauth.grant.access_token.content.sub
-    const userId = req.kauth.grant.access_token.content.sub
-    const username = req.kauth.grant.access_token.content.preferred_username
-    console.log('REQUESTED USERDATA: ', userId, username)
+router.get('/', (req, res) => {
+    const userId = req.userId;
 
     db.users.find({id: userId})
     .then((data) => {
@@ -25,8 +17,8 @@ router.get('/', keycloak.protect(), (req, res) => {
         console.error(err);
         // If no data is returned, add the user to the database
         if (err.code === pgp.errors.queryResultErrorCode.noData) {
-            db.users.add({id: userId, nickname: username}) // niech dodaje to bazy danych nickname podczas tworzenia (mozna zmienic nazwe tej zmiennej na 'username'??)
-            .then((data) => {
+            db.users.add({id: userId, username: req.username}) // niech dodaje to bazy danych username podczas tworzenia (mozna zmienic nazwe tej zmiennej na 'username'??)
+            .then((data) => {                                   // zmienione na username
                 res.setHeader('Location', '/user/' + userId);
                 res.status(201).json({
                     success: true,
@@ -50,8 +42,9 @@ router.get('/', keycloak.protect(), (req, res) => {
 
 
 router.patch('/', (req, res) => {  
-    // const userId = req.userId;
+    const userId = req.userId;
     req.body.id = userId;
+
     if ('picture' in req.body) {
     db.users.update(req.body)
         db.tx(async () => {
@@ -87,25 +80,25 @@ router.patch('/', (req, res) => {
     }
 })
 
-// router.delete('/delete', getUserId, (req, res) => {
-//     const userId = req.userId;
-//     db.users.delete({id: userId})
-//         .then((data) => {
-//             res.status(200).json({
-//                 success: true,
-//                 data
-//             });
-//         })
-//         .catch((err) => {
-//             res.status(500).json({
-//                 success: false,
-//                 err
-//             });
-//         });
-// })
+router.delete('/', (req, res) => {
+    const userId = req.userId;
+    db.users.delete({id: userId})
+        .then((data) => {
+            res.status(200).json({
+                success: true,
+                data
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+})
 
-router.delete('/profilePicture', (req, res) => {  // body, query ???
-    // const userId = req.userId;
+router.delete('/profilePicture', (req, res) => {  
+    const userId = req.userId;
 
     db.profile_pictures.delete({id: userId})
         .then((data) => {
