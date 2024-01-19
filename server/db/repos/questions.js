@@ -7,16 +7,7 @@ class QuestionsRepository {
     }
 
     add(values) {
-        return this.db.one(queries.questions.add, {
-            unitId: +values.unitId,
-            polishQuestionBody: values.polishQuestionBody,
-            polishPossibleAnswers: values.polishPossibleAnswers,
-            polishCorrectAnswers: values.polishCorrectAnswers,
-            englishQuestionBody: values.englishQuestionBody,
-            englishPossibleAnswers: values.englishPossibleAnswers,
-            englishCorrectAnswers: values.englishCorrectAnswers,
-            difficulty: +values.difficulty,
-        });
+        return this.db.one(queries.questions.add, values);
     }
 
     getQuiz(values) {

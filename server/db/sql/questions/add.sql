@@ -1,6 +1,6 @@
 INSERT INTO questions(topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES(
-    ${topicId},
+    ${topic_id},
     ${content},
     ${correct_answers},
     ${misleading_answers},

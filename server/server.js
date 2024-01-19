@@ -27,7 +27,7 @@ await testConnection(db);
 //     resave: false,
 //     saveUninitialized: true,
 //     store: memoryStore
-// }));  
+// }));    
  
 app.use(morgan(":method :url :status :response-time ms")); 
 
@@ -48,8 +48,8 @@ app.use(cors({
 // app.use(keycloak.middleware({ logout: '/' }));
 
 app.use(keycloak.middleware()); 
-app.use(keycloak.protect(), getUserData);
-// app.use(getUserData);
+// app.use(keycloak.protect(), getUserData);
+app.use(getUserData);
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
 app.use('/relationships', userRelationsRouter);

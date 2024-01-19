@@ -6,6 +6,16 @@ class UnitsRepository {
         this.pgp = pgp;
     }
 
+    findUnitIdByName(value) {
+        return this.db.oneOrNone(`
+            SELECT
+                id
+            FROM
+                units
+            WHERE unit = $1
+            `, [value.unit]);
+    }
+
     add(values) {
         return this.db.one(queries.units.add, values);
     }

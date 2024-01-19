@@ -396,3 +396,27 @@ returns:
         ]
     }
 }
+
+/questions 
+expects e.g.: req.body = 
+{
+  topic: 'Days of the Week',
+  unit: 'Introduction to English',
+  content: 'What is the third day of the week?',
+  correctAnswers: '["Wednesday"]',
+  misleadingAnswers: '["Monday", "Thursday", "Friday", "Saturday", "Sunday"]',
+  questionType: 'pick',
+  difficulty: '2'
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 22
+    }
+}
+OR
+{
+    "success": false,
+    "err": "Unit or topic does not exist"
+}

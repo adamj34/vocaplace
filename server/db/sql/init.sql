@@ -139,7 +139,7 @@ VALUES (3, 'What is the first day of the week?', '{"Monday"}', '{"Tuesday", "Wed
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (3, 'What is the second day of the week?', '{"Tuesday"}', '{"Monday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (3, 'What is the last day of the week?', '{"Friday"}', '{"Tuesday", "Monday", "Thursday", "Friday", "Saturday", "Sunday"}', 'pick', 1);
+VALUES (3, 'What is the last day of the week?', '{"Friday"}', '{"Tuesday", "Monday", "Thursday", "Saturday", "Sunday"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (3, 'Put the words in the correct order to translate: "Jaki jest dzisiaj dzień?"', '{"What day is it today?"}', '{"What", "day", "month", "is", "today?", "yesterday", "it"}', 'order', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
