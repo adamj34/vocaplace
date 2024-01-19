@@ -3,7 +3,50 @@ import { db, pgp } from "../db/connection/db.js";
 
 const router = express.Router();
 
-// const userId = '123e4567-e89b-12d3-a456-426614174001';
+
+router.post('/', (req, res) => {
+    console.log(req.body);
+    let questionId;
+    db.tx(async () => {
+        // check if unit and topic exist
+        const unitId = await db.units.findUnitIdByName({unit: req.body.unit});
+        const topicId = await db.topics.findTopicIdByName({topic: req.body.topic});
+        if (!unitId || !topicId) {
+            console.log('Unit or topic does not exist');
+            res.status(400).json({
+                success: false,
+                err: 'Unit or topic does not exist'
+            });
+            return;
+        }
+
+        const question = {
+            topic_id: topicId.id,
+            content: req.body.content,
+            correct_answers: JSON.parse(req.body.correctAnswers),
+            misleading_answers: JSON.parse(req.body.misleadingAnswers),
+            question_type: req.body.questionType,
+            difficulty: req.body.difficulty,
+        };
+        const result = await db.questions.add(question);
+        questionId = result.id;
+    })
+    .then(() => {
+        res.setHeader('Location', '/question/' + questionId);
+        res.status(201).json({
+            success: true,
+            data: {id: questionId}
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+
+});
 
 router.get('/quiz', (req, res) => {
     const userId = req.userId;
