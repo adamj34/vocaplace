@@ -16,8 +16,8 @@ class UnitsRepository {
             `, [value.unit]);
     }
 
-    add(values) {
-        return this.db.one(queries.units.add, values);
+    add(value) {
+        return this.db.one(queries.units.add, value);
     }
 
     generalUserProgress(value) {

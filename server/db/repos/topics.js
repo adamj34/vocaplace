@@ -6,8 +6,8 @@ class TopicsRepository {
         this.pgp = pgp;
     }
 
-    add(value) {
-        return this.db.one(queries.topics.add, value);
+    add(values) {
+        return this.db.one(queries.topics.add, values);
     }
 
     findTopicIdByName(value) {

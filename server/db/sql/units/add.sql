@@ -1,5 +1,5 @@
-INSERT INTO unit(unit)
+INSERT INTO units(unit)
 VALUES (
-    ${unit},
+    ${unit}
 )
 RETURNING *;

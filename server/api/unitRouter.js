@@ -3,7 +3,30 @@ import { db, pgp } from "../db/connection/db.js";
 
 const router = express.Router();
 
-// const userId = '123e4567-e89b-12d3-a456-426614174001';
+
+router.post('/', (req, res) => {
+    console.log(req.body);
+    db.units.add(req.body)
+    .then((data) => {
+        res.status(201).json({
+            success: true,
+            data
+        });
+    })
+    .catch((err) => {
+        if (err.code === '23505') {
+            return res.status(403).json({
+                success: false,
+                err: "Unit already exists"
+            });
+        }
+
+        res.status(500).json({
+            success: false,
+            err
+        });
+    }); 
+});
 
 router.get('/progress', (req, res) => {
     const userId = req.userId;

@@ -18,6 +18,7 @@ returns:
     }
 }
 
+/user
 PATCH:, body {username, bio, private_profile, picture}
 e.g.
 {
@@ -104,6 +105,27 @@ returns:
         "user2_id": "323e4567-e89b-12d3-a456-426614174003",
         "relationship": "friends"
     }
+}
+
+/units
+POST:
+expects e.g.: req.body = 
+{
+    unit: 'Grammar'
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 3,
+        "unit": "Grammar",
+        "created_at": "2024-01-19T13:01:15.224Z"
+    }
+}
+OR
+{
+    "success": false,
+    "err": "Unit already exists"
 }
 
 /units/progress
@@ -309,8 +331,37 @@ returns:
     }
 }
 
+/topics
+POST:
+expects e.g.: req.body = 
+{
+    topic: 'Food',
+    unit: 'Vocabulary Building'
+}
+returns:
+{
+    "success": false,
+    "err": "Topic already exists"
+}
+OR
+{
+    "success": true,
+    "data": {
+        "id": 24,   //topic id
+        "unit_id": 2,
+        "topic": "Food",
+        "created_at": "2024-01-19T12:44:33.630Z"
+    }
+}
+OR
+{
+    "success": false,
+    "err": "Unit not found"
+}
+
 
 /questions/quiz/?{unitId}=1&{topicId}=1
+GET:
 returns:
 {
     "success": true,
@@ -398,6 +449,7 @@ returns:
 }
 
 /questions 
+POST:
 expects e.g.: req.body = 
 {
   topic: 'Days of the Week',
