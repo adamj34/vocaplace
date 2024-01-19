@@ -23,8 +23,30 @@ class UsersRepository {
         });
     }
 
-    find(value) {
+    findById(value) {
         return this.db.one(queries.users.find, value);
+    }
+
+    findGroupsByUserId(value) {
+        return this.db.any(`
+        SELECT
+            group_id
+        FROM
+            group_membership
+        WHERE user_id = $1
+        `, [value.id]);
+    }
+
+    searchByUsername(value) {
+        return this.db.any(`
+        SELECT
+            id,
+            username,
+            (SELECT profile_pictures.picture FROM profile_pictures WHERE profile_pictures.id = users.id) AS picture
+        FROM
+            users
+        WHERE username LIKE $1
+        `,  ['%' + value.username + '%']);
     }
 }
 

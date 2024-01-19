@@ -16,7 +16,15 @@ class QuestionsRepository {
 
     findAll() {
         return this.db.any('SELECT * FROM questions');
-    } 
+    }
+
+    addToAnswered(values) {
+        return this.db.one('INSERT INTO answered_questions (user_id, question_id) VALUES (${user_id}, ${question_id}) RETURNING *', values);
+    }
+
+    addToRepetition(values) {
+        return this.db.one('INSERT INTO repetitions (user_id, question_id) VALUES (${user_id}, ${question_id}) RETURNING *', values);
+    }
 }
 
 

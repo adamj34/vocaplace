@@ -75,5 +75,44 @@ router.get('/quiz', (req, res) => {
     });
 });
 
+router.post('/answered', (req, res) => {
+    const userId = req.userId;
+    const questionId = req.body.questionId;
+    db.questions.addToAnswered({user_id: userId, question_id: questionId})
+    .then((data) => {
+        res.setHeader('Location', '/answered_question/' + questionId);
+        res.status(201).json({
+            success: true,
+            data
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
+
+router.post('/repetition', (req, res) => {
+    const userId = req.userId;
+    const questionId = req.body.questionId;
+    db.questions.addToRepetition({user_id: userId, question_id: questionId})
+    .then((data) => {
+        res.setHeader('Location', '/repetitions/' + questionId);
+        res.status(201).json({
+            success: true,
+            data
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
 
 export default router;

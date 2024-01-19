@@ -73,13 +73,9 @@ CREATE TABLE IF NOT EXISTS answered_questions (
 
 CREATE TABLE IF NOT EXISTS groups (
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  bio TEXT
-);
-
-CREATE TABLE IF NOT EXISTS group_pictures (
-  id INTEGER PRIMARY KEY REFERENCES groups(id),
-  picture BYTEA NOT NULL
+  group_name TEXT UNIQUE NOT NULL,
+  bio TEXT,
+  picture TEXT
 );
 
 CREATE TABLE IF NOT EXISTS group_membership (

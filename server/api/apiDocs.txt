@@ -1,4 +1,4 @@
-API
+API Documentation
 
 /user
 GET:
@@ -45,10 +45,37 @@ returns:
     }
 }
 
-TODO
-/visit/:visitedUserId
+/user/visit/:visitedUserId
 GET:
 returns:
+{
+    "success": true,
+    "user": {
+        "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
+        "username": "x",
+        "bio": null,
+        "private_profile": false,
+        "points": 0,
+        "ongoing_streak": 0,
+        "last_active": "2024-01-19T21:32:10.949Z",
+        "created_at": "2024-01-19T21:32:10.949Z",
+        "picture": null
+    },
+    "friends": [],
+    "groups": [
+        {
+            "id": 3,
+            "group_name": "new grouppp",
+            "bio": "group bio",
+            "picture": null
+        }
+    ]
+}
+
+/user/search?{username}=some_username  // does not need to be a full username, it matches any username that contains the string
+GET:
+returns:
+
 
 
 
@@ -478,3 +505,97 @@ OR
     "success": false,
     "err": "Unit or topic does not exist"
 }
+
+/questions/answered 
+POST:
+expects e.g.: req.body = 
+{
+  questionId: 1,
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "question_id": 1,
+        "user_id": "8a697eb1-786d-4b9d-8df8-dd891901284d"
+    }
+}
+
+/questions/repetition
+POST:
+expects e.g.: req.body = 
+{
+  questionId: 1,
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "user_id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
+        "question_id": 1
+    }
+}
+
+
+/groups
+POST:
+expects e.g.: req.body = 
+{
+    group_name: 'new grouppp',
+    bio: 'new bio',   // optional
+    picture: 'new picture'  // optional
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 3,
+        "group_name": "new grouppp",
+        "bio": "group bio",
+        "picture": null
+    }
+}
+
+/groups/join
+POST:
+expects e.g.: req.body = 
+{
+    group_name: 'new grouppp'
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 3   // group id
+    }
+}
+
+/groups/:groupId
+GET:
+returns:
+{
+    "success": true,
+    "group": {
+        "id": 3,
+        "group_name": "new grouppp",
+        "bio": "group bio",
+        "picture": null
+    },
+    "members": [
+        {
+            "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
+            "username": "x",
+            "bio": null,
+            "private_profile": false,
+            "points": 0,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-19T21:32:10.949Z",
+            "created_at": "2024-01-19T21:32:10.949Z",
+            "picture": null,
+            "admin": true
+        }
+    ]
+}
+

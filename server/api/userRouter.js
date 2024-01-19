@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
     const userId = req.userId;
 
-    db.users.find({id: userId})
+    db.users.findById({id: userId})
     .then((data) => {
         res.status(200).json({
             success: true,
@@ -43,22 +43,32 @@ router.get('/', (req, res) => {
 
 router.get('/visit/:visitedUserId', (req, res) => {
     const userId = req.params.visitedUserId;
-
+    console.log('in visit');
     db.tx(() => {
-        db.users.find({id: userId})
+        db.users.findById({id: userId})
         .then((data) => {
-            db.relationships.findFriends({id: userId})
-            .then((friends) => {
-                Promise.all(friends.map(friendId => db.users.find({id: friendId})))
-                .then(friendsData => {
-                    // friendsData is an array of user objects for each friend
+            console.log(data)
+            Promise.all([
+                db.user_relationships.findFriends({id: userId}),
+                db.users.findGroupsByUserId({id: userId})
+            ])
+            .then(([friends, groups]) => {
+                Promise.all([
+                    ...friends.map(friend => db.users.findById({id: friend.user_id})),
+                    ...groups.map(group => db.groups.findById({id: group.group_id}))
+                ])
+                .then(allData => {
+                    const friendsData = allData.slice(0, friends.length);
+                    const groupsData = allData.slice(friends.length);
                     res.status(200).json({
                         success: true,
                         user: data,
-                        friends: friendsData
+                        friends: friendsData,
+                        groups: groupsData
                     });
                 })
                 .catch((err) => {
+                    console.error(err);
                     res.status(500).json({
                         success: false,
                         err
@@ -66,6 +76,7 @@ router.get('/visit/:visitedUserId', (req, res) => {
                 });
             })
             .catch((err) => {
+                console.error(err);
                 res.status(500).json({
                     success: false,
                     err
@@ -73,6 +84,7 @@ router.get('/visit/:visitedUserId', (req, res) => {
             });
         })
         .catch((err) => {
+            console.error(err);
             res.status(500).json({
                 success: false,
                 err
@@ -81,6 +93,23 @@ router.get('/visit/:visitedUserId', (req, res) => {
     })
 });
 
+router.get('/search', (req, res) => {
+    const username = req.query.username;
+
+    db.users.searchByUsername({username})
+    .then((data) => {
+        res.status(200).json({
+            success: true,
+            data
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
 
 router.patch('/', (req, res) => {  
     const userId = req.userId;
