@@ -41,6 +41,46 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/visit/:visitedUserId', (req, res) => {
+    const userId = req.params.visitedUserId;
+
+    db.tx(() => {
+        db.users.find({id: userId})
+        .then((data) => {
+            db.relationships.findFriends({id: userId})
+            .then((friends) => {
+                Promise.all(friends.map(friendId => db.users.find({id: friendId})))
+                .then(friendsData => {
+                    // friendsData is an array of user objects for each friend
+                    res.status(200).json({
+                        success: true,
+                        user: data,
+                        friends: friendsData
+                    });
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        success: false,
+                        err
+                    });
+                });
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    success: false,
+                    err
+                });
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    })
+});
+
 
 router.patch('/', (req, res) => {  
     const userId = req.userId;

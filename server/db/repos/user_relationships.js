@@ -21,6 +21,18 @@ class UserRelationshipsRepository {
     deleteFriend(values) {
         return this.db.one(queries.user_relationships.deleteFriend, values);
     }
+
+    findFriends(value) {
+        return this.db.any(`
+        SELECT user1_id AS friend_id
+        FROM user_relationships
+        WHERE user2_id = $1 AND relationship = 'friends'
+        UNION ALL
+        SELECT user2_id AS friend_id
+        FROM user_relationships
+        WHERE user1_id = $1 AND relationship = 'friends'`
+        , [value.id]);
+    }
 }
 
 export default UserRelationshipsRepository;

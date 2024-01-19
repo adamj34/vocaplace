@@ -45,6 +45,12 @@ returns:
     }
 }
 
+TODO
+/visit/:visitedUserId
+GET:
+returns:
+
+
 
 /relationships/request/friend/:friendID
 POST:
