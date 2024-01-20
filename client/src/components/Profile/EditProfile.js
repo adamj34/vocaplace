@@ -12,7 +12,7 @@ export function EditProfile() {
     const { id } = useParams()
     document.title = `Duolingo | Edit Profile`
 
-    if (C.UserData.userid != id) {
+    if (C.UserData.id != id) {
         return <AccessDenied/>
     }
     

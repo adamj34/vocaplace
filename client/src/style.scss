@@ -5,6 +5,9 @@ $maingraygradientbottom: #1f2229;
 $darkgray: #1d2026;
 $darkgraygradientbottom: #12151a;
 
+@import "./icons/scss/fontawesome.scss";
+@import "./icons/scss/solid.scss";
+
 body {
   color: white;
   margin: 0;

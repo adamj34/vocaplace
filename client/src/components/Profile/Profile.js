@@ -2,8 +2,10 @@ import { useParams } from 'react-router-dom';
 import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
 import {FaHandsHelping, FaUserFriends} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../../App';
+import DataService from '../../DataService';
+import { DateFormat } from '../../helpers/DateFormat';
 
 
 function ListElement(p) {
@@ -20,39 +22,40 @@ function ListElement(p) {
 }
 
 export function Profile() {
+    const [Loading, SetLoading] = useState(true);
     const C = useContext(AppContext);
     const { id } = useParams()
-    const [ProfileData, SetProfileData] = useState([]);
-    const groups = [{name:'group1', pic:null}, {name:'group2', pic:null}]
-    const friends = [{name:'friend1', pic:null}, {name:'friend2', pic:null}, {name:'friend3', pic:null}]
+    const [ProfileData, SetProfileData] = useState({});
     document.title = `VocaPlace | username`
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
-    // tu musi isc fetch do servera, server wysyla zapytanie do keycloaka o username (bo ma uprawnienia) ???????
-    // useEffect(() => {
-    //     fetch(`http://localhost:3001/getuserdata?username=${data.username}`, 
-    //     {method: 'GET',  headers: {Authorization: `Bearer ${keycloak.token}`}})
-    //         .then(response => response.json())
-    //         .then(data => {SetUserData(data)})
-    //     }).catch((err) => console.log(err))
-          
- 
+    useEffect(() => {
+        if (C.AppReady) {
+            DataService.GetProfileData(id).then((data)=> {
+                SetProfileData(data)
+                console.log(data)
+                SetLoading(false)
+            })
+        }
+    }, [C.AppReady])
+
     return (
+        Loading ? <div>Loading</div> :
         <div id="Profile">
             <div id='banner'>
                 <div id='left'>
                     <div id='profilepic'>
-                        <div id='pfp' style={{ backgroundImage: `url(${C.UserData.pfp || placeholderpfp})`, height: 200, width:200 }}></div>
+                        <div id='pfp' style={{ backgroundImage: `url(${ProfileData.user.picture || placeholderpfp})`, height: 200, width:200 }}></div>
                     </div>
                     <div id='side'>
-                        <h1 id='username'>uzytkownik o id: {id}</h1>
-                        <p>Member since [DATE]</p>
-                        <p>[DAYS] streak</p>
-                        <p>[NUMBER] points</p>
-                        <p>[BIO] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus sem urna, sed imperdiet arcu aliquet sit amet. Integer sed metus hendrerit, iaculis nunc eget, porttitor nisl. Donec lacinia elit sem, in venenatis lectus sollicitudin sed. Mauris vulputate scelerisque enim, nec scelerisque lectus elementum ac.</p>
+                        <h1 id='username'>{ProfileData.user.username}</h1>
+                        <p>Member since {DateFormat(ProfileData.user.created_at)}</p>
+                        <p>{ProfileData.user.ongoing_streak} streak</p>
+                        <p>{ProfileData.user.points} points</p>
+                        <p>{ProfileData.user.bio}</p>
                     </div>
                 </div>
-                {(id === C.UserData.userid) ? 
+                {(id === C.UserData.id) ? 
                     <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
                         <button className='button'>Add Friend</button>
@@ -66,19 +69,19 @@ export function Profile() {
                 <div id='friends'>
                     <div id='title'>
                         <FaHandsHelping id='icon'/>
-                        <p>{friends.length} Friends</p>
+                        <p>{ProfileData.friends.length} Friends</p>
                     </div>
                     <ul id='content'>
-                        {friends.map((x) => {return <ListElement data={x} page='profile'/>})}
+                        {/* {friends.map((x) => {return <ListElement data={x} page='profile' key={x.name}/>})} */}
                     </ul>
                 </div>
                 <div id='groups'>
                     <div id='title'>
                         <FaUserFriends id='icon'/>
-                        <p>{groups.length} Groups</p>
+                        <p>{ProfileData.groups.length} Groups</p>
                     </div>
                     <ul id='content'>
-                        {groups.map((x) => {return <ListElement data={x} page='group'/>})}
+                        {/* {groups.map((x) => {return <ListElement data={x} page='group' key={x.name}/>})} */}
                     </ul>
                 </div>
             </div>

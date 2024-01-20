@@ -10,7 +10,7 @@ import { Group } from'./components/Group/Group'
 import { SubmitTask } from './components/SubmitTask/SubmitTask';
 import { Nav } from './components/Nav/Nav';
 import { Footer } from './components/Nav/Footer'
-import { Units } from './components/Units/Units'
+import { Units } from './components/Units/Units.js'
 import { EditProfile } from './components/Profile/EditProfile'
 import { Topics } from './components/Units/Topics';
 import { Admin } from './components/Admin/Admin'
@@ -24,31 +24,22 @@ export const AppContext = createContext();
 
 function App() {
   const [UserData, SetUserData] = useState({});
+  const [AppReady, SetAppReady] = useState(false);
   const { keycloak, initialized } = useKeycloak();
 
   useEffect(() => {
     if (keycloak.authenticated) {
       DataService.SetToken(keycloak.token)
       keycloak.loadUserProfile().then(async (data) => {
-        const d = await DataService.GetUserData()
-        console.log(d)
+        const userdata = await DataService.GetUserData()
+        SetUserData(userdata.data)
+        SetAppReady(true)
       })}
     } ,[initialized])
 
-  // useEffect(() => {
-  //   if (keycloak.authenticated) {
-  //     keycloak.loadUserProfile().then((data) => {
-  //       fetch(`http://localhost:8000/user`,
-  //         { method: 'GET', headers: { Authorization: `Bearer ${keycloak.token}` } })
-  //         .then(response => response.json())
-  //         .then(data => { console.log(data) })
-  //     }).catch((err) => console.log(err))
-  //   }
-  // }, [initialized])
-
   return (
     <div id="App">
-      <AppContext.Provider value={{UserData,SetUserData}}>
+      <AppContext.Provider value={{UserData,SetUserData,AppReady}}>
         <Nav/>
         <Routes>
           <Route path='' element={<Home/>}/>

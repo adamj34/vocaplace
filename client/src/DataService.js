@@ -59,6 +59,11 @@ export default {
         return res.data
     },
 
+    async GetProfileData(userid) {
+        const res = await Server.get(`/user/visit/${userid}`)
+        return res.data
+    },
+
 
     async GetNotifications() {
         const res = await Server.get(`/user`)

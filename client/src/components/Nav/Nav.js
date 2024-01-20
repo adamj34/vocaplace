@@ -57,7 +57,7 @@ export function Nav() {
                 </div>
                 <div id='right'>
                     <Notifications messages={notifications}/>
-                    <Link to={"/profile/"+C.UserData.userid} id='profile' className='hovertext'>
+                    <Link to={"/profile/"+C.UserData.id} id='profile' className='hovertext'>
                         <p id='username' >{C.UserData.username}</p>
                         <div id='profilepic'>
                             <div id='pfp' style={{ backgroundImage: `url(${C.UserData.pfp || placeholderpfp})`, height: 30, width:30 }}></div>
