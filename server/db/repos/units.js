@@ -20,7 +20,7 @@ class UnitsRepository {
         return this.db.one(queries.units.add, value);
     }
 
-    generalUserProgress(value) {
+    generalUserProgress(value) { 
         return this.db.many(queries.units.generalUserProgress, value);
     }
 

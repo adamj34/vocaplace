@@ -1,6 +1,7 @@
 SELECT
     u.id,
     u.unit,
+    u.icon,
     ROUND(COALESCE(
         COUNT(aq.id) FILTER (WHERE aq.user_id = ${id})::numeric / NULLIF(COUNT(DISTINCT q.id), 0), 0
     ), 2) AS completion_ratio,

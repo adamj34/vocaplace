@@ -8,15 +8,15 @@ router.post('/', (req, res) => {
     db.units.findUnitIdByName({unit: req.body.unit})
     .then((data) => {
         console.log(data);
-        if (!data) {
-            res.status(404).json({
+        if (!data) { 
+            return res.status(404).json({
                 success: false,
                 err: "Unit not found"
             });
         }
 
         const unitId = data.id;
-        db.topics.add({topic: req.body.topic, unit_id: unitId})
+        db.topics.add({topic: req.body.topic, unit_id: unitId, icon: req.body.icon})
         .then((data) => {
             res.status(201).json({
                 success: true,

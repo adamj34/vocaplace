@@ -1,6 +1,8 @@
 SELECT
+    u.unit AS unit,
     t.id AS topic_id,
     t.topic AS topic,
+    t.icon AS icon,
     t.created_at AS topic_created_at,
     json_agg(
         json_build_object(
@@ -20,4 +22,4 @@ LEFT JOIN
 WHERE 
     u.id = ${unit_id}
 GROUP BY
-    t.id, t.topic, t.created_at
+    t.id, t.topic, t.created_at, u.id

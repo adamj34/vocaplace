@@ -1,10 +1,12 @@
 SELECT
     u.id AS unit_id,
     u.unit AS unit,
+    u.icon AS unit_icon,
     json_agg(
         json_build_object(
             'topic_id', t.topic_id,
             'topic', t.topic,
+            'topic_icon', t.icon,
             'question_ids', t.question_ids
         )
     ) FILTER (WHERE t.topic_id IS NOT NULL) AS topics  -- filter to ignore NULLS
@@ -15,6 +17,7 @@ LEFT JOIN (
         t.unit_id,
         t.id AS topic_id,
         t.topic AS topic,
+        t.icon,
         array_agg(q.id) FILTER (WHERE q.id IS NOT NULL) AS question_ids  -- filter to ignore NULLS
     FROM
         topics t

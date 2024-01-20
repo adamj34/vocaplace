@@ -83,7 +83,7 @@ router.get('/check/user/:id', (req, res) => {
     const userId = req.userId;
     const friendId = req.params.id;
     if (userId === friendId) {
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             err: 'Cannot check relationship with yourself'
         });

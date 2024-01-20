@@ -8,12 +8,13 @@ router.post('/', (req, res) => {
     console.log(req.body);
     db.units.add(req.body)
     .then((data) => {
-        res.status(201).json({
+        res.status(201).json({ 
             success: true,
             data
         });
-    })
+    }) 
     .catch((err) => {
+        console.error(err);
         if (err.code === '23505') {
             return res.status(403).json({
                 success: false,
@@ -36,6 +37,7 @@ router.get('/progress', (req, res) => {
         const progressData = data.reduce((acc, curr) => {
             acc = {...acc, [curr.id]: {
                 unit: curr.unit,
+                unit_icon: curr.icon,
                 completion_ratio: curr.completion_ratio,
                 created_at: curr.created_at,
             }};
@@ -61,9 +63,12 @@ router.get('/progress/:id', (req, res) => {
 
     db.units.detailedUserProgress({user_id: userId, unit_id: id})
     .then((data) => {
+        let unit;
         const retrieveIds = data.reduce((acc, curr) => {
+            unit = curr.unit;
             acc = {...acc, [curr.topic_id]: {
-                topic: curr.topic,
+                topic: curr.topic, 
+                topic_icon: curr.icon,
                 created_at: curr.created_at,
                 questions: curr.questions,
             }};
@@ -71,6 +76,7 @@ router.get('/progress/:id', (req, res) => {
         }, {});
         res.status(200).json({
             success: true,
+            unit: unit,
             data: retrieveIds
         });
     })
@@ -90,6 +96,7 @@ router.get('/overview', (req, res) => {
         const retrieveIds = data.reduce((acc, curr) => {
             acc = {...acc, [curr.unit_id]: {
                 unit: curr.unit,
+                unit_icon: curr.unit_icon,
                 topics: curr.topics,
             }};
             return acc;

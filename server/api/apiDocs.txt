@@ -75,9 +75,8 @@ returns:
 /user/search?{username}=some_username  // does not need to be a full username, it matches any username that contains the string
 GET:
 returns:
-
-
-
+{"success":true,
+"data":[{"id":"533e4a19-be1e-4c5d-8659-83b2234a7bcd","username":"r","picture":null}]}
 
 /relationships/request/friend/:friendID
 POST:
@@ -144,7 +143,8 @@ returns:
 POST:
 expects e.g.: req.body = 
 {
-    unit: 'Grammar'
+    unit: 'Grammar',
+    'icon': 'icon string i guess'
 }
 returns:
 {
@@ -152,7 +152,8 @@ returns:
     "data": {
         "id": 3,
         "unit": "Grammar",
-        "created_at": "2024-01-19T13:01:15.224Z"
+        "icon": "icon string i guess",
+        "created_at": "2024-01-20T22:17:12.780Z"
     }
 }
 OR
@@ -169,13 +170,21 @@ returns:
     "data": {
         "1": {
             "unit": "Introduction to English",
+            "unit_icon": null,
             "completion_ratio": "0.00",
-            "created_at": "2024-01-17T16:55:24.066Z"
+            "created_at": "2024-01-20T22:06:54.494Z"
         },
         "2": {
             "unit": "Vocabulary Building",
+            "unit_icon": null,
             "completion_ratio": "0.00",
-            "created_at": "2024-01-17T16:55:24.089Z"
+            "created_at": "2024-01-20T22:06:54.503Z"
+        },
+        "3": {
+            "unit": "Grammar",
+            "unit_icon": "icon string i guess",
+            "completion_ratio": "0.00",
+            "created_at": "2024-01-20T22:17:12.780Z"
         }
     }
 }
@@ -185,9 +194,11 @@ GET:
 returns:
 {
     "success": true,
+    "unit": "Introduction to English",
     "data": {
-        "1": {  // topic id
+        "1": {
             "topic": "Greetings",
+            "topic_icon": null,
             "questions": [
                 {
                     "question_id": 1,
@@ -233,6 +244,7 @@ returns:
         },
         "2": {
             "topic": "Numbers and Counting",
+            "topic_icon": null,
             "questions": [
                 {
                     "question_id": 9,
@@ -268,6 +280,7 @@ returns:
         },
         "3": {
             "topic": "Days of the Week",
+            "topic_icon": null,
             "questions": [
                 {
                     "question_id": 15,
@@ -288,6 +301,11 @@ returns:
                     "question_id": 18,
                     "difficulty": 1,
                     "is_answered": false
+                },
+                {
+                    "question_id": 19,
+                    "difficulty": 2,
+                    "is_answered": false
                 }
             ]
         }
@@ -302,28 +320,16 @@ returns:
     "data": {
         "1": {
             "unit": "Introduction to English",
+            "unit_icon": null,
             "topics": [
-                {
-                    "topic_id": 1,
-                    "topic": "Greetings",
-                    "question_ids": [
-                        2,
-                        3,
-                        1,
-                        4,
-                        5,
-                        6,
-                        7,
-                        8
-                    ]
-                },
                 {
                     "topic_id": 2,
                     "topic": "Numbers and Counting",
+                    "topic_icon": null,
                     "question_ids": [
-                        11,
                         9,
                         10,
+                        11,
                         12,
                         13,
                         14
@@ -332,44 +338,80 @@ returns:
                 {
                     "topic_id": 3,
                     "topic": "Days of the Week",
+                    "topic_icon": null,
                     "question_ids": [
-                        18,
+                        15,
                         16,
                         17,
-                        15
+                        18,
+                        19
+                    ]
+                },
+                {
+                    "topic_id": 1,
+                    "topic": "Greetings",
+                    "topic_icon": null,
+                    "question_ids": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8
                     ]
                 }
             ]
         },
         "2": {
             "unit": "Vocabulary Building",
+            "unit_icon": null,
             "topics": [
                 {
                     "topic_id": 4,
                     "topic": "Travel",
+                    "topic_icon": null,
+                    "question_ids": [
+                        20
+                    ]
+                },
+                {
+                    "topic_id": 6,
+                    "topic": "Animals",
+                    "topic_icon": null,
                     "question_ids": null
                 },
                 {
                     "topic_id": 5,
                     "topic": "Food",
+                    "topic_icon": null,
                     "question_ids": null
                 },
                 {
-                    "topic_id": 6,
-                    "topic": "Animals",
+                    "topic_id": 7,
+                    "topic": "Foodd",
+                    "topic_icon": "icon string i guess",
                     "question_ids": null
                 }
             ]
+        },
+        "3": {
+            "unit": "Grammar",
+            "unit_icon": "icon string i guess",
+            "topics": null
         }
     }
 }
+
 
 /topics
 POST:
 expects e.g.: req.body = 
 {
     topic: 'Food',
-    unit: 'Vocabulary Building'
+    unit: 'Vocabulary Building',
+    icon: 'icon string i guess'
 }
 returns:
 {
@@ -380,10 +422,11 @@ OR
 {
     "success": true,
     "data": {
-        "id": 24,   //topic id
+        "id": 7,
         "unit_id": 2,
-        "topic": "Food",
-        "created_at": "2024-01-19T12:44:33.630Z"
+        "topic": "Foodd",
+        "icon": "icon string i guess",
+        "created_at": "2024-01-20T22:13:54.349Z"
     }
 }
 OR
