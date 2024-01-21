@@ -3,14 +3,11 @@ SELECT
     t.id AS topic_id,
     t.topic AS topic,
     t.icon AS icon,
-    t.created_at AS topic_created_at,
-    json_agg(
-        json_build_object(
-            'question_id', q.id,
-            'difficulty', q.difficulty,
-            'is_answered', CASE WHEN aq.question_id IS NOT NULL THEN TRUE ELSE FALSE END
-        )
-    ) FILTER (WHERE q.id IS NOT NULL) AS questions
+    t.created_at AS created_at,
+    COALESCE(
+        CAST(SUM(CASE WHEN aq.question_id IS NOT NULL THEN 1 ELSE 0 END) AS FLOAT) / NULLIF(COUNT(q.id), 0),
+        0
+    ) AS completion_ratio
 FROM
     units u
 LEFT JOIN 

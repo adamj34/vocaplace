@@ -70,7 +70,7 @@ router.get('/progress/:id', (req, res) => {
                 topic: curr.topic, 
                 topic_icon: curr.icon,
                 created_at: curr.created_at,
-                questions: curr.questions,
+                completion_ratio: curr.completion_ratio,
             }};
             return acc;
         }, {});

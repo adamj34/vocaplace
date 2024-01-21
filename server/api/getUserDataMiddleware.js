@@ -9,6 +9,7 @@ function getUserData(req, _res, next) {
 
     // req.userId = '533e4a19-be1e-4c5d-8659-83b2234a7bcd'
     // req.username = 'r'
+
     next(); 
 }
 
