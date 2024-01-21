@@ -4209,6 +4209,7 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 	at io.quarkus.runtime.Application.stop(Application.java:203)
 	at io.quarkus.runtime.Application.stop(Application.java:155)
 	at io.quarkus.runtime.ApplicationLifecycleManager$ShutdownHookThread.run(ApplicationLifecycleManager.java:420)
+<<<<<<< HEAD
 2024-01-21 12:10:20 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-197]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
@@ -4365,6 +4366,9 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 	at io.quarkus.runtime.Application.stop(Application.java:155)
 	at io.quarkus.runtime.ApplicationLifecycleManager$ShutdownHookThread.run(ApplicationLifecycleManager.java:420)
 2024-01-21 17:30:09 jdbc[3]: exception
+=======
+2024-01-21 16:25:42 jdbc[3]: exception
+>>>>>>> ff63d0d081f08945cfc130bc0e356c65e452ca7a
 org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-197]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
 	at org.h2.message.DbException.get(DbException.java:179)
