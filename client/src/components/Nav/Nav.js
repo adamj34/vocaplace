@@ -51,7 +51,7 @@ export function Nav() {
                         <Link to='friends'><FaHandsHelping id='icon'/></Link>
                         <Link to='groups'><FaUserFriends id='icon'/></Link>
                         <Link to='ranking'><FaMedal id='icon'/></Link>
-                        <Link to='admin'><FaIdBadge id='icon'/></Link>
+                        {/* <Link to='admin'><FaIdBadge id='icon'/></Link> */}
                     </div>
                     <SearchBar/>
                 </div>

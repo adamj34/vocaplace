@@ -31,12 +31,3 @@
   * Zarządzanie grupami i użytkownikami
 * Powiadomienia o zaproszeniach do znajomych i grup
 * Wyszukiwanie użytkowników i grup
-
---- notatki (do usunięcia potem)
-Do dokumentacji:
-- instrukcja obsługi / opis jak to działa
-- screenshoty (z podpisami!)
-- wykorzystane technologie (i dlaczego te np. chciałem się nauczyć, jest użyteczne, ma dobra dokumentację)
-- wymagania pozafunkcjonalne (?) np. że ma być bezpieczne
-- funkcjonalności
-- schemat bazy danych

@@ -16,7 +16,7 @@ function Button(p) {
                     <p>{p.data.topic}</p>
                 </div>
             </Link>
-            <ProgressBar completion={parseInt(p.data.completion_)}/>
+            <ProgressBar completion={parseInt(p.data.completion)}/>
         </div>
     )
 }
@@ -24,20 +24,23 @@ function Button(p) {
 
 
 export function Topics() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     const C = useContext(AppContext);
-    const [TopicsData, SetTopicsData] = useState([]);
+    const [Topics, SetTopics] = useState([]);
+    const [UnitName, SetUnitName] = useState('');
     const { unitid } = useParams()
 
-    // document.title = `VocaPlace | ${unitname}`
+    document.title = `VocaPlace | ${UnitName}`
 
     useEffect(() => {
         if (C.AppReady) {
-            DataService.GetUnitData(unitid).then((data) => {
+            DataService.GetTopics(unitid).then((data) => {
                 const formatted = Object.entries(data.data).map(([topicid, d]) => {
                     return { topicid, ...d }
                 })
-                SetTopicsData(formatted)
+                SetTopics(formatted)
+                SetUnitName(data.unit)
             })
         }
     }, [C.AppReady])
@@ -49,11 +52,11 @@ export function Topics() {
     return (
         <div id="Topics">
             <div id='header'>
-                {/* <h1>{unitname}</h1> */}
-                <p>Choose a topic to generate a quiz.</p>
+                <h1>{UnitName}</h1>
+                <p>Choose a topic to generate a set of questions.</p>
             </div>
             <div id="list">
-                {TopicsData.map((x) => {return <Button data={x} key={x.id}/>})}
+                {Topics.map((x) => {return <Button data={x} key={x.id}/>})}
             </div>
         </div>
         

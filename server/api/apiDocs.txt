@@ -1,6 +1,6 @@
 API Documentation
 
-/user
+/user ✔️
 GET:
 returns: 
 {
@@ -45,7 +45,7 @@ returns:
     }
 }
 
-/user/visit/:visitedUserId
+/user/visit/:visitedUserId ✔️
 GET:
 returns:
 {
@@ -162,7 +162,7 @@ OR
     "err": "Unit already exists"
 }
 
-/units/progress
+/units/progress ✔️
 GET:
 returns:
 {

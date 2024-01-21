@@ -49,13 +49,17 @@ export default {
         await Server.delete(`/relationships/friend/${userid}`)
     },
 
-    async GetUnitsProgress() {
+    async GetUnits() {
         const res = await Server.get(`/units/progress`)
         return res.data
     },
 
-    async GetUnitData(unitid) {
+    async GetTopics(unitid) {
         const res = await Server.get(`/units/progress/${unitid}`)
+        return res.data
+    },
+    async GenerateQuiz(unitid, topicid) {
+        const res = await Server.get(`/questions/quiz/?unitId=${unitid}&topicId=${topicid}`)
         return res.data
     },
 

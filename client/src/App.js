@@ -18,6 +18,7 @@ import { Revisions } from './components/Revisions/Revisions';
 import { Friends } from './components/Friends/Friends';
 import { Groups } from './components/Groups/Groups';
 import { Ranking } from './components/Ranking/Ranking';
+import { Questions } from './components/Units/Questions.js';
 import DataService from "./DataService.js"
 
 export const AppContext = createContext();
@@ -30,7 +31,7 @@ function App() {
   useEffect(() => {
     if (keycloak.authenticated) {
       DataService.SetToken(keycloak.token)
-      keycloak.loadUserProfile().then(async (data) => {
+      keycloak.loadUserProfile().then(async (d) => {
         const userdata = await DataService.GetUserData()
         SetUserData(userdata.data)
         SetAppReady(true)
@@ -47,6 +48,7 @@ function App() {
           <Route path='profile/:id/edit' element={<EditProfile/>}/>
           <Route path='group/:id' element={<Group/>}/>
           <Route path='task/submit' element={<SubmitTask/>}/>
+          <Route path='units/:unitid/:topicid' element={<Questions />} />
           <Route path='units/:unitid' element={<Topics/>}/>
           <Route path='units' element={<Units/>}/>
           <Route path='admin' element={<Admin/>}/>

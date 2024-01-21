@@ -582,7 +582,7 @@ input[type="file"] {
   }
 }
 
-#Units, #Topics, #Admin, #Revisions, #Friends, #Groups, #Ranking {
+#Units, #Topics, #Admin, #Revisions, #Friends, #Groups, #Ranking, #Questions {
   padding: 0 20px;
   display: flex;
   flex-direction: column;
@@ -713,6 +713,39 @@ input[type="file"] {
     }
    
     
+  }
+}
+
+#Questions {
+  #questions {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    #question {
+      #title {
+        font-size: 120%;
+        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+        background-color: $darkgray;
+        padding: 20px;
+        border-radius: 12px;
+        background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+        display: flex;
+        justify-content: space-between;
+      }
+      #answers {
+        margin-top: 10px;
+        #pick {
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+        }
+      }
+    }
+  }
+  #submitbutton {
+    margin: auto;
+    margin-top: 80px;
+    width: 250px;
   }
 }
 
