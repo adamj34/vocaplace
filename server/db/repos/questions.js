@@ -19,11 +19,24 @@ class QuestionsRepository {
     }
 
     addToAnswered(values) {
-        return this.db.one('INSERT INTO answered_questions (user_id, question_id) VALUES (${user_id}, ${question_id}) RETURNING *', values);
+        const question_ids = JSON.parse(values.question_ids);
+        const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
+
+        const cs = new this.pgp.helpers.ColumnSet(['user_id', 'question_id'], {table: 'answered_questions'});
+        const query = this.pgp.helpers.insert(dataMulti, cs);
+        
+        return this.db.none(query);
     }
 
     addToRepetition(values) {
-        return this.db.one('INSERT INTO repetitions (user_id, question_id) VALUES (${user_id}, ${question_id}) RETURNING *', values);
+        const question_ids = JSON.parse(values.question_ids);
+        const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
+
+        const cs = new this.pgp.helpers.ColumnSet(['user_id', 'question_id'], {table: 'repetitions'});
+        const query = this.pgp.helpers.insert(dataMulti, cs);
+
+        return this.db.none(query);
+        // return this.db.one('INSERT INTO repetitions (user_id, question_id) VALUES (${user_id}, ${question_id}) RETURNING *', values);
     }
 }
 

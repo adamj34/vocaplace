@@ -7,11 +7,16 @@ function getUserData(req, _res, next) {
     req.userId = decodedToken.sub; // Get the user ID and add it to the request object
     req.username = decodedToken.preferred_username;
 
-    // req.userId = '533e4a19-be1e-4c5d-8659-83b2234a7bcd'
-    // req.username = 'r'
-
     next(); 
 }
+
+// function getUserData(req, _res, next) {
+
+//     req.userId = '533e4a19-be1e-4c5d-8659-83b2234a7bcd'
+//     req.username = 'r'
+
+//     next(); 
+// }
 
 
 export default getUserData;

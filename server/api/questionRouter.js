@@ -76,11 +76,11 @@ router.get('/quiz', (req, res) => {
 });
 
 router.post('/answered', (req, res) => {
+    console.log(req.body);
     const userId = req.userId;
-    const questionId = req.body.questionId;
-    db.questions.addToAnswered({user_id: userId, question_id: questionId})
+    const questionIds = req.body.questionIds;
+    db.questions.addToAnswered({user_id: userId, question_ids: questionIds})
     .then((data) => {
-        res.setHeader('Location', '/answered_question/' + questionId);
         res.status(201).json({
             success: true,
             data
@@ -97,10 +97,9 @@ router.post('/answered', (req, res) => {
 
 router.post('/repetition', (req, res) => {
     const userId = req.userId;
-    const questionId = req.body.questionId;
-    db.questions.addToRepetition({user_id: userId, question_id: questionId})
+    const questionIds = req.body.questionIds;
+    db.questions.addToRepetition({user_id: userId, question_ids: questionIds})
     .then((data) => {
-        res.setHeader('Location', '/repetitions/' + questionId);
         res.status(201).json({
             success: true,
             data

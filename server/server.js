@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-// import session from 'express-session';
 import morgan from "morgan";
 
 import { db } from "./db/connection/db.js";
@@ -18,8 +17,6 @@ import keycloak from './Keycloak.js';
 const app = express(); 
 
 await testConnection(db); 
-
-  
  
 app.use(morgan(":method :url :status :response-time ms")); 
 
@@ -33,6 +30,7 @@ app.use(cors({
 
 
 app.use(keycloak.middleware()); 
+// app.use(keycloak.protect());
 app.use(getUserData);
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
