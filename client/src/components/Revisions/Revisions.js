@@ -14,7 +14,7 @@ export function Revisions() {
                 <h1>Revisions</h1>
                 <p>Practice makes perfect.</p>
             </div>
-            
+            <p>Coming Soon</p>
         </div>
         
     )

@@ -12,9 +12,9 @@ export function Ranking() {
         <div id="Ranking">
             <div id='header'>
                 <h1>Ranking</h1>
-                <p>whos the best</p>
+                <p>The best of the best.</p>
             </div>
-            
+            <p>Coming Soon</p>
         </div>
         
     )

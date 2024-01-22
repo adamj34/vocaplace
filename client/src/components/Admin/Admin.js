@@ -1,5 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import TagsInput from 'react-tagsinput'
+import { AccessDenied } from '../AccessDenied';
+import { useKeycloak } from '@react-keycloak/web';
+import { AppContext } from '../../App';
+import DataService from '../../DataService';
 
 function QuestionManager(p) {
     const [QuestionData, SetQuestionData] = useState({});
@@ -75,7 +79,7 @@ function UnitCreator(p) {
                 </div>
                 <div id='field'>
                     <label>Date Created:</label>
-                    <input className='input'type='date' defaultValue={new Date().toISOString().substring(0, 10)} onChange={(e)=>{SetUnitData({...UnitData, datecreated:e.target.value})}}/>
+                    <input className='input' type='date' defaultValue={new Date().toISOString().substring(0, 10)} onChange={(e)=>{SetUnitData({...UnitData, datecreated:e.target.value})}}/>
                 </div>
                 <div id='buttons'>
                     <button className='button'>Submit</button>
@@ -88,6 +92,7 @@ function UnitCreator(p) {
 function TopicCreator(p) {
     const [TopicData, SetTopicData] = useState({});
     const [ShowUnits, SetShowUnits] = useState(false);
+    console.log(p.units)
 
     return (
         <div id='creator'>
@@ -98,9 +103,9 @@ function TopicCreator(p) {
                         <button className='selectbutton' type='button' onClick={()=>SetShowUnits(!ShowUnits)}>{(TopicData.unitname) || "None"}</button>
                         {ShowUnits && <div id='select' onMouseLeave={()=>SetShowUnits(false)}>
                             <div id='select-scroll'>
-                                {Object.keys(p.units).map((u) => {return (<>
-                                        <div className={u==TopicData.unitid && 'chosen'} onClick={()=>{SetShowUnits(!ShowUnits); SetTopicData({...TopicData, unitid:u, unitname:p.units[u].name})}}>{p.units[u].name}</div>
-                                </>)})}
+                                {Object.keys(p.units).map((u,i) => {return (
+                                        <div key={i} className={u==TopicData.unitid ? 'chosen' : ''} onClick={()=>{SetShowUnits(!ShowUnits); SetTopicData({...TopicData, unitid:u, unitname:p.units[u].unit})}}>{p.units[u].unit}</div>
+                                )})}
                             </div>
                         </div>}
                     </div>
@@ -137,10 +142,10 @@ function QuestionCreator(p) {
                         {ShowTopics && <div id='select' onMouseLeave={()=>SetShowTopics(false)}>
                             <div id='select-scroll'>
                                 {Object.keys(p.units).map((u) => {return (<>
-                                    <div id='topic' className='disabled'>{p.units[u].name}</div>
-                                    {Object.keys(p.units[u].topics).map((t) => {return (<>
-                                        <div id='question'className={t==QuestionData.topicid && u==QuestionData.unitid && 'chosen'} onClick={()=>{SetShowTopics(false); SetQuestionData({...QuestionData, unitid:u, unitname:p.units[u].name, topicid:t, topicname:p.units[u].topics[t].name})}}>{p.units[u].topics[t].name}</div>
-                                    </>)})}
+                                    <div id='topic' className='disabled'>{p.units[u].unit}</div>
+                                    {Object.keys(p.units[u].topics).map((t,i) => {return (
+                                        <div key={i} id='question'className={t==QuestionData.topicid && u==QuestionData.unitid && 'chosen'} onClick={()=>{SetShowTopics(false); SetQuestionData({...QuestionData, unitid:u, unitname:p.units[u].unit, topicid:t, topicname:p.units[u].topics[t].name})}}>{p.units[u].topics[t].topic}</div>
+                                    )})}
                                 </>)})}
                             </div>
                         </div>}
@@ -257,41 +262,28 @@ function QuestionCreator(p) {
 
 export function Admin() {
     document.title = `VocaPlace | Admin`
-    const units = { // placeholder
-        '1':{
-            'name':'Vocabulary',
-            'topics':{
-                '1':{
-                    'name':'Animals',
-                    'questions':['u1t1q1', 'u1t1q2', 'u1t1q3']
-                },
-                '2':{
-                    'name':'plants',
-                    'questions':['u1t2q1', 'u1t2q2', 'u1t2q3']
-                }
-            }
-        },
-        '2':{
-            'name':'Grammar and idioms',
-            'topics':{
-                '1':{
-                    'name':'Verbs',
-                    'questions':['u2t1q1', 'u2t1q2', 'u2t1q3'],
-                    'datecreated':'24.11.2023'
-                },
-                '2':{
-                    'name':'Tenses',
-                    'questions':['u2t2q1', 'u2t2q2', 'u2t2q3'],
-                    'datecreated':'20.01.2023'
-                }
-            }
+   
+    const C = useContext(AppContext)
+    const [Units, SetUnits] = useState({})
+    const [ShowManageQuestions, SetShowManageQuestions] = useState(false)
+    const [ShowCreate, SetShowCreate] = useState(false)
+    const [Managed, SetManaged] = useState({})
+    const [Created, SetCreated] = useState({})
+
+    useEffect(() => {
+        if (C.AppReady) {
+            DataService.GetUnits().then((data) => {
+                const formatted = Object.entries(data.data).map(([unitid, d]) => {
+                    return {unitid,...d}
+                })
+                SetUnits(formatted)
+            })
+
         }
-    }
-    const [Units, SetUnits] = useState(units);
-    const [ShowManageQuestions, SetShowManageQuestions] = useState(false);
-    const [ShowCreate, SetShowCreate] = useState(false);
-    const [Managed, SetManaged] = useState({});
-    const [Created, SetCreated] = useState({});
+    }, [C.AppReady])
+
+    const { keycloak } = useKeycloak();
+    if (!keycloak.hasRealmRole("app-admin")) { return <AccessDenied /> }
 
     return (
         <div id='Admin'>
@@ -307,8 +299,8 @@ export function Admin() {
                         <button className='selectbutton' onClick={()=>SetShowCreate(!ShowCreate)}>{Created.type || "None"}</button>
                         {ShowCreate && <div id='select' onMouseLeave={()=>SetShowCreate(false)}>
                             <div id='select-scroll'>
-                                {['unit', 'topic', 'question'].map((v) => {return (
-                                    <div id='pick' className={v==Created.type && 'chosen'} onClick={()=>{SetShowCreate(!ShowCreate); SetCreated({type:v})}}>{v}</div>
+                                {['unit', 'topic', 'question'].map((v,i) => {return (
+                                    <div id='pick' key={i} className={v==Created.type ? 'chosen' : ''} onClick={()=>{SetShowCreate(!ShowCreate); SetCreated({type:v})}}>{v}</div>
                                 )})}
                             </div>
                         </div>}

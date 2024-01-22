@@ -9,7 +9,10 @@ import { FaStar, FaLightbulb } from 'react-icons/fa';
 
 function Question(p) {
     const answers = p.data.correct_answers.concat(p.data.misleading_answers)
-    const stars = Array.from({ length: p.data.difficulty}, (_,i) => i + 1);
+    const stars = Array.from({ length: p.data.difficulty}, (_,i) => i + 1)
+    let selected = []
+    p.UpdateQuestion(p.count, {selected}, )
+    
     return (
         <div id="question">
             <div id="title">
@@ -28,7 +31,18 @@ function Question(p) {
                 <div id="pick">
                     {answers.map((q)=> {
                         return (
-                            <button className="button">{q}</button>
+                            <button className="button" id={selected.includes(q) && 'selected'}
+                            onClick={()=>{
+                                if (selected.includes(q)) {
+                                    selected = selected.filter(x => x != q)
+                                } else {
+                                    selected.push(q)
+                                }
+                                p.UpdateQuestion(p.count, { selected })
+                               
+
+                            }}
+                            >{q}</button>
                         )
                     })}
                     {/* <FaLightbulb id='icon' /> */}
@@ -45,7 +59,15 @@ export function Questions() {
 
     const C = useContext(AppContext);
     const [Questions, SetQuestions] = useState({unansweredQuestions:[], answeredQuestions:[]});
+    const [QuizData, SetQuizData] = useState({});
     const { unitid, topicid } = useParams()
+
+    function UpdateQuestion(questionid, questiondata) {
+        const newdata = QuizData
+        QuizData[questionid] = questiondata
+        SetQuizData(newdata)
+        console.log(QuizData)
+    }
 
     useEffect(() => {
         if (C.AppReady) {
@@ -72,7 +94,7 @@ export function Questions() {
                 <p>Here's your set of questions. Good luck!</p>
             </div>
             <div id="questions">
-                {Questions.unansweredQuestions.map((x,i) => { return <Question data={x} key={x.question_id} count={i} /> })}
+                {Questions.unansweredQuestions.map((x,i) => { return <Question data={x} key={x.question_id} count={i} QuizData={QuizData} UpdateQuestion={UpdateQuestion} /> })}
             </div>
             <button id="submitbutton" className="button">Submit Answers</button>
         </div>

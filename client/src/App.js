@@ -19,6 +19,7 @@ import { Friends } from './components/Friends/Friends';
 import { Groups } from './components/Groups/Groups';
 import { Ranking } from './components/Ranking/Ranking';
 import { Questions } from './components/Units/Questions.js';
+import { Search } from './components/Search/Search.js';
 import DataService from "./DataService.js"
 
 export const AppContext = createContext();
@@ -56,6 +57,7 @@ function App() {
           <Route path='friends' element={<Friends/>}/>
           <Route path='groups' element={<Groups/>}/>
           <Route path='ranking' element={<Ranking />} />
+          <Route path='search' element={<Search />} />
 
 
           <Route path='*' element={<NotFound/>}/>

@@ -16,7 +16,7 @@ function Button(p) {
                     <p>{p.data.topic}</p>
                 </div>
             </Link>
-            <ProgressBar completion={parseInt(p.data.completion)}/>
+            <ProgressBar completion={parseInt(p.data.completion_ratio)}/>
         </div>
     )
 }

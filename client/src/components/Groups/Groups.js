@@ -12,7 +12,7 @@ export function Groups() {
         <div id="Groups">
             <div id='header'>
                 <h1>Groups</h1>
-                <p>groups</p>
+                <p>Get in touch with others.</p>
             </div>
             <p>Coming Soon</p>
         </div>

@@ -12,7 +12,7 @@ export function Friends() {
         <div id="Friends">
             <div id='header'>
                 <h1>Friends</h1>
-                <p>idk i have none.</p>
+                <p>Manage your friends.</p>
             </div>
             <p>Coming Soon</p>
         </div>

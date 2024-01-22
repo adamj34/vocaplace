@@ -11,7 +11,8 @@ export function Search() {
     return (
         <div id="Search">
             <p>Results for</p>
-                <p id="bold">{Params.get('q')}</p>
+            <p id="bold">{Params.get('q')}</p>
+            <p>Coming Soon</p>
         </div>
     )
 }
