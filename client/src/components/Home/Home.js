@@ -114,7 +114,7 @@ export function Home() {
                         </div>
                     </Link>
 
-                    <Link to={'profile/'+C.UserData.userid}>
+                    <Link to={'profile/'+C.UserData.id}>
                         <div id='profile'>
                             <div id='title'>
                                 <FaPen id='icon'/>
