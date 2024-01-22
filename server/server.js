@@ -19,17 +19,7 @@ const app = express();
 
 await testConnection(db); 
 
-// const memoryStore = new session.MemoryStore(); 
-// const keycloak = new Keycloak({ store: memoryStore }, './keycloak.json'); // Specify the path to your keycloak.json file
-// app.use(keycloak.middleware());  
- 
-// Session
-// app.use(session({
-//     secret: 'secret',
-//     resave: false,
-//     saveUninitialized: true,
-//     store: memoryStore
-// }));       
+  
  
 app.use(morgan(":method :url :status :response-time ms")); 
 
@@ -40,17 +30,9 @@ app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:8080']
 }))    
 
-// app.get('/test', keycloak.protect(), function (req, res) {
-//     res.render(
-//         'test',
-//         { title: 'Testing keycloak on the server' }
-//     );
-// });
 
-// app.use(keycloak.middleware({ logout: '/' }));  
 
 app.use(keycloak.middleware()); 
-// app.use(keycloak.protect(), getUserData);
 app.use(getUserData);
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
