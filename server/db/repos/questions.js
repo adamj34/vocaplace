@@ -19,7 +19,7 @@ class QuestionsRepository {
     }
 
     addToAnswered(values) {
-        const question_ids = JSON.parse(values.question_ids);
+        const question_ids = values.question_ids;
         const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
 
         const cs = new this.pgp.helpers.ColumnSet(['user_id', 'question_id'], {table: 'answered_questions'});
@@ -29,7 +29,7 @@ class QuestionsRepository {
     }
 
     addToRepetition(values) {
-        const question_ids = JSON.parse(values.question_ids);
+        const question_ids = values.question_ids;
         const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
 
         const cs = new this.pgp.helpers.ColumnSet(['user_id', 'question_id'], {table: 'repetitions'});

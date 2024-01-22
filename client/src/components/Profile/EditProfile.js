@@ -6,8 +6,19 @@ import { useState, useContext } from 'react';
 import { AppContext } from '../../App';
 import TextareaAutosize from 'react-textarea-autosize';
 import { AccessDenied } from '../AccessDenied'
+import { DateFormat } from '../../helpers/DateFormat';
+import DataService from '../../DataService';
+
+
+function UpdateUserData(data) {
+    data.bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec orci sit amet nisi vestibulum lacinia nec sed enim. Curabitur massa arcu, lobortis id diam at, lobortis cursus nisi. Nullam semper, nibh condimentum feugiat tempus, lorem urna efficitur enim, sodales convallis orci dui vel mauris. Morbi at vulputate metus. Cras tellus leo, vulputate in porttitor vel, lobortis ac magna. Nam suscipit et urna ut porttitor. Morbi elementum purus vel lectus fringilla, ut fringilla augue convallis."
+    DataService.UpdateUserData(data).then(() => {
+        console.log('updated')
+    })
+}
 
 export function EditProfile() {
+    const [Data, SetData] = useState({});
     const C = useContext(AppContext);
     const { id } = useParams()
     document.title = `Duolingo | Edit Profile`
@@ -18,7 +29,6 @@ export function EditProfile() {
     
 
     // placeholders
-    const bio='[BIO] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce luctus sem urna, sed imperdiet arcu aliquet sit amet. Integer sed metus hendrerit, iaculis nunc eget, porttitor nisl. Donec lacinia elit sem, in venenatis lectus sollicitudin sed. Mauris vulputate scelerisque enim, nec scelerisque lectus elementum ac.'
     const privateprofile = false
     
     return (
@@ -33,15 +43,15 @@ export function EditProfile() {
                         <input type='file' id='picinput' onChange={(e)=>{C.SetUserData({...C.UserData, 'pfp':URL.createObjectURL(e.target.files[0])}); console.log(e.target.files[0].name)}}></input>
                     </div>
                     <div id='side'>
-                        <h1 id='username'>uzytkownik o id: {id}</h1>
-                        <p>Member since [DATE]</p>
-                        <p>[DAYS] streak</p>
-                        <p>[NUMBER] points</p>
-                        <TextareaAutosize id='bio' className='input' minRows={5} maxLength={400} defaultValue={bio}></TextareaAutosize>
+                        <h1 id='username'>{C.UserData.username}</h1>
+                        <p>Member since {DateFormat(C.UserData.created_at)}</p>
+                        <p>{C.UserData.ongoing_streak} streak</p>
+                        <p>{C.UserData.points} points</p>
+                        <TextareaAutosize id='bio' className='input' minRows={5} maxLength={400} defaultValue={C.UserData.bio} ></TextareaAutosize>
                     </div>
                 </div>
                 <div id='buttons'>
-                    <button className='button'>Save Changes</button>
+                    <button className='button' onClick={()=>{UpdateUserData(Data)}}>Save Changes</button>
                     <button className='button'>Set profile to {privateprofile == false ? 'private' : "public"}</button>
                     <Link to="./../"><button className='button'>Back</button></Link>
                 </div>

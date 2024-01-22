@@ -68,10 +68,17 @@ export default {
         return res.data
     },
 
-
     async GetNotifications() {
         const res = await Server.get(`/user`)
         return res.data
+    },
+
+    async SaveQuestionsAnswered(ids) {
+        await Server.post(`/questions/answered`, {questionIds:ids})
+    },
+
+    async SaveRepetitions(ids) {
+        await Server.post(`/questions/repetition`, ids)
     },
 
    
