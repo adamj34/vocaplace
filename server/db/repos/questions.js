@@ -19,11 +19,12 @@ class QuestionsRepository {
     }
 
     addToAnswered(values) {
+        // const question_ids = JSON.parse(values.question_ids);
         const question_ids = values.question_ids;
         const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
 
         const cs = new this.pgp.helpers.ColumnSet(['user_id', 'question_id'], {table: 'answered_questions'});
-        const query = this.pgp.helpers.insert(dataMulti, cs);
+        const query = this.pgp.helpers.insert(dataMulti, cs) + ' ON CONFLICT (user_id, question_id) DO NOTHING';
         
         return this.db.none(query);
     }
@@ -33,10 +34,9 @@ class QuestionsRepository {
         const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
 
         const cs = new this.pgp.helpers.ColumnSet(['user_id', 'question_id'], {table: 'repetitions'});
-        const query = this.pgp.helpers.insert(dataMulti, cs);
+        const query = this.pgp.helpers.insert(dataMulti, cs) + ' ON CONFLICT (user_id, question_id) DO NOTHING';
 
         return this.db.none(query);
-        // return this.db.one('INSERT INTO repetitions (user_id, question_id) VALUES (${user_id}, ${question_id}) RETURNING *', values);
     }
 }
 
