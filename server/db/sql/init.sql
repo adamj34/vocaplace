@@ -112,12 +112,12 @@ INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, q
 VALUES (1, 'How do you greet someone in the afternoon', '{"Good afternoon."}', '{"Good night.", "Good morning.", "Good day."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (1, 'How do you greet someone in the night', '{"Good night."}', '{"Good morning.", "Good afternoon.", "Good day."}', 'pick', 1);
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'Put the words in the correct order to translate: "Miło mi cię poznać."', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'Put the words in the correct order to translate: "Miło cię widzieć."', '{"Nice to see you"}', '{"Nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How are you ...?', '{"doing"}', '{"doing", "going", "feeling", "being"}', 'fill', 1);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (1, 'Put the words in the correct order to translate: "Miło mi cię poznać."', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (1, 'Put the words in the correct order to translate: "Miło cię widzieć."', '{"Nice to see you"}', '{"Nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (1, 'How are you ...?', '{"doing"}', '{"doing", "going", "feeling", "being"}', 'fill', 1);
 
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (2, 'How do you say 1 in English?', '{"one"}', '{"two", "three", "four", "five"}', 'pick', 1);
@@ -127,10 +127,10 @@ INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, q
 VALUES (2, 'How do you say 3 in English?', '{"three"}', '{"two", "one", "four", "five"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (2, 'How do you say 4 in English?', '{"four"}', '{"two", "three", "one", "five"}', 'pick', 1);
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (2, 'How do you say 45 in English?', '{"forty five"}', '{"forty", "hive", "four", "five"}', 'order', 2);
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (2, 'How do you say 100 in English?', '{"one hundred"}', '{"one", "two", "hunded", "four"}', 'order', 2);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (2, 'How do you say 45 in English?', '{"forty five"}', '{"forty", "hive", "four", "five"}', 'order', 2);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (2, 'How do you say 100 in English?', '{"one hundred"}', '{"one", "two", "hunded", "four"}', 'order', 2);
 
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (3, 'What is the first day of the week?', '{"Monday"}', '{"Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}', 'pick', 1);
@@ -138,13 +138,13 @@ INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, q
 VALUES (3, 'What is the second day of the week?', '{"Tuesday"}', '{"Monday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (3, 'What is the last day of the week?', '{"Friday"}', '{"Tuesday", "Monday", "Thursday", "Saturday", "Sunday"}', 'pick', 1);
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (3, 'Put the words in the correct order to translate: "Jaki jest dzisiaj dzień?"', '{"What day is it today?"}', '{"What", "day", "month", "is", "today?", "yesterday", "it"}', 'order', 1);
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (3, 'Put the words in the correct order to translate: "Jaki jest jutro dzień?"', '{"What day is it tomorrow?"}', '{"What", "tomorrow?", "day", "month", "is", "today?", "yesterday", "it"}', 'order', 2);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (3, 'Put the words in the correct order to translate: "Jaki jest dzisiaj dzień?"', '{"What day is it today?"}', '{"What", "day", "month", "is", "today?", "yesterday", "it"}', 'order', 1);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (3, 'Put the words in the correct order to translate: "Jaki jest jutro dzień?"', '{"What day is it tomorrow?"}', '{"What", "tomorrow?", "day", "month", "is", "today?", "yesterday", "it"}', 'order', 2);
 
-INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (4, 'What is your favorite vacation ...?', '{"destination"}', '{"destination", "world", "land", "cottage"}', 'fill', 1);
+-- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+-- VALUES (4, 'What is your favorite vacation ...?', '{"destination"}', '{"destination", "world", "land", "cottage"}', 'fill', 1);
 
 
 -- INSERT INTO user_relationships (user1_id, user2_id, relationship) VALUES ('3a84759d-8ea5-40d7-91f7-f22440d2d866', 'db77d276-7c84-4543-908b-d4ac92f031ec', 'friends');

@@ -21,7 +21,7 @@ function CheckQuestions(checkedstate, DispatchQuestionsData) {
         }
     }
 
-    const percentage = (correct.length / (correct.length+incorrect.length)) * 100
+    const percentage = Math.round((correct.length / (correct.length+incorrect.length)) * 100)
 
     return {correct, incorrect, percentage}
 }
@@ -68,7 +68,7 @@ function Question(p) {
                     )) : 
                         p.QuestionsData[p.i].correct ? 
                         <FaCheck id='icon' />
-                        : <FaXmark id='icon' />
+                        : <FaXmark id='icon' className="wrong" />
                     }
                 </div>
             </div>
@@ -123,6 +123,7 @@ export function Questions() {
         if (C.AppReady) {
             DataService.GenerateQuiz(unitid,topicid).then((data) => {
                 console.log('answeredquestions',data.data.answeredQuestions)
+                console.log('unansweredquestions', data.data.unansweredQuestions)
                 const questions = ShuffleArray(data.data.unansweredQuestions.concat(data.data.answeredQuestions))
 
                 questions.forEach((q, i) => {
@@ -170,10 +171,13 @@ export function Questions() {
                     console.log('correctquestions',result.correct)
                     // const incorrect = Object.values(QuestionsData).slice(0,-1).filter(x => !x.correct).map(x => x.question_id)
                     // console.log(incorrect)
-                    DataService.SaveQuestionsAnswered(result.correct).then(()=>{
-                        SetFinished(true); window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-                        console.log('saved')
-                    })
+                    if (result.correct.length > 0) {
+                        DataService.SaveQuestionsAnswered(result.correct).then(()=>{
+                            console.log('saved')
+                        })
+                    }
+                    SetFinished(true)
+                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
                 }}>Submit Answers</button>
             )}
         </div>

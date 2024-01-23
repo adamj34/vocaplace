@@ -731,6 +731,16 @@ input[type="file"] {
         background-image: linear-gradient($darkgray, $darkgraygradientbottom);
         display: flex;
         justify-content: space-between;
+        #right, #left {
+          display: flex;
+          align-items: center;
+          #icon {
+            font-size: 120%;
+            &.wrong {
+              font-size: 140%;
+            }
+          }
+        }
       }
       #correctanswers {
         padding-left: 3%;
