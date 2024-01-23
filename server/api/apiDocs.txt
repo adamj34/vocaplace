@@ -189,7 +189,7 @@ returns:
     }
 }
 
-/units/progress/:unitId
+/units/progress/:unitId ✔️
 GET:
 returns:
 {
@@ -217,7 +217,7 @@ returns:
     }
 }
 
-/units/overview
+/units/overview (jeszcze nie wiem czy to jest potrzebne)
 GET:
 returns: 
 {

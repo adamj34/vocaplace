@@ -16,7 +16,7 @@ function Button(p) {
                     <p>{p.data.unit}</p>
                 </div>
             </Link>
-            <ProgressBar completion={parseInt(p.data.completion_ratio)}/>
+            <ProgressBar completion={parseFloat(p.data.completion_ratio)*100}/>
         </div>
     )
 }
@@ -35,7 +35,6 @@ export function Units() {
                     return { unitid, ...d }
                 })
                 SetUnits(formatted)
-                console.log(formatted)
             })
         }
     }, [C.AppReady])

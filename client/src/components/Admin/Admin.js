@@ -4,6 +4,8 @@ import { AccessDenied } from '../AccessDenied';
 import { useKeycloak } from '@react-keycloak/web';
 import { AppContext } from '../../App';
 import DataService from '../../DataService';
+import { UnitCreator } from './UnitCreator'
+
 
 function QuestionManager(p) {
     const [QuestionData, SetQuestionData] = useState({});
@@ -68,26 +70,25 @@ function UnitManager(p) {
     )
 }
 
-function UnitCreator(p) {
-    const [UnitData, SetUnitData] = useState({});
-    return (
-        <div id='creator'>
-            <form>
-                <div id='field'>
-                    <label>Unit Name:</label>
-                    <input className='input' placeholder='Vocabulary' onChange={(e)=>{SetUnitData({...UnitData, unitname:e.target.value})}}/>
-                </div>
-                <div id='field'>
-                    <label>Date Created:</label>
-                    <input className='input' type='date' defaultValue={new Date().toISOString().substring(0, 10)} onChange={(e)=>{SetUnitData({...UnitData, datecreated:e.target.value})}}/>
-                </div>
-                <div id='buttons'>
-                    <button className='button'>Submit</button>
-                </div>
-            </form>
-        </div>
-    )
-}
+// function UnitCreator(p) {
+//     const [UnitData, SetUnitData] = useState();
+//     return (
+//         <div id='creator'>
+//             <form>
+//                 <div id='field'>
+//                     <label>Unit Name:</label>
+//                     <input className='input' placeholder='Vocabulary' onChange={(e)=>{SetUnitData({...UnitData, unit:e.target.value})}}/>
+//                 </div>
+//                 <div id='buttons'>
+//                     <button type='button' className='button' onClick={()=>{
+//                         console.log('add')
+//                         console.log(UnitData)
+//                     }}>Submit</button>
+//                 </div>
+//             </form>
+//         </div>
+//     )
+// }
 
 function TopicCreator(p) {
     const [TopicData, SetTopicData] = useState({});
@@ -306,7 +307,8 @@ export function Admin() {
                         </div>}
                     </div>
                 </div>
-                {Created.type =='unit' && <UnitCreator/>}
+                <UnitCreator units={Units} />
+                {/* {Created.type =='unit' && <UnitCreator units={Units}/>} */}
                 {Created.type =='topic' && <TopicCreator units={Units}/>}
                 {Created.type =='question' && <QuestionCreator units={Units}/>}
             </div>

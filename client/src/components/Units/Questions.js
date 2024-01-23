@@ -12,15 +12,18 @@ function CheckQuestions(checkedstate, DispatchQuestionsData) {
     const correct = []
     const incorrect = []
 
-    for (let i = 0; i < Object.keys(checkedstate).length - 1; i++) {
+    for (let i = 0; i < Object.keys(checkedstate).length; i++) {
         if (checkedstate[i].selected.sort().toString() == checkedstate[i].correct_answers.sort().toString()) { // correct
             correct.push(checkedstate[i].question_id)
             DispatchQuestionsData({type:'SETASCORRECT', i})
         } else {
             incorrect.push(checkedstate[i].question_id)
+            console.log(checkedstate[i].content)
         }
     }
 
+    console.log('correct',correct.length)
+    console.log('incorrect',incorrect.length)
     const percentage = Math.round((correct.length / (correct.length+incorrect.length)) * 100)
 
     return {correct, incorrect, percentage}

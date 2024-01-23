@@ -78,7 +78,11 @@ export default {
     },
 
     async SaveRepetitions(ids) {
-        await Server.post(`/questions/repetition`, ids)
+        await Server.post(`/questions/repetition`, {questionIds: ids})
+    },
+    
+    async AddUnit(unit) {
+        await Server.post(`/units`, unit)
     },
 
    

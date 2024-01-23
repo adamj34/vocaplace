@@ -9,7 +9,6 @@ function ProgressBarRoundFunction(n) {
 
 
 export default function ProgressBar(p) {
-    console.log(p)
     return (
         <div id='ProgressBar'>
             <div id='container'>

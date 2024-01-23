@@ -16,7 +16,7 @@ function Button(p) {
                     <p>{p.data.topic}</p>
                 </div>
             </Link>
-            <ProgressBar completion={parseInt(p.data.completion_ratio)}/>
+            <ProgressBar completion={parseFloat(p.data.completion_ratio) * 100} />
         </div>
     )
 }
@@ -56,7 +56,7 @@ export function Topics() {
                 <p>Choose a topic to generate a set of questions.</p>
             </div>
             <div id="list">
-                {Topics.map((x) => {return <Button data={x} key={x.id}/>})}
+                {Topics.map((x) => {return <Button data={x} key={x.topicid}/>})}
             </div>
         </div>
         

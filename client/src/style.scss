@@ -642,7 +642,18 @@ input[type="file"] {
           input {
             width: 500px;
           }
+          label>a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+            &:hover {
+              color: $themecolor;
+            }
+          }
         }
+      }
+      #error {
+        margin: 0;
       }
     }
     #buttons {
