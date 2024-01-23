@@ -62,15 +62,17 @@ CREATE TABLE IF NOT EXISTS user_relationships (
 );
 
 CREATE TABLE IF NOT EXISTS repetitions (
-  id SERIAL PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id),
-  question_id INTEGER NOT NULL REFERENCES questions(id)
+  question_id INTEGER NOT NULL REFERENCES questions(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (user_id, question_id)
 );
 
 CREATE TABLE IF NOT EXISTS answered_questions (
-  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id),
   question_id INTEGER NOT NULL REFERENCES questions(id),
-  user_id UUID NOT NULL REFERENCES users(id)
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (user_id, question_id)
 );
 
 CREATE TABLE IF NOT EXISTS groups (
