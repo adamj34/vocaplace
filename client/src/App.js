@@ -14,7 +14,7 @@ import { Units } from './components/Units/Units.js'
 import { EditProfile } from './components/Profile/EditProfile'
 import { Topics } from './components/Units/Topics';
 import { Admin } from './components/Admin/Admin'
-import { Revisions } from './components/Revisions/Revisions';
+import { Repetitions } from './components/Repetitions/Repetitions.js';
 import { Friends } from './components/Friends/Friends';
 import { Groups } from './components/Groups/Groups';
 import { Ranking } from './components/Ranking/Ranking';
@@ -53,7 +53,7 @@ function App() {
           <Route path='units/:unitid' element={<Topics/>}/>
           <Route path='units' element={<Units/>}/>
           <Route path='admin' element={<Admin/>}/>
-          <Route path='revisions' element={<Revisions/>}/>
+          <Route path='repetitions' element={<Repetitions/>}/>
           <Route path='friends' element={<Friends/>}/>
           <Route path='groups' element={<Groups/>}/>
           <Route path='ranking' element={<Ranking />} />

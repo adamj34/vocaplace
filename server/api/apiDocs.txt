@@ -139,7 +139,7 @@ returns:
     }
 }
 
-/units
+/units ✔️
 POST:
 expects e.g.: req.body = 
 {
@@ -217,7 +217,7 @@ returns:
     }
 }
 
-/units/overview (jeszcze nie wiem czy to jest potrzebne)
+/units/overview (to jest do admin panel)
 GET:
 returns: 
 {
@@ -310,7 +310,7 @@ returns:
 }
 
 
-/topics
+/topics ✔️
 POST:
 expects e.g.: req.body = 
 {

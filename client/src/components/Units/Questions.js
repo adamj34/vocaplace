@@ -176,7 +176,10 @@ export function Questions() {
                     // console.log(incorrect)
                     if (result.correct.length > 0) {
                         DataService.SaveQuestionsAnswered(result.correct).then(()=>{
-                            console.log('saved')
+                            console.log('saved answered')
+                        })
+                        DataService.SaveRepetitions(result.incorrect).then(() => {
+                            console.log('saved repetitions')
                         })
                     }
                     SetFinished(true)

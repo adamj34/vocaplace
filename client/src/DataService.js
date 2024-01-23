@@ -68,10 +68,10 @@ export default {
         return res.data
     },
 
-    async GetNotifications() {
-        const res = await Server.get(`/user`)
-        return res.data
-    },
+    // async GetNotifications() {
+    //     const res = await Server.get(`/user`)
+    //     return res.data
+    // },
 
     async SaveQuestionsAnswered(ids) {
         await Server.post(`/questions/answered`, {questionIds:ids})
@@ -83,6 +83,11 @@ export default {
     
     async AddUnit(unit) {
         await Server.post(`/units`, unit)
+    },
+
+    async GetUnitsTopicsQuestions() { // for admin panel
+        const res = await Server.get(`/units/overview`)
+        return res.data
     },
 
    

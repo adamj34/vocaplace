@@ -47,7 +47,7 @@ export function Nav() {
                     </Link>
                     <div id='links'>
                         <Link to='units'><FaBook id='icon'/></Link>
-                        <Link to='revisions'><FaBrain id='icon'/></Link>
+                        <Link to='repetitions'><FaBrain id='icon'/></Link>
                         <Link to='friends'><FaHandsHelping id='icon'/></Link>
                         <Link to='groups'><FaUserFriends id='icon'/></Link>
                         <Link to='ranking'><FaMedal id='icon'/></Link>

@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
 
 function Button(p) {
+    console.log(p.data)
     return (
         <div id='button'>
             <Link to={p.data.unitid}>
                 <div id='title' className="hovertext">
-                    <i id='icon' className="fa-solid fa-book"></i>
+                    <i id='icon' className={"fa-solid fa-"+(p.data.unit_icon || "book")}></i>
                     <p>{p.data.unit}</p>
                 </div>
             </Link>

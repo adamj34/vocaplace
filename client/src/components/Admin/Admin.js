@@ -5,228 +5,209 @@ import { useKeycloak } from '@react-keycloak/web';
 import { AppContext } from '../../App';
 import DataService from '../../DataService';
 import { UnitCreator } from './UnitCreator'
+import { TopicCreator } from './TopicCreator';
 
 
-function QuestionManager(p) {
-    const [QuestionData, SetQuestionData] = useState({});
+// function QuestionManager(p) {
+//     const [QuestionData, SetQuestionData] = useState({});
 
-    return (
-        <div id='manager'>
-            <form id='questionform'>
-                <div id='left'>
-                    <div id='field'>
-                        <label htmlFor='polishQuestionBody'>Polish Question: </label>
-                        <input className='input' name='polishQuestionBody' value={'hey'}/>
-                    </div>
-                    <div id='field'>
-                        <label htmlFor='polishQuestionBody'>Polish Possible Answers: </label>
-                        <input className='input' name='polishQuestionBody' value={'hey'}/>
-                    </div>
-                </div>
-                   <div id='middle'>
-                    <div id='field'>
-                        <label htmlFor='englishQuestionBody'>English Question: </label>
-                        <input className='input' name='englishQuestionBody' value={'hey'}/>
-                    </div>
-               </div>
-               <div id='right'>
-                    <div id='field'>
-                        <label>Unit:</label>
-                        <button type='button' className='selectbutton'>None</button>
-                    </div>
-                    <div id='field'>
-                        <label>Topic:</label>
-                        <button type='button' className='selectbutton'>None</button>
-                    </div>
-                    <div id='field'>
-                        <label>Difficulty:</label>
-                        <button type='button' className='selectbutton'>None</button>
-                    </div>
-                </div>                        
-            </form>
-            <div id='buttons'>
-                <button className='button'>Save</button>
-                <button className='button'>Delete</button>
-            </div>
-        </div>
-    )
-}
+//     return (
+//         <div id='manager'>
+//             <form id='questionform'>
+//                 <div id='left'>
+//                     <div id='field'>
+//                         <label htmlFor='polishQuestionBody'>Polish Question: </label>
+//                         <input className='input' name='polishQuestionBody' value={'hey'}/>
+//                     </div>
+//                     <div id='field'>
+//                         <label htmlFor='polishQuestionBody'>Polish Possible Answers: </label>
+//                         <input className='input' name='polishQuestionBody' value={'hey'}/>
+//                     </div>
+//                 </div>
+//                    <div id='middle'>
+//                     <div id='field'>
+//                         <label htmlFor='englishQuestionBody'>English Question: </label>
+//                         <input className='input' name='englishQuestionBody' value={'hey'}/>
+//                     </div>
+//                </div>
+//                <div id='right'>
+//                     <div id='field'>
+//                         <label>Unit:</label>
+//                         <button type='button' className='selectbutton'>None</button>
+//                     </div>
+//                     <div id='field'>
+//                         <label>Topic:</label>
+//                         <button type='button' className='selectbutton'>None</button>
+//                     </div>
+//                     <div id='field'>
+//                         <label>Difficulty:</label>
+//                         <button type='button' className='selectbutton'>None</button>
+//                     </div>
+//                 </div>                        
+//             </form>
+//             <div id='buttons'>
+//                 <button className='button'>Save</button>
+//                 <button className='button'>Delete</button>
+//             </div>
+//         </div>
+//     )
+// }
 
-function UnitManager(p) {
-    const [UnitData, SetUnitData] = useState(p.data || {});
-    return (
-        <div id='manage'>
-            <form id='unitform'>
-                <div id='field'>
-                    <label htmlFor='unitname'>Unit Name: </label>
-                    <input className='input' name='unitname' value={UnitData.name}/>
-                </div>
-            </form>
-            <div id='buttons'>
-                <button className='button'>Save</button>
-                <button className='button'>Delete</button>
-            </div>
-        </div>
-    )
-}
+// function UnitManager(p) {
+//     const [UnitData, SetUnitData] = useState(p.data || {});
+//     return (
+//         <div id='manage'>
+//             <form id='unitform'>
+//                 <div id='field'>
+//                     <label htmlFor='unitname'>Unit Name: </label>
+//                     <input className='input' name='unitname' value={UnitData.name}/>
+//                 </div>
+//             </form>
+//             <div id='buttons'>
+//                 <button className='button'>Save</button>
+//                 <button className='button'>Delete</button>
+//             </div>
+//         </div>
+//     )
+// }
 
-// function UnitCreator(p) {
-//     const [UnitData, SetUnitData] = useState();
+// function TopicCreator(p) {
+//     const [TopicData, SetTopicData] = useState({});
+//     const [ShowUnits, SetShowUnits] = useState(false);
+//     console.log(p.units)
+
 //     return (
 //         <div id='creator'>
 //             <form>
+                // <div id='field'>
+                //     <label>Unit:</label>
+                //     <div id='selectfield'>
+                //         <button className='selectbutton' type='button' onClick={()=>SetShowUnits(!ShowUnits)}>{(TopicData.unitname) || "None"}</button>
+                //         {ShowUnits && <div id='select' onMouseLeave={()=>SetShowUnits(false)}>
+                //             <div id='select-scroll'>
+                //                 {Object.keys(p.units).map((u,i) => {return (
+                //                         <div key={i} className={u==TopicData.unitid ? 'chosen' : ''} onClick={()=>{SetShowUnits(!ShowUnits); SetTopicData({...TopicData, unitid:u, unitname:p.units[u].unit})}}>{p.units[u].unit}</div>
+                //                 )})}
+                //             </div>
+                //         </div>}
+                //     </div>
+                // </div>
 //                 <div id='field'>
-//                     <label>Unit Name:</label>
-//                     <input className='input' placeholder='Vocabulary' onChange={(e)=>{SetUnitData({...UnitData, unit:e.target.value})}}/>
+//                     <label>Topic Name:</label>
+//                     <input className='input' onChange={(e)=>{SetTopicData({...TopicData, topicname:e.target.value})}} placeholder='Animals'/>
+//                 </div>
+//                 <div id='field'>
+//                     <label>Date Created:</label>
+//                     <input className='input'type='date' defaultValue={new Date().toISOString().substring(0, 10)} onChange={(e)=>{SetTopicData({...TopicData, datecreated:e.target.value})}}/>
 //                 </div>
 //                 <div id='buttons'>
-//                     <button type='button' className='button' onClick={()=>{
-//                         console.log('add')
-//                         console.log(UnitData)
-//                     }}>Submit</button>
+//                     <button className='button'>Submit</button>
 //                 </div>
 //             </form>
 //         </div>
 //     )
 // }
 
-function TopicCreator(p) {
-    const [TopicData, SetTopicData] = useState({});
-    const [ShowUnits, SetShowUnits] = useState(false);
-    console.log(p.units)
+// function QuestionCreator(p) {
+//     const [QuestionData, SetQuestionData] = useState({});
+//     const [ShowTopics, SetShowTopics] = useState(false);
+//     const [ShowDifficulty, SetShowDifficulty] = useState(false);
+//     const [ShowType, SetShowType] = useState(false);
 
-    return (
-        <div id='creator'>
-            <form>
-            <   div id='field'>
-                    <label>Unit:</label>
-                    <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowUnits(!ShowUnits)}>{(TopicData.unitname) || "None"}</button>
-                        {ShowUnits && <div id='select' onMouseLeave={()=>SetShowUnits(false)}>
-                            <div id='select-scroll'>
-                                {Object.keys(p.units).map((u,i) => {return (
-                                        <div key={i} className={u==TopicData.unitid ? 'chosen' : ''} onClick={()=>{SetShowUnits(!ShowUnits); SetTopicData({...TopicData, unitid:u, unitname:p.units[u].unit})}}>{p.units[u].unit}</div>
-                                )})}
-                            </div>
-                        </div>}
-                    </div>
-                </div>
-                <div id='field'>
-                    <label>Topic Name:</label>
-                    <input className='input' onChange={(e)=>{SetTopicData({...TopicData, topicname:e.target.value})}} placeholder='Animals'/>
-                </div>
-                <div id='field'>
-                    <label>Date Created:</label>
-                    <input className='input'type='date' defaultValue={new Date().toISOString().substring(0, 10)} onChange={(e)=>{SetTopicData({...TopicData, datecreated:e.target.value})}}/>
-                </div>
-                <div id='buttons'>
-                    <button className='button'>Submit</button>
-                </div>
-            </form>
-        </div>
-    )
-}
-
-function QuestionCreator(p) {
-    const [QuestionData, SetQuestionData] = useState({});
-    const [ShowTopics, SetShowTopics] = useState(false);
-    const [ShowDifficulty, SetShowDifficulty] = useState(false);
-    const [ShowType, SetShowType] = useState(false);
-
-    return (
-        <div id='creator'>
-            <form>
-                <div id='field'>
-                    <label>Unit and Topic:</label>
-                    <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowTopics(!ShowTopics)}>{QuestionData.unitname || "None"}{QuestionData.topicname && QuestionData.unitname && " | "}{(QuestionData.topicname) || ""}</button>
-                        {ShowTopics && <div id='select' onMouseLeave={()=>SetShowTopics(false)}>
-                            <div id='select-scroll'>
-                                {Object.keys(p.units).map((u) => {return (<>
-                                    <div id='topic' className='disabled'>{p.units[u].unit}</div>
-                                    {Object.keys(p.units[u].topics).map((t,i) => {return (
-                                        <div key={i} id='question'className={t==QuestionData.topicid && u==QuestionData.unitid && 'chosen'} onClick={()=>{SetShowTopics(false); SetQuestionData({...QuestionData, unitid:u, unitname:p.units[u].unit, topicid:t, topicname:p.units[u].topics[t].name})}}>{p.units[u].topics[t].topic}</div>
-                                    )})}
-                                </>)})}
-                            </div>
-                        </div>}
-                    </div>
-                </div>
-                <div id='field'>
-                    <label>Type:</label>
-                    <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowType(!ShowType)}>{QuestionData.type || "None"}</button>
-                        {ShowType && <div id='select' onMouseLeave={()=>SetShowType(false)}>
-                            <div id='select-scroll'>
-                                {['Pick', 'Order', 'Connect', 'Fill'].map((t) => {return (<>
-                                    <div className={t==QuestionData.type && 'chosen'} onClick={()=>{SetShowType(false); SetQuestionData({...QuestionData, type:t,})}}>{t}</div>
-                                </>)})}
-                            </div>
-                        </div>}
-                    </div>
-                </div>
+//     return (
+//         <div id='creator'>
+//             <form>
+//                 <div id='field'>
+//                     <label>Unit and Topic:</label>
+//                     <div id='selectfield'>
+//                         <button className='selectbutton' type='button' onClick={()=>SetShowTopics(!ShowTopics)}>{QuestionData.unitname || "None"}{QuestionData.topicname && QuestionData.unitname && " | "}{(QuestionData.topicname) || ""}</button>
+//                         {ShowTopics && <div id='select' onMouseLeave={()=>SetShowTopics(false)}>
+//                             <div id='select-scroll'>
+//                                 {Object.keys(p.units).map((u) => {return (<>
+//                                     <div id='topic' className='disabled'>{p.units[u].unit}</div>
+//                                     {Object.keys(p.units[u].topics).map((t,i) => {return (
+//                                         <div key={i} id='question'className={t==QuestionData.topicid && u==QuestionData.unitid && 'chosen'} onClick={()=>{SetShowTopics(false); SetQuestionData({...QuestionData, unitid:u, unitname:p.units[u].unit, topicid:t, topicname:p.units[u].topics[t].name})}}>{p.units[u].topics[t].topic}</div>
+//                                     )})}
+//                                 </>)})}
+//                             </div>
+//                         </div>}
+//                     </div>
+//                 </div>
+//                 <div id='field'>
+//                     <label>Type:</label>
+//                     <div id='selectfield'>
+//                         <button className='selectbutton' type='button' onClick={()=>SetShowType(!ShowType)}>{QuestionData.type || "None"}</button>
+//                         {ShowType && <div id='select' onMouseLeave={()=>SetShowType(false)}>
+//                             <div id='select-scroll'>
+//                                 {['Pick', 'Order', 'Connect', 'Fill'].map((t) => {return (<>
+//                                     <div className={t==QuestionData.type && 'chosen'} onClick={()=>{SetShowType(false); SetQuestionData({...QuestionData, type:t,})}}>{t}</div>
+//                                 </>)})}
+//                             </div>
+//                         </div>}
+//                     </div>
+//                 </div>
                 
-                <div id='field'>
-                    <label>Question:</label>
-                    <input className='input' placeholder={(QuestionData.type == 'Connect' && "Connect the words with their meaning in English.") || (QuestionData.type == 'Order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (QuestionData.type == 'Pick' && "Which of these are vehicles?") || (QuestionData.type == 'Fill' && 'The dog quickly _ the thief who tried to enter the house.')} required onChange={(e)=>{SetQuestionData({...QuestionData, englishquestion:e.target.value})}}/>
-                </div>
-                {(QuestionData.type == 'Pick') && <div id='field'>
-                    <label>Correct Answers:</label>
-                    <input className='input' placeholder="Motorcycle, Bus, Car" onChange={(e)=>{SetQuestionData({...QuestionData, englishcorrectanswers:e.target.value})}}/>
-                </div>}
-                {(QuestionData.type == 'Pick') && <div id='field'>
-                    <label>Misleading Answers:</label>
-                    <input className='input' placeholder="Hospital, Crocodile, Juice, Wardrobe" onChange={(e)=>{SetQuestionData({...QuestionData, englishmisleadinganswers:e.target.value})}}/>
-                </div>}
-                {(QuestionData.type == 'Order') && <div id='field'>
-                    <label>Correct Answers:</label>
-                    <input className='input' placeholder="She has a dog." onChange={(e)=>{SetQuestionData({...QuestionData, englishcorrectanswers:e.target.value})}}/>
-                </div>}
-                {(QuestionData.type == 'Order') && <div id='field'>
-                    <label>Misleading Answers:</label>
-                    <input className='input' placeholder="He likes have wants an cat. bird." onChange={(e) => { SetQuestionData({ ...QuestionData, englishmisleadinganswers: e.target.value }) }} />
-                </div>}
-                {(QuestionData.type == 'Fill') && <div id='field'>
-                    <label>Correct Answers:</label>
-                    <input className='input' placeholder="chased off" onChange={(e) => { SetQuestionData({ ...QuestionData, englishcorrectanswers: e.target.value }) }} />
-                </div>}
-                {(QuestionData.type == 'Fill') && <div id='field'>
-                    <label>Hint:</label>
-                    <input className='input' placeholder="(idiomatic) to make someone or something go away" onChange={(e) => { SetQuestionData({ ...QuestionData, hint: e.target.value }) }} />
-                </div>}
-                {(QuestionData.type == 'Connect') && <div id='field'>
-                    <label>Correct Answers:</label>
-                    <input className='input' placeholder="Cat+Kot; Dog+Pies; Bird+Ptak; Horse+Koń" onChange={(e) => { SetQuestionData({ ...QuestionData, englishcorrectanswers: e.target.value }) }} />
-                </div>}
-                {(QuestionData.type == 'Connect') && <div id='field'>
-                    <label>Misleading Answers:</label>
-                    <input className='input' placeholder="Fish+Papuga" onChange={(e) => { SetQuestionData({ ...QuestionData, englishmisleadinganswers: e.target.value }) }} />
-                </div>}
-                <div id='field'>
-                    <label>Difficulty:</label>
-                    <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowDifficulty(!ShowDifficulty)}>{(QuestionData.difficulty == 1 && 'Easy') || (QuestionData.difficulty == 2 && 'Medium') || (QuestionData.difficulty == 3 && 'Hard') || "None"}</button>
-                        {ShowDifficulty && <div id='select' onMouseLeave={()=>SetShowDifficulty(false)}>
-                            <div id='select-scroll'>
-                                {[1,2,3].map((d) => {return (<>
-                                    <div className={d==QuestionData.difficulty && 'chosen'} onClick={()=>{SetShowDifficulty(false); SetQuestionData({...QuestionData, difficulty:d,})}}>{d==1 && 'Easy'}{d==2 && 'Medium'}{d==3 && 'Hard'}</div>
-                                </>)})}
-                            </div>
-                        </div>}
-                    </div>
-                </div>
-                <div id='field'>
-                    <label>Date Created:</label>
-                    <input className='input'type='date' defaultValue={new Date().toISOString().substring(0, 10)} onChange={(e)=>{SetQuestionData({...QuestionData, datecreated:e.target.value})}}/>
-                </div>
+//                 <div id='field'>
+//                     <label>Question:</label>
+//                     <input className='input' placeholder={(QuestionData.type == 'Connect' && "Connect the words with their meaning in English.") || (QuestionData.type == 'Order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (QuestionData.type == 'Pick' && "Which of these are vehicles?") || (QuestionData.type == 'Fill' && 'The dog quickly _ the thief who tried to enter the house.')} required onChange={(e)=>{SetQuestionData({...QuestionData, englishquestion:e.target.value})}}/>
+//                 </div>
+//                 {(QuestionData.type == 'Pick') && <div id='field'>
+//                     <label>Correct Answers:</label>
+//                     <input className='input' placeholder="Motorcycle, Bus, Car" onChange={(e)=>{SetQuestionData({...QuestionData, englishcorrectanswers:e.target.value})}}/>
+//                 </div>}
+//                 {(QuestionData.type == 'Pick') && <div id='field'>
+//                     <label>Misleading Answers:</label>
+//                     <input className='input' placeholder="Hospital, Crocodile, Juice, Wardrobe" onChange={(e)=>{SetQuestionData({...QuestionData, englishmisleadinganswers:e.target.value})}}/>
+//                 </div>}
+//                 {(QuestionData.type == 'Order') && <div id='field'>
+//                     <label>Correct Answers:</label>
+//                     <input className='input' placeholder="She has a dog." onChange={(e)=>{SetQuestionData({...QuestionData, englishcorrectanswers:e.target.value})}}/>
+//                 </div>}
+//                 {(QuestionData.type == 'Order') && <div id='field'>
+//                     <label>Misleading Answers:</label>
+//                     <input className='input' placeholder="He likes have wants an cat. bird." onChange={(e) => { SetQuestionData({ ...QuestionData, englishmisleadinganswers: e.target.value }) }} />
+//                 </div>}
+//                 {(QuestionData.type == 'Fill') && <div id='field'>
+//                     <label>Correct Answers:</label>
+//                     <input className='input' placeholder="chased off" onChange={(e) => { SetQuestionData({ ...QuestionData, englishcorrectanswers: e.target.value }) }} />
+//                 </div>}
+//                 {(QuestionData.type == 'Fill') && <div id='field'>
+//                     <label>Hint:</label>
+//                     <input className='input' placeholder="(idiomatic) to make someone or something go away" onChange={(e) => { SetQuestionData({ ...QuestionData, hint: e.target.value }) }} />
+//                 </div>}
+//                 {(QuestionData.type == 'Connect') && <div id='field'>
+//                     <label>Correct Answers:</label>
+//                     <input className='input' placeholder="Cat+Kot; Dog+Pies; Bird+Ptak; Horse+Koń" onChange={(e) => { SetQuestionData({ ...QuestionData, englishcorrectanswers: e.target.value }) }} />
+//                 </div>}
+//                 {(QuestionData.type == 'Connect') && <div id='field'>
+//                     <label>Misleading Answers:</label>
+//                     <input className='input' placeholder="Fish+Papuga" onChange={(e) => { SetQuestionData({ ...QuestionData, englishmisleadinganswers: e.target.value }) }} />
+//                 </div>}
+//                 <div id='field'>
+//                     <label>Difficulty:</label>
+//                     <div id='selectfield'>
+//                         <button className='selectbutton' type='button' onClick={()=>SetShowDifficulty(!ShowDifficulty)}>{(QuestionData.difficulty == 1 && 'Easy') || (QuestionData.difficulty == 2 && 'Medium') || (QuestionData.difficulty == 3 && 'Hard') || "None"}</button>
+//                         {ShowDifficulty && <div id='select' onMouseLeave={()=>SetShowDifficulty(false)}>
+//                             <div id='select-scroll'>
+//                                 {[1,2,3].map((d) => {return (<>
+//                                     <div className={d==QuestionData.difficulty && 'chosen'} onClick={()=>{SetShowDifficulty(false); SetQuestionData({...QuestionData, difficulty:d,})}}>{d==1 && 'Easy'}{d==2 && 'Medium'}{d==3 && 'Hard'}</div>
+//                                 </>)})}
+//                             </div>
+//                         </div>}
+//                     </div>
+//                 </div>
+//                 <div id='field'>
+//                     <label>Date Created:</label>
+//                     <input className='input'type='date' defaultValue={new Date().toISOString().substring(0, 10)} onChange={(e)=>{SetQuestionData({...QuestionData, datecreated:e.target.value})}}/>
+//                 </div>
                   
-                <div id='buttons'>
-                    <button className='button'>Submit</button>
-                </div>
-            </form>
-        </div>
-    )
-}
+//                 <div id='buttons'>
+//                     <button className='button'>Submit</button>
+//                 </div>
+//             </form>
+//         </div>
+//     )
+// }
 
 // function TopicManager(p) {
 //     const [TopicData, SetTopicData] = useState(p.data || {});
@@ -265,7 +246,7 @@ export function Admin() {
     document.title = `VocaPlace | Admin`
    
     const C = useContext(AppContext)
-    const [Units, SetUnits] = useState({})
+    const [GlobalData, SetGlobalData] = useState({})
     const [ShowManageQuestions, SetShowManageQuestions] = useState(false)
     const [ShowCreate, SetShowCreate] = useState(false)
     const [Managed, SetManaged] = useState({})
@@ -273,11 +254,9 @@ export function Admin() {
 
     useEffect(() => {
         if (C.AppReady) {
-            DataService.GetUnits().then((data) => {
-                const formatted = Object.entries(data.data).map(([unitid, d]) => {
-                    return {unitid,...d}
-                })
-                SetUnits(formatted)
+            DataService.GetUnitsTopicsQuestions().then((data) => {
+                const formatted = Object.fromEntries(Object.entries(data.data).map(([i, d]) => [d.unit, {topics:d.topics, unit_icon:d.unit_icon}]))
+                SetGlobalData(formatted)
             })
 
         }
@@ -307,14 +286,14 @@ export function Admin() {
                         </div>}
                     </div>
                 </div>
-                <UnitCreator units={Units} />
-                {/* {Created.type =='unit' && <UnitCreator units={Units}/>} */}
-                {Created.type =='topic' && <TopicCreator units={Units}/>}
-                {Created.type =='question' && <QuestionCreator units={Units}/>}
+                {/* <TopicCreator GlobalData={GlobalData} /> */}
+                {Created.type =='unit' && <UnitCreator GlobalData={GlobalData}/>}
+                {/* {Created.type =='topic' && <TopicCreator units={Units}/>} */}
+                {/* {Created.type =='question' && <QuestionCreator units={Units}/>} */}
             </div>
             <div className='line'></div>
 
-            <div id='managequestions'>
+            {/* <div id='managequestions'>
                 <div id='subheader'>
                     <h3>Manage{Managed.type && " "+Managed.type}:</h3>
                     <div id='selectquestion'>
@@ -335,10 +314,10 @@ export function Admin() {
                         </div>}
                     </div>
                 </div>
-                {/* {Managed.type =='question' && <QuestionManager data={Managed.data}/>}
+                {Managed.type =='question' && <QuestionManager data={Managed.data}/>}
                 {Managed.type =='topic' && <TopicManager data={Managed.data} units={Units}/>}
-                {Managed.type =='unit' && <UnitManager data={Managed.data}/>} */}
-            </div>
+                {Managed.type =='unit' && <UnitManager data={Managed.data}/>}
+            </div> */}
 
             
 

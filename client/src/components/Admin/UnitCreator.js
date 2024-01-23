@@ -2,17 +2,18 @@ import { useState } from "react";
 import DataService from "../../DataService";
 
 
-function Validate(UnitData, units) {
-    if (!UnitData.unit || UnitData.unit.length < 5) {
+function Validate(Data, GlobalData) {
+    console.log(Object.keys(GlobalData).map(x=>x.toLowerCase()))
+    if (!Data.unit || Data.unit.length < 5) {
         return "Unit name must be at least 5 characters long!"
-    } else if (Object.values(units).map(x => x.unit.toLowerCase()).includes(UnitData.unit.toLowerCase())) {
+    } else if (Object.keys(GlobalData).map(x => x.toLowerCase()).includes(Data.unit.toLowerCase())) {
         return "This unit already exists!"
     }
 }
 
 
 export function UnitCreator(p) {
-    const [UnitData, SetUnitData] = useState({});
+    const [Data, SetData] = useState({icon:null});
     const [ErrorMessage, SetErrorMessage] = useState("");
     const [Submitting, SetSubmitting] = useState(false);
     
@@ -21,12 +22,12 @@ export function UnitCreator(p) {
             <form>
                 <div id='field'>
                     <label>Unit Name:</label>
-                    <input className='input' placeholder='Vocabulary' onChange={(e)=>{SetUnitData({...UnitData, unit:e.target.value})}}/>
+                    <input className='input' placeholder='Vocabulary' onChange={(e)=>{SetData({...Data, unit:e.target.value})}}/>
                 </div>
                 <div id='field'>
                     <label>Unit <a href="https://react-icons.github.io/react-icons/icons/fa/">Icon:</a></label>
-                    <input className='input' placeholder='pen' onChange={(e) => { SetUnitData({ ...UnitData, icon: e.target.value }) }} />
-                    <span>Icon Preview: <i id='icon' className={"fa-solid fa-"+UnitData.icon}></i></span>
+                    <input className='input' placeholder='pen' onChange={(e) => { SetData({ ...Data, icon: e.target.value }) }} />
+                    <span>Icon Preview: <i id='icon' className={"fa-solid fa-"+Data.icon}></i></span>
                 </div>
 
                 <p id="error">{ErrorMessage}</p>
@@ -34,20 +35,18 @@ export function UnitCreator(p) {
                 <div id='buttons'>
                 <button type='button' className='button' disabled={Submitting} onClick={()=>{
                     SetSubmitting(true)
-                    const validationerror = Validate(UnitData, p.units)
+                    const validationerror = Validate(Data, p.GlobalData)
                     if (validationerror) {
                         SetErrorMessage(validationerror)
                     } else {
                         SetErrorMessage("")
-
-                        DataService.AddUnit(UnitData).then(()=>{
-                            SetSubmitting(false)
+                        DataService.AddUnit(Data).then(()=>{
                             SetErrorMessage("Unit created!")
                         }).catch(()=>{
                             SetErrorMessage("Failed to submit!")
-                            SetSubmitting(false)
                         })
                     }
+                    SetSubmitting(false)
                 }}>Submit</button>
             </div>
         </form>
