@@ -22,6 +22,8 @@ const queries = {
     questions: {
         add: sql('questions/add.sql'),
         getQuiz: sql('questions/get_quiz.sql'),
+        getRepetition: sql('questions/get_repetition.sql'),
+        repetitionOverview: sql('questions/repetition_overview.sql'),
     },
     units: {
         add: sql('units/add.sql'),

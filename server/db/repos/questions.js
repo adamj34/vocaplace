@@ -5,6 +5,10 @@ class QuestionsRepository {
         this.db = db;
         this.pgp = pgp;
     }
+  
+    findAll() {
+        return this.db.any('SELECT * FROM questions');
+    }
 
     add(values) {
         return this.db.one(queries.questions.add, values);
@@ -14,8 +18,12 @@ class QuestionsRepository {
         return this.db.many(queries.questions.getQuiz, values);
     }
 
-    findAll() {
-        return this.db.any('SELECT * FROM questions');
+    getRepetition(values) {
+        return this.db.any(queries.questions.getRepetition, values);
+    }        
+
+    repetitionOverview(values) { 
+        return this.db.many(queries.questions.repetitionOverview, values);
     }
 
     addToAnswered(values) {
@@ -30,6 +38,7 @@ class QuestionsRepository {
     }
 
     addToRepetition(values) {
+        // const question_ids = JSON.parse(values.question_ids);
         const question_ids = values.question_ids;
         const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
 

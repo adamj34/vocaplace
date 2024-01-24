@@ -73,7 +73,7 @@ router.get('/quiz', (req, res) => {
             err
         });
     });
-});
+});  
 
 router.post('/answered', (req, res) => {
     console.log(req.body);
@@ -113,5 +113,46 @@ router.post('/repetition', (req, res) => {
         });
     });
 });
+
+router.get('/repetition', (req, res) => {
+    const userId = req.userId;
+
+    db.questions.getRepetition({user_id: userId})
+    .then((data) => {
+        console.log(data);
+        res.status(200).json({
+            success: true,
+            data
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
+
+router.get('/repetition/overview', (req, res) => {
+    const userId = req.userId;
+
+    db.questions.repetitionOverview({user_id: userId})
+    .then((data) => {
+        console.log(data);
+        res.status(200).json({
+            success: true,
+            data
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
+
 
 export default router;

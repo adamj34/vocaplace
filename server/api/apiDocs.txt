@@ -429,6 +429,108 @@ returns:
     }
 }
 
+/questions/repetition
+GET:
+returns:
+{
+    "success": true,
+    "data": [
+        {
+            "question_id": 3,
+            "content": "How do you greet someone in the evening",
+            "correct_answers": [
+                "Good evening."
+            ],
+            "misleading_answers": [
+                "Good night.",
+                "Good afternoon.",
+                "Good day."
+            ],
+            "question_type": "pick",
+            "difficulty": 1
+        },
+        {
+            "question_id": 5,
+            "content": "How do you greet someone in the night",
+            "correct_answers": [
+                "Good night."
+            ],
+            "misleading_answers": [
+                "Good morning.",
+                "Good afternoon.",
+                "Good day."
+            ],
+            "question_type": "pick",
+            "difficulty": 1
+        }
+    ]
+}
+
+/questions/repetition/overview
+GET:
+returns:
+{
+    "success": true,
+    "data": [
+        {
+            "unit_id": 2,
+            "unit": "Vocabulary Building",
+            "unit_icon": null,
+            "topics": [
+                {
+                    "topic_id": 4,
+                    "topic": "Travel",
+                    "topic_icon": null,
+                    "total_questions": 0,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 6,
+                    "topic": "Animals",
+                    "topic_icon": null,
+                    "total_questions": 0,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 5,
+                    "topic": "Food",
+                    "topic_icon": null,
+                    "total_questions": 0,
+                    "repetition_questions": 0
+                }
+            ]
+        },
+        {
+            "unit_id": 1,
+            "unit": "Introduction to English",
+            "unit_icon": null,
+            "topics": [
+                {
+                    "topic_id": 2,
+                    "topic": "Numbers and Counting",
+                    "topic_icon": null,
+                    "total_questions": 4,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 3,
+                    "topic": "Days of the Week",
+                    "topic_icon": null,
+                    "total_questions": 3,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 1,
+                    "topic": "Greetings",
+                    "topic_icon": null,
+                    "total_questions": 5,
+                    "repetition_questions": 2
+                }
+            ]
+        }
+    ]
+}
+
 /questions 
 POST:
 expects e.g.: req.body = 
