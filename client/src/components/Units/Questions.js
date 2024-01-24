@@ -113,7 +113,7 @@ function Question(p) {
 }
 
 
-export function Questions() {
+export function Questions(p) {
     document.title = `VocaPlace | Questions`
 
     const { unitid, topicid } = useParams()
@@ -124,17 +124,21 @@ export function Questions() {
 
     useEffect(() => {
         if (C.AppReady) {
-            DataService.GenerateQuiz(unitid,topicid).then((data) => {
-                console.log('answeredquestions',data.data.answeredQuestions)
-                console.log('unansweredquestions', data.data.unansweredQuestions)
-                const questions = ShuffleArray(data.data.unansweredQuestions.concat(data.data.answeredQuestions))
+            if (p.type == 'normal') {
+                DataService.GenerateQuiz(unitid,topicid).then((data) => {
+                    // console.log('answeredquestions',data.data.answeredQuestions)
+                    // console.log('unansweredquestions', data.data.unansweredQuestions)
+                    const questions = ShuffleArray(data.data.unansweredQuestions.concat(data.data.answeredQuestions))
 
-                questions.forEach((q, i) => {
-                    const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-                    DispatchQuestionsData({ type: 'INIT', i, answer_options, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
+                    questions.forEach((q, i) => {
+                        const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
+                        DispatchQuestionsData({ type: 'INIT', i, answer_options, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
+                    })
+                    SetQuestions(questions)
                 })
-                SetQuestions(questions)
-            })
+            } else if (p.type == 'repetition') {
+                console.log('this is a repetition quiz')
+            }
         }
     }, [C.AppReady])
 
@@ -144,10 +148,16 @@ export function Questions() {
 
     return (
         <div id="Questions">
-            <div id='header'>
+            {p.type == 'normal' && (<div id='header'>
                 <h1>Questions</h1>
                 <p>Here's your set of questions. Good luck!</p>
-            </div>
+            </div>)}
+            {p.type == 'repetition' && (<div id='header'>
+                <h1>Repetition</h1>
+                <p>Here's your set of previously incorrect questions. Good luck!</p>
+            </div>)}
+
+
             {Finished && (
             <div id="result">
                 <h2>Your result is {QuestionsData.percentage}%</h2>
@@ -167,13 +177,8 @@ export function Questions() {
             </div>
             {!Finished && ( 
                 <button id="submitbutton" className="button" onClick={() => { 
-                    // DispatchQuestionsData({ type: "CHECK" })
                     const result = CheckQuestions(QuestionsData, DispatchQuestionsData)
                     DispatchQuestionsData({ type: "UPDATEPERCENTAGE", percentage:result.percentage})
-                    
-                    console.log('correctquestions',result.correct)
-                    // const incorrect = Object.values(QuestionsData).slice(0,-1).filter(x => !x.correct).map(x => x.question_id)
-                    // console.log(incorrect)
                     if (result.correct.length > 0) {
                         DataService.SaveQuestionsAnswered(result.correct).then(()=>{
                             console.log('saved answered')

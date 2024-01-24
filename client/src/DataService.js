@@ -90,5 +90,10 @@ export default {
         return res.data
     },
 
+    async GetSearchResults() { // for admin panel
+        const res = await Server.get(`/units/overview`)
+        return res.data
+    },
+
    
 }

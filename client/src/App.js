@@ -49,11 +49,12 @@ function App() {
           <Route path='profile/:id/edit' element={<EditProfile/>}/>
           <Route path='group/:id' element={<Group/>}/>
           <Route path='task/submit' element={<SubmitTask/>}/>
-          <Route path='units/:unitid/:topicid' element={<Questions />} />
+          <Route path='repetitions' element={<Repetitions />} />
+          <Route path='repetitions/set' element={<Questions type='repetition'/>} />
+          <Route path='units/:unitid/:topicid' element={<Questions type='normal'/>} />
           <Route path='units/:unitid' element={<Topics/>}/>
           <Route path='units' element={<Units/>}/>
           <Route path='admin' element={<Admin/>}/>
-          <Route path='repetitions' element={<Repetitions/>}/>
           <Route path='friends' element={<Friends/>}/>
           <Route path='groups' element={<Groups/>}/>
           <Route path='ranking' element={<Ranking />} />
