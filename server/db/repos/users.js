@@ -38,6 +38,7 @@ class UsersRepository {
     }
 
     searchByUsername(value) {
+        console.log(value);
         return this.db.any(`
         SELECT
             id,
@@ -45,9 +46,9 @@ class UsersRepository {
             (SELECT profile_pictures.picture FROM profile_pictures WHERE profile_pictures.id = users.id) AS picture
         FROM
             users
-        WHERE username LIKE $1
-        `,  ['%' + value.username + '%']);
-    }
+        WHERE username ILIKE $1
+        `,  ['%' + value.searchPhrase + '%']);
+    } 
 }
 
 export default UsersRepository;

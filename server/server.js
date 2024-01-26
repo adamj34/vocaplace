@@ -11,6 +11,7 @@ import userRelationsRouter from "./api/userRelationsRouter.js";
 import questionRouter from "./api/questionRouter.js";   
 import topicRouter from "./api/topicRouter.js";
 import groupRouter from "./api/groupRouter.js";
+import searchRouter from "./api/searchRouter.js";
 
 import keycloak from './Keycloak.js';
 
@@ -32,6 +33,7 @@ app.use(cors({
 app.use(keycloak.middleware()); 
 // app.use(keycloak.protect());
 app.use(getUserData);
+app.use('/search', searchRouter);
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
 app.use('/topics', topicRouter);

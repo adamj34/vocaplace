@@ -72,11 +72,28 @@ returns:
     ]
 }
 
-/user/search?{username}=some_username  // does not need to be a full username, it matches any username that contains the string
+/search?searchPhrase=some_username  // matches all that contain the phrase
 GET:
 returns:
-{"success":true,
-"data":[{"id":"533e4a19-be1e-4c5d-8659-83b2234a7bcd","username":"r","picture":null}]}
+{
+    "success": true,
+    "data": {
+        "matchedUsers": [
+            {
+                "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+                "username": "r",
+                "picture": null
+            }
+        ],
+        "matchedGroups": [
+            {
+                "id": 1,
+                "group_name": "new grouppp",
+                "picture": null
+            }
+        ]
+    }
+}
 
 /relationships/request/friend/:friendID
 POST:

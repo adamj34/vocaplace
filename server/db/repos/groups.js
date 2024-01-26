@@ -44,6 +44,18 @@ class GroupsRepository {
     addMember(values) {
         return this.db.one('INSERT INTO group_membership (group_id, user_id, admin) VALUES(${group_id}, ${user_id}, ${admin}) RETURNING *', values);
     }
+
+    searchByGroupname(value) {
+        return this.db.any(`
+        SELECT
+            id,
+            group_name,
+            picture
+        FROM
+            groups
+        WHERE group_name ILIKE $1
+        `,  ['%' + value.searchPhrase + '%']);
+    }
 }
 
 export default GroupsRepository;

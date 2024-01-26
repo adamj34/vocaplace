@@ -93,24 +93,6 @@ router.get('/visit/:visitedUserId', (req, res) => {
     })
 });
 
-router.get('/search', (req, res) => {
-    const username = req.query.username;
-
-    db.users.searchByUsername({username})
-    .then((data) => {
-        res.status(200).json({
-            success: true,
-            data
-        });
-    })
-    .catch((err) => {
-        res.status(500).json({
-            success: false,
-            err
-        });
-    });
-});
-
 router.patch('/', (req, res) => {  
     const userId = req.userId;
     req.body.id = userId;

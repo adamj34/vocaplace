@@ -34,7 +34,19 @@ class QuestionsRepository {
         const cs = new this.pgp.helpers.ColumnSet(['user_id', 'question_id'], {table: 'answered_questions'});
         const query = this.pgp.helpers.insert(dataMulti, cs) + ' ON CONFLICT (user_id, question_id) DO NOTHING';
         
-        return this.db.none(query);
+        return this.db.none(query)
+            .then(() => {
+                const query = `
+                    DELETE FROM
+                        repetitions
+                    WHERE
+                        user_id = $1
+                        AND question_id IN ($2:csv)`;
+                return this.db.none(query, [values.user_id, question_ids]);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     addToRepetition(values) {

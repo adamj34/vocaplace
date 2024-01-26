@@ -81,7 +81,7 @@ router.post('/answered', (req, res) => {
     const questionIds = req.body.questionIds;
     db.questions.addToAnswered({user_id: userId, question_ids: questionIds})
     .then((data) => {
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             data
         });
