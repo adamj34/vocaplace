@@ -126,10 +126,7 @@ export function Questions(p) {
         if (C.AppReady) {
             if (p.type == 'normal') {
                 DataService.GenerateQuiz(unitid,topicid).then((data) => {
-                    // console.log('answeredquestions',data.data.answeredQuestions)
-                    // console.log('unansweredquestions', data.data.unansweredQuestions)
                     const questions = ShuffleArray(data.data.unansweredQuestions.concat(data.data.answeredQuestions))
-
                     questions.forEach((q, i) => {
                         const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
                         DispatchQuestionsData({ type: 'INIT', i, answer_options, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
@@ -138,6 +135,15 @@ export function Questions(p) {
                 })
             } else if (p.type == 'repetition') {
                 console.log('this is a repetition quiz')
+                DataService.GenerateRepetitionQuiz().then((data) => {
+                    console.log(data)
+                    const questions = ShuffleArray(data.data)
+                    questions.forEach((q, i) => {
+                        const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
+                        DispatchQuestionsData({ type: 'INIT', i, answer_options, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
+                    })
+                    SetQuestions(questions)
+                })
             }
         }
     }, [C.AppReady])
@@ -167,7 +173,7 @@ export function Questions(p) {
                 {QuestionsData.percentage >= 50 && (
                     <p>Well done!</p>
                 )}
-                <Link to='/units' className='hovertext'>Return to Units</Link>
+                <Link to='/units' className='hovertext'>Return to units</Link> or <Link to='/repetitions' className='hovertext'>review your mistakes</Link>.
             </div>
             )}
             <div id="questions">
@@ -183,6 +189,8 @@ export function Questions(p) {
                         DataService.SaveQuestionsAnswered(result.correct).then(()=>{
                             console.log('saved answered')
                         })
+                    }
+                    if (result.incorrect.length > 0 && p.type != 'repetition') {
                         DataService.SaveRepetitions(result.incorrect).then(() => {
                             console.log('saved repetitions')
                         })

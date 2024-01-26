@@ -3,6 +3,9 @@ import { LoginRequired } from "../LoginRequired";
 import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
+import { Link } from "react-router-dom";
+
+
 
 export function Repetitions() {
     document.title = `VocaPlace | Repetitions`
@@ -10,38 +13,14 @@ export function Repetitions() {
     const C = useContext(AppContext);
     const [Repetitions, SetRepetitions] = useState([]);
 
-    const data = {
-        'Vocabulary' : {
-            unit_icon: 'book',
-            topics: {
-                'Animals': 1,
-                'Plants': 2
-            }
-        },
-        'Grammar' : {
-            unit_icon: 'book',
-            topics: {
-                'Idioms': 5,
-                'Past Simple': 3
-            }
+    useEffect(() => {
+        if (C.AppReady) {
+            DataService.GetRepetitions().then((data) => {
+                const filtered = data.data.map(unit => {unit.topics = unit.topics.filter(t => t.repetition_questions > 0); return unit}).filter(unit => unit.topics.length > 0) // remove unnecessary units and topics
+                SetRepetitions(filtered)
+            })
         }
-    }
-
-    // useEffect(() => {
-    //     if (C.AppReady) {
-    //         DataService.GetRepetitions().then((data) => {
-    //             console.log(data)
-    //             // console.log('unansweredquestions', data.data.unansweredQuestions)
-    //             // const questions = ShuffleArray(data.data.unansweredQuestions.concat(data.data.answeredQuestions))
-
-    //             // questions.forEach((q, i) => {
-    //             //     const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-    //             //     DispatchQuestionsData({ type: 'INIT', i, answer_options, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
-    //             // })
-    //             // SetQuestions(questions)
-    //         })
-    //     }
-    // }, [C.AppReady])
+    }, [C.AppReady])
 
     const { keycloak } = useKeycloak();
     if (!keycloak.authenticated) { return <LoginRequired /> }
@@ -52,25 +31,33 @@ export function Repetitions() {
                 <h1>Repetitions</h1>
                 <p>Practice makes perfect.</p>
             </div>
-            {Object.entries(data).map(([unit,data])=>{
-                return (
-                    <div id='unit' key='unit'>
-                        <div id="subheader">
-                            <i id='icon' className={"fa-solid fa-" + (data.unit_icon || "book")}></i>
-                            <h3>{unit}</h3>
+            {Repetitions.length > 0 ? (
+            <div>
+                {Repetitions.map((u,i)=>{
+                    return (
+                        <div id='unit' key={i}>
+                            <div id="subheader">
+                                <i id='icon' className={"fa-solid fa-" + (u.unit_icon || "book")}></i>
+                                <p>{u.unit}</p>
+                            </div>
+                            
+                            <div id="topics">
+                                {u.topics.map((t,i)=>{
+                                    return (
+                                        <li key={i}>
+                                            <i id='icon' className={"fa-solid fa-" + (t.topic_icon || "book")}></i>
+                                            <p>{t.topic}: {t.repetition_questions} mistake{t.repetition_questions > 1 && 's'}</p>
+                                        </li>
+                                    )
+                                })}
+                            </div>
                         </div>
-                        
-                        <div id="topics">
-                            {Object.entries(data.topics).map(([topic,count])=>{
-                                return (
-                                    <li>{topic}: {count} mistake{count>1 && 's'}</li>
-                                )
-                            })}
-                        </div>
-                    </div>
-                )
-            })}
-            <button className="button">Generate Repetition</button>
+                    )
+                })}
+                <Link to={'./set'}><button className="button">Review Mistakes</button></Link>
+            </div>) : 
+            <h3>You have reviewed all your mistakes :)</h3>
+            }
         </div>
         
     )

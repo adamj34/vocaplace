@@ -731,7 +731,7 @@ input[type="file"] {
   #questions {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     #question {
       #title {
         font-size: 120%;
@@ -763,11 +763,10 @@ input[type="file"] {
         }
       }
       #answers {
-        margin-top: 15px;
+        margin: 15px 20px;
         #pick {
           display: flex;
           gap: 20px;
-          justify-content: center;
         }
         #answer {
           font-size: 110%;
@@ -806,8 +805,8 @@ input[type="file"] {
     text-align: center;
   }
   #submitbutton {
-    margin: auto;
     margin-top: 80px;
+    margin-left: 20px;
     width: 250px;
   }
 }
@@ -874,17 +873,36 @@ input[type="file"] {
       display: flex;
       gap: 10px;
       align-items: center;
-      h3 {
+      font-size: 110%;
+      p {
         text-transform: uppercase;
+      }
+      #icon {
+        font-size: 140%;
       }
     }
     #topics {
-      margin: 0 20px;
+      margin: 0;
       margin-bottom: 20px;
+      li {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin: 0 20px;
+          &:before {
+              content: "•";
+              font-size: 120%;
+            }
+        }
     }
+  }
+  >h3 {
+    margin-left: 20px;
   }
   button {
     margin: 20px;
+    width: 250px;
+    
   }
 }
 

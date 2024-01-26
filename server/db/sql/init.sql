@@ -109,13 +109,13 @@ INSERT INTO topics (unit_id, topic) VALUES (2, 'Animals');
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (1, 'How could you answer this question: How are you?', '{"I am fine.", "I have been better.", "I am great."}', '{"I am bad.", "I am angry."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How do you greet someone in the morning', '{"Good morning."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
+VALUES (1, 'How do you greet someone in the morning?', '{"Good morning."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How do you greet someone in the evening', '{"Good evening."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
+VALUES (1, 'How do you greet someone in the evening?', '{"Good evening."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How do you greet someone in the afternoon', '{"Good afternoon."}', '{"Good night.", "Good morning.", "Good day."}', 'pick', 1);
+VALUES (1, 'How do you greet someone in the afternoon?', '{"Good afternoon."}', '{"Good night.", "Good morning.", "Good day."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How do you greet someone in the night', '{"Good night."}', '{"Good morning.", "Good afternoon.", "Good day."}', 'pick', 1);
+VALUES (1, 'What do you say before going to sleep?', '{"Good night."}', '{"Good morning.", "Good afternoon.", "Good day."}', 'pick', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 -- VALUES (1, 'Put the words in the correct order to translate: "Miło mi cię poznać."', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
@@ -149,6 +149,9 @@ VALUES (3, 'What is the last day of the week?', '{"Friday"}', '{"Tuesday", "Mond
 
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 -- VALUES (4, 'What is your favorite vacation ...?', '{"destination"}', '{"destination", "world", "land", "cottage"}', 'fill', 1);
+
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (4, 'Which of these are vehicles?', '{"Train", "Car", "Drawer", "Elephant", "Plane"}', '{"Train", "Car", "Plane"}', 'pick', 1);
 
 
 -- INSERT INTO user_relationships (user1_id, user2_id, relationship) VALUES ('3a84759d-8ea5-40d7-91f7-f22440d2d866', 'db77d276-7c84-4543-908b-d4ac92f031ec', 'friends');

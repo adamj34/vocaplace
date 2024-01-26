@@ -90,8 +90,13 @@ export default {
         return res.data
     },
 
-    async GetSearchResults() { // for admin panel
-        const res = await Server.get(`/units/overview`)
+    async GetRepetitions() {
+        const res = await Server.get(`/questions/repetition/overview`)
+        return res.data
+    },
+
+    async GenerateRepetitionQuiz() {
+        const res = await Server.get(`/questions/repetition`)
         return res.data
     },
 
