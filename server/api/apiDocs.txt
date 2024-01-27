@@ -45,6 +45,20 @@ returns:
     }
 }
 
+/user/points
+PATCH:
+expects e.g.: req.body = 
+{
+    points: 3
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "points": 6    // value after incrementation
+    }
+}
+
 /user/visit/:visitedUserId ✔️
 GET:
 returns:

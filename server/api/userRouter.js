@@ -168,5 +168,23 @@ router.delete('/profilePicture', (req, res) => {
         });
 })
 
+router.patch('/points', (req, res) => {
+    const userId = req.userId;
+    const points = req.body.points;
+    db.users.incrementPoints({id: userId, points})
+        .then((data) => {
+            res.json({
+                success: true,
+                data
+            }).status(200);
+        })
+        .catch((err) => {
+            res.json({
+                success: false,
+                err
+            }).status(500);
+        });
+});
+
 
 export default router;
