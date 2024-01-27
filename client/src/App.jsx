@@ -13,7 +13,7 @@ import { Footer } from './components/Nav/Footer.jsx'
 import { Units } from './components/Units/Units.jsx'
 import { EditProfile } from './components/Profile/EditProfile.jsx'
 import { Topics } from './components/Units/Topics.jsx';
-import { Admin } from './components/Admin/Admin.js'
+import { Admin } from './components/Admin/Admin.jsx'
 import { Repetitions } from './components/Repetitions/Repetitions.jsx';
 import { Friends } from './components/Friends/Friends.jsx';
 import { Groups } from './components/Groups/Groups.jsx';
