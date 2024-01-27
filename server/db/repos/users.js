@@ -23,6 +23,16 @@ class UsersRepository {
         });
     }
 
+    incrementPoints(values) {
+        return this.db.one(`
+        UPDATE
+            users
+        SET points = points + $1
+        WHERE id = $2
+        RETURNING points
+        `, [values.points, values.id]);
+    }
+
     findById(value) {
         return this.db.one(queries.users.find, value);
     }
