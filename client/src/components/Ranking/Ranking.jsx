@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from "react";
+import { useState, useContext, useEffect } from 'react';
 import { useKeycloak } from "@react-keycloak/web";
 import { LoginRequired } from "../LoginRequired";
 import DataService from "../../DataService";
+import { AppContext } from '../../App';
 
 const meAndFriends = [
-    { username: 'user2', points: 150 },
-    { username: 'user3', points: 120 },
-    { username: 'me', points: 100 },
+    { username: 'Joe', points: 150 },
+    { username: 'Bill', points: 117 },
+    { username: 'Anne', points: 88 },
 ];
 
 const initialTopUsersData = [
-    { username: "topUser2", points: 1500 },
-    { username: "topUser3", points: 1200 },
-    { username: "topUser1", points: 1000 },
+    { username: "Addam", points: 308 },
+    { username: "George", points: 223 },
+    { username: "Bob", points: 208 },
+    { username: "Joe", points: 150 },
+    { username: "Bill", points: 117 },
 ];
 
 const initialTopGroupsData = [
-    { name: "topGroup2", points: 15000 },
-    { name: "topGroup3", points: 12000 },
-    { name: "topGroup1", points: 10000 },
+    { username: "Englovers", points: 1639 },
+    { username: "WeAreFriends", points: 1084 },
+    { username: "THEBEST", points: 881 },
 ];
 
 export function Ranking() {
+    const C = useContext(AppContext);
     const { keycloak } = useKeycloak();
     const [meAndFriendsData, setMeAndFriendsData] = useState([]);
     const [topUsersData, setTopUsersData] = useState([]);
@@ -31,7 +35,7 @@ export function Ranking() {
         setMeAndFriendsData(meAndFriends);
         setTopUsersData(initialTopUsersData);
         setTopGroupData(initialTopGroupsData)
-    }, []);
+    }, [C.AppReady]);
 
     if (!keycloak.authenticated) {
         return <LoginRequired />;
@@ -46,44 +50,35 @@ export function Ranking() {
                 <p>The best of the best.</p>
             </div>
 
-            <div id="ranking-columns">
-                <div id="ranking-column">
-                    <h2>Friendly Ranking</h2>
-                    {meAndFriendsData.map((user, index) => (
-                        <div key={index} id="user-row">
-                            <div id="placement">{index + 1}</div>
-                            <div id="username">{user.username}</div>
-                            <div id="points-container">
-                                <div id="points">{user.points}</div>
-                                <div id="points-label">pts</div>
-                            </div>
+            <div id="columns">
+                <div id="column">
+                    <h2>Friends</h2>
+                    {meAndFriendsData.map((user, i) => (
+                        <div key={i} id="row">
+                            <p id="placement">{i + 1}</p>
+                            <p id="username">{user.username}</p>
+                            <p id="points">{user.points}p</p> 
                         </div>
                     ))}
                 </div>
 
-                <div id="ranking-column">
-                    <h2>Top Users of All Time</h2>
-                    {topUsersData.map((user, index) => (
-                        <div key={index} id="user-row">
-                            <div id="placement">{index + 1}</div>
-                            <div id="username">{user.username}</div>
-                            <div id="points-container">
-                                <div id="points">{user.points}</div>
-                                <div id="points-label">pts</div>
-                            </div>
+                <div id="column">
+                    <h2>Users</h2>
+                    {topUsersData.map((user, i) => (
+                        <div key={i} id="row">
+                            <p id="placement">{i + 1}</p>
+                            <p id="username">{user.username}</p>
+                            <p id="points">{user.points}p</p>
                         </div>
                     ))}
                 </div>
-                <div id="ranking-column">
-                    <h2>Top Group of All Time</h2>
-                    {topGroupsData.map((user, index) => (
-                        <div key={index} id="user-row">
-                            <div id="placement">{index + 1}</div>
-                            <div id="username">{user.name}</div>
-                            <div id="points-container">
-                                <div id="points">{user.points}</div>
-                                <div id="points-label">pts</div>
-                            </div>
+                <div id="column">
+                    <h2>Groups</h2>
+                    {topGroupsData.map((user, i) => (
+                        <div key={i} id="row">
+                            <p id="placement">{i + 1}</p>
+                            <p id="username">{user.username}</p>
+                            <p id="points">{user.points}p</p>
                         </div>
                     ))}
                 </div>
