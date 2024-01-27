@@ -63,6 +63,15 @@ router.get('/progress/:id', (req, res) => {
 
     db.units.detailedUserProgress({user_id: userId, unit_id: id})
     .then((data) => {
+        console.log(data);
+        // handle case where unit has no topics
+        if (data.length === 1 && data[0].topic_id === null) {
+            return res.status(200).json({
+                success: true,
+                unit: data[0].unit,
+                data: []
+            });
+        }
         let unit;
         const retrieveIds = data.reduce((acc, curr) => {
             unit = curr.unit;
@@ -82,6 +91,12 @@ router.get('/progress/:id', (req, res) => {
     })
     .catch((err) => {
         console.error(err);
+        if (err.code === pgp.errors.queryResultErrorCode.noData) {
+            return res.status(404).json({
+                success: false,
+                err: "Unit not found"
+            });
+        }
         res.status(500).json({
             success: false,
             err
@@ -97,7 +112,7 @@ router.get('/overview', (req, res) => {
             acc = {...acc, [curr.unit_id]: {
                 unit: curr.unit,
                 unit_icon: curr.unit_icon,
-                topics: curr.topics,
+                topics: curr.topics || [],
             }};
             return acc;
         }, {})

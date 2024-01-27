@@ -233,6 +233,12 @@ returns:
         }
     }
 }
+OR
+{
+    "success": true,
+    "unit": "Grammar",
+    "data": []
+}
 
 /units/overview (to jest do admin panel)
 GET:
@@ -405,36 +411,6 @@ returns:
                 ],
                 "misleading_answers": [
                     "Good night.",
-                    "Good afternoon.",
-                    "Good day."
-                ],
-                "question_type": "pick",
-                "difficulty": 1,
-                "is_answered": false
-            },
-            {
-                "question_id": 4,
-                "content": "How do you greet someone in the afternoon",
-                "correct_answers": [
-                    "Good afternoon."
-                ],
-                "misleading_answers": [
-                    "Good night.",
-                    "Good morning.",
-                    "Good day."
-                ],
-                "question_type": "pick",
-                "difficulty": 1,
-                "is_answered": false
-            },
-            {
-                "question_id": 5,
-                "content": "How do you greet someone in the night",
-                "correct_answers": [
-                    "Good night."
-                ],
-                "misleading_answers": [
-                    "Good morning.",
                     "Good afternoon.",
                     "Good day."
                 ],
