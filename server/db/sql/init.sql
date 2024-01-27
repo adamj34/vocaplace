@@ -113,13 +113,13 @@ VALUES (1, 'In what situation is it appropriate to say "Nice to meet you"?', '{"
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (1, 'How do you greet someone in the evening?', '{"Good evening."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, "In a formal email, what is a suitable greeting to use when you don't know the recipient's name?", '{"Dear Sir/Madam,"}', '{"Hey!", "Hi there!", "See you soon."}', 'pick', 1);
+VALUES (1, 'In a formal email, what is a suitable greeting to use when you don''t know the recipient''s name?', '{"Dear Sir/Madam,"}', '{"Hey!", "Hi there!", "See you soon."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (1, 'What do you say before going to sleep?', '{"Good night."}', '{"Good morning.", "Good afternoon.", "Good day."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, "What is a polite way to ask about someone's name?", '{"What is your name?", "May I ask your name?}', '{"Who are you?", "What is this?"}', 'pick', 1);
+VALUES (1, 'What is a polite way to ask about someone''s name?', '{"What is your name?", "May I ask your name?"}', '{"Who are you?", "What is this?"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, "Which question can be used to ask about someone about their interests or hobbies?", '{"What do you do for fun?"}', '{"How are you?", "What is your name?", "Do you like me?"}', 'pick', 1);
+VALUES (1, 'Which question can be used to ask about someone about their interests or hobbies?', '{"What do you do for fun?"}', '{"How are you?", "What is your name?", "Do you like me?"}', 'pick', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 -- VALUES (1, 'Put the words in the correct order to translate: "Miło mi cię poznać."', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
@@ -132,7 +132,7 @@ VALUES (2, 'Which of these are odd numbers?', '{"sixty five", "eleven"}', '{"six
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (2, 'Which of these are even numbers?', '{"eighty two", "twelve"}', '{"seventeen", "thirty seven", "five"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (2, 'Which of these numbers are greater than twenty', '{"thirty one", "one hundred"}', '{"seven", "twelve", "nineteen"}', 'pick', 1);
+VALUES (2, 'Which of these numbers are greater than twenty?', '{"thirty one", "one hundred"}', '{"seven", "twelve", "nineteen"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (2, 'How do you say 4 in English?', '{"four"}', '{"two", "three", "one", "five"}', 'pick', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
