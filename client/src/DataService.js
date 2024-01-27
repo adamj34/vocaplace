@@ -24,6 +24,10 @@ export default {
         await Server.patch(`/user`, data)
     },
 
+    async UpdatePoints(points) {
+        await Server.patch(`/user/add/points`, {points:points})
+    },
+
     async DeleteProfilePicture() {
         await Server.delete(`/user/profilePicture`)
     },

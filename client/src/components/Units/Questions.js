@@ -11,14 +11,15 @@ import { ShuffleArray } from "../../helpers/ShuffleArray";
 function CheckQuestions(checkedstate, DispatchQuestionsData) {
     const correct = []
     const incorrect = []
+    let pointsGained = 0
 
     for (let i = 0; i < Object.keys(checkedstate).length; i++) {
         if (checkedstate[i].selected.sort().toString() == checkedstate[i].correct_answers.sort().toString()) { // correct
             correct.push(checkedstate[i].question_id)
+            pointsGained += checkedstate[i].difficulty * 10
             DispatchQuestionsData({type:'SETASCORRECT', i})
         } else {
             incorrect.push(checkedstate[i].question_id)
-            console.log(checkedstate[i].content)
         }
     }
 
@@ -26,7 +27,7 @@ function CheckQuestions(checkedstate, DispatchQuestionsData) {
     console.log('incorrect',incorrect.length)
     const percentage = Math.round((correct.length / (correct.length+incorrect.length)) * 100)
 
-    return {correct, incorrect, percentage}
+    return {correct, incorrect, percentage, pointsGained}
 }
 
 
@@ -34,7 +35,7 @@ const QuestionsReducer = (state, action) => {
     switch (action.type) {
         case "INIT":
             const newstate = {...state}
-            newstate[action.i] = {selected:[], answer_options:action.answer_options, correct:false, correct_answers:action.correct_answers, question_id: action.question_id}
+            newstate[action.i] = {selected:[], answer_options:action.answer_options,difficulty:action.difficulty, correct:false, correct_answers:action.correct_answers, question_id: action.question_id}
             return newstate
         case "UPDATESELECTED":
             const updatedstate = {...state}
@@ -46,8 +47,8 @@ const QuestionsReducer = (state, action) => {
             correctstate[action.i].correct = true
             return correctstate
         
-        case "UPDATEPERCENTAGE":
-            return {...state, percentage:action.percentage}
+        case "UPDATEPERCENTAGEANDPOINTS":
+            return {...state, percentage:action.percentage, pointsGained:action.pointsGained}
         
         default:
             return state;
@@ -129,18 +130,18 @@ export function Questions(p) {
                     const questions = ShuffleArray(data.data.unansweredQuestions.concat(data.data.answeredQuestions))
                     questions.forEach((q, i) => {
                         const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-                        DispatchQuestionsData({ type: 'INIT', i, answer_options, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
+                        
+                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[1].difficulty, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
                     })
                     SetQuestions(questions)
                 })
             } else if (p.type == 'repetition') {
                 console.log('this is a repetition quiz')
                 DataService.GenerateRepetitionQuiz().then((data) => {
-                    console.log(data)
                     const questions = ShuffleArray(data.data)
                     questions.forEach((q, i) => {
                         const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-                        DispatchQuestionsData({ type: 'INIT', i, answer_options, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
+                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[1].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
                     })
                     SetQuestions(questions)
                 })
@@ -167,6 +168,7 @@ export function Questions(p) {
             {Finished && (
             <div id="result">
                 <h2>Your result is {QuestionsData.percentage}%</h2>
+                <h3>You gained {QuestionsData.pointsGained} points!</h3>
                 {QuestionsData.percentage < 50 && (
                     <p>Looks like you still need more practice.</p>
                 )}
@@ -184,11 +186,15 @@ export function Questions(p) {
             {!Finished && ( 
                 <button id="submitbutton" className="button" onClick={() => { 
                     const result = CheckQuestions(QuestionsData, DispatchQuestionsData)
-                    DispatchQuestionsData({ type: "UPDATEPERCENTAGE", percentage:result.percentage})
+                    DispatchQuestionsData({ type: "UPDATEPERCENTAGEANDPOINTS", percentage:result.percentage, pointsGained:result.pointsGained})
                     if (result.correct.length > 0) {
                         DataService.SaveQuestionsAnswered(result.correct).then(()=>{
                             console.log('saved answered')
                         })
+                        DataService.UpdatePoints(result.pointsGained).then(() => {
+                            console.log('updated points')
+                        })
+
                     }
                     if (result.incorrect.length > 0 && p.type != 'repetition') {
                         DataService.SaveRepetitions(result.incorrect).then(() => {

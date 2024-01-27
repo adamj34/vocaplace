@@ -118,6 +118,7 @@ router.patch('/', (req, res) => {
     } else {
         db.users.update(req.body)
         .then((data) => {
+            console.log(data);
             res.json({
                 success: true,
                 data
