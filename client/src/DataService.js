@@ -112,6 +112,7 @@ export default {
         const res = await Server.get(`/search?searchPhrase=${query}`)
         return res.data
     },
+   
 
    
 }
