@@ -3,23 +3,23 @@ import { createContext, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useKeycloak } from "@react-keycloak/web";
 
-import { NotFound } from './components/NotFound';
-import { Home } from './components/Home/Home';
-import { Profile } from './components/Profile/Profile';
-import { Group } from'./components/Group/Group'
-import { SubmitTask } from './components/SubmitTask/SubmitTask';
-import { Nav } from './components/Nav/Nav';
-import { Footer } from './components/Nav/Footer'
-import { Units } from './components/Units/Units.js'
-import { EditProfile } from './components/Profile/EditProfile'
-import { Topics } from './components/Units/Topics';
-import { Admin } from './components/Admin/Admin'
-import { Repetitions } from './components/Repetitions/Repetitions.js';
-import { Friends } from './components/Friends/Friends';
-import { Groups } from './components/Groups/Groups';
-import { Ranking } from './components/Ranking/Ranking';
-import { Questions } from './components/Units/Questions.js';
-import { Search } from './components/Search/Search.js';
+import { NotFound } from './components/NotFound.jsx';
+import { Home } from './components/Home/Home.jsx';
+import { Profile } from './components/Profile/Profile.jsx';
+import { Group } from'./components/Group/Group.jsx'
+import { SubmitTask } from './components/SubmitTask/SubmitTask.jsx';
+import { Nav } from './components/Nav/Nav.jsx';
+import { Footer } from './components/Nav/Footer.jsx'
+import { Units } from './components/Units/Units.jsx'
+import { EditProfile } from './components/Profile/EditProfile.jsx'
+import { Topics } from './components/Units/Topics.jsx';
+import { Admin } from './components/Admin/Admin.js'
+import { Repetitions } from './components/Repetitions/Repetitions.jsx';
+import { Friends } from './components/Friends/Friends.jsx';
+import { Groups } from './components/Groups/Groups.jsx';
+import { Ranking } from './components/Ranking/Ranking.jsx';
+import { Questions } from './components/Units/Questions.jsx';
+import { Search } from './components/Search/Search.jsx';
 import DataService from "./DataService.js"
 
 export const AppContext = createContext();
