@@ -15,38 +15,52 @@ function Validate(Data, GlobalData) {
 }
 
 
-export function TopicCreator(p) {
+export function QuestionCreator(p) {
     const [Data, SetData] = useState({});
     const [ErrorMessage, SetErrorMessage] = useState("");
     const [Submitting, SetSubmitting] = useState(false);
-    const [ShowUnits, SetShowUnits] = useState(false);
+    const [ShowTopics, SetShowTopics] = useState(false);
+    const [ShowDifficulty, SetShowDifficulty] = useState(false);
+    const [ShowType, SetShowType] = useState(false);
     const units = Object.keys(p.GlobalData)
 
     return (
         <div id='creator'>
             <form>
                 <div id='field'>
-                    <label>Unit:</label>
+                    <label>Question Content:</label>
+                    <input className='input' placeholder='Animals' onChange={(e)=>{SetData({...Data, topic:e.target.value})}}/>
+                </div>
+                <div id='field'>
+                    <label>Assign to Unit:</label>
                     <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={()=>SetShowUnits(!ShowUnits)}>{(Data.unit) || "None"}</button>
-                        {ShowUnits && <div id='select' onMouseLeave={()=>SetShowUnits(false)}>
+                        <button className='selectbutton' type='button' onClick={()=>SetShowTopics(!ShowTopics)}>{(Data.unit) || "None"}</button>
+                        {ShowTopics && <div id='select' onMouseLeave={()=>SetShowTopics(false)}>
                             <div id='select-scroll'>
                                 {units.map((u,i) => {return (
-                                    <div key={i} className={u==Data.unit ? 'chosen' : ''} onClick={()=>{SetShowUnits(!ShowUnits); SetData({...Data, unit:u})}}>{u}</div>
+                                    <div key={i} className={u==Data.unit ? 'chosen' : ''} onClick={()=>{SetShowTopics(!ShowTopics); SetData({...Data, unit:u})}}>{u}</div>
                                 )})}
                             </div>
                         </div>}
                     </div>
                 </div>
+
                 <div id='field'>
-                    <label>Topic Name:</label>
-                    <input className='input' placeholder='Animals' onChange={(e)=>{SetData({...Data, topic:e.target.value})}}/>
+                    <label>Difficulty:</label>
+                    <div id='selectfield'>
+                        <button className='selectbutton' type='button' onClick={() => SetShowDifficulty(!ShowDifficulty)}>{(Data.difficulty == 1 && 'Easy') || (Data.difficulty == 2 && 'Medium') || (Data.difficulty == 3 && 'Hard') || "None"}</button>
+                        {ShowDifficulty && <div id='select' onMouseLeave={() => SetShowDifficulty(false)}>
+                            <div id='select-scroll'>
+                                {[1, 2, 3].map((d) => {
+                                    return (<>
+                                        <div className={d == Data.difficulty && 'chosen'} onClick={() => { SetShowDifficulty(false); SetData({ ...Data, difficulty: d, }) }}>{d == 1 && 'Easy'}{d == 2 && 'Medium'}{d == 3 && 'Hard'}</div>
+                                    </>)
+                                })}
+                            </div>
+                        </div>}
+                    </div>
                 </div>
-                <div id='field'>
-                    <label>Topic <a href="https://react-icons.github.io/react-icons/icons/fa/">Icon:</a></label>
-                    <input className='input' placeholder='pen' onChange={(e) => { SetData({ ...Data, icon: e.target.value }) }} />
-                    <span>Icon Preview: <i id='icon' className={"fa-solid fa-"+Data.icon}></i></span>
-                </div>
+                
 
                 <p id="error">{ErrorMessage}</p>
 

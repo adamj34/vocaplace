@@ -85,6 +85,10 @@ export default {
         await Server.post(`/units`, unit)
     },
 
+    async AddTopic(topic) {
+        await Server.post(`/topics`, topic)
+    },
+
     async GetUnitsTopicsQuestions() { // for admin panel
         const res = await Server.get(`/units/overview`)
         return res.data
@@ -97,6 +101,11 @@ export default {
 
     async GenerateRepetitionQuiz() {
         const res = await Server.get(`/questions/repetition`)
+        return res.data
+    },
+
+    async GetSearchResults(query) {
+        const res = await Server.get(`/search?searchPhrase=${query}`)
         return res.data
     },
 

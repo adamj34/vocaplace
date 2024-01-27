@@ -3,10 +3,10 @@ import DataService from "../../DataService";
 
 
 function Validate(Data, GlobalData) {
-    console.log(Object.keys(GlobalData).map(x=>x.toLowerCase()))
+    const units = Object.keys(GlobalData)
     if (!Data.unit || Data.unit.length < 5) {
         return "Unit name must be at least 5 characters long!"
-    } else if (Object.keys(GlobalData).map(x => x.toLowerCase()).includes(Data.unit.toLowerCase())) {
+    } else if (units.map(x => x.toLowerCase()).includes(Data.unit.toLowerCase())) {
         return "This unit already exists!"
     }
 }
@@ -33,21 +33,22 @@ export function UnitCreator(p) {
                 <p id="error">{ErrorMessage}</p>
 
                 <div id='buttons'>
-                <button type='button' className='button' disabled={Submitting} onClick={()=>{
-                    SetSubmitting(true)
-                    const validationerror = Validate(Data, p.GlobalData)
-                    if (validationerror) {
-                        SetErrorMessage(validationerror)
-                    } else {
-                        SetErrorMessage("")
-                        DataService.AddUnit(Data).then(()=>{
-                            SetErrorMessage("Unit created!")
-                        }).catch(()=>{
-                            SetErrorMessage("Failed to submit!")
-                        })
-                    }
-                    SetSubmitting(false)
-                }}>Submit</button>
+                    <button type='button' className='button' disabled={Submitting} onClick={()=>{
+                        SetSubmitting(true)
+                        const validationerror = Validate(Data, p.GlobalData)
+                        if (validationerror) {
+                            SetErrorMessage(validationerror)
+                        } else {
+                            SetErrorMessage("")
+                            DataService.AddUnit(Data).then(()=>{
+                                SetErrorMessage("Unit created!")
+                                p.SetNeedToUpdateData(true)
+                            }).catch(()=>{
+                                SetErrorMessage("Failed to submit!")
+                            })
+                        }
+                        SetSubmitting(false)
+                    }}>Submit</button>
             </div>
         </form>
     </div>

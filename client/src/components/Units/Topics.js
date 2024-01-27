@@ -41,6 +41,7 @@ export function Topics() {
                 })
                 SetTopics(formatted)
                 SetUnitName(data.unit)
+                console.log(formatted)
             })
         }
     }, [C.AppReady])

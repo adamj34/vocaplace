@@ -107,15 +107,19 @@ INSERT INTO topics (unit_id, topic) VALUES (2, 'Food');
 INSERT INTO topics (unit_id, topic) VALUES (2, 'Animals');
 
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How could you answer this question: How are you?', '{"I am fine.", "I have been better.", "I am great."}', '{"I am bad.", "I am angry."}', 'pick', 1);
+VALUES (1, 'Which of the following is a common response to the greeting "How are you?"', '{"I have been better.", "Fine, thank you."}', '{"Goodbye!", "Nice to meet you.", "See you later!"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How do you greet someone in the morning?', '{"Good morning."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
+VALUES (1, 'In what situation is it appropriate to say "Nice to meet you"?', '{"Introducing yourself."}', '{"Asking for directions.", "Saying goodbye."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (1, 'How do you greet someone in the evening?', '{"Good evening."}', '{"Good night.", "Good afternoon.", "Good day."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (1, 'How do you greet someone in the afternoon?', '{"Good afternoon."}', '{"Good night.", "Good morning.", "Good day."}', 'pick', 1);
+VALUES (1, "In a formal email, what is a suitable greeting to use when you don't know the recipient's name?", '{"Dear Sir/Madam,"}', '{"Hey!", "Hi there!", "See you soon."}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (1, 'What do you say before going to sleep?', '{"Good night."}', '{"Good morning.", "Good afternoon.", "Good day."}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, "What is a polite way to ask about someone's name?", '{"What is your name?", "May I ask your name?}', '{"Who are you?", "What is this?"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, "Which question can be used to ask about someone about their interests or hobbies?", '{"What do you do for fun?"}', '{"How are you?", "What is your name?", "Do you like me?"}', 'pick', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 -- VALUES (1, 'Put the words in the correct order to translate: "Miło mi cię poznać."', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
@@ -124,11 +128,11 @@ VALUES (1, 'What do you say before going to sleep?', '{"Good night."}', '{"Good 
 -- VALUES (1, 'How are you ...?', '{"doing"}', '{"doing", "going", "feeling", "being"}', 'fill', 1);
 
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (2, 'How do you say 1 in English?', '{"one"}', '{"two", "three", "four", "five"}', 'pick', 1);
+VALUES (2, 'Which of these are odd numbers?', '{"sixty five", "eleven"}', '{"six", "twenty eight", "seventy two"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (2, 'How do you say 2 in English?', '{"two"}', '{"one", "three", "four", "five"}', 'pick', 1);
+VALUES (2, 'Which of these are even numbers?', '{"eighty two", "twelve"}', '{"seventeen", "thirty seven", "five"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (2, 'How do you say 3 in English?', '{"three"}', '{"two", "one", "four", "five"}', 'pick', 1);
+VALUES (2, 'Which of these numbers are greater than twenty', '{"thirty one", "one hundred"}', '{"seven", "twelve", "nineteen"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (2, 'How do you say 4 in English?', '{"four"}', '{"two", "three", "one", "five"}', 'pick', 1);
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
@@ -151,7 +155,29 @@ VALUES (3, 'What is the last day of the week?', '{"Friday"}', '{"Tuesday", "Mond
 -- VALUES (4, 'What is your favorite vacation ...?', '{"destination"}', '{"destination", "world", "land", "cottage"}', 'fill', 1);
 
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
-VALUES (4, 'Which of these are vehicles?', '{"Train", "Car", "Drawer", "Elephant", "Plane"}', '{"Train", "Car", "Plane"}', 'pick', 1);
+VALUES (4, 'Which of these are vehicles?', '{"Train", "Car", "Plane"}', '{"Drawer", "Crane"}', 'pick', 1);
+
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (5, 'Which of these products come are diary?', '{"Milk", "Cheese"}', '{"Meat", "Wheat", "Greese"}', 'pick', 1);
+
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'Which of these are birds?', '{"Eagle", "Ostrich", "Chicken"}', '{"Donkey", "Cheetah"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'Which of these animals live underground?', '{"Mole", "Worm"}', '{"Deer", "Sparrow", "Salmon"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'Which of these are pets?', '{"Hamster", "Cat"}', '{"Dolphin", "Boar", "Shark"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'What do we call a baby cow?', '{"Foal"}', '{"Cowlet", "Calf", "Cub", "Pup"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'Which of the following is a large, herbivorous mammal with a trunk?', '{"Elephant"}', '{"Dolphin", "Giraffe", "Lion", "Hippo"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'Which bird is known for its ability to imitate human speech?', '{"Parrot"}', '{"Penguin", "Owl", "Petrel"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'Which of the following is a marine mammal known for its playful behavior and intelligence?', '{"Dolphin", "Porpoise"}', '{"Shark", "Jellyfish"}', 'pick', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (6, 'Which reptile is known for changing color to blend with its surroundings?', '{"Chameleon"}', '{"Crocodile", "Snake", "Tortoise"}', 'pick', 1);
+
+
 
 
 -- INSERT INTO user_relationships (user1_id, user2_id, relationship) VALUES ('3a84759d-8ea5-40d7-91f7-f22440d2d866', 'db77d276-7c84-4543-908b-d4ac92f031ec', 'friends');
