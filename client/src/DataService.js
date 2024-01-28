@@ -120,7 +120,12 @@ export default {
     async GetRankingTop() {
         const res = await Server.get(`/rankings/top`)
         return res.data
-    }
+    },
+
+    async CreateGroup(group) {
+        const res = await Server.post(`/groups`, group)
+        return res.data
+    },
    
    
 }
