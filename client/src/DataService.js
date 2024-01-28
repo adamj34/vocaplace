@@ -93,6 +93,10 @@ export default {
         await Server.post(`/topics`, topic)
     },
 
+    async AddQuestion(question) {
+        await Server.post(`/questions`, question)
+    },
+
     async GetUnitsTopicsQuestions() { // for admin panel
         const res = await Server.get(`/units/overview`)
         return res.data
@@ -113,6 +117,5 @@ export default {
         return res.data
     },
    
-
    
 }

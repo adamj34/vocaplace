@@ -1,23 +1,35 @@
 import { useState } from "react";
 import DataService from "../../DataService";
-import { FaPlus } from "react-icons/fa";
 
 
-function Validate(Data, GlobalData) {
-    console.log(Data)
-    // const topics = Object.values(GlobalData).map(x => x.topics).flat().map(x => x.topic)
-    // if (!Data.topic || Data.topic.length < 5) {
-    //     return "Topic name must be at least 5 characters long!"
-    // } else if (topics.map(x => x.toLowerCase()).includes(Data.topic.toLowerCase())) {
-    //     return "This topic already exists!"
-    // } else if (!Data.unit) {
-    //     return "You must choose a unit!"
-    // }
+function Validate(Data) {
+    // console.log(Data)
+    if (!Data.topic || !Data.unit) {
+        return "You must choose a unit and a topic!"
+    } else if (!Data.questionType) {
+        return "You must choose question type!"
+    } else if (!Data.content) {
+        return "You must specify the question content!"
+    } else if (!Data.difficulty) {
+        return "You must choose question difficulty!"
+    } else if (!Data.correctAnswers) {
+        return "You must specify at least one correct answer!"
+    } else if (!Data.misleadingAnswers) {
+        return "You must specify at least one misleading answer!"
+    } else if ((Data.misleadingAnswers.includes("") && Data.questionType != 'fill') || Data.correctAnswers.includes("")) {
+        return "An answer option cannot be empty!"
+    } else if (Data.questionType != 'order' && Data.misleadingAnswers.length + Data.correctAnswers.length > 5) { // answer limit = 5, 10 for type order
+        return "You can only have up to five answer options!"
+    } else if (Data.questionType == 'order' && Data.misleadingAnswers.length + Data.correctAnswers.length > 10) {
+        return "You can only have up to ten answer options!"
+    } else if (Data.questionType == 'fill' && !Data.content.includes("_")) {
+        return "Question content must include a gap (_ symbol)!"
+    }
 }
 
 
 export function QuestionCreator(p) {
-    const [Data, SetData] = useState({correctAnswers:["a","b"]});
+    const [Data, SetData] = useState({correctAnswers:[""], misleadingAnswers:[""]}); // one empty answer by default 
     const [ErrorMessage, SetErrorMessage] = useState("");
     const [Submitting, SetSubmitting] = useState(false);
     const [ShowTopics, SetShowTopics] = useState(false);
@@ -34,8 +46,8 @@ export function QuestionCreator(p) {
                         <button className='selectbutton' type='button' onClick={() => SetShowTopics(!ShowTopics)}>{Data.unit || "None"}{Data.topic && Data.unit && " | "}{(Data.topic) || ""}</button>
                         {ShowTopics && <div id='select' onMouseLeave={() => SetShowTopics(false)}>
                             <div id='select-scroll'>
-                                {Object.entries(p.GlobalData).map(([u,data],i) => { // opakuj to w diva i dodaj key={i} jak krystian odda cssa
-                                    return (<> 
+                                {Object.entries(p.GlobalData).map(([u,data],i) => { // to trzeba jakos opakowac w diva
+                                    return (<>
                                         <div id='topic' className='disabled'>{u}</div>
                                         {data.topics.map((t, i) => {
                                             return (
@@ -52,12 +64,12 @@ export function QuestionCreator(p) {
                 <div id='field'>
                     <label>Type:</label>
                     <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={() => SetShowType(!ShowType)}>{(Data.type && Data.type.charAt(0).toUpperCase() + Data.type.slice(1)) || "None"}</button>
+                        <button className='selectbutton' type='button' onClick={() => SetShowType(!ShowType)}>{(Data.questionType && Data.questionType.charAt(0).toUpperCase() + Data.questionType.slice(1)) || "None"}</button>
                         {ShowType && <div id='select' onMouseLeave={() => SetShowType(false)}>
                             <div id='select-scroll'>
-                                {['Pick', 'Order', 'Connect', 'Fill'].map((t,i) => {
+                                {['Pick', 'Order', 'Fill'].map((t,i) => { // add 'Connect' later on
                                     return (
-                                        <div key={i} className={t.toLowerCase() == Data.type ? 'chosen' : ''} onClick={() => { SetShowType(false); SetData({ ...Data, type: t.toLowerCase(), }) }}>{t}</div>
+                                        <div key={i} className={t.toLowerCase() == Data.questionType ? 'chosen' : ''} onClick={() => { SetShowType(false); SetData({ ...Data, questionType: t.toLowerCase(), correctAnswers:[""], misleadingAnswers:[""] }) }}>{t}</div> // reset answer on type changed
                                     )
                                 })}
                             </div>
@@ -65,29 +77,49 @@ export function QuestionCreator(p) {
                     </div>
                 </div>
 
-                <div id='field'>
+                {Data.questionType && (<div id='field'>
                     <label>Question:</label>
-                    <input className='input' placeholder={(Data.type == 'connect' && "Connect the words with their meaning in English.") || (Data.type == 'order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (Data.type == 'pick' && "Which of these are vehicles?") || (Data.type == 'fill' && 'The dog quickly _ the thief who tried to enter the house.')} onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
-                </div>
+                    <input className='input' placeholder={(Data.questionType == 'connect' && "Connect the words with their meaning in English.") || (Data.questionType == 'order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (Data.questionType == 'pick' && "Which of these are vehicles?") || (Data.questionType == 'fill' && 'The dog quickly _ the thief who tried to enter the house.') || ""} onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
+                </div>)}
 
-                <div id='field'>
+                {(Data.questionType == 'pick' || Data.questionType == 'fill') && (<div id='field'>
                     <label>Correct Answers:</label>
                     <div id="answers">
                         <div id="inputs">
-                            {Data.correctAnswers.map((x,i) => {
+                            {Data.correctAnswers.map((x, i) => {
                                 return (
-                                    <div id="inputbox">
-                                        <input key={i} className='input' placeholder='Vocabulary' onChange={(e) => { SetData({ ...Data, [['correctAnswers'][i]]:e.target.value }) }} />
-                                        <i id='iconbutton' className="fas fa-xmark" />
+                                    <div id="inputbox" key={i}>
+                                        <input className='input' value={x} placeholder={'Option ' + (i + 1)} onChange={(e) => { const newcorrect = [...Data.correctAnswers]; newcorrect[i] = e.target.value; SetData({ ...Data, correctAnswers: newcorrect }) }} />
+                                        {Data.correctAnswers.length > 1 && <i id='iconbutton' className="fas fa-xmark" onClick={(e) => { SetData({ ...Data, correctAnswers: Data.correctAnswers.filter((_, i2) => i2 !== i) }) }} />}
                                     </div>
                                 )
                             })}
-                            
                         </div>
-                        <i id='iconbutton' className="fas fa-plus"/>
+                        {Data.correctAnswers.length < 5 && <i id='iconbutton' className="fas fa-plus" onClick={(e) => { SetData({ ...Data, correctAnswers: [...Data.correctAnswers, ""] }) }} />}
                     </div>
-                    
-                </div>
+                </div>)}
+
+                {Data.questionType == 'order' && (<div id='field'>
+                    <label>Correct Answer:</label>
+                    <input className='input' placeholder='She has a dog.' onChange={(e) => { SetData({ ...Data, correctAnswers: e.target.value.split(' ') }) }} />
+                </div>)}
+
+                {(Data.questionType == 'pick' || Data.questionType == 'order') && (<div id='field'>
+                    <label>Misleading Answers:</label>
+                    <div id="answers">
+                        <div id="inputs">
+                            {Data.misleadingAnswers.map((x, i) => {
+                                return (
+                                    <div id="inputbox" key={i}>
+                                        <input className='input' value={x} placeholder={'Option ' + (i + 1)} onChange={(e) => { const newcorrect = [...Data.misleadingAnswers]; newcorrect[i] = e.target.value; SetData({ ...Data, misleadingAnswers: newcorrect }) }} />
+                                        {Data.misleadingAnswers.length > 1 && <i id='iconbutton' className="fas fa-xmark" onClick={(e) => { SetData({ ...Data, misleadingAnswers: Data.misleadingAnswers.filter((_, i2) => i2 !== i) }) }} />}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        {Data.misleadingAnswers.length < 5 && <i id='iconbutton' className="fas fa-plus" onClick={(e) => { SetData({ ...Data, misleadingAnswers: [...Data.misleadingAnswers, ""] }) }} />}
+                    </div>
+                </div>)}
 
                 <div id='field'>
                     <label>Difficulty:</label>
@@ -117,12 +149,12 @@ export function QuestionCreator(p) {
                             SetErrorMessage(validationerror)
                         } else {
                             SetErrorMessage("")
-                            // DataService.AddTopic(Data).then(() => {
-                            //     SetErrorMessage("Topic created!")
-                            //     p.SetNeedToUpdateData(true)
-                            // }).catch(() => {
-                            //     SetErrorMessage("Failed to submit!")
-                            // })
+                            DataService.AddQuestion(Data).then(() => {
+                                SetErrorMessage("Question created!")
+                                p.SetNeedToUpdateData(true)
+                            }).catch(() => {
+                                SetErrorMessage("Failed to submit!")
+                            })
                         }
                         SetSubmitting(false)
                     }}>Submit</button>

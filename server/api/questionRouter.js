@@ -23,8 +23,8 @@ router.post('/', (req, res) => {
         const question = {
             topic_id: topicId.id,
             content: req.body.content,
-            correct_answers: JSON.parse(req.body.correctAnswers),
-            misleading_answers: JSON.parse(req.body.misleadingAnswers),
+            correct_answers: req.body.correctAnswers,
+            misleading_answers: req.body.misleadingAnswers,
             question_type: req.body.questionType,
             difficulty: req.body.difficulty,
         };
