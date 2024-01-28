@@ -186,5 +186,33 @@ router.patch('/points', (req, res) => {
         });
 });
 
+router.get('/friends', (req, res) => {
+    const userId = req.userId;
+    db.user_relationships.findFriends({id: userId})
+    .then((data) => {
+        Promise.all(data.map(friend => db.users.findById({id: friend.friend_id})))
+        .then((data) => {
+            data.sort((a, b) => b.points - a.points);
+            res.status(200).json({
+                success: true,
+                data
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
 
 export default router;

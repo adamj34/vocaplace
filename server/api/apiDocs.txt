@@ -59,6 +59,37 @@ returns:
     }
 }
 
+/user/friends
+GET:
+returns:
+{
+    "success": true,
+    "data": [       // friends' data, desc order by points
+        {
+            "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+            "username": "q",
+            "bio": null,
+            "private_profile": false,
+            "points": 4,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
+            "picture": null
+        },
+        {
+            "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+            "username": "r",
+            "bio": null,
+            "private_profile": false,
+            "points": 2,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
+            "picture": null
+        }
+    ]
+}
+
 /user/visit/:visitedUserId ✔️
 GET:
 returns:
@@ -645,3 +676,23 @@ returns:
     ]
 }
 
+/rankings/top
+GET:
+returns:    (returns top 10)
+{
+    "success": true,
+    "data": [
+        {
+            "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+            "username": "r",
+            "points": 6,
+            "picture": null
+        },
+        {
+            "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
+            "username": "x",
+            "points": 3,
+            "picture": null
+        }
+    ]
+}

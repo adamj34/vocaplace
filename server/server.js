@@ -12,6 +12,7 @@ import questionRouter from "./api/questionRouter.js";
 import topicRouter from "./api/topicRouter.js";
 import groupRouter from "./api/groupRouter.js";
 import searchRouter from "./api/searchRouter.js";
+import rankingRouter from "./api/rankingRouter.js";
 
 import keycloak from './Keycloak.js';
 
@@ -29,7 +30,6 @@ app.use(cors({
 }))    
 
 
-
 app.use(keycloak.middleware()); 
 // app.use(keycloak.protect());
 app.use(getUserData);
@@ -40,6 +40,7 @@ app.use('/topics', topicRouter);
 app.use('/relationships', userRelationsRouter);
 app.use('/questions', questionRouter);
 app.use('/groups', groupRouter);
+app.use('/rankings', rankingRouter);
 
 const PORT = process.env.PORT || 8000; 
 app.listen(PORT, () => {
