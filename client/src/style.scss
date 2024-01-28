@@ -12,22 +12,30 @@ body {
   color: white;
   margin: 0;
   background-color: $maingray;
-  background-image: linear-gradient(to bottom right, $maingray, $maingraygradientbottom);
+  background-image: linear-gradient(
+    to bottom right,
+    $maingray,
+    $maingraygradientbottom
+  );
   background-repeat: none;
   background-attachment: fixed;
-  font-family: 'Gill Sans MT';
+  font-family: "Gill Sans MT";
   letter-spacing: 1px;
   button {
     font-family: inherit;
     font-size: 90%;
     cursor: pointer;
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-weight: normal;
   }
 }
 
-#profilepic, #editprofilepic {
+#profilepic,
+#editprofilepic {
   border-radius: 50%;
   #pfp {
     border-radius: 50%;
@@ -42,7 +50,7 @@ body {
   text-transform: uppercase;
   border-radius: 5px;
   background-color: $themecolor;
-  background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
+  background-image: linear-gradient($themecolor, $themecolorgradientbottom);
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
   color: white;
   transition: 0.4s;
@@ -78,11 +86,11 @@ body {
 }
 
 .wordinput {
-  background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+  background-image: linear-gradient($darkgray, $darkgraygradientbottom);
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
   padding: 6px 10px;
   border-radius: 5px;
-  >span {
+  > span {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -115,7 +123,7 @@ body {
       transition: 0.3s;
       width: 100%;
       &:focus {
-          border: 2px solid $themecolor;
+        border: 2px solid $themecolor;
       }
     }
   }
@@ -133,12 +141,12 @@ body {
   outline: none;
   transition: 0.3s;
   &:focus {
-      border: 2px solid $themecolor;
+    border: 2px solid $themecolor;
   }
   &#bio {
     resize: none;
     width: 90%;
-    overflow:hidden;
+    overflow: hidden;
   }
 }
 
@@ -161,7 +169,7 @@ input[type="file"] {
   align-items: center;
   justify-content: space-between;
   background-color: $darkgray;
-  background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+  background-image: linear-gradient($darkgray, $darkgraygradientbottom);
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
@@ -210,7 +218,10 @@ input[type="file"] {
       margin-right: 4px;
       #count {
         background-color: $themecolor;
-        background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
+        background-image: linear-gradient(
+          $themecolor,
+          $themecolorgradientbottom
+        );
         border: 2px solid $darkgray;
         padding: 2px 6px;
         border-radius: 12px;
@@ -226,7 +237,7 @@ input[type="file"] {
         transition: 0.4s;
       }
       &:hover {
-      #icon {
+        #icon {
           color: $themecolor;
         }
         #messages {
@@ -246,88 +257,86 @@ input[type="file"] {
     position: absolute;
     top: 40px;
     right: 0;
-    background-color:$maingray;
+    background-color: $maingray;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     border-radius: 12px;
     padding: 10px;
     min-width: 200px;
 
     #title {
-        border-bottom: 3px solid $darkgray;
-        padding: 5px;
-        text-transform: uppercase;
-        font-size: 110%;
-        margin-bottom: 10px;
+      border-bottom: 3px solid $darkgray;
+      padding: 5px;
+      text-transform: uppercase;
+      font-size: 110%;
+      margin-bottom: 10px;
     }
-    #message-scroll{
+    #message-scroll {
       max-height: 300px;
       overflow-y: auto;
       &::-webkit-scrollbar-track {
         background-color: $maingray;
       }
       &::-webkit-scrollbar-thumb {
-        background-color: $maingraygradientbottom; 
+        background-color: $maingraygradientbottom;
       }
-      
+
       #message {
         padding: 6px;
         margin-right: 10px;
         border-bottom: 2px solid $darkgray;
         transition: 0.4s;
-        
+
         &:hover {
-          color: $themecolor; 
+          color: $themecolor;
         }
       }
     }
+  }
 }
-
-}
-  #SearchBar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: $maingray;
-    padding: 6px 10px;
-    border-radius: 5px;
-    border: 2px solid $maingray;
-    box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
+#SearchBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: $maingray;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 2px solid $maingray;
+  box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
+  transition: 0.4s;
+  input {
+    font-family: inherit;
+    color: white;
+    font-size: 110%;
+    background: none;
+    border: none;
+    outline: none;
+    width: 300px;
+    opacity: 0.3;
     transition: 0.4s;
-    input {
-      font-family: inherit;
+    &::placeholder {
       color: white;
-      font-size: 110%;
-      background: none;
-      border: none;
-      outline: none;
-      width: 300px;
-      opacity: 0.3;
-      transition: 0.4s;
-      &::placeholder {
-        color: white;
-      }
-    }
-    &:focus-within {
-      border: 2px solid $themecolor;
-      opacity: 1;
-      color: white;
-      #icon {
-        opacity: 1;
-      }
-      input {
-        opacity: 1;
-      }
-    }
-    #icon {
-      opacity: 0.3;
-      transition: 0.4s;
     }
   }
-
+  &:focus-within {
+    border: 2px solid $themecolor;
+    opacity: 1;
+    color: white;
+    #icon {
+      opacity: 1;
+    }
+    input {
+      opacity: 1;
+    }
+  }
+  #icon {
+    opacity: 0.3;
+    transition: 0.4s;
+  }
+}
 
 #footer {
   position: relative;
-  background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+  background-image: linear-gradient($darkgray, $darkgraygradientbottom);
   padding: 20px;
   margin-top: 50px;
   width: calc(100% - 40px);
@@ -335,7 +344,6 @@ input[type="file"] {
   color: gray;
 }
 
- 
 #Home {
   display: flex;
   flex-direction: column;
@@ -360,7 +368,7 @@ input[type="file"] {
       font-size: 300%;
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       background-color: $darkgray;
-      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       border-radius: 12px;
       padding: 20px 10%;
     }
@@ -368,7 +376,7 @@ input[type="file"] {
       font-size: 110%;
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       background-color: $darkgray;
-      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       border-radius: 12px;
       padding: 15px;
     }
@@ -380,12 +388,12 @@ input[type="file"] {
     grid-template-columns: 60% 60%;
     gap: 20px;
     justify-content: center;
-    >div {
+    > div {
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       background-color: $darkgray;
       padding: 40px;
       border-radius: 12px;
-      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       #title {
         display: flex;
         gap: 12px;
@@ -400,47 +408,47 @@ input[type="file"] {
     }
   }
 
-    #links {
-      margin-top: 50px;
-      display: grid;
-      grid-template-columns: 60% 60%;
-      gap: 20px;
-      justify-content: center;
-      a {
-        text-decoration: none;
-      }
-      >a>div {
-        color: white;
-        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-        background-color: $darkgray;
-        padding: 40px;
-        border-radius: 12px;
-        background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
-        #title {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          border-bottom: 3px solid $themecolor;
-          text-transform: uppercase;
-          font-size: 120%;
-          #icon {
-            font-size: 150%;
-          }
-          p {
-            transition: 0.4s;
-          }
+  #links {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 60% 60%;
+    gap: 20px;
+    justify-content: center;
+    a {
+      text-decoration: none;
+    }
+    > a > div {
+      color: white;
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      padding: 40px;
+      border-radius: 12px;
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+      #title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        border-bottom: 3px solid $themecolor;
+        text-transform: uppercase;
+        font-size: 120%;
+        #icon {
+          font-size: 150%;
         }
-        &:hover {
-          #title>p {
-            color: $themecolor;
-          }
+        p {
+          transition: 0.4s;
         }
       }
-    
+      &:hover {
+        #title > p {
+          color: $themecolor;
+        }
+      }
+    }
   }
 }
 
-#Profile, #EditProfile {
+#Profile,
+#EditProfile {
   min-height: 100vh;
   #banner {
     padding: 60px 10%;
@@ -480,7 +488,7 @@ input[type="file"] {
         }
         &:hover {
           #pfp {
-            filter:brightness(0.3);
+            filter: brightness(0.3);
           }
           #icon {
             filter: opacity(1);
@@ -492,7 +500,7 @@ input[type="file"] {
       }
     }
     #buttons {
-      a>button {
+      a > button {
         width: 100%;
       }
       margin-top: 30px;
@@ -506,12 +514,12 @@ input[type="file"] {
     grid-template-columns: 40% 40%;
     gap: 20px;
     justify-content: center;
-    >div {
+    > div {
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       background-color: $darkgray;
       padding: 40px;
       border-radius: 12px;
-      background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       #title {
         display: flex;
         gap: 12px;
@@ -547,7 +555,9 @@ input[type="file"] {
   }
 }
 
-#NotFound, #LoginRequired, #AccessDenied {
+#NotFound,
+#LoginRequired,
+#AccessDenied {
   padding-top: 100px;
   text-align: center;
   display: flex;
@@ -565,13 +575,13 @@ input[type="file"] {
     padding: 4px;
     border-radius: 20px;
     background-color: $darkgray;
-    background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
+    background-image: linear-gradient($darkgray, $darkgraygradientbottom);
     #bar {
       width: 0;
       transition: 0.4s;
       border-radius: 20px;
       background-color: $themecolor;
-      background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
+      background-image: linear-gradient($themecolor, $themecolorgradientbottom);
       p {
         margin: 0;
         padding: 4px 10px;
@@ -582,7 +592,15 @@ input[type="file"] {
   }
 }
 
-#Units, #Topics, #Admin, #Repetitions, #Friends, #Groups, #Ranking, #Questions, #Search {
+#Units,
+#Topics,
+#Admin,
+#Repetitions,
+#Friends,
+#Groups,
+#Ranking,
+#Questions,
+#Search {
   padding: 0 20px;
   display: flex;
   flex-direction: column;
@@ -627,22 +645,24 @@ input[type="file"] {
 }
 
 #Admin {
-  #managequestions, #create {
+  #managequestions,
+  #create {
     margin: 0 20px;
-    #manager, #creator {
+    #manager,
+    #creator {
       margin-top: 10px;
       form {
         display: flex;
         gap: 15px;
         flex-direction: column;
-        #field  {
+        #field {
           display: grid;
           gap: 10px;
           align-items: center;
           input {
             width: 500px;
           }
-          label>a {
+          label > a {
             color: white;
             text-decoration: none;
             transition: 0.3s;
@@ -692,9 +712,9 @@ input[type="file"] {
       text-transform: uppercase;
     }
   }
-  
-  #selectcreated>.selectbutton {
-    text-transform: capitalize
+
+  #selectcreated > .selectbutton {
+    text-transform: capitalize;
   }
 
   #select {
@@ -713,7 +733,7 @@ input[type="file"] {
         background-color: $darkgray;
       }
       &::-webkit-scrollbar-thumb {
-        background-color: $darkgraygradientbottom; 
+        background-color: $darkgraygradientbottom;
       }
       div {
         padding: 6px;
@@ -722,7 +742,7 @@ input[type="file"] {
         &:not(.disabled) {
           cursor: pointer;
           &:hover {
-            color: $themecolor; 
+            color: $themecolor;
           }
           &.chosen {
             color: $themecolor;
@@ -744,8 +764,6 @@ input[type="file"] {
         text-transform: capitalize;
       }
     }
-   
-    
   }
 }
 
@@ -764,7 +782,8 @@ input[type="file"] {
         background-image: linear-gradient($darkgray, $darkgraygradientbottom);
         display: flex;
         justify-content: space-between;
-        #right, #left {
+        #right,
+        #left {
           display: flex;
           align-items: center;
           #icon {
@@ -795,7 +814,10 @@ input[type="file"] {
           padding: 12px;
           border-radius: 5px;
           background-color: $themecolor;
-          background-image: linear-gradient($themecolor, $themecolorgradientbottom);
+          background-image: linear-gradient(
+            $themecolor,
+            $themecolorgradientbottom
+          );
           box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
           color: white;
           transition: 0.4s;
@@ -808,7 +830,7 @@ input[type="file"] {
             background-image: none;
             color: $themecolor;
           }
-          
+
           &:not(.disabled):hover {
             background-color: white;
             background-image: none;
@@ -833,59 +855,58 @@ input[type="file"] {
   }
 }
 
-
 #Search {
   #data {
-      display: grid;
-      grid-template-columns: 40% 40%;
-      gap: 20px;
-      justify-content: center;
-  
-      >div {
-        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-        background-color: $darkgray;
-        padding: 40px;
-        border-radius: 12px;
-        background-image: linear-gradient($darkgray, $darkgraygradientbottom);
-  
-        #title {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          border-bottom: 3px solid $themecolor;
-          text-transform: uppercase;
-          font-size: 120%;
-  
-          #icon {
-            font-size: 150%;
-          }
-        }
-      }
-  
-      #content {
-        margin-top: 20px;
-        list-style: none;
-  
-        li {
-          display: flex;
-          align-items: center;
-  
-          &:before {
-            content: "•";
-            font-size: 120%;
-            padding-right: 10px;
-          }
-  
-          div {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 110%;
-            vertical-align: middle;
-          }
+    display: grid;
+    grid-template-columns: 40% 40%;
+    gap: 20px;
+    justify-content: center;
+
+    > div {
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      padding: 40px;
+      border-radius: 12px;
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+
+      #title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        border-bottom: 3px solid $themecolor;
+        text-transform: uppercase;
+        font-size: 120%;
+
+        #icon {
+          font-size: 150%;
         }
       }
     }
+
+    #content {
+      margin-top: 20px;
+      list-style: none;
+
+      li {
+        display: flex;
+        align-items: center;
+
+        &:before {
+          content: "•";
+          font-size: 120%;
+          padding-right: 10px;
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 110%;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
 }
 
 #Repetitions {
@@ -907,44 +928,41 @@ input[type="file"] {
       margin: 0;
       margin-bottom: 20px;
       li {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin: 0 20px;
-          &:before {
-              content: "•";
-              font-size: 120%;
-            }
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 20px;
+        &:before {
+          content: "•";
+          font-size: 120%;
         }
+      }
     }
   }
-  >h3 {
+  > h3 {
     margin-left: 20px;
   }
   button {
     margin: 20px;
     width: 250px;
-    
   }
 }
 
-
 #Ranking {
   text-align: center;
-  a{
+  a {
     text-decoration: none;
     color: white;
-    #username{
-      transition: 0.3s;
-      
-    }
-  &:hover {
     #username {
-      color: $themecolor;
+      transition: 0.3s;
+    }
+    &:hover {
+      #username {
+        color: $themecolor;
+      }
     }
   }
-  }
-  #user{
+  #user {
     display: flex;
     gap: 5px;
     #pfp {
@@ -953,9 +971,7 @@ input[type="file"] {
       background-position: center;
     }
   }
-  
-  
-  
+
   #columns {
     display: flex;
     justify-content: center;
@@ -969,27 +985,125 @@ input[type="file"] {
       border-radius: 12px;
       background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       #row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 10px;
-          border-bottom: 2px solid $themecolor;
-          margin: 0 20px;
-          p {
-            margin: 0;
-            padding: 5px;
-            font-size: 110%;
-          }
-        }
-        h2 {
-          text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 2px solid $themecolor;
+        margin: 0 20px;
+        p {
           margin: 0;
-          padding-bottom: 20px;
-          margin-bottom: 20px;
-          border-bottom: 3px solid $themecolor;
+          padding: 5px;
+          font-size: 110%;
         }
-        
+      }
+      h2 {
+        text-transform: uppercase;
+        margin: 0;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 3px solid $themecolor;
+      }
     }
+  }
+}
+
+#Friends {
+  h3{
+    text-transform: uppercase;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+    #username {
+      transition: 0.3s;
+    }
+    &:hover {
+      #username {
+        color: $themecolor;
+      }
+    }
+  }
+  #friends-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 30px;
+
+    #friends-list-container {
+      display: flex;
+      flex-direction: column;
+      border-right: $themecolor solid 3px;
+      height: 100%;
+      
+      #friends-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+  }
+}
+#friend-requests {
+  #friend-requests-list {
+    #friend-request {        
+        #user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin: 0 20px;
+            box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+            background-color: $darkgray;
+            border-radius: 12px;
+            background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+            padding: 10px 20px;
+            justify-content: space-between;
+            width: 250px;
+            #pfp {
+              border-radius: 50%;
+          
+              background-size: cover;
+              background-position: center;
+            }
+            #username {
+              text-transform: uppercase;
+              font-size: 130%;
+            }
+          #friend-box{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+          #friend-request-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            
+          }
+      }
+    }
+  }
+}
+#friend {
+  display: flex;
+  align-items: center;
+  width: 250px;
+  gap: 10px;
+  padding: 10px;
+  margin: 0 20px;
+  box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+  background-color: $darkgray;
+  border-radius: 12px;
+  background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+  padding: 10px 20px;
+  #pfp {
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+  }
+  #username {
+    text-transform: uppercase;
+    font-size: 130%;
   }
 }
 
@@ -1066,9 +1180,7 @@ input[type="file"] {
 }
 
 
-
-
- // SCROLLBAR
+// SCROLLBAR
 
 ::-webkit-scrollbar {
   width: 10px;
