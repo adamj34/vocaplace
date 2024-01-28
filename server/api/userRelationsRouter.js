@@ -120,6 +120,35 @@ router.get('/check/user/:id', (req, res) => {
     }
 });
 
+router.get('/pending', (req, res) => {
+    const userId = req.userId;
+    db.user_relationships.getPendingRequests({id : userId})
+    .then((data) => {
+        console.log(data)
+        Promise.all(data.map(user => db.users.findById({id: user.user_id})))
+        .then((data) => {
+            res.status(200).json({
+                success: true,
+                data
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
+
 router.delete('/friend/:id', (req, res) => {
     const userId = req.userId;
     const friendId = req.params.id;

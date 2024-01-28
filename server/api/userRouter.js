@@ -215,4 +215,37 @@ router.get('/friends', (req, res) => {
     });
 });
 
+router.get('/groups', (req, res) => {
+    const userId = req.userId;
+    db.users.findGroupsByUserId({id: userId})
+    .then((data) => {
+        Promise.all(data.map(group => {
+            return db.groups.findById({id: group.group_id})
+                .then(foundGroup => {
+                    return {admin: group.admin, ...foundGroup};
+                });
+        }))
+        .then((data) => {
+            res.status(200).json({
+                success: true,
+                data
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            err
+        });
+    });
+});
+
 export default router;

@@ -19,6 +19,7 @@ class RankingsRepository {
         LIMIT 10
         `);
     }
+
 }
 
 

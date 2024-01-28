@@ -40,7 +40,8 @@ class UsersRepository {
     findGroupsByUserId(value) {
         return this.db.any(`
         SELECT
-            group_id
+            group_id,
+            admin
         FROM
             group_membership
         WHERE user_id = $1
