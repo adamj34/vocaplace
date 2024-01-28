@@ -30,17 +30,27 @@ export function Friends() {
     useEffect(() => {
         if(C.AppReady){
             // Getingfriends
-            // DataService.GetFriends().then((res) => {
-            //     setFriends(res.data);
-            // }).catch((err) => {
-            //     console.log(err);
-            // });
-            setFriends(initialFreiendsData);
+            DataService.GetFriends().then((res) => {
+                setFriends(res.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+            // setFriends(initialFreiendsData);
         }
     }, [C.AppReady]);
     if (!keycloak.authenticated) {return <LoginRequired/>}
 
     document.title = `VocaPlace | Friends`
+    const handleAccept = () => {
+        DataService.AcceptFriendRequest().then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+    const handleDecline = () => {
+        console.log("Decline")
+    }
 
 
     return (
@@ -52,8 +62,10 @@ export function Friends() {
             <div id="friends-container">
 
                 <div id="friends-list-container">
-                    <h2>Friends List</h2>
+                    <h3>Friends List</h3>
+                    {friends.length > 0 && <p>You have {friends.length} friends.</p>}
                     <div id="friends-list">
+                        {friends.length === 0 && <p>You have no friends yet.</p>}
                         {friends.map((friend) => (
                             <Link key={friend.id} to={`/profile/${friend.id}`}>
                                 <div id="friend">
@@ -66,19 +78,18 @@ export function Friends() {
                     </div>
                 </div>
                     <div id="friend-requests">
-                        <h2>Friend Requests</h2>
+                        <h3>Friend Requests</h3>
                         <div id="friend-requests-list">
                             <div id="friend-request">
-                                <div id="request-manage">
-                                <div id="friend">
-                                    <div id='pfp' style={{ backgroundImage: `url(${ placeholderpfp})`, height: 50, width:50 }}></div>
-                                    <p id="username">Bob</p>
-                                </div>
-                                    <div id="friend-request-buttons">
-                                        <button className="button" id="accept">Accept</button>
-                                        <button className="button" id="decline">Decline</button>
+                                <div id="user">
+                                    <div id="friend-box">
+                                        <div id='pfp' style={{ backgroundImage: `url(${ placeholderpfp})`, height: 50, width:50 }}></div>
+                                        <p id="username">Bob</p>
                                     </div>
-
+                                    <div id="friend-request-buttons">
+                                        <button className="button" onClick={handleAccept} id="accept">Accept</button>
+                                        <button className="button" onClick={handleDecline} id="decline">Decline</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

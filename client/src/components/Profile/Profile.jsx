@@ -39,6 +39,14 @@ export function Profile() {
         }
     }, [C.AppReady])
 
+    const handleAddFriend = () => {
+        DataService.SendFriendRequest(id).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
     return (
         Loading ? <div>Loading</div> :
         <div id="Profile">
@@ -58,7 +66,7 @@ export function Profile() {
                 {(id === C.UserData.id) ? 
                     <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
-                        <button className='button'>Add Friend</button>
+                        <button className='button' onClick={handleAddFriend}>Add Friend</button>
                         <button className='button'>Invite to Group</button>
                         <button className='button'>Message</button>
                     </div>
