@@ -20,6 +20,11 @@ export default {
         return res.data
     },
 
+    async GetUserGroups() {
+        const res = await Server.get(`/user/groups`)
+        return res.data
+    },
+
     async UpdateUserData(data) { // expects: keycloak token in header, body {nickname, bio, private_profile, picture}
         await Server.patch(`/user`, data)
     },

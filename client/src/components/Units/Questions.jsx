@@ -62,7 +62,7 @@ function Question(p) {
         <div id="question">
             <div id="title">
                 <div id="left">
-                    {p.i + 1}. {p.data.content}
+                    {p.i + 1}. {p.data.question_type == 'pick' && p.data.content} {p.data.question_type == 'fill' && ('Fill in the gap to make a sentence: ' + p.data.content.replace('_', '_____'))} {p.data.question_type == 'order' && p.data.content}
                 </div>
                 <div id="right">
                     {!p.Finished ? 
@@ -76,6 +76,7 @@ function Question(p) {
                 </div>
             </div>
             <div id="answers">
+
                 {p.data.question_type == 'pick' && (<div id="pick">
                     {p.QuestionsData[p.i].answer_options.map((q,i)=> {
                         return (
@@ -97,6 +98,11 @@ function Question(p) {
                         )
                     })}
                 </div>)}
+
+                {p.data.question_type == 'fill' && (<div id="fill">
+                    <input className='input' placeholder='Enter your answer.' />
+                </div>)}
+
             </div>
             {(p.Finished && !p.QuestionsData[p.i].correct) && (
                 <div id="correctanswers">

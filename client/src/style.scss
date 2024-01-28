@@ -809,6 +809,9 @@ input[type="file"] {
           display: flex;
           gap: 20px;
         }
+        input {
+          width: 40%;
+        }
         #answer {
           font-size: 110%;
           padding: 12px;
@@ -1135,7 +1138,7 @@ input[type="file"] {
         background-color: $darkgray;
         border-radius: 12px;
         background-image: linear-gradient($darkgray, $darkgraygradientbottom);
-        padding: 10px 20px;
+        padding: 20px;
         #pfp {
             border-radius: 50%;
             background-size: cover;

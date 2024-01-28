@@ -36,11 +36,10 @@ export function Groups() {
     
     useEffect(() => {
         if (C.AppReady) {
-            // DataService.GetProfileData(id).then((data) => {
-            //     SetProfileData(data)
-            //     console.log(data)
-            // })
-            SetGroups(groups)
+            DataService.GetUserGroups().then((data) => {
+                SetGroups(data.data)
+                console.log(data.data)
+            })
         }
     }, [C.AppReady])
 
@@ -60,9 +59,9 @@ export function Groups() {
                         return (
                             <Link key={i} to={`/groups/${g.id}`}>
                                 <div id="group">
-                                    <div id='pfp' style={{ backgroundImage: `url(${g.picture || placeholderpfp})`, height: 80, minWidth: 80 }}></div>
+                                    <div id='pfp' style={{ backgroundImage: `url(${g.picture || placeholderpfp})`, height: 60, minWidth: 60 }}></div>
                                     <div id="groupdata">
-                                        <h3>{g.group_name}</h3>
+                                        <h3>{g.group_name} {g.admin && (<i className="fas fa-crown" />)}</h3>
                                         <p>{g.bio}</p>
                                     </div>
                                 </div>
@@ -80,7 +79,7 @@ export function Groups() {
                         </div>
                         <div id='field'>
                             <label>Group Description:</label>
-                            <TextareaAutosize id='bio' className='input' minRows={4} maxLength={300} placeholder='We love learning English!' ></TextareaAutosize>
+                            <TextareaAutosize id='bio' className='input' minRows={4} maxLength={300} placeholder='We love learning English!' onChange={(e) => { SetNewGroupData({ ...NewGroupData, bio: e.target.value }) }} ></TextareaAutosize>
                         </div>
                         <div id='field'>
                             <label>Group Picture:</label>
@@ -97,6 +96,8 @@ export function Groups() {
                             SetSubmitting(true)
                             if (!NewGroupData.group_name) {
                                 SetErrorMessage("You must enter group name!")
+                            } else if (NewGroupData.group_name.length < 5) {
+                                SetErrorMessage("Group name must contain at least five characters!")
                             } else {
                                 SetErrorMessage("")
                                 DataService.CreateGroup(NewGroupData).then((d) => { // d.data.id
