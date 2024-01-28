@@ -33,6 +33,22 @@ class UserRelationshipsRepository {
         WHERE user1_id = $1 AND relationship = 'friends'`
         , [value.id]);
     }
+
+    getPendingRequests(value) {
+        return this.db.any(`
+        SELECT
+            CASE
+                WHEN user1_id = $1 THEN user2_id
+                ELSE user1_id
+            END AS user_id
+        FROM
+            user_relationships
+        WHERE 
+            (user2_id = $1 AND relationship = 'pending_user1_user2') 
+            OR 
+            (user1_id = $1 AND relationship = 'pending_user2_user1')`
+        , [value.id]);
+    }
 }
 
 export default UserRelationshipsRepository;

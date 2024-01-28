@@ -90,6 +90,22 @@ returns:
     ]
 }
 
+/user/groups
+GET:
+returns:
+{
+    "success": true,
+    "data": [   // groups the user belongs to
+        {
+            "admin": true,
+            "id": 1,
+            "group_name": "new grouppp",
+            "bio": "group bio",
+            "picture": null
+        }
+    ]
+}
+
 /user/visit/:visitedUserId ✔️
 GET:
 returns:
@@ -199,6 +215,26 @@ returns:
         "user2_id": "323e4567-e89b-12d3-a456-426614174003",
         "relationship": "friends"
     }
+}
+
+/relationships/pending 
+GET:
+returns:
+{
+    "success": true,
+    "data": [    // list of users that send the request
+        {
+            "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+            "username": "q",
+            "bio": null,
+            "private_profile": false,
+            "points": 0,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
+            "picture": null
+        }
+    ]
 }
 
 /units ✔️
@@ -692,6 +728,37 @@ returns:    (returns top 10)
             "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
             "username": "x",
             "points": 3,
+            "picture": null
+        }
+    ]
+}
+
+/rankings/friends
+GET:
+returns:
+{
+    "success": true,
+    "data": [
+        {
+            "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+            "username": "r",
+            "bio": "new bio :/",
+            "private_profile": false,
+            "points": 6,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-23T15:15:48.986Z",
+            "created_at": "2024-01-23T15:15:48.986Z",
+            "picture": null
+        },
+        {
+            "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+            "username": "q",
+            "bio": null,
+            "private_profile": false,
+            "points": 0,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
             "picture": null
         }
     ]
