@@ -116,6 +116,11 @@ export default {
         const res = await Server.get(`/search?searchPhrase=${query}`)
         return res.data
     },
+
+    async GetRankingTop() {
+        const res = await Server.get(`/rankings/top`)
+        return res.data
+    }
    
    
 }
