@@ -131,7 +131,7 @@ export function Questions(p) {
                     questions.forEach((q, i) => {
                         const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
                         
-                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[1].difficulty, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
+                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
                     })
                     SetQuestions(questions)
                 })
@@ -141,7 +141,7 @@ export function Questions(p) {
                     const questions = ShuffleArray(data.data)
                     questions.forEach((q, i) => {
                         const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[1].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
+                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
                     })
                     SetQuestions(questions)
                 })

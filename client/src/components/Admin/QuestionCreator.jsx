@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DataService from "../../DataService";
+import { FaPlus } from "react-icons/fa";
 
 
 function Validate(Data, GlobalData) {
@@ -16,7 +17,7 @@ function Validate(Data, GlobalData) {
 
 
 export function QuestionCreator(p) {
-    const [Data, SetData] = useState({});
+    const [Data, SetData] = useState({correctAnswers:["a","b"]});
     const [ErrorMessage, SetErrorMessage] = useState("");
     const [Submitting, SetSubmitting] = useState(false);
     const [ShowTopics, SetShowTopics] = useState(false);
@@ -66,12 +67,26 @@ export function QuestionCreator(p) {
 
                 <div id='field'>
                     <label>Question:</label>
-                    <input className='input' placeholder={(Data.type == 'connect' && "Connect the words with their meaning in English.") || (Data.type == 'order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (Data.type == 'pick' && "Which of these are vehicles?") || (Data.type == 'fill' && 'The dog quickly _ the thief who tried to enter the house.')} required onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
+                    <input className='input' placeholder={(Data.type == 'connect' && "Connect the words with their meaning in English.") || (Data.type == 'order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (Data.type == 'pick' && "Which of these are vehicles?") || (Data.type == 'fill' && 'The dog quickly _ the thief who tried to enter the house.')} onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
                 </div>
 
                 <div id='field'>
                     <label>Correct Answers:</label>
-                    <input className='input' placeholder='Vocabulary' onChange={(e) => { SetData({ ...Data, unit: e.target.value }) }} />
+                    <div id="answers">
+                        <div id="inputs">
+                            {Data.correctAnswers.map((x,i) => {
+                                return (
+                                    <div id="inputbox">
+                                        <input key={i} className='input' placeholder='Vocabulary' onChange={(e) => { SetData({ ...Data, [['correctAnswers'][i]]:e.target.value }) }} />
+                                        <i id='iconbutton' className="fas fa-xmark" />
+                                    </div>
+                                )
+                            })}
+                            
+                        </div>
+                        <i id='iconbutton' className="fas fa-plus"/>
+                    </div>
+                    
                 </div>
 
                 <div id='field'>
