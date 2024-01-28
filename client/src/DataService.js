@@ -32,6 +32,11 @@ export default {
         await Server.delete(`/user/profilePicture`)
     },
 
+    async GetFriends() {
+        const res = await Server.get(`/user/friends`)
+        return res.data
+    },
+
     async SendFriendRequest(userid) {
         await Server.post(`/relationships/request/friend/${userid}`)
     },

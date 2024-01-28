@@ -85,7 +85,10 @@ export function Ranking() {
                     {meAndFriendsData.map((user, i) => (
                         <div key={i} id="row">
                             <p id="placement">{i + 1}</p>
-                            <p id="username">{user.username}</p>
+                            <div id="user">
+                                <div id='pfp' style={{ backgroundImage: `url(${user.picture || placeholderpfp})`, height: 30, width:30 }}></div>
+                                <p id="username">{user.username}</p>
+                            </div>
                             <p id="points">{user.points}p</p> 
                         </div>
                     ))}
@@ -111,7 +114,10 @@ export function Ranking() {
                     {topGroupsData.map((user, i) => (
                         <div key={i} id="row">
                             <p id="placement">{i + 1}</p>
-                            <p id="username">{user.username}</p>
+                            <div id="user">
+                                <div id='pfp' style={{ backgroundImage: `url(${user.picture || placeholderpfp})`, height: 30, width:30 }}></div>
+                                <p id="username">{user.username}</p>
+                            </div>
                             <p id="points">{user.points}p</p>
                         </div>
                     ))}
