@@ -1045,9 +1045,7 @@ input[type="file"] {
 }
 #friend-requests {
   #friend-requests-list {
-    #friend-request {
-
-        
+    #friend-request {        
         #user {
             display: flex;
             align-items: center;
@@ -1100,7 +1098,6 @@ input[type="file"] {
   padding: 10px 20px;
   #pfp {
     border-radius: 50%;
-
     background-size: cover;
     background-position: center;
   }
@@ -1109,6 +1106,79 @@ input[type="file"] {
     font-size: 130%;
   }
 }
+
+
+#Groups {
+  #content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 100px;
+  a {
+    text-decoration: none;
+    color: white;
+    &:hover {
+      h3 {
+        color: $themecolor;
+      }
+    }
+  }
+    #grouplist {
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      #group {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+        background-color: $darkgray;
+        border-radius: 12px;
+        background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+        padding: 10px 20px;
+        #pfp {
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+          }
+        #groupdata {
+          h3 {
+            transition: 0.3s;
+          }
+        }
+
+      }
+    }
+    #groupcreator {
+      h3 {
+        text-transform: uppercase;
+      }
+      button {
+        min-width: 50%;
+      }
+       #field  {
+          display: grid;
+          gap: 10px;
+          align-items: center;
+          input, textarea {
+            width: 80%
+          }
+          margin-bottom: 20px;
+          #picinput {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            #pfp {
+              border-radius: 50%;
+              background-size: cover;
+              background-position: center;
+            }
+          }
+        }
+    }
+  }
+}
+
 
 // SCROLLBAR
 

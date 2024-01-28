@@ -9,25 +9,23 @@ import { FaXmark } from "react-icons/fa6";
 import { ShuffleArray } from "../../helpers/ShuffleArray";
 
 function CheckQuestions(checkedstate, DispatchQuestionsData) {
-    const correct = []
-    const incorrect = []
-    let pointsGained = 0
+    const correctids = []
+    const incorrectids = []
+    let points = 0
 
+    console.log(checkedstate)
     for (let i = 0; i < Object.keys(checkedstate).length; i++) {
         if (checkedstate[i].selected.sort().toString() == checkedstate[i].correct_answers.sort().toString()) { // correct
-            correct.push(checkedstate[i].question_id)
-            pointsGained += checkedstate[i].difficulty * 10
+            correctids.push(checkedstate[i].question_id)
+            points += checkedstate[i].difficulty * 10
             DispatchQuestionsData({type:'SETASCORRECT', i})
         } else {
-            incorrect.push(checkedstate[i].question_id)
+            incorrectids.push(checkedstate[i].question_id)
         }
     }
+    const percentage = Math.round((correctids.length / (correctids.length+incorrectids.length)) * 100)
 
-    console.log('correct',correct.length)
-    console.log('incorrect',incorrect.length)
-    const percentage = Math.round((correct.length / (correct.length+incorrect.length)) * 100)
-
-    return {correct, incorrect, percentage, pointsGained}
+    return {correctids, incorrectids, percentage, points}
 }
 
 
@@ -48,7 +46,7 @@ const QuestionsReducer = (state, action) => {
             return correctstate
         
         case "UPDATEPERCENTAGEANDPOINTS":
-            return {...state, percentage:action.percentage, pointsGained:action.pointsGained}
+            return {...state, percentage:action.percentage, points:action.points}
         
         default:
             return state;
@@ -58,6 +56,7 @@ const QuestionsReducer = (state, action) => {
 
 function Question(p) {
     const stars = Array.from({ length: p.data.difficulty }, (_,i) => i + 1)
+    console.log(p.data)
 
     return (
         <div id="question">
@@ -168,7 +167,7 @@ export function Questions(p) {
             {Finished && (
             <div id="result">
                 <h2>Your result is {QuestionsData.percentage}%</h2>
-                <h3>You gained {QuestionsData.pointsGained} points!</h3>
+                <h3>You have earned {QuestionsData.points} points!</h3>
                 {QuestionsData.percentage < 50 && (
                     <p>Looks like you still need more practice.</p>
                 )}
@@ -186,18 +185,18 @@ export function Questions(p) {
             {!Finished && ( 
                 <button id="submitbutton" className="button" onClick={() => { 
                     const result = CheckQuestions(QuestionsData, DispatchQuestionsData)
-                    DispatchQuestionsData({ type: "UPDATEPERCENTAGEANDPOINTS", percentage:result.percentage, pointsGained:result.pointsGained})
-                    if (result.correct.length > 0) {
-                        DataService.SaveQuestionsAnswered(result.correct).then(()=>{
+                    DispatchQuestionsData({ type: "UPDATEPERCENTAGEANDPOINTS", percentage:result.percentage, points:result.points})
+                    if (result.correctids.length > 0) {
+                        DataService.SaveQuestionsAnswered(result.correctids).then(()=>{
                             console.log('saved answered')
                         })
-                        DataService.UpdatePoints(result.pointsGained).then(() => {
+                        DataService.UpdatePoints(result.points).then(() => {
                             console.log('updated points')
                         })
 
                     }
-                    if (result.incorrect.length > 0 && p.type != 'repetition') {
-                        DataService.SaveRepetitions(result.incorrect).then(() => {
+                    if (result.incorrectids.length > 0 && p.type != 'repetition') {
+                        DataService.SaveRepetitions(result.incorrectids).then(() => {
                             console.log('saved repetitions')
                         })
                     }

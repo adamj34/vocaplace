@@ -14,7 +14,7 @@ function ListElement(p) {
             <Link to={"../" + p.page + "/" + p.data.id} className='hovertext'>
                 <div id='listitem'>
                     <img src={p.data.pic || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
-                    <p>{p.data.username || 'undefined'}</p>
+                    <p>{p.data.username || p.data.group_name || 'undefined'}</p>
                 </div>
             </Link>
         </li>
@@ -65,7 +65,7 @@ export function Search() {
                         <p>{SearchData.matchedGroups.length} Groups</p>
                     </div>
                     <ul id='content'>
-                        {/* {groups.map((x) => {return <ListElement data={x} page='group' key={x.name}/>})} */}
+                        {SearchData.matchedGroups.map((x) => { return <ListElement data={x} page='group' /> })}
                     </ul>
                 </div>
             </div>

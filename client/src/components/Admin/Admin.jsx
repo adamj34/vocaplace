@@ -257,9 +257,9 @@ export function Admin() {
                 </div>
 
 
-                <QuestionCreator GlobalData={GlobalData} />
                 {Created.type == 'unit' && <UnitCreator GlobalData={GlobalData} SetNeedToUpdateData={SetNeedToUpdateData}/>}
                 {Created.type == 'topic' && <TopicCreator GlobalData={GlobalData} SetNeedToUpdateData={SetNeedToUpdateData} />}
+                {Created.type == 'question' && <QuestionCreator GlobalData={GlobalData} SetNeedToUpdateData={SetNeedToUpdateData} />}
                 {/* {Created.type =='topic' && <TopicCreator units={Units}/>} */}
                 {/* {Created.type =='question' && <QuestionCreator units={Units}/>} */}
             </div>
