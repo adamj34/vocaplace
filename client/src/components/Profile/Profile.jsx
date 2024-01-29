@@ -26,6 +26,7 @@ export function Profile() {
     const C = useContext(AppContext);
     const { id } = useParams()
     const [ProfileData, SetProfileData] = useState({});
+    const [isFriend, setIsFriend] = useState(false);
     document.title = `VocaPlace | username`
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
@@ -35,9 +36,20 @@ export function Profile() {
                 SetProfileData(data)
                 console.log(data)
                 SetLoading(false)
+                isFriendCheck();
             })
         }
-    }, [C.AppReady])
+    }, [C.AppReady,id])
+
+    const isFriendCheck = async () => {
+       try{
+        const friendStatus = await DataService.IsFriend(id);
+        setIsFriend(friendStatus)
+        console.log(friendStatus)
+       }catch(err){
+            console.error(err)
+         }
+    }
 
     const handleAddFriend = () => {
         DataService.SendFriendRequest(id).then((res) => {
@@ -66,9 +78,9 @@ export function Profile() {
                 {(id === C.UserData.id) ? 
                     <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
-                        <button className='button' onClick={handleAddFriend}>Add Friend</button>
+                        {isFriendCheck && <button className='button' onClick={handleAddFriend}>Add Friend</button>}
                         <button className='button'>Invite to Group</button>
-                        <button className='button'>Message</button>
+                        <button className='button' >Message</button>
                     </div>
                 }
                 

@@ -46,6 +46,11 @@ export default {
         await Server.post(`/relationships/request/friend/${userid}`)
     },
 
+    async GetFriendRequests() {
+        const res = await Server.get(`/relationships/pending/`)
+        return res.data
+    },
+
     async AcceptFriendRequest(userid) {
         await Server.post(`/relationships/accept/friend/${userid}`)
     },
