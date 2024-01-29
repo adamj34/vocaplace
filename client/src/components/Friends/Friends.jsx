@@ -59,6 +59,16 @@ export function Friends() {
     const handleDecline = () => {
         console.log("Decline")
     }
+    const handleRemove = (userId) => {
+        DataService.DeleteFriend(userId).then((res) => {
+            console.log(res.status)
+            
+        }
+        ).catch((err) => {
+            console.log(err)
+        })
+
+    }
 
 
     return (
@@ -69,19 +79,27 @@ export function Friends() {
             </div>
             <div id="friends-container">
 
-                <div id="friends-list-container">
+                <div id="friend-requests">
                     <h3>Friends List</h3>
                     {friends.length > 0 && <p>You have {friends.length} friends.</p>}
-                    <div id="friends-list">
+                    <div id="friend-requests-list">
                         {friends.length === 0 && <p>You have no friends yet.</p>}
                         {friends.map((friend) => (
-                            <Link key={friend.id} to={`/profile/${friend.id}`}>
-                                <div id="friend">
-                                    <div id='pfp' style={{ backgroundImage: `url(${friend.picture || placeholderpfp})`, height: 50, width:50 }}></div>
-                                    <p id="username">{friend.username}</p>
+                            <div key={friend.id} id="friend-request">
+                                <div id="user">
+                                <Link to={`/profile/${friend.id}`}>
+                                    <div  id="friend-box">
+                                        <div id='pfp' style={{ backgroundImage: `url(${friend.picture || placeholderpfp})`, height: 50, width: 50 }}></div>
+                                        <p id="username">{friend.username}</p>
+                                    </div>
+                                </Link>
+                                <div id="friend-request-buttons">
+
+                                    <button className="button" onClick={()=>handleRemove(friend.id)} id="remove">Remove</button>
                                 </div>
-                            </Link>
-                        ))}
+                                </div>
+                            </div>
+                    ))}
 
                     </div>
                 </div>
@@ -92,12 +110,12 @@ export function Friends() {
                         { friendRequests.map((user) => (
                             <div key={user.id} id="friend-request">
                                 <div id="user">
-                            <Link  to={`/profile/${user.id}`}>
+                                        <Link  to={`/profile/${user.id}`}>
                                     <div id="friend-box">
                                         <div id='pfp' style={{ backgroundImage: `url(${ user.picture||placeholderpfp})`, height: 50, width:50 }}></div>
                                         <p id="username">{user.username}</p>
                                     </div>
-                            </Link>
+                                        </Link>
                                     <div id="friend-request-buttons">
                                         <button className="button" onClick={() => handleAccept(user.id)} id="accept">Accept</button>
                                         <button className="button" onClick={handleDecline} id="decline">Decline</button>

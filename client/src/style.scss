@@ -1030,7 +1030,7 @@ input[type="file"] {
   }
   #friends-container {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 30px;
 
     #friends-list-container {
@@ -1061,7 +1061,7 @@ input[type="file"] {
             background-image: linear-gradient($darkgray, $darkgraygradientbottom);
             padding: 10px 20px;
             justify-content: space-evenly;
-            width: 300px;
+            width: 250px;
             #pfp {
               border-radius: 50%;
           
@@ -1095,7 +1095,7 @@ input[type="file"] {
 #friend {
   display: flex;
   align-items: center;
-  width: 250px;
+  width: 350px;
   gap: 10px;
   padding: 10px;
   margin: 0 20px;

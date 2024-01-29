@@ -67,6 +67,7 @@ export default {
 
     async DeleteFriend(userid) {
         await Server.delete(`/relationships/friend/${userid}`)
+        return true
     },
 
     async GetUnits() {
