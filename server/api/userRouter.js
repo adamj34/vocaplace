@@ -43,55 +43,85 @@ router.get('/', (req, res) => {
 
 router.get('/visit/:visitedUserId', (req, res) => {
     const userId = req.params.visitedUserId;
+    console.log(userId)
     console.log('in visit');
     db.tx(() => {
         db.users.findById({id: userId})
         .then((data) => {
             console.log(data)
-            Promise.all([
-                db.user_relationships.findFriends({id: userId}),
-                db.users.findGroupsByUserId({id: userId})
-            ])
-            .then(([friends, groups]) => {
-                Promise.all([
-                    ...friends.map(friend => db.users.findById({id: friend.user_id})),
-                    ...groups.map(group => db.groups.findById({id: group.group_id}))
-                ])
-                .then(allData => {
-                    const friendsData = allData.slice(0, friends.length);
-                    const groupsData = allData.slice(friends.length);
-                    res.status(200).json({
-                        success: true,
-                        user: data,
-                        friends: friendsData,
-                        groups: groupsData
-                    });
-                })
-                .catch((err) => {
-                    console.error(err);
-                    res.status(500).json({
-                        success: false,
-                        err
-                    });
+            db.user_relationships.checkRelationship({user1_id: req.userId, user2_id: userId})
+            .then((resp) => {
+                console.log(resp)
+                if (resp) {
+                    data.relationship = resp.relationship;
+                } else {
+                    data.relationship = null;
+                }
+                return res.status(200).json({
+                    success: true,
+                    user: data,
+                    friends: [],
+                    groups: []
                 });
             })
-            .catch((err) => {
-                console.error(err);
-                res.status(500).json({
-                    success: false,
-                    err
-                });
-            });
         })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({
-                success: false,
-                err
-            });
-        });
     })
 });
+
+    
+//             .catch((err) => console.error(err));
+//             Promise.all([
+//                 db.user_relationships.findFriends({id: userId}),
+//                 db.users.findGroupsByUserId({id: userId})
+//             ])
+//             .then(([friends, groups]) => {
+//                 if (friends.length === 0 && friends.length === 0) {
+//                     return res.status(200).json({
+//                         success: true,
+//                         user: data,
+//                         friends: [],
+//                         groups: []
+//                     });
+//                 }
+//                 Promise.all([
+//                     ...friends.map(friend => db.users.findById({id: friend.user_id})),
+//                     ...groups.map(group => db.groups.findById({id: group.group_id}))
+//                 ])
+//                 .then(allData => {
+//                     const friendsData = allData.slice(0, friends.length);
+//                     const groupsData = allData.slice(friends.length);
+//                     res.status(200).json({
+//                         success: true,
+//                         user: data,
+//                         friends: friendsData,
+//                         groups: groupsData
+//                     });
+//                 })
+//                 .catch((err) => {
+//                     console.error(err);
+//                     res.status(500).json({
+//                         success: false,
+//                         err
+//                     });
+//                 });
+//             })
+//             .catch((err) => {
+//                 console.error(err);
+//                 res.status(500).json({
+//                     success: false,
+//                     err
+//                 });
+//             });
+//         })
+//         .catch((err) => {
+//             console.error(err);
+//             res.status(500).json({
+//                 success: false,
+//                 err
+//             });
+//         });
+//     })
+// });
 
 router.patch('/', (req, res) => {  
     const userId = req.userId;
