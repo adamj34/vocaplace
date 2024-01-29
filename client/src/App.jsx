@@ -6,7 +6,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { NotFound } from './components/NotFound.jsx';
 import { Home } from './components/Home/Home.jsx';
 import { Profile } from './components/Profile/Profile.jsx';
-import { Group } from'./components/Group/Group.jsx'
+import { Group } from'./components/Groups/Group.jsx'
 import { SubmitTask } from './components/SubmitTask/SubmitTask.jsx';
 import { Nav } from './components/Nav/Nav.jsx';
 import { Footer } from './components/Nav/Footer.jsx'
@@ -47,7 +47,7 @@ function App() {
           <Route path='' element={<Home/>}/>
           <Route path='profile/:id' element={<Profile/>}/>
           <Route path='profile/:id/edit' element={<EditProfile/>}/>
-          <Route path='group/:id' element={<Group/>}/>
+          <Route path='groups/:id' element={<Group/>}/>
           <Route path='task/submit' element={<SubmitTask/>}/>
           <Route path='repetitions' element={<Repetitions />} />
           <Route path='repetitions/set' element={<Questions type='repetition'/>} />

@@ -65,7 +65,7 @@ export function Search() {
                         <p>{SearchData.matchedGroups.length} Groups</p>
                     </div>
                     <ul id='content'>
-                        {SearchData.matchedGroups.map((x) => { return <ListElement data={x} page='group' /> })}
+                        {SearchData.matchedGroups.map((x) => { return <ListElement data={x} page='groups' /> })}
                     </ul>
                 </div>
             </div>

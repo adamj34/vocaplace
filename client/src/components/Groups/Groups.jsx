@@ -101,12 +101,11 @@ export function Groups() {
                             } else {
                                 SetErrorMessage("")
                                 DataService.CreateGroup(NewGroupData).then((d) => { // d.data.id
-                                    navigate(`/${d.data.id}`)
+                                    navigate(`/groups/${d.data.id}`)
                                 }).catch(() => {
                                     SetErrorMessage("Failed to submit!")
                                 })
                             }
-                            console.log(NewGroupData)
                             SetSubmitting(false)
                         }}>Create Group</button>
                     </form>
