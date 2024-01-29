@@ -24,12 +24,13 @@ export function Friends() {
     const { keycloak } = useKeycloak();
     const [friends, setFriends] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
+    const [isUpdated, setIsUpdated] = useState(false);
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
     
     const C = useContext(AppContext);
     useEffect(() => {
-        if(C.AppReady){
+        if(C.AppReady && !isUpdated){
             // Getingfriends
             DataService.GetFriends().then((res) => {
                 setFriends(res.data);
@@ -42,15 +43,15 @@ export function Friends() {
             }).catch((err) => {
                 console.log(err);
             });
-            // setFriends(initialFreiendsData);
+            setIsUpdated(true);
         }
-    }, [C.AppReady]);
+    }, [C.AppReady,isUpdated]);
     if (!keycloak.authenticated) {return <LoginRequired/>}
 
     document.title = `VocaPlace | Friends`
     const handleAccept = (userId) => {
         DataService.AcceptFriendRequest(userId).then((res) => {
-            console.log(res.status)
+            setIsUpdated(false);
             
         }).catch((err) => {
             console.log(err)
@@ -61,7 +62,7 @@ export function Friends() {
     }
     const handleRemove = (userId) => {
         DataService.DeleteFriend(userId).then((res) => {
-            console.log(res.status)
+            setIsUpdated(false);
             
         }
         ).catch((err) => {
