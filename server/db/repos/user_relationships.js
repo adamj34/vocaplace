@@ -15,7 +15,7 @@ class UserRelationshipsRepository {
     }
 
     checkRelationship(values) {
-        return this.db.one(queries.user_relationships.checkRelationship, values);
+        return this.db.oneOrNone(queries.user_relationships.checkRelationship, values);
     }
 
     deleteFriend(values) {

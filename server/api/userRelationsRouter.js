@@ -10,14 +10,13 @@ const relationship_state = {
 };
 Object.freeze(relationship_state);
 
-// const userId ='223e4567-e89b-12d3-a456-426614174002';
 
 router.post('/request/friend/:id', (req, res) => {
     const userId = req.userId;
     const friendId = req.params.id;
     // adhere to the constraint that user1_id < user2_id
     if (userId === friendId) {
-        res.status(400).json({
+        return  res.status(400).json({
             success: false,
             err: 'Cannot add yourself as a friend'
         });
@@ -36,12 +35,31 @@ router.post('/request/friend/:id', (req, res) => {
                 relationship: relationship_state.PENDING_USER2_USER1
             };
         }
-        db.user_relationships.addFriend(users)
+
+        db.user_relationships.checkRelationship(users)
         .then((data) => {
-            res.status(201).json({
-                success: true,
-                data
-            });
+            // if relationship does not exist
+            if (!data) {
+                db.user_relationships.addFriend(users)
+                .then((data) => {
+                    res.status(201).json({
+                        success: true,
+                        data
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                    res.status(500).json({
+                        success: false,
+                        err
+                    });
+                });
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    err: 'You are already friends or have a pending request with this user'
+                });
+            }
         })
         .catch((err) => {
             console.error(err);
@@ -63,6 +81,12 @@ router.patch('/accept/friend/:id', (req, res) => {
         users = {user1_id: friendId, user2_id: userId};
     }
     users.relationship = relationship_state.FRIENDS;
+    if (userId === friendId) {
+        return res.status(400).json({
+            success: false,
+            err: 'Cannot accept yourself as a friend'
+        });
+    }
     db.user_relationships.acceptFriend(users)
     .then((data) => {
         res.status(200).json({
