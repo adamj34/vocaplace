@@ -58,11 +58,11 @@ export function Ranking() {
         // });
 
         // Geting me and my friends
-        // DataService.GetRankingFriends().then((res) => {
-        //     setMeAndFriendsData(res.data);
-        // }).catch((err) => {
-        //     console.log(err);
-        // });    
+        DataService.GetRankingFriends().then((res) => {
+            setMeAndFriendsData(res.data);
+        }).catch((err) => {
+            console.log(err);
+        });    
         }
     }, [C.AppReady]);
 

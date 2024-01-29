@@ -51,6 +51,7 @@ export function Friends() {
     const handleAccept = (userId) => {
         DataService.AcceptFriendRequest(userId).then((res) => {
             console.log(res.status)
+            
         }).catch((err) => {
             console.log(err)
         })

@@ -52,7 +52,8 @@ export default {
     },
 
     async AcceptFriendRequest(userid) {
-        await Server.post(`/relationships/accept/friend/${userid}`)
+        await Server.patch(`/relationships/accept/friend/${userid}`)
+        return true
     },
 
     async IsFriend(userid) {
@@ -134,6 +135,11 @@ export default {
 
     async GetRankingTop() {
         const res = await Server.get(`/rankings/top`)
+        return res.data
+    },
+
+    async GetRankingFriends() {
+        const res = await Server.get(`/rankings/friends`)
         return res.data
     },
 

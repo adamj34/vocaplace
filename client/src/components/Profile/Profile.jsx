@@ -27,6 +27,7 @@ export function Profile() {
     const { id } = useParams()
     const [ProfileData, SetProfileData] = useState({});
     const [isFriend, setIsFriend] = useState(false);
+    
     document.title = `VocaPlace | username`
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
