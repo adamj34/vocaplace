@@ -141,6 +141,11 @@ export default {
         const res = await Server.post(`/groups`, group)
         return res.data
     },
+
+    async GetGroupData(groupid) {
+        const res = await Server.get(`/groups/${groupid}`)
+        return res.data
+    },
    
    
 }
