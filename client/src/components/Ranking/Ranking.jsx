@@ -83,6 +83,8 @@ export function Ranking() {
                 <div id="column">
                     <h2>Friends</h2>
                     {meAndFriendsData.map((user, i) => (
+                        <Link key={user.id} to={`/profile/${user.id}`}>
+
                         <div key={i} id="row">
                             <p id="placement">{i + 1}</p>
                             <div id="user">
@@ -91,6 +93,8 @@ export function Ranking() {
                             </div>
                             <p id="points">{user.points}p</p> 
                         </div>
+                        </Link>
+
                     ))}
                 </div>
 
