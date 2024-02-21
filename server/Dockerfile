@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["node", "server.js"]
+CMD ["tsx", "src/server.ts"]

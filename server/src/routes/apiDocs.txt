@@ -1,0 +1,770 @@
+API Documentation
+
+/user ✔️
+GET:
+returns: 
+{
+    "success": true,
+    "data": {
+        "bio": null,
+        "created_at": "2023-12-05T13:25:24.422Z",
+        "id": "223e4567-e89b-12d3-a456-426614174005",
+        "last active": "2023-12-05T13:25:24.422Z",
+        "picture": null,
+        "private_profile": false,
+        "username": "aaaaa",
+        "points": 0,
+        "ongoing_streak": 0
+    }
+}
+
+/user
+PATCH:, body {username, bio, private_profile, picture}
+e.g.
+{
+    "bio": "new bio :/",
+    "username": "veery cool",
+    "picture": "\\xDEADBEEF"
+}
+returns: 
+{
+    "success": true,
+    "data": {
+        "id": "223e4567-e89b-12d3-a456-426614174005"
+    }
+}
+
+
+/user/profilePicture
+DELETE:
+returns:
+{
+    "success": true,
+    "data": {
+        "id": "223e4567-e89b-12d3-a456-426614174005"
+    }
+}
+
+/user/points
+PATCH:
+expects e.g.: req.body = 
+{
+    points: 3
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "points": 6    // value after incrementation
+    }
+}
+
+/user/friends
+GET:
+returns:
+{
+    "success": true,
+    "data": [       // friends' data, desc order by points
+        {
+            "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+            "username": "q",
+            "bio": null,
+            "private_profile": false,
+            "points": 4,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
+            "picture": null
+        },
+        {
+            "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+            "username": "r",
+            "bio": null,
+            "private_profile": false,
+            "points": 2,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
+            "picture": null
+        }
+    ]
+}
+
+/user/groups
+GET:
+returns:
+{
+    "success": true,
+    "data": [   // groups the user belongs to
+        {
+            "admin": true,
+            "id": 1,
+            "group_name": "new grouppp",
+            "bio": "group bio",
+            "picture": null
+        }
+    ]
+}
+
+/user/visit/:visitedUserId ✔️
+GET:
+returns:
+{
+    "success": true,
+    "user": {
+        "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
+        "username": "x",
+        "bio": null,
+        "private_profile": false,
+        "points": 0,
+        "ongoing_streak": 0,
+        "last_active": "2024-01-19T21:32:10.949Z",
+        "created_at": "2024-01-19T21:32:10.949Z",
+        "picture": null
+    },
+    "friends": [],
+    "groups": [
+        {
+            "id": 3,
+            "group_name": "new grouppp",
+            "bio": "group bio",
+            "picture": null
+        }
+    ]
+}
+
+/search?searchPhrase=some_username  // matches all that contain the phrase
+GET:
+returns:
+{
+    "success": true,
+    "data": {
+        "matchedUsers": [
+            {
+                "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+                "username": "r",
+                "picture": null
+            }
+        ],
+        "matchedGroups": [
+            {
+                "id": 1,
+                "group_name": "new grouppp",
+                "picture": null
+            }
+        ]
+    }
+}
+
+/relationships/request/friend/:friendID
+POST:
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": "pending_user1_user2"
+    }
+}
+
+/relationships/accept/friend/:id  (id is the id of the friend)
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": "friends"
+    }
+}
+
+/relationships/check/user/:userID
+GET:
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "123e4567-e89b-12d3-a456-426614174001",
+        "user2_id": "223e4567-e89b-12d3-a456-426614174002",
+        "relationship": "friends"
+    }
+}
+OR
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": null
+    }
+}
+OR
+{
+    "success": false,
+    "err": "Cannot check relationship with yourself"
+}
+
+/relationships/friend/:friendId
+DELETE:
+returns:
+{
+    "success": true,
+    "data": {
+        "user1_id": "223e4567-e89b-12d3-a456-426614174002",
+        "user2_id": "323e4567-e89b-12d3-a456-426614174003",
+        "relationship": "friends"
+    }
+}
+
+/relationships/pending 
+GET:
+returns:
+{
+    "success": true,
+    "data": [    // list of users that send the request
+        {
+            "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+            "username": "q",
+            "bio": null,
+            "private_profile": false,
+            "points": 0,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
+            "picture": null
+        }
+    ]
+}
+
+/units ✔️
+POST:
+expects e.g.: req.body = 
+{
+    unit: 'Grammar',
+    'icon': 'icon string i guess'
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 3,
+        "unit": "Grammar",
+        "icon": "icon string i guess",
+        "created_at": "2024-01-20T22:17:12.780Z"
+    }
+}
+OR
+{
+    "success": false,
+    "err": "Unit already exists"
+}
+
+/units/progress ✔️
+GET:
+returns:
+{
+    "success": true,
+    "data": {
+        "1": {
+            "unit": "Introduction to English",
+            "unit_icon": null,
+            "completion_ratio": "0.00",
+            "created_at": "2024-01-20T22:06:54.494Z"
+        },
+        "2": {
+            "unit": "Vocabulary Building",
+            "unit_icon": null,
+            "completion_ratio": "0.00",
+            "created_at": "2024-01-20T22:06:54.503Z"
+        },
+        "3": {
+            "unit": "Grammar",
+            "unit_icon": "icon string i guess",
+            "completion_ratio": "0.00",
+            "created_at": "2024-01-20T22:17:12.780Z"
+        }
+    }
+}
+OR (when there are no topics in unit)
+{
+    "success": true,
+    "data": []
+}
+
+/units/progress/:unitId ✔️
+GET:
+returns:
+{
+    "success": true,
+    "unit": "Introduction to English",
+    "data": {
+        "1": {
+            "topic": "Greetings",
+            "topic_icon": null,
+            "created_at": "2024-01-20T22:06:54.496Z",
+            "completion_ratio": 0
+        },
+        "2": {
+            "topic": "Numbers and Counting",
+            "topic_icon": null,
+            "created_at": "2024-01-20T22:06:54.499Z",
+            "completion_ratio": 0
+        },
+        "3": {
+            "topic": "Days of the Week",
+            "topic_icon": null,
+            "created_at": "2024-01-20T22:06:54.501Z",
+            "completion_ratio": 0
+        }
+    }
+}
+OR
+{
+    "success": true,
+    "unit": "Grammar",
+    "data": []
+}
+
+/units/overview (to jest do admin panel)
+GET:
+returns: 
+{
+    "success": true,
+    "data": {
+        "1": {
+            "unit": "Introduction to English",
+            "unit_icon": null,
+            "topics": [
+                {
+                    "topic_id": 2,
+                    "topic": "Numbers and Counting",
+                    "topic_icon": null,
+                    "question_ids": [
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                {
+                    "topic_id": 3,
+                    "topic": "Days of the Week",
+                    "topic_icon": null,
+                    "question_ids": [
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                },
+                {
+                    "topic_id": 1,
+                    "topic": "Greetings",
+                    "topic_icon": null,
+                    "question_ids": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8
+                    ]
+                }
+            ]
+        },
+        "2": {
+            "unit": "Vocabulary Building",
+            "unit_icon": null,
+            "topics": [
+                {
+                    "topic_id": 4,
+                    "topic": "Travel",
+                    "topic_icon": null,
+                    "question_ids": [
+                        20
+                    ]
+                },
+                {
+                    "topic_id": 6,
+                    "topic": "Animals",
+                    "topic_icon": null,
+                    "question_ids": null
+                },
+                {
+                    "topic_id": 5,
+                    "topic": "Food",
+                    "topic_icon": null,
+                    "question_ids": null
+                },
+                {
+                    "topic_id": 7,
+                    "topic": "Foodd",
+                    "topic_icon": "icon string i guess",
+                    "question_ids": null
+                }
+            ]
+        },
+        "3": {
+            "unit": "Grammar",
+            "unit_icon": "icon string i guess",
+            "topics": null
+        }
+    }
+}
+
+
+/topics ✔️
+POST:
+expects e.g.: req.body = 
+{
+    topic: 'Food',
+    unit: 'Vocabulary Building',
+    icon: 'icon string i guess'
+}
+returns:
+{
+    "success": false,
+    "err": "Topic already exists"
+}
+OR
+{
+    "success": true,
+    "data": {
+        "id": 7,
+        "unit_id": 2,
+        "topic": "Foodd",
+        "icon": "icon string i guess",
+        "created_at": "2024-01-20T22:13:54.349Z"
+    }
+}
+OR
+{
+    "success": false,
+    "err": "Unit not found"
+}
+
+
+/questions/quiz/?{unitId}=1&{topicId}=1
+GET:
+returns:
+{
+    "success": true,
+    "data": {
+        "answeredQuestions": [],
+        "unansweredQuestions": [
+            {
+                "question_id": 1,
+                "content": "How could you answer this question: How are you?",
+                "correct_answers": [
+                    "I am fine.",
+                    "I have been better.",
+                    "I am great."
+                ],
+                "misleading_answers": [
+                    "I am bad.",
+                    "I am angry."
+                ],
+                "question_type": "pick",
+                "difficulty": 1,
+                "is_answered": false
+            },
+            {
+                "question_id": 2,
+                "content": "How do you greet someone in the morning",
+                "correct_answers": [
+                    "Good morning."
+                ],
+                "misleading_answers": [
+                    "Good night.",
+                    "Good afternoon.",
+                    "Good day."
+                ],
+                "question_type": "pick",
+                "difficulty": 1,
+                "is_answered": false
+            },
+            {
+                "question_id": 3,
+                "content": "How do you greet someone in the evening",
+                "correct_answers": [
+                    "Good evening."
+                ],
+                "misleading_answers": [
+                    "Good night.",
+                    "Good afternoon.",
+                    "Good day."
+                ],
+                "question_type": "pick",
+                "difficulty": 1,
+                "is_answered": false
+            }
+        ]
+    }
+}
+
+/questions/repetition
+GET:
+returns:
+{
+    "success": true,
+    "data": [
+        {
+            "question_id": 3,
+            "content": "How do you greet someone in the evening",
+            "correct_answers": [
+                "Good evening."
+            ],
+            "misleading_answers": [
+                "Good night.",
+                "Good afternoon.",
+                "Good day."
+            ],
+            "question_type": "pick",
+            "difficulty": 1
+        },
+        {
+            "question_id": 5,
+            "content": "How do you greet someone in the night",
+            "correct_answers": [
+                "Good night."
+            ],
+            "misleading_answers": [
+                "Good morning.",
+                "Good afternoon.",
+                "Good day."
+            ],
+            "question_type": "pick",
+            "difficulty": 1
+        }
+    ]
+}
+
+/questions/repetition/overview
+GET:
+returns:
+{
+    "success": true,
+    "data": [
+        {
+            "unit_id": 2,
+            "unit": "Vocabulary Building",
+            "unit_icon": null,
+            "topics": [
+                {
+                    "topic_id": 4,
+                    "topic": "Travel",
+                    "topic_icon": null,
+                    "total_questions": 0,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 6,
+                    "topic": "Animals",
+                    "topic_icon": null,
+                    "total_questions": 0,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 5,
+                    "topic": "Food",
+                    "topic_icon": null,
+                    "total_questions": 0,
+                    "repetition_questions": 0
+                }
+            ]
+        },
+        {
+            "unit_id": 1,
+            "unit": "Introduction to English",
+            "unit_icon": null,
+            "topics": [
+                {
+                    "topic_id": 2,
+                    "topic": "Numbers and Counting",
+                    "topic_icon": null,
+                    "total_questions": 4,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 3,
+                    "topic": "Days of the Week",
+                    "topic_icon": null,
+                    "total_questions": 3,
+                    "repetition_questions": 0
+                },
+                {
+                    "topic_id": 1,
+                    "topic": "Greetings",
+                    "topic_icon": null,
+                    "total_questions": 5,
+                    "repetition_questions": 2
+                }
+            ]
+        }
+    ]
+}
+
+/questions 
+POST:
+expects e.g.: req.body = 
+{
+  topic: 'Days of the Week',
+  unit: 'Introduction to English',
+  content: 'What is the third day of the week?',
+  correctAnswers: '["Wednesday"]',
+  misleadingAnswers: '["Monday", "Thursday", "Friday", "Saturday", "Sunday"]',
+  questionType: 'pick',
+  difficulty: '2'
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 22
+    }
+}
+OR
+{
+    "success": false,
+    "err": "Unit or topic does not exist"
+}
+
+/questions/answered 
+POST:
+expects e.g.: req.body = 
+{
+    "questionIds": "[4,6]" 
+}
+returns:
+{"success":true, "data":null}
+
+/questions/repetition
+POST:
+expects e.g.: req.body = 
+{
+    "questionIds": "[4,6]" 
+}
+returns:
+{
+    "success": true,
+    "data": null
+}
+
+
+/groups
+POST:
+expects e.g.: req.body = 
+{
+    group_name: 'new grouppp',
+    bio: 'new bio',   // optional
+    picture: 'new picture'  // optional
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 3,
+        "group_name": "new grouppp",
+        "bio": "group bio",
+        "picture": null
+    }
+}
+
+/groups/join
+POST:
+expects e.g.: req.body = 
+{
+    group_name: 'new grouppp'
+}
+returns:
+{
+    "success": true,
+    "data": {
+        "id": 3   // group id
+    }
+}
+
+/groups/:groupId
+GET:
+returns:
+{
+    "success": true,
+    "group": {
+        "id": 3,
+        "group_name": "new grouppp",
+        "bio": "group bio",
+        "picture": null
+    },
+    "members": [
+        {
+            "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
+            "username": "x",
+            "bio": null,
+            "private_profile": false,
+            "points": 0,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-19T21:32:10.949Z",
+            "created_at": "2024-01-19T21:32:10.949Z",
+            "picture": null,
+            "admin": true
+        }
+    ]
+}
+
+/rankings/top
+GET:
+returns:    (returns top 10)
+{
+    "success": true,
+    "data": [
+        {
+            "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+            "username": "r",
+            "points": 6,
+            "picture": null
+        },
+        {
+            "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
+            "username": "x",
+            "points": 3,
+            "picture": null
+        }
+    ]
+}
+
+/rankings/friends
+GET:
+returns:
+{
+    "success": true,
+    "data": [
+        {
+            "id": "533e4a19-be1e-4c5d-8659-83b2234a7bcd",
+            "username": "r",
+            "bio": "new bio :/",
+            "private_profile": false,
+            "points": 6,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-23T15:15:48.986Z",
+            "created_at": "2024-01-23T15:15:48.986Z",
+            "picture": null
+        },
+        {
+            "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+            "username": "q",
+            "bio": null,
+            "private_profile": false,
+            "points": 0,
+            "ongoing_streak": 0,
+            "last_active": "2024-01-28T10:32:33.178Z",
+            "created_at": "2024-01-28T10:32:33.178Z",
+            "picture": null
+        }
+    ]
+}

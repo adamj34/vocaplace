@@ -17,7 +17,7 @@ services:
     environment:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
-      - DB_NAME=duolingo
+      - DB_NAME=vocaplace
       - DB_PORT=5432
       - DB_SERVICE_NAME=db
       - PORT=8000
@@ -31,13 +31,13 @@ services:
     image: postgres:16-alpine3.18
     volumes:
       - postgres:/var/lib/postgresql/data/
-      - ./server/db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./server/src/db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432:5432'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=duolingo
+      - POSTGRES_DB=vocaplace
 
   keycloak:
     image: quay.io/keycloak/keycloak:18.0.2
