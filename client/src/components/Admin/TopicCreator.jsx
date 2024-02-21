@@ -3,7 +3,6 @@ import DataService from "../../DataService";
 
 
 function Validate(Data, GlobalData) {
-    console.log(Data)
     const topics = Object.values(GlobalData).map(x => x.topics).flat().map(x => x.topic)
     if (!Data.topic || Data.topic.length < 5) {
         return "Topic name must be at least 5 characters long!"

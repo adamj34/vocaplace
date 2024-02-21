@@ -83,8 +83,13 @@ export function Groups() {
                         </div>
                         <div id='field'>
                             <label>Group Picture:</label>
-                            <div id="picinput">
-                                <button type="button" className="button">Upload</button>
+                            <div id="pic">
+                                <label for="picinput">
+                                    <p id="inputbutton" className="button" onclick="document.getElementById('picinput').click()">Upload</p>
+                                    <input type='file' id='picinput' onChange={(e) => {if (e.target.files && e.target.files.length > 0) {SetNewGroupData({ ...C.UserData, 'picture': URL.createObjectURL(e.target.files[0]) })} }} ></input>
+                                </label>
+                                
+                                
                                 <div id='pfp' style={{ backgroundImage: `url(${NewGroupData.picture || placeholderpfp})`, height: 60, width: 60 }}></div>
                             </div>
                             

@@ -218,10 +218,7 @@ input[type="file"] {
       margin-right: 4px;
       #count {
         background-color: $themecolor;
-        background-image: linear-gradient(
-          $themecolor,
-          $themecolorgradientbottom
-        );
+        background-image: linear-gradient($themecolor, $themecolorgradientbottom);
         border: 2px solid $darkgray;
         padding: 2px 6px;
         border-radius: 12px;
@@ -1097,7 +1094,6 @@ input[type="file"] {
   align-items: center;
   width: 350px;
   gap: 10px;
-  padding: 10px;
   margin: 0 20px;
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
   background-color: $darkgray;
@@ -1164,6 +1160,8 @@ input[type="file"] {
       button {
         min-width: 50%;
       }
+      
+
        #field  {
           display: grid;
           gap: 10px;
@@ -1172,10 +1170,19 @@ input[type="file"] {
             width: 80%
           }
           margin-bottom: 20px;
-          #picinput {
+          #pic {
             display: flex;
             align-items: center;
             gap: 30px;
+            label {
+              text-align: center;
+              min-width: 50%;
+              #inputbutton {
+                margin: 0;
+                font-size: 90%;
+              }
+              cursor: pointer;
+            }
             #pfp {
               border-radius: 50%;
               background-size: cover;
@@ -1183,6 +1190,111 @@ input[type="file"] {
             }
           }
         }
+    }
+  }
+}
+
+#Group {
+  #content {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 20px;
+    max-height: 1vh;
+
+    #members {
+      #title {
+        text-transform: uppercase;
+        font-size: 110%;
+        margin: 0;
+        margin-bottom: 10px;
+        padding: 15px 0;
+        text-align: center;
+        border-bottom: 3px solid $themecolor;
+      }
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      border-radius: 12px;
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+      padding: 10px 20px;
+      #memberlist {
+        max-height: 200px;
+        overflow-y: auto;
+        &::-webkit-scrollbar-track {
+          background: none;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: $maingray;
+        }
+      }
+    }
+    a {
+      text-decoration: none;
+      padding: 0;
+    }
+    #user {
+      color: white;
+      margin-left: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      transition: 0.3s;
+      &:hover {
+        color: $themecolor;
+      }
+      #pfp {
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+      }
+    }
+
+    #chat {
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      border-radius: 12px;
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+      padding: 10px 20px;
+      #title {
+        text-transform: uppercase;
+        font-size: 110%;
+        margin: 0;
+        margin-bottom: 10px;
+        padding: 15px 0;
+        text-align: center;
+        border-bottom: 3px solid $themecolor;
+      }
+      #window {
+        padding: 10px;
+        #message {
+          &:not(:first-of-type) #messagedata {
+            margin-top: 20px;
+          }
+          #messagedata {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+            #user, p {
+              margin: 0;
+            }
+            #time {
+              opacity: 0.3;
+              font-size: 70%;
+            }
+          }
+          #messagecontent {
+            margin: 4px 38px;
+          }
+        }
+        // max-height: 200px;
+        overflow-y: auto;
+        &::-webkit-scrollbar-track {
+          background: none;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: $maingray;
+        }
+      }
     }
   }
 }

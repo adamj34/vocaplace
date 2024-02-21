@@ -40,7 +40,7 @@ export function EditProfile() {
                         <div id='pfp' style={{ backgroundImage: `url(${C.UserData.pfp || placeholderpfp})`, height: 200, width:200 }}></div>
                             <i><FaPen id='icon'/></i>
                         </label>
-                        <input type='file' id='picinput' onChange={(e)=>{C.SetUserData({...C.UserData, 'pfp':URL.createObjectURL(e.target.files[0])}); console.log(e.target.files[0].name)}}></input>
+                        <input type='file' id='picinput' onChange={(e)=>{C.SetUserData({...C.UserData, 'pfp':URL.createObjectURL(e.target.files[0])})}}></input>
                     </div>
                     <div id='side'>
                         <h1 id='username'>{C.UserData.username}</h1>
