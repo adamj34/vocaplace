@@ -1,39 +1,19 @@
 import express from 'express';
 import userController from '../controllers/userController';
+import validate from '../validation/validateMiddleware';
+import { updateUserSchema, updatePointsSchema, getVistedUserIdSchema } from '../validation/userValidation';
 
 const router = express.Router();
 
+router
+    .get('/', userController.getUserData)
+    .get('/friends', userController.getFriendsData)
+    .get('/groups', userController.getGroupsData)
+    .get('/visit/:visitedUserId', validate(getVistedUserIdSchema), userController.getVisitedUserData)
+    .patch('/', validate(updateUserSchema), userController.updateUser)
+    .patch('/points', validate(updatePointsSchema), userController.updatePoints)
+    .delete('/', userController.deleteUser)
+    .delete('/profilePicture', userController.deleteProfilePicture)
 
-router.get('/', (req, res) => {
-    userController.getUserData(req, res);
-});
-
-router.get('/visit/:visitedUserId', (req, res) => {
-    userController.getVisitedUserData(req, res);
-});
-
-router.patch('/', (req, res) => {  
-    userController.updateUser(req, res);
-})
-
-router.delete('/', (req, res) => {
-    userController.deleteUser(req, res);
-})
-
-router.delete('/profilePicture', (req, res) => {  
-    userController.deleteProfilePicture(req, res);
-})
-
-router.patch('/points', (req, res) => {
-    userController.updatePoints(req, res);
-});
-
-router.get('/friends', (req, res) => {
-    userController.getFriendsData(req, res);
-});
-
-router.get('/groups', (req, res) => {
-    userController.getGroupsData(req, res);
-});
 
 export default router;

@@ -1,32 +1,17 @@
 import express from 'express';
 import questionController from '../controllers/questionController';
+import validate from '../validation/validateMiddleware';
+import { createQuestionSchema, getQuizSchema, addToAnsweredSchema, addToRepetitionSchema } from '../validation/questionValidation';
 
 const router = express.Router();
 
-
-router.post('/', (req, res) => {
-    questionController.createQuestion(req, res);
-});
-
-router.get('/quiz', (req, res) => {
-    questionController.getQuiz(req, res);
-});  
-
-router.post('/answered', (req, res) => {
-    questionController.addToAnswered(req, res);
-});
-
-router.post('/repetition', (req, res) => {
-    questionController.addToRepetition(req, res);
-});
-
-router.get('/repetition', (req, res) => {
-    questionController.getRepetition(req, res);
-});
-
-router.get('/repetition/overview', (req, res) => {
-    questionController.getRepetitionOverview(req, res);
-});
+router
+    .post('/', validate(createQuestionSchema), questionController.createQuestion)
+    .get('/quiz', validate(getQuizSchema), questionController.getQuiz)
+    .post('/answered', validate(addToAnsweredSchema), questionController.addToAnswered)
+    .post('/repetition', validate(addToRepetitionSchema), questionController.addToRepetition)
+    .get('/repetition', questionController.getRepetition)
+    .get('/repetition/overview', questionController.getRepetitionOverview);
 
 
 export default router;

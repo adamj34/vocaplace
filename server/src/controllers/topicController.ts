@@ -10,7 +10,7 @@ const createTopic = async (req, res) => {
         res.status(httpStatus.CREATED).json(response);
     } catch (error) {
         logger.error(error, 'Error in createTopic controller');
-        handleError(res, error);
+        handleError(error, res);
     }
 }
 

@@ -2,7 +2,7 @@ import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory";
 
 
-const createUnit = async (unit: string, icon: string) => {
+const createUnit = async (unit: string, icon?: string) => {
     const data = await db.units.add({unit, icon});
     return {
         success: true,

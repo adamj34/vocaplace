@@ -2,7 +2,7 @@ import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory";
 
 
-const createGroup = async (userId: string, groupName:string, groupBio: string, groupPicture?: string) => {
+const createGroup = async (userId: string, groupName:string, groupBio?: string, groupPicture?: string) => {
     return await db.tx(async t => {
         const groupData = await t.groups.addGroup({group_name: groupName, bio: groupBio, picture: groupPicture});
         const data = await t.groups.addMember({group_id: groupData.id, user_id: userId, admin: true});
@@ -35,15 +35,15 @@ const joinGroup = async (userId: string, groupName: string) => {
     })
 }
 
-const getGroupInfo = async (groupId: string) => {
+const getGroupInfo = async (groupId: number) => {
     return await db.task(async t => {
-        const groupData = await t.groups.findById({id: +groupId});
+        const groupData = await t.groups.findById({id: groupId});
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
 
         // add members to groupData
-        const members = await t.groups.findMembersByGroupId({id: +groupId});
+        const members = await t.groups.findMembersByGroupId({id: groupId});
         const membersData = await Promise.all(
             members.map(async member => {
                 const userData = await t.users.findById({id: member.user_id});

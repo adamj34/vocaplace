@@ -10,7 +10,7 @@ const createQuestion = async (
         correctAnswers: string[], 
         misleadingAnswers: string[], 
         questionType: string, 
-        difficulty: string
+        difficulty: number
     }
 ) => {
     return await db.tx(async () => {

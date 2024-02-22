@@ -1,27 +1,17 @@
 import express from 'express';
 import userRelationsController from '../controllers/userRelationsController';
+import validate from '../validation/validateMiddleware';
+import { friendRelationSchema } from '../validation/userRelationsValidation';
 
 const router = express.Router();
 
 
-router.post('/request/friend/:id', (req, res) => {
-    userRelationsController.sendFriendRequest(req, res);
-});
+router
+    .get('/check/user/:id', validate(friendRelationSchema), userRelationsController.checkRelationship)
+    .get('/pending', userRelationsController.checkPendingRequests)
+    .post('/request/friend/:id', validate(friendRelationSchema), userRelationsController.sendFriendRequest)
+    .patch('/accept/friend/:id', validate(friendRelationSchema), userRelationsController.acceptFriendRequest)
+    .delete('/friend/:id', validate(friendRelationSchema), userRelationsController.deleteFriend);
 
-router.patch('/accept/friend/:id', (req, res) => {
-    userRelationsController.acceptFriendRequest(req, res);
-});
-
-router.get('/check/user/:id', (req, res) => {
-    userRelationsController.checkRelationship(req, res);
-});
-
-router.get('/pending', (req, res) => {
-    userRelationsController.checkPendingRequests(req, res);
-});
-
-router.delete('/friend/:id', (req, res) => {
-    userRelationsController.deleteFriend(req, res);
-});
 
 export default router;

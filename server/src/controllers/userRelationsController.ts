@@ -2,7 +2,6 @@ import httpStatus from 'http-status-codes';
 import handleError from '../utils/errorHandler';
 import userRelationsService from '../services/userRelationsService';
 import logger from '../logger/logger';
-import { log } from 'console';
 
 
 const sendFriendRequest = async (req, res) => {

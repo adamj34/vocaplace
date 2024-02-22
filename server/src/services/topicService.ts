@@ -2,7 +2,7 @@ import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory";
 
 
-const createTopic = async (topic: string, unit: string, icon: string) => {
+const createTopic = async (topic: string, unit: string, icon?: string) => {
     return await db.tx(async t => {
         const unitData = await t.units.findUnitIdByName({unit: unit})
         if (!unitData) {

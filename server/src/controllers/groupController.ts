@@ -6,7 +6,7 @@ import logger from '../logger/logger';
 
 const createGroup = async (req, res) => {
     try {
-        const response = await groupService.createGroup(req.userId, req.body.group_name, req.body.admin)
+        const response = await groupService.createGroup(req.userId, req.body.group_name, req.body.bio, req.body.picture)
         res.status(httpStatus.CREATED).json(response);
     } catch (err) {
         logger.error(err, 'Error in createGroup controller');
@@ -25,8 +25,9 @@ const joinGroup = async (req, res) => {
 }
 
 const getGroupInfo = async (req, res) => {
+    console.log(req.params)
     try {
-        const response = await groupService.getGroupInfo(req.params.id)
+        const response = await groupService.getGroupInfo(+req.params.id)
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in getGroupInfo controller');

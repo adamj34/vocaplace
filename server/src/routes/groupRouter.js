@@ -1,12 +1,14 @@
 import express from 'express';
 import groupController from '../controllers/groupController';
+import { createGroupSchema, joinGroupSchema, getGroupInfoSchema } from '../validation/groupValidation';
+import validate from '../validation/validateMiddleware';
 
 const router = express.Router();
 
 
 router
-    .post('/', groupController.createGroup)
-    .post('/join', groupController.joinGroup)
-    .get('/:id', groupController.getGroupInfo)
+    .post('/', validate(createGroupSchema), groupController.createGroup)
+    .post('/join', validate(joinGroupSchema), groupController.joinGroup)
+    .get('/:id', validate(getGroupInfoSchema), groupController.getGroupInfo)
 
 export default router;

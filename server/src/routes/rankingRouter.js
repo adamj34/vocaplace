@@ -3,13 +3,9 @@ import rankingController from '../controllers/rankingController';
 
 const router = express.Router();
 
+router
+    .get('/top', rankingController.getTopUsersRanking)
+    .get('/friends', rankingController.getFriendsRanking);
 
-router.get('/top', (req, res) => {
-    rankingController.getTopUsersRanking(req, res);
-});
-
-router.get('/friends', (req, res) => {
-    rankingController.getFriendsRanking(req, res);
-});
-
+    
 export default router;
