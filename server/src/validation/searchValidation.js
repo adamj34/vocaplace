@@ -2,7 +2,7 @@ import { object, string } from 'yup';
 
 const searchGroupsAndUsersSchema = object({
     query: object({
-        searchPhrase: string().trim().strict().required(),
+        searchPhrase: string().max(50).trim().strict().required(),
     }).required()
 });
 

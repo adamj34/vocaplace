@@ -2,15 +2,15 @@ import { object, string, number } from 'yup';
 
 const createGroupSchema = object({
     body: object({
-        group_name: string().max(100).trim().strict().required(),
-        bio: string().max(1000).trim().strict().optional(),
+        group_name: string().max(50).trim().strict().required(),
+        bio: string().max(500).trim().strict().optional(),
         picture: string().optional(),
     }).required()
 });
 
 const joinGroupSchema = object({
     body: object({
-        group_name: string().max(100).trim().strict().required(),
+        group_name: string().max(50).trim().strict().required(),
     }).required()
 });
 

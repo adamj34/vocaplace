@@ -2,7 +2,7 @@ SET TIME ZONE 'EUROPE/WARSAW';
 
 CREATE TABLE IF NOT EXISTS units (
   id SMALLSERIAL PRIMARY KEY,
-  unit TEXT UNIQUE NOT NULL, 
+  unit TEXT UNIQUE NOT NULL CHECK (CHAR_LENGTH(unit) <= 50), 
   icon TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS units (
 CREATE TABLE IF NOT EXISTS topics (
   id SMALLSERIAL PRIMARY KEY,
   unit_id INTEGER NOT NULL REFERENCES units(id),
-  topic TEXT UNIQUE NOT NULL,
+  topic TEXT UNIQUE NOT NULL CHECK (CHAR_LENGTH(topic) <= 50),
   icon TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -24,7 +24,7 @@ CREATE TYPE question_type AS ENUM (
 CREATE TABLE IF NOT EXISTS questions (
   id SERIAL PRIMARY KEY,
   topic_id INTEGER NOT NULL REFERENCES topics(id),
-  content TEXT NOT NULL,
+  content TEXT NOT NULL CHECK (CHAR_LENGTH(content) <= 500),
   correct_answers TEXT[] NOT NULL,
   misleading_answers TEXT[],
   question_type question_type NOT NULL,
@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS questions (
 
 CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY ,
-  username TEXT NOT NULL,
-  bio TEXT,
+  username TEXT UNIQUE NOT NULL,
+  bio TEXT CHECK (CHAR_LENGTH(bio) <= 500),
   picture TEXT,
   private_profile BOOLEAN NOT NULL DEFAULT false,
   points INTEGER NOT NULL DEFAULT 0,
@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS answered_questions (
 
 CREATE TABLE IF NOT EXISTS groups (
   id SERIAL PRIMARY KEY,
-  group_name TEXT UNIQUE NOT NULL,
-  bio TEXT,
+  group_name TEXT UNIQUE NOT NULL CHECK (CHAR_LENGTH(group_name) <= 50),
+  bio TEXT CHECK (CHAR_LENGTH(bio) <= 500),
   picture TEXT
 );
 
@@ -84,7 +84,8 @@ CREATE TABLE IF NOT EXISTS group_membership (
   id SERIAL PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id),
   group_id INTEGER NOT NULL REFERENCES groups(id),
-  admin BOOLEAN NOT NULL DEFAULT false
+  admin BOOLEAN NOT NULL DEFAULT false,
+  UNIQUE(user_id, group_id)
 );
 
 

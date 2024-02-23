@@ -5,7 +5,7 @@ const createUnitSchema = object({
     body: object({
         unit:
             string()
-            .max(200)
+            .max(50)
             .matches(/^[^\d]*$/, 'Unit should not consist only of numbers')
             .trim()
             .strict()

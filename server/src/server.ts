@@ -3,6 +3,7 @@ import cors from "cors";
 import PinoHttp from "pino-http";
 import logger from "./logger/logger";
 
+// database imports
 import { db } from "./db/connection/db";
 import getUserData from "./routes/getUserDataMiddleware.js";
 import testConnection from "./db/connection/testConnection.js";
@@ -22,6 +23,7 @@ const app = express();
 
 await testConnection(db);  
  
+// server configuration
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
@@ -29,6 +31,7 @@ app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:8080']
 }))  
 
+// logger configuration
 app.use(PinoHttp({
     logger,
     serializers: {
@@ -36,7 +39,6 @@ app.use(PinoHttp({
             method: req.method,
             url: req.url,
             body: req.raw.body,
-            params: req.params,
             query: req.query
         }),
         res: res => ({ statusCode: res.statusCode })

@@ -9,8 +9,8 @@ const getVistedUserIdSchema = object({
 
 const updateUserSchema = object({
     body: object({
-        username: string().max(200).trim().strict().optional(),
-        bio: string().max(1000).trim().strict().optional(),
+        username: string().trim().strict().optional(),
+        bio: string().max(500).trim().strict().optional(),
         picture: string().trim().strict().optional(),
         private_profile: boolean().optional(),
     })
