@@ -1,7 +1,7 @@
 import express from 'express';
-import questionController from '../controllers/questionController';
-import validate from '../validation/validateMiddleware';
-import { createQuestionSchema, getQuizSchema, addToAnsweredSchema, addToRepetitionSchema } from '../validation/questionValidation';
+import questionController from '../controllers/questionController.js';
+import validate from '../validation/validateMiddleware.js';
+import { createQuestionSchema, getQuizSchema, addToAnsweredSchema, addToRepetitionSchema } from '../validation/questionValidation.js';
 
 const router = express.Router();
 

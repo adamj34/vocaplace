@@ -1,5 +1,5 @@
-import { db, pgp } from "../db/connection/db";
-import { errorFactory, FrienshipConstraintError } from "../utils/errorFactory";
+import { db, pgp } from "../db/connection/db.js";
+import { errorFactory, FrienshipConstraintError } from "../utils/errorFactory.js";
 
 
 enum RelationshipState {

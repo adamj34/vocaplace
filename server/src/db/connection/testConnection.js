@@ -1,4 +1,4 @@
-import logger from '../../logger/logger';
+import logger from '../../logger/logger.js';
 
 
 async function testConnection(db) {

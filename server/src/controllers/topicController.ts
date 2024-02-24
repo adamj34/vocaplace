@@ -1,7 +1,7 @@
 import httpStatus from 'http-status-codes';
-import handleError from '../utils/errorHandler';
-import topicService from '../services/topicService';
-import logger from '../logger/logger';
+import handleError from '../utils/errorHandler.js';
+import topicService from '../services/topicService.js';
+import logger from '../logger/logger.js';
 
 
 const createTopic = async (req, res) => {

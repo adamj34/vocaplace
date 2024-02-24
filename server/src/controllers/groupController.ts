@@ -1,7 +1,7 @@
-import groupService from '../services/groupService';
+import groupService from '../services/groupService.js';
 import httpStatus from 'http-status-codes';
-import handleError from '../utils/errorHandler';
-import logger from '../logger/logger';
+import handleError from '../utils/errorHandler.js';
+import logger from '../logger/logger.js';
 
 
 const createGroup = async (req, res) => {

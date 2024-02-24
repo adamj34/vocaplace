@@ -1,7 +1,7 @@
 import httpStatus from 'http-status-codes';
-import handleError from '../utils/errorHandler';
-import searchService from '../services/searchService';
-import logger from '../logger/logger';
+import handleError from '../utils/errorHandler.js';
+import searchService from '../services/searchService.js';
+import logger from '../logger/logger.js';
 
 
 const searchGroupsAndUsers = async (req, res) => {

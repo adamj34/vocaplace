@@ -1,7 +1,7 @@
 import express from 'express';
-import topicController from '../controllers/topicController';
-import validate from '../validation/validateMiddleware';
-import { createTopicSchema } from '../validation/topicValidation';
+import topicController from '../controllers/topicController.js';
+import validate from '../validation/validateMiddleware.js';
+import { createTopicSchema } from '../validation/topicValidation.js';
 
 const router = express.Router();
 

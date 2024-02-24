@@ -1,7 +1,7 @@
 import httpStatus from 'http-status-codes';
-import handleError from '../utils/errorHandler';
-import unitService from '../services/unitService';
-import logger from '../logger/logger';
+import handleError from '../utils/errorHandler.js';
+import unitService from '../services/unitService.js';
+import logger from '../logger/logger.js';
 
 
 const createUnit = async (req, res) => {

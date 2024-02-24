@@ -1,5 +1,5 @@
-import { db, pgp } from "../db/connection/db";
-import { errorFactory } from "../utils/errorFactory";
+import { db, pgp } from "../db/connection/db.js";
+import { errorFactory } from "../utils/errorFactory.js";
 
 
 const createTopic = async (topic: string, unit: string, icon?: string) => {

@@ -106,6 +106,7 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "ts-node": {
+    "swc": true,
     "esm": true
   },
   "exclude": [
@@ -114,5 +115,5 @@
   ],
   "include": [
     "src/**/*.ts"
-, "src/routes/userRelationsRouter.js"  ]
+  ]
 }

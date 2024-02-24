@@ -1,7 +1,7 @@
 import express from 'express';
-import searchController from '../controllers/searchController';
-import validate from '../validation/validateMiddleware';
-import { searchGroupsAndUsersSchema } from '../validation/searchValidation';
+import searchController from '../controllers/searchController.js';
+import validate from '../validation/validateMiddleware.js';
+import { searchGroupsAndUsersSchema } from '../validation/searchValidation.js';
 
 const router = express.Router();
 
