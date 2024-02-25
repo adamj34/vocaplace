@@ -1,16 +1,18 @@
-import logger from '../logger/logger.js';
+import logger from '../logger/logger';
 
 
 const validate = (schema) => {
     return async (req, res, next) => {
         try {
+            if (req.file) {
+                req.body.picture = req.file;
+                delete req.file;
+            }
             const castedReq = schema.cast({
                 body: req.body,
                 query: req.query,
                 params: req.params,
             })
-
-            console.log(castedReq);
 
             await schema.validate(castedReq, {strict: true});
 

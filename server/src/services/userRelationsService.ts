@@ -1,4 +1,4 @@
-import { db, pgp } from "../db/connection/db.js";
+import { db, pgp } from "../db/connection/db";
 import { errorFactory, FrienshipConstraintError } from "../utils/errorFactory.js";
 
 

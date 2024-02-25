@@ -1,5 +1,5 @@
 import express from 'express';
-import searchController from '../controllers/searchController.js';
+import searchController from '../controllers/searchController';
 import validate from '../validation/validateMiddleware.js';
 import { searchGroupsAndUsersSchema } from '../validation/searchValidation.js';
 

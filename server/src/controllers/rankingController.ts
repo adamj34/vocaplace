@@ -1,7 +1,7 @@
 import httpStatus from 'http-status-codes';
-import rankingService from '../services/rankingService.js';
+import rankingService from '../services/rankingService';
 import handleError from '../utils/errorHandler.js';
-import logger from '../logger/logger.js';
+import logger from '../logger/logger';
 
 
 const getTopUsersRanking = async (_req, res) => {

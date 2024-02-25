@@ -1,5 +1,5 @@
 import express from 'express';
-import groupController from '../controllers/groupController.js';
+import groupController from '../controllers/groupController';
 import { createGroupSchema, joinGroupSchema, getGroupInfoSchema } from '../validation/groupValidation.js';
 import validate from '../validation/validateMiddleware.js';
 

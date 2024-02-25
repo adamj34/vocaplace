@@ -1,4 +1,4 @@
-import { object, string, boolean, number } from 'yup';
+import { object, string, boolean, number, mixed } from 'yup';
 
 
 const getVistedUserIdSchema = object({
@@ -11,7 +11,14 @@ const updateUserSchema = object({
     body: object({
         username: string().trim().strict().optional(),
         bio: string().max(500).trim().strict().optional(),
-        picture: string().trim().strict().optional(),
+        picture: mixed()
+            .test('file-size', 'The file is too large', pic => {
+                return pic.size <= 1024 * 1024; // 1 MB
+            })
+            .test('media-type', 'Unsupported Format', pic => {
+                return ['image/jpeg', 'image/png', 'image/jpg'].includes(pic.mimetype);
+            })
+            .optional(),
         private_profile: boolean().optional(),
     })
     .required()

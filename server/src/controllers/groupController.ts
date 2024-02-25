@@ -1,7 +1,7 @@
-import groupService from '../services/groupService.js';
+import groupService from '../services/groupService';
 import httpStatus from 'http-status-codes';
 import handleError from '../utils/errorHandler.js';
-import logger from '../logger/logger.js';
+import logger from '../logger/logger';
 
 
 const createGroup = async (req, res) => {
@@ -25,7 +25,6 @@ const joinGroup = async (req, res) => {
 }
 
 const getGroupInfo = async (req, res) => {
-    console.log(req.params)
     try {
         const response = await groupService.getGroupInfo(+req.params.id)
         res.status(httpStatus.OK).json(response);

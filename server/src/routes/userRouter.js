@@ -1,7 +1,8 @@
 import express from 'express';
-import userController from '../controllers/userController.js';
+import userController from '../controllers/userController';
 import validate from '../validation/validateMiddleware.js';
 import { updateUserSchema, updatePointsSchema, getVistedUserIdSchema } from '../validation/userValidation.js';
+import upload from '../utils/multerUpload.js';
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router
     .get('/friends', userController.getFriendsData)
     .get('/groups', userController.getGroupsData)
     .get('/visit/:visitedUserId', validate(getVistedUserIdSchema), userController.getVisitedUserData)
-    .patch('/', validate(updateUserSchema), userController.updateUser)
+    .patch('/',  upload.single('picture'), validate(updateUserSchema), userController.updateUser)
     .patch('/points', validate(updatePointsSchema), userController.updatePoints)
     .delete('/', userController.deleteUser)
     .delete('/profilePicture', userController.deleteProfilePicture)

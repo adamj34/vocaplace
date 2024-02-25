@@ -1,5 +1,5 @@
 import express from 'express';
-import topicController from '../controllers/topicController.js';
+import topicController from '../controllers/topicController';
 import validate from '../validation/validateMiddleware.js';
 import { createTopicSchema } from '../validation/topicValidation.js';
 

@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { errorFactory, CustomError } from './errorFactory.js';
-import { pgp } from '../db/connection/db.js';
+import { pgp } from '../db/connection/db';
 
 
 const handleError = (err, res: Response) => {

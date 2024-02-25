@@ -1,7 +1,7 @@
 import httpStatus from 'http-status-codes';
 import handleError from '../utils/errorHandler.js';
-import userService from '../services/userService.js';
-import logger from '../logger/logger.js';
+import userService from '../services/userService';
+import logger from '../logger/logger';
 
 
 const getUserData = async (req, res) => {

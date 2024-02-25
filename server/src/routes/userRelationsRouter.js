@@ -1,5 +1,5 @@
 import express from 'express';
-import userRelationsController from '../controllers/userRelationsController.js';
+import userRelationsController from '../controllers/userRelationsController';
 import validate from '../validation/validateMiddleware.js';
 import { friendRelationSchema } from '../validation/userRelationsValidation.js';
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import questionController from '../controllers/questionController.js';
+import questionController from '../controllers/questionController';
 import validate from '../validation/validateMiddleware.js';
 import { createQuestionSchema, getQuizSchema, addToAnsweredSchema, addToRepetitionSchema } from '../validation/questionValidation.js';
 

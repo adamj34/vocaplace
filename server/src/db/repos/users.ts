@@ -19,7 +19,7 @@ class UsersRepository {
     }
 
     deleteProfilePicture(value: { id: string; }) {
-        return this.db.one(`
+        return this.db.none(`
         UPDATE
             users
         SET

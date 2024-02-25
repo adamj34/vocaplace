@@ -1,10 +1,19 @@
-import { db, pgp } from "../db/connection/db.js";
+import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
+import s3Instance from "../cloud/s3Client.js"
+import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import sharp from "sharp";
+import crypto from "crypto";
 
 
 const getUserData = async (userId: string, username: string) => {
     try {
         const data = await db.users.findById({id: userId});
+
+        // If the user has a picture, get a signed url for it
+        const picture = data.picture ? await getSignedUrl(s3Instance, new GetObjectCommand({Bucket: process.env.AWS_BUCKET_NAME, Key: data.picture}), {expiresIn: 120}) : null;
+        data.picture = picture;
         return {
             success: true,
             data
@@ -49,14 +58,43 @@ const deleteUser = async (userId: string) => {
 }
 
 const deleteProfilePicture = async (userId: string) => {
+    const user = await db.users.findById({id: userId});
+    if (!user.picture) {
+        throw errorFactory('404', 'No profile picture found');
+    }
+
+    const deleteParams = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: user.picture
+    };
+
+    // delete from s3 and if successful from db
+    await s3Instance.send(new DeleteObjectCommand(deleteParams));
     await db.users.deleteProfilePicture({id: userId});
+
     return {
         success: true,
         data: null
     };
 }
 
-const updateUser = async (userData: {id: string, username?: string, bio?: string, private_profile?: boolean, picture?: string,}) => {
+const updateUser = async (userData: {id: string, username?: string, bio?: string, private_profile?: boolean, picture?: any}) => {
+    
+
+    if (userData.picture) {
+        const pictureKey = crypto.createHash('sha256').update(userData.id).digest('hex');
+        const buffer = await sharp(userData.picture.buffer).resize(200, 200).toBuffer();
+        const uploadParams = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: pictureKey,
+            Body: buffer,
+            ContentType: userData.picture.mimetype,
+        }; 
+
+        await s3Instance.send(new PutObjectCommand(uploadParams));
+        userData.picture = pictureKey;
+    } 
+
     const data = await db.users.update(userData);
 
     return {

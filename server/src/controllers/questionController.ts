@@ -1,7 +1,7 @@
-import questionService from '../services/questionService.js';
+import questionService from '../services/questionService';
 import httpStatus from 'http-status-codes';
 import handleError from '../utils/errorHandler.js';
-import logger from '../logger/logger.js';
+import logger from '../logger/logger';
 
 
 const createQuestion = async (req, res) => {

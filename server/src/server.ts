@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 import PinoHttp from "pino-http";
-import logger from "./logger/logger.js";
+import logger from "./logger/logger";
 
 // database imports
-import { db } from "./db/connection/db.js";
+import { db } from "./db/connection/db";
 import getUserData from "./routes/getUserDataMiddleware.js";
 import testConnection from "./db/connection/testConnection.js";
 import userRouter from "./routes/userRouter.js";
@@ -44,6 +44,7 @@ app.use(PinoHttp({
         res: res => ({ statusCode: res.statusCode })
     }
 }));
+
 
 app.use(keycloak.middleware()); 
 // app.use(keycloak.protect());

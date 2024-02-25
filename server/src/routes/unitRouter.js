@@ -1,5 +1,5 @@
 import express from 'express';
-import unitController from '../controllers/unitController.js';
+import unitController from '../controllers/unitController';
 import validate from '../validation/validateMiddleware.js';
 import { createUnitSchema, getDetailedUserProgressSchema } from '../validation/unitValidation.js';
 
