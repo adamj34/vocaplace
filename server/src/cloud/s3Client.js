@@ -22,5 +22,19 @@ const getPreSignedUrl = async (pictureName) => {
     ) 
 };
 
+const pictureNameToUrl = async (payload) => {
+    if (typeof payload === 'object' && payload.picture) {
+        payload.picture = await getPreSignedUrl(payload.picture);
+    } else if (Array.isArray(payload) && payload.every(item => typeof item === 'object')) {
+        payload.forEach(async (item) => {
+            if (item.picture) {
+                item.picture = await getPreSignedUrl(item.picture);
+            }
+        });
+    }
+
+    return payload;
+};
+
 
 export { s3Instance, getPreSignedUrl };

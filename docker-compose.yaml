@@ -31,8 +31,6 @@ services:
             - node_modules
         - action: rebuild
           path: ./server/package.json
-    # volumes:
-    #   - ./server/:/opt/app
     depends_on:
       - db
       - keycloak

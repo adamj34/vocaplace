@@ -13,10 +13,10 @@ const updateUserSchema = object({
         bio: string().max(500).trim().strict().optional(),
         picture: mixed()
             .test('file-size', 'The file is too large', pic => {
-                return pic.size <= 1024 * 1024; // 1 MB
+                return !pic || pic.size <= 1024 * 1024; // 1 MB
             })
             .test('media-type', 'Unsupported Format', pic => {
-                return ['image/jpeg', 'image/png', 'image/jpg'].includes(pic.mimetype);
+                return !pic || ['image/jpeg', 'image/png', 'image/jpg'].includes(pic.mimetype);
             })
             .optional(),
         private_profile: boolean().optional(),
