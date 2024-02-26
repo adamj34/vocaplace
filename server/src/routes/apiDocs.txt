@@ -6,15 +6,15 @@ returns:
 {
     "success": true,
     "data": {
-        "bio": null,
-        "created_at": "2023-12-05T13:25:24.422Z",
-        "id": "223e4567-e89b-12d3-a456-426614174005",
-        "last active": "2023-12-05T13:25:24.422Z",
-        "picture": null,
+        "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+        "username": "q",
+        "bio": "new new",
+        "picture": "https://vocaplace-bucket.s3.eu-north-1.amazonaws.com/fd294f9dd32b5fa2fea06c560bb503c6b6a9de98bb5322b3146ab2a2ea2a303f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAYS2NTUIELLJ2SI6Z%2F20240226%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20240226T213440Z&X-Amz-Expires=120&X-Amz-Signature=0e4c9c29a23b3b5a4684cb3a0bc90ff68498f268e603774d6c608f757946f03c&X-Amz-SignedHeaders=host&x-id=GetObject",
         "private_profile": false,
-        "username": "aaaaa",
-        "points": 0,
-        "ongoing_streak": 0
+        "points": -3,
+        "ongoing_streak": 0,
+        "last_active": "2024-02-26T21:02:16.504Z",
+        "created_at": "2024-02-26T21:02:16.504Z"
     }
 }
 
@@ -38,12 +38,7 @@ returns:
 /user/profilePicture
 DELETE:
 returns:
-{
-    "success": true,
-    "data": {
-        "id": "223e4567-e89b-12d3-a456-426614174005"
-    }
-}
+no content
 
 /user/points
 PATCH:
@@ -95,13 +90,20 @@ GET:
 returns:
 {
     "success": true,
-    "data": [   // groups the user belongs to
+    "data": [
         {
-            "admin": true,
             "id": 1,
-            "group_name": "new grouppp",
+            "group_name": "new_group_nnn",
             "bio": "group bio",
-            "picture": null
+            "picture": null,
+            "admin": false
+        },
+        {
+            "id": 3,
+            "group_name": "new_group",
+            "bio": "group bio",
+            "picture": null,
+            "admin": true
         }
     ]
 }
@@ -112,25 +114,34 @@ returns:
 {
     "success": true,
     "user": {
-        "id": "8a697eb1-786d-4b9d-8df8-dd891901284d",
-        "username": "x",
-        "bio": null,
+        "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+        "username": "q",
+        "bio": "new new",
+        "picture": null,
         "private_profile": false,
-        "points": 0,
+        "points": -6,
         "ongoing_streak": 0,
-        "last_active": "2024-01-19T21:32:10.949Z",
-        "created_at": "2024-01-19T21:32:10.949Z",
-        "picture": null
+        "last_active": "2024-02-26T21:02:16.504Z",
+        "created_at": "2024-02-26T21:02:16.504Z"
     },
     "friends": [],
     "groups": [
         {
-            "id": 3,
-            "group_name": "new grouppp",
+            "id": 1,
+            "group_name": "new_group_nnn",
             "bio": "group bio",
-            "picture": null
+            "picture": null,
+            "admin": false
+        },
+        {
+            "id": 3,
+            "group_name": "new_group",
+            "bio": "group bio",
+            "picture": null,
+            "admin": true
         }
-    ]
+    ],
+    "relationship": 'friends'
 }
 
 /search?searchPhrase=some_username  // matches all that contain the phrase
@@ -198,11 +209,6 @@ OR
         "user2_id": "323e4567-e89b-12d3-a456-426614174003",
         "relationship": null
     }
-}
-OR
-{
-    "success": false,
-    "err": "Cannot check relationship with yourself"
 }
 
 /relationships/friend/:friendId
@@ -715,6 +721,31 @@ returns:
             "admin": true
         }
     ]
+}
+
+/groups/membership/:id
+DELETE:
+expects e.g.:
+req.params = {id: 3}  // group id
+req.body = {user_id_to_delete: '8a697eb1-786d-4b9d-8df8-dd891901284d'}  // id of the user to be *removed* from group
+returns:
+no content
+
+/groups/membership/:id
+PATCH:
+expects e.g.:
+req.params = {id: 3}  // group id
+req.body = {user_id_to_update: '8a697eb1-786d-4b9d-8df8-dd891901284d'}  // id of the user to be *accepted* to group
+returns:
+{
+    "success": true,
+    "data": {
+        id: 6
+        user_id: '8a697eb1-786d-4b9d-8df8-dd891901284d'
+        group_id: 3
+        admin: false,
+        accepted: true 
+    }
 }
 
 /rankings/top

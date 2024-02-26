@@ -1,18 +1,18 @@
 import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
-import { s3Instance } from "../cloud/s3Client.js"
-import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { s3Instance, pictureToSignedUrl } from "../cloud/s3Client.js"
+import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import sharp from "sharp";
 import crypto from "crypto";
 
 
 const getUserData = async (userId: string, username: string) => {
     try {
-        const data = await db.users.findById({id: userId});
+        const data = await pictureToSignedUrl(await db.users.findById({id: userId}));
 
         return {
             success: true,
-            data
+            data: data
         };
     } catch (err) {
         // If no data is returned, add the user to the database
@@ -31,9 +31,9 @@ const getUserData = async (userId: string, username: string) => {
 
 const getVisitedUserData = async (userId: string, visitedUserId: string) => {
     return await db.task(async () => {
-        const visitedUser = await db.users.findById({id: visitedUserId});
-        const visitedUserFriends = await db.user_relationships.findFriendsByUserId({id: visitedUserId});
-        const visitedUserGroups = await db.users.findGroupsByUserId({id: visitedUserId});
+        const visitedUser = await pictureToSignedUrl(await db.users.findById({id: visitedUserId}));
+        const visitedUserFriends = await pictureToSignedUrl(await db.user_relationships.findFriendsByUserId({id: visitedUserId}));
+        const visitedUserGroups = await pictureToSignedUrl(await db.users.findGroupsByUserId({id: visitedUserId}));
         const userRelationship = await db.user_relationships.checkRelationship({user1_id: userId, user2_id: visitedUserId});
         return {
             success: true,
@@ -116,7 +116,7 @@ const updatePoints = async (userId: string, points: number) => {
 }
 
 const getFriendsData = async (userId: string) => {
-    const friendsData = await db.user_relationships.findFriendsByUserId({id: userId});
+    const friendsData = await pictureToSignedUrl(await db.user_relationships.findFriendsByUserId({id: userId}));
     friendsData.sort((a, b) => b.points - a.points);
 
     return {
@@ -126,7 +126,7 @@ const getFriendsData = async (userId: string) => {
 }
 
 const getGroupsData = async (userId: string) => {
-    const groupsData = await db.users.findGroupsByUserId({id: userId});
+    const groupsData = await pictureToSignedUrl(await db.users.findGroupsByUserId({id: userId}));
 
     return {
         success: true,

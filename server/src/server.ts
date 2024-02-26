@@ -18,7 +18,6 @@ import rankingRouter from "./routes/rankingRouter.js";
 
 import keycloak from './Keycloak.js';
 
-
 const app = express(); 
 
 await testConnection(db);  
@@ -28,9 +27,9 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'http://localhost:8080']
+    origin: ['http://localhost:3000', 'http://localhost:8080'] 
 }))  
-
+   
 // logger configuration
 app.use(PinoHttp({
     logger,

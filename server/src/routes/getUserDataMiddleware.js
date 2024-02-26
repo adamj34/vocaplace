@@ -4,6 +4,7 @@ import logger from '../logger/logger';
 
 // Middleware to extract user ID and preffered_username from token
 const getUserData = async (req, res, next) => {
+
     const token = req.headers.authorization.split(' ')[1]; // Extract the token from the Authorization header
     const decodedToken = decode(token); // Decode the token
     req.userId = decodedToken.sub; // Get the user ID and add it to the request object
@@ -18,13 +19,13 @@ const getUserData = async (req, res, next) => {
         logger.error(error);
         res.status(422).json({
             name: error.name,
-            message: error.message, 
+            message: error.message,
             value: error.value, 
             errors: error.errors
         });
     }
 
-    next();
+    next(); 
 }
 
 // const getUserData = async (req, res, next) => {

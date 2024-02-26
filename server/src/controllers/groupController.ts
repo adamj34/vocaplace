@@ -24,6 +24,26 @@ const joinGroup = async (req, res) => {
     }
 }
 
+const updateMembership = async (req, res) => {
+    try {
+        const response = await groupService.updateMembership(req.userId, req.body.user_id_to_update, +req.params.id)
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in acceptMember controller');
+        handleError(err, res)
+    }
+}
+
+const deleteMember = async (req, res) => {
+    try {
+        const response = await groupService.deleteMember(req.userId, req.body.user_id_to_delete, +req.params.id)
+        res.status(httpStatus.NO_CONTENT).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in deleteMember controller');
+        handleError(err, res)
+    }
+}
+
 const getGroupInfo = async (req, res) => {
     try {
         const response = await groupService.getGroupInfo(+req.params.id)
@@ -38,5 +58,7 @@ const getGroupInfo = async (req, res) => {
 export default {
     createGroup,
     joinGroup,
-    getGroupInfo
+    getGroupInfo,
+    deleteMember,
+    updateMembership
 }

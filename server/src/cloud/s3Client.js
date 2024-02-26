@@ -1,6 +1,7 @@
 import { S3 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
+import logger from '../logger/logger';
 
 
 const region = process.env.AWS_BUCKET_REGION;
@@ -22,19 +23,21 @@ const getPreSignedUrl = async (pictureName) => {
     ) 
 };
 
-const pictureNameToUrl = async (payload) => {
+const pictureToSignedUrl = async (payload) => {
     if (typeof payload === 'object' && payload.picture) {
+        logger.info('Signing picture URL...');  
         payload.picture = await getPreSignedUrl(payload.picture);
     } else if (Array.isArray(payload) && payload.every(item => typeof item === 'object')) {
-        payload.forEach(async (item) => {
+        logger.info('Signing pictures URLs...'); 
+        await Promise.all(payload.map(async (item) => {
             if (item.picture) {
                 item.picture = await getPreSignedUrl(item.picture);
             }
-        });
+        }));
     }
 
     return payload;
 };
 
 
-export { s3Instance, getPreSignedUrl };
+export { s3Instance, pictureToSignedUrl };

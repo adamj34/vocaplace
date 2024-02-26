@@ -67,7 +67,14 @@ const acceptFriendRequest = async (userId: string, friendId: string) => {
 
 const checkRelationship = async (userId: string, friendId: string) => {
     if (userId === friendId) {
-        throw new FrienshipConstraintError('Cannot check relationship with yourself');
+        return {
+            success: true,
+            data: {
+                user1_id: userId,
+                user2_id: friendId,
+                relationship: null
+            }
+        }
     } else {
         let users;
         if (userId < friendId) {

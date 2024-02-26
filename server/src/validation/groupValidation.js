@@ -20,9 +20,29 @@ const getGroupInfoSchema = object({
     }).required()
 });
 
+const deleteMemberSchema = object({
+    body: object({
+        user_id_to_delete: string().uuid().trim().strict().required(),
+    }).required(),
+    params: object({
+        id: number().integer().positive().required(),  // group id
+    }).required()
+});
+
+const updateMembershipSchema = object({
+    body: object({
+        user_id_to_update: string().uuid().trim().strict().required(),
+    }).required(),
+    params: object({
+        id: number().integer().positive().required(),  // group id
+    }).required()
+});
+
 
 export {
     createGroupSchema,
     joinGroupSchema,
     getGroupInfoSchema,
+    deleteMemberSchema,
+    updateMembershipSchema
 };

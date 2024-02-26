@@ -1,6 +1,5 @@
 import queries from "../sql/sqlQueries.js";
 import {IDatabase, IMain} from 'pg-promise';
-import { getPreSignedUrl } from "../../cloud/s3Client.js"
 
 class UsersRepository {
     db: IDatabase<any>;
@@ -48,13 +47,8 @@ class UsersRepository {
         `, values);
     }
 
-    async findById(value: { id: string; }) {
-        const user = await this.db.one(queries.users.find, value);
-        // If the user has a picture, get a signed url for it
-        if (user.picture) {
-            user.picture = await getPreSignedUrl(user.picture);
-        }
-        return user;
+    findById(value: { id: string; }) {
+        return this.db.one(queries.users.find, value);
     }
 
     findGroupsByUserId(value: { id: string; }) {

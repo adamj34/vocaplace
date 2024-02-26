@@ -61,6 +61,12 @@ class FrienshipConstraintError extends CustomError {
     }
 }
 
+class NoAccessError extends CustomError {
+    constructor(message?: string) {
+        super(message, 'NoAccessError', 'User has no access to the resource', httpStatus.FORBIDDEN);
+    }
+}
+
 class InvalidInputError extends CustomError {
     constructor(message?: string) {
         super(message, 'InvalidInputError', 'Invalid input', httpStatus.UNPROCESSABLE_ENTITY);
@@ -76,6 +82,8 @@ function errorFactory(identifier: string | number, message?: string): CustomErro
             return new InvalidInputError(message);
         case '404':
             return new NotFoundError(message);
+        case '403':
+            return new NoAccessError(message);
         case 0:
             return new NoDataError(message);
         default:

@@ -30,6 +30,16 @@ class GroupsRepository {
             `, value);
     }
 
+    findMemberByGroupIdAndUserId(value: { user_id: string; group_id: number; }) {
+        return this.db.oneOrNone(`
+            SELECT
+                *
+            FROM
+                group_membership
+            WHERE user_id = $<user_id> AND group_id = $<group_id>
+            `, value);
+    }
+
     findMembersByGroupId(value: { id: number; }) {
         return this.db.any(`
             SELECT
@@ -45,8 +55,16 @@ class GroupsRepository {
         return this.db.one('INSERT INTO groups (group_name, bio, picture) VALUES(${group_name}, ${bio}, ${picture}) RETURNING *', values);
     }
 
-    addMember(values: { group_id: number; user_id: string; admin: boolean; }) {
-        return this.db.one('INSERT INTO group_membership (group_id, user_id, admin) VALUES(${group_id}, ${user_id}, ${admin}) RETURNING *', values);
+    addMember(values: { group_id: number; user_id: string; admin: boolean; accepted: boolean; }) {
+        return this.db.one('INSERT INTO group_membership (group_id, user_id, admin, accepted) VALUES(${group_id}, ${user_id}, ${admin}, ${accepted}) RETURNING *', values);
+    }
+
+    removeMember(values: { user_id: string; group_id: number;}) {
+        return this.db.none('DELETE FROM group_membership WHERE group_id = $<group_id> AND user_id = $<user_id>', values);
+    }
+
+    updateMembership(values: { user_id: string; group_id: number; accepted: boolean; }) {
+        return this.db.one('UPDATE group_membership SET accepted = $<accepted> WHERE group_id = $<group_id> AND user_id = $<user_id> RETURNING *', values);
     }
 
     searchByGroupname(value: { searchPhrase: string; }) {

@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS topics (
 CREATE TYPE question_type AS ENUM (
   'pick',
   'order',
-  'connect',
   'fill'
 );
 CREATE TABLE IF NOT EXISTS questions (
@@ -85,7 +84,9 @@ CREATE TABLE IF NOT EXISTS group_membership (
   user_id UUID NOT NULL REFERENCES users(id),
   group_id INTEGER NOT NULL REFERENCES groups(id),
   admin BOOLEAN NOT NULL DEFAULT false,
-  UNIQUE(user_id, group_id)
+  accepted BOOLEAN NOT NULL DEFAULT false,
+  UNIQUE(user_id, group_id),
+  CHECK ((accepted = false AND admin = false) OR accepted = true)
 );
 
 
@@ -173,9 +174,3 @@ INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, q
 VALUES (6, 'Which of the following is a marine mammal known for its playful behavior and intelligence?', '{"Dolphin", "Porpoise"}', '{"Shark", "Jellyfish"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (6, 'Which reptile is known for changing color to blend with its surroundings?', '{"Chameleon"}', '{"Crocodile", "Snake", "Tortoise"}', 'pick', 1);
-
-
-
-
--- INSERT INTO user_relationships (user1_id, user2_id, relationship) VALUES ('3a84759d-8ea5-40d7-91f7-f22440d2d866', 'db77d276-7c84-4543-908b-d4ac92f031ec', 'friends');
--- INSERT INTO user_relationships (user1_id, user2_id, relationship) VALUES ('3a84759d-8ea5-40d7-91f7-f22440d2d866', 'e0b0b2a0-0b1e-4b0e-9b0a-9b0b0b0b0b0b', 'friends');
