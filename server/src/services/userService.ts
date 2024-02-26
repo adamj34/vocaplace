@@ -1,8 +1,7 @@
 import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
-import s3Instance from "../cloud/s3Client.js"
+import { s3Instance } from "../cloud/s3Client.js"
 import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import sharp from "sharp";
 import crypto from "crypto";
 
@@ -11,9 +10,6 @@ const getUserData = async (userId: string, username: string) => {
     try {
         const data = await db.users.findById({id: userId});
 
-        // If the user has a picture, get a signed url for it
-        const picture = data.picture ? await getSignedUrl(s3Instance, new GetObjectCommand({Bucket: process.env.AWS_BUCKET_NAME, Key: data.picture}), {expiresIn: 120}) : null;
-        data.picture = picture;
         return {
             success: true,
             data
@@ -51,6 +47,14 @@ const getVisitedUserData = async (userId: string, visitedUserId: string) => {
 
 const deleteUser = async (userId: string) => {
     const deletedUser = await db.users.delete({id: userId});
+    if (deletedUser.picture) {
+        const deleteParams = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: deletedUser.picture
+        };
+        await s3Instance.send(new DeleteObjectCommand(deleteParams));
+    }
+
     return {
         success: true,
         data: deletedUser
@@ -79,7 +83,6 @@ const deleteProfilePicture = async (userId: string) => {
 }
 
 const updateUser = async (userData: {id: string, username?: string, bio?: string, private_profile?: boolean, picture?: any}) => {
-    
 
     if (userData.picture) {
         const pictureKey = crypto.createHash('sha256').update(userData.id).digest('hex');
