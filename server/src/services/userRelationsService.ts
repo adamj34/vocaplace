@@ -32,7 +32,7 @@ const sendFriendRequest = async (userId: string, friendId: string) => {
             const data = await t.user_relationships.checkRelationship(users);
             // if relationship does not exist
             if (!data) {
-                const data = await t.user_relationships.addFriend(users);
+                const data = await t.user_relationships.changeRelationship(users);
                 return {
                     success: true,
                     data

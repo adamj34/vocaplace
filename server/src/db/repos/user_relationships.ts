@@ -11,8 +11,8 @@ class UserRelationshipsRepository {
         this.pgp = pgp;
     }
 
-    addFriend(values: { user1_id: string; user2_id: string; relationship: string; }) {
-        return this.db.one(queries.user_relationships.addFriend, values);
+    changeRelationship(values: { user1_id: string; user2_id: string; relationship: string; }) {
+        return this.db.one(queries.user_relationships.changeRelationship, values);
     }
 
     acceptFriend(values: { user1_id: string; user2_id: string; }) {
