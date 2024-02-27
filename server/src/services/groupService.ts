@@ -4,7 +4,6 @@ import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { s3Instance, pictureToSignedUrl, PictureFolder } from "../cloud/s3Client"
 import sharp from "sharp";
 import crypto from "crypto";
-import { group } from "console";
 
 
 const createGroup = async (userId: string, groupName:string, groupBio?: string, groupPicture?: any) => {
@@ -36,8 +35,10 @@ const createGroup = async (userId: string, groupName:string, groupBio?: string, 
     })
 }
 
-const updateGroup = async (userId: string, groupId: number, groupName?: string, groupBio?: string, groupPicture?: any) => {
+const updateGroup = async (userId: string, groupId: number, updateData: {group_name?: string, bio?: string, picture?: any}) => {
     return await db.tx(async t => {
+        console.log('data to update:')
+        console.log(updateData);
         const groupData = await t.groups.findById({id: groupId});
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
@@ -48,29 +49,29 @@ const updateGroup = async (userId: string, groupId: number, groupName?: string, 
             throw errorFactory('403', 'User is not an admin of this group');
         }
 
-        if (groupPicture) {
+        const picture = updateData.picture;
+        delete updateData.picture;
+        let uploadParams;
+        if (picture) {
             const pictureKey = crypto.createHash('sha256').update(userId).digest('hex');
             const pictureURI = `${PictureFolder.GROUP}/${pictureKey}`;
-            const buffer = await sharp(groupPicture.buffer).resize(200, 200).toBuffer();
-            const uploadParams = {
+            const buffer = await sharp(picture.buffer).resize(200, 200).toBuffer();
+            uploadParams = {
                 Bucket: process.env.AWS_BUCKET_NAME,
                 Key: pictureURI,
                 Body: buffer,
-                ContentType: groupPicture.mimetype,
+                ContentType: picture.mimetype,
             };
+        } 
 
+        const data = await t.groups.updateGroup(groupId, updateData);
+
+        // Only after the group is updated, upload the picture
+        if (picture) {
             await s3Instance.send(new PutObjectCommand(uploadParams));
-            groupData.picture = pictureURI;
+            const pictureData = await t.groups.updateGroup(groupId, { picture: uploadParams.Key });
+            data.picture = pictureData.picture;
         }
-
-        const queryData = {id: groupId, group_name: groupName, bio: groupBio, picture: groupData.picture};
-        Object.keys(queryData).forEach(key => {
-            if (queryData[key] === undefined) {
-               delete queryData[key];
-            }
-        });
-
-        const data = await t.groups.updateGroup(queryData);
 
         return {
             success: true,

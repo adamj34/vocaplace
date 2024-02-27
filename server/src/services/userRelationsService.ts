@@ -139,7 +139,7 @@ const checkRelationship = async (userId: string, friendId: string) => {
 const checkPendingRequests = async (userId: string) => {
     return await db.task(async t => {
         const pendingRequests = await t.user_relationships.getPendingRequests({id : userId});
-        const data = await Promise.all(pendingRequests.map(user => t.users.findById({id: user.user_id})));
+        const data = await Promise.all(pendingRequests.map(async user => await t.users.findById({id: user.user_id})));
 
         return {
             success: true,

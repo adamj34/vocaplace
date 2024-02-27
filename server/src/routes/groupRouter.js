@@ -8,9 +8,9 @@ const router = express.Router();
 
 
 router
+    .get('/:id', validate(getGroupInfoSchema), groupController.getGroupInfo)
     .post('/', upload.single('picture'), validate(createGroupSchema), groupController.createGroup)
     .post('/join', validate(joinGroupSchema), groupController.joinGroup)
-    .get('/:id', validate(getGroupInfoSchema), groupController.getGroupInfo)
     .delete('/membership/:id', validate(deleteMemberSchema), groupController.deleteMember)
     .patch('/membership/:id', validate(updateMembershipSchema), groupController.updateMembership)
     .patch('/:id', upload.single('picture'), validate(updateGroupSchema), groupController.updateGroup)
