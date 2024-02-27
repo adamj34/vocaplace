@@ -11,7 +11,8 @@ router
     .get('/pending', userRelationsController.checkPendingRequests)
     .post('/request/friend/:id', validate(friendRelationSchema), userRelationsController.sendFriendRequest)
     .patch('/accept/friend/:id', validate(friendRelationSchema), userRelationsController.acceptFriendRequest)
-    .delete('/friend/:id', validate(friendRelationSchema), userRelationsController.deleteFriend);
-
+    .delete('/request/sent/friend/:id', validate(friendRelationSchema), userRelationsController.deleteSentFriendRequest)
+    .delete('/request/received/friend/:id', validate(friendRelationSchema), userRelationsController.deleteReceivedFriendRequest)
+    .delete('/friend/:id', validate(friendRelationSchema), userRelationsController.deleteFriend)
 
 export default router;

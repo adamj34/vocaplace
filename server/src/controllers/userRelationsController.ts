@@ -24,6 +24,26 @@ const acceptFriendRequest = async (req, res) => {
     }
 }
 
+const deleteReceivedFriendRequest = async (req, res) => {
+    try {
+        const response = await userRelationsService.deleteReceivedFriendRequest(req.userId, req.params.id);
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in deleteReceivedFriendRequest controller');
+        handleError(err, res);
+    }
+}
+
+const deleteSentFriendRequest = async (req, res) => {
+    try {
+        const response = await userRelationsService.deleteSentFriendRequest(req.userId, req.params.id);
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in deleteSentFriendRequest controller');
+        handleError(err, res);
+    }
+}
+
 const checkRelationship = async (req, res) => {
     try {
         const response = await userRelationsService.checkRelationship(req.userId, req.params.id);
@@ -57,6 +77,8 @@ const deleteFriend = async (req, res) => {
 export default {
     sendFriendRequest,
     acceptFriendRequest,
+    deleteReceivedFriendRequest,
+    deleteSentFriendRequest,
     checkRelationship,
     checkPendingRequests,
     deleteFriend

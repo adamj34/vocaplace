@@ -23,8 +23,8 @@ class UserRelationshipsRepository {
         return this.db.oneOrNone(queries.user_relationships.checkRelationship, values);
     }
 
-    deleteFriend(values: { user1_id: string; user2_id: string; }) {
-        return this.db.one(queries.user_relationships.deleteFriend, values);
+    deleteRelationship(values: { user1_id: string; user2_id: string; relationship: string; }) {
+        return this.db.one(queries.user_relationships.deleteRelationship, values);
     }
 
     findFriendsByUserId(value: { id: string; }) {

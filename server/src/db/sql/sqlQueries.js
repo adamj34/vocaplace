@@ -38,7 +38,7 @@ const queries = {
         addFriend: sql('user_relationships/add_friend.sql'),
         acceptFriend: sql('user_relationships/accept_friend.sql'),
         checkRelationship: sql('user_relationships/check_relationship.sql'),
-        deleteFriend: sql('user_relationships/delete_friend.sql'),
+        deleteRelationship: sql('user_relationships/delete_relationship.sql'),
     },
 };
 

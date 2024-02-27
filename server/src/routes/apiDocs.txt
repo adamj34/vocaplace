@@ -183,6 +183,19 @@ returns:
     }
 }
 
+/relationships/request/friend/:id
+DELETE:
+returns:
+{
+    "success": true,
+    "data" :
+        {
+            "user1_id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+            "user2_id": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+            "relationship": "pending_user2_user1"
+        }
+}
+
 /relationships/accept/friend/:id  (id is the id of the friend)
 PATCH:
 returns:
