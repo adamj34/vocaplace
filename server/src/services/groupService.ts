@@ -64,21 +64,26 @@ const updateMembership = async (userId: string, userIdToBeAccepted: string, grou
 }
 
 const deleteMember = async (userId: string, userIdtoBeDeleted: string, groupId: number) => {
-    return await db.tx(async t => {
-        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
-        if (!userRequestingData || !userRequestingData.admin) {
-            throw errorFactory('403', 'User is not an admin of this group');
-        }
-
+    return await db.task(async t => {
+        //check if group exits
         const groupData = await t.groups.findById({id: groupId});
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
 
+        // check if user is a member of the group
         const members = await t.groups.findMembersByGroupId({id: groupId});
         const isMember = members.some(member => member.user_id === userIdtoBeDeleted);
         if (!isMember) {
             throw errorFactory('404', 'User is not a member of this group');
+        }
+
+        // admin is deleting a member
+        if (userId !== userIdtoBeDeleted) {
+            const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
+            if (!userRequestingData || !userRequestingData.admin) {
+                throw errorFactory('403', 'User is not an admin of this group');
+            }
         }
 
         await t.groups.removeMember({user_id: userIdtoBeDeleted, group_id: groupId});

@@ -16,7 +16,7 @@ const s3Instance = new S3({
     }
 });
 
-const getPreSignedUrl = async (pictureName) => {
+const getPreSignedUrl = async (pictureName: string) => {
     return await getSignedUrl(s3Instance,
         new GetObjectCommand({Bucket: process.env.AWS_BUCKET_NAME, Key: pictureName}),
         {expiresIn: 120}
@@ -25,19 +25,27 @@ const getPreSignedUrl = async (pictureName) => {
 
 const pictureToSignedUrl = async (payload) => {
     if (typeof payload === 'object' && payload.picture) {
-        logger.info('Signing picture URL...');  
         payload.picture = await getPreSignedUrl(payload.picture);
+        logger.info('Picture URL signed');  
     } else if (Array.isArray(payload) && payload.every(item => typeof item === 'object')) {
-        logger.info('Signing pictures URLs...'); 
         await Promise.all(payload.map(async (item) => {
             if (item.picture) {
                 item.picture = await getPreSignedUrl(item.picture);
             }
         }));
+        logger.info('Picture URLs signed'); 
     }
 
     return payload;
 };
 
+enum PictureFolder {
+    PROFILE = 'profile_pictures',
+    GROUP = 'group_pictures',
+}
 
-export { s3Instance, pictureToSignedUrl };
+export {
+    s3Instance,
+    pictureToSignedUrl,
+    PictureFolder 
+};

@@ -1,6 +1,6 @@
 import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
-import { s3Instance, pictureToSignedUrl } from "../cloud/s3Client.js"
+import { s3Instance, pictureToSignedUrl, PictureFolder } from "../cloud/s3Client.js"
 import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import sharp from "sharp";
 import crypto from "crypto";
@@ -12,7 +12,7 @@ const getUserData = async (userId: string, username: string) => {
 
         return {
             success: true,
-            data: data
+            data
         };
     } catch (err) {
         // If no data is returned, add the user to the database
@@ -30,11 +30,11 @@ const getUserData = async (userId: string, username: string) => {
 }
 
 const getVisitedUserData = async (userId: string, visitedUserId: string) => {
-    return await db.task(async () => {
-        const visitedUser = await pictureToSignedUrl(await db.users.findById({id: visitedUserId}));
-        const visitedUserFriends = await pictureToSignedUrl(await db.user_relationships.findFriendsByUserId({id: visitedUserId}));
-        const visitedUserGroups = await pictureToSignedUrl(await db.users.findGroupsByUserId({id: visitedUserId}));
-        const userRelationship = await db.user_relationships.checkRelationship({user1_id: userId, user2_id: visitedUserId});
+    return await db.task(async t => {
+        const visitedUser = await pictureToSignedUrl(await t.users.findById({id: visitedUserId}));
+        const visitedUserFriends = await pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({id: visitedUserId}));
+        const visitedUserGroups = await pictureToSignedUrl(await t.users.findGroupsByUserId({id: visitedUserId}));
+        const userRelationship = await t.user_relationships.checkRelationship({user1_id: userId, user2_id: visitedUserId});
         return {
             success: true,
             user: visitedUser,
@@ -86,16 +86,17 @@ const updateUser = async (userData: {id: string, username?: string, bio?: string
 
     if (userData.picture) {
         const pictureKey = crypto.createHash('sha256').update(userData.id).digest('hex');
+        const pictureURI = `${PictureFolder.PROFILE}/${pictureKey}`;
         const buffer = await sharp(userData.picture.buffer).resize(200, 200).toBuffer();
         const uploadParams = {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: pictureKey,
+            Key: pictureURI,
             Body: buffer,
             ContentType: userData.picture.mimetype,
         }; 
 
         await s3Instance.send(new PutObjectCommand(uploadParams));
-        userData.picture = pictureKey;
+        userData.picture = pictureURI;
     } 
 
     const data = await db.users.update(userData);

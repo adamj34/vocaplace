@@ -98,4 +98,6 @@ export {
     InternalServerError,
     FrienshipConstraintError,
     InvalidInputError,
-    errorFactory, CustomError }
+    CustomError,
+    errorFactory 
+}
