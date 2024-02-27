@@ -141,7 +141,11 @@ returns:
             "admin": true
         }
     ],
-    "relationship": 'friends'
+    "relationship": {
+        "user1_id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+        "user2_id": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+        "relationship": "pending_user2_user1"
+    }
 }
 
 /search?searchPhrase=some_username  // matches all that contain the phrase

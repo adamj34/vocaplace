@@ -40,7 +40,7 @@ const getVisitedUserData = async (userId: string, visitedUserId: string) => {
             user: visitedUser,
             friends: visitedUserFriends,
             groups: visitedUserGroups,
-            relationship: userRelationship ? userRelationship.relationship : null
+            relationship: userRelationship
         }
     })
 }
