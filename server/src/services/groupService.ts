@@ -4,7 +4,7 @@ import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { s3Instance, pictureToSignedUrl, PictureFolder } from "../cloud/s3Client"
 import sharp from "sharp";
 import crypto from "crypto";
-
+import { group } from "console";
 
 
 const createGroup = async (userId: string, groupName:string, groupBio?: string, groupPicture?: any) => {
@@ -32,6 +32,49 @@ const createGroup = async (userId: string, groupName:string, groupBio?: string, 
         return {
             success: true,
             data: groupData,
+        }
+    })
+}
+
+const updateGroup = async (userId: string, groupId: number, groupName?: string, groupBio?: string, groupPicture?: any) => {
+    return await db.tx(async t => {
+        const groupData = await t.groups.findById({id: groupId});
+        if (!groupData) {
+            throw errorFactory('404', 'Group not found');
+        }
+
+        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
+        if (!userRequestingData || !userRequestingData.admin) {
+            throw errorFactory('403', 'User is not an admin of this group');
+        }
+
+        if (groupPicture) {
+            const pictureKey = crypto.createHash('sha256').update(userId).digest('hex');
+            const pictureURI = `${PictureFolder.GROUP}/${pictureKey}`;
+            const buffer = await sharp(groupPicture.buffer).resize(200, 200).toBuffer();
+            const uploadParams = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: pictureURI,
+                Body: buffer,
+                ContentType: groupPicture.mimetype,
+            };
+
+            await s3Instance.send(new PutObjectCommand(uploadParams));
+            groupData.picture = pictureURI;
+        }
+
+        const queryData = {id: groupId, group_name: groupName, bio: groupBio, picture: groupData.picture};
+        Object.keys(queryData).forEach(key => {
+            if (queryData[key] === undefined) {
+               delete queryData[key];
+            }
+        });
+
+        const data = await t.groups.updateGroup(queryData);
+
+        return {
+            success: true,
+            data
         }
     })
 }
@@ -118,7 +161,7 @@ const deleteMember = async (userId: string, userIdtoBeDeleted: string, groupId: 
 
 const getGroupInfo = async (groupId: number) => {
     return await db.task(async t => {
-        const groupData = await t.groups.findById({id: groupId});
+        const groupData = await pictureToSignedUrl(await t.groups.findById({id: groupId}));
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
@@ -142,6 +185,7 @@ const getGroupInfo = async (groupId: number) => {
 
 export default {
     createGroup,
+    updateGroup,
     joinGroup,
     getGroupInfo,
     deleteMember,

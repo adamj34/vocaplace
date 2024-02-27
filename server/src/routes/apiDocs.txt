@@ -687,6 +687,19 @@ returns:
     }
 }
 
+/groups
+PATCH:
+expects e.g.:
+req.params = {id: 1}  // group id
+req.body = 
+{
+    group_name: 'patched group',
+    bio: 'patched bio',
+    picture: *picture file*
+}
+returns:
+
+
 /groups/join
 POST:
 expects e.g.: req.body = 

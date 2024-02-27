@@ -59,6 +59,7 @@ class GroupsRepository {
     updateGroup(values: { id: number; group_name?: string; bio?: string; picture?: string; }) {
         // return this.db.one('UPDATE groups SET group_name = $<group_name>, bio = $<bio>, picture = $<picture> WHERE id = $<id> RETURNING *', values);
         const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', values);
+        delete values.id;
         const updateQuery = pgp.helpers.update(values, null, 'groups') + condition;
         return this.db.one(updateQuery);
     }

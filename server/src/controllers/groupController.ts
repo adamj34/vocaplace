@@ -14,6 +14,16 @@ const createGroup = async (req, res) => {
     }
 }
 
+const updateGroup = async (req, res) => {
+    try {
+        const response = await groupService.updateGroup(req.userId, +req.params.id, req.body.group_name, req.body.bio, req.body.picture)
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in updateGroup controller');
+        handleError(err, res)
+    }
+}
+
 const joinGroup = async (req, res) => {
     try {
         const response = await groupService.joinGroup(req.userId, req.body.group_name)
@@ -57,6 +67,7 @@ const getGroupInfo = async (req, res) => {
 
 export default {
     createGroup,
+    updateGroup,
     joinGroup,
     getGroupInfo,
     deleteMember,
