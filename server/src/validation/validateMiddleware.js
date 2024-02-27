@@ -4,6 +4,7 @@ import logger from '../logger/logger';
 const validate = (schema) => {
     return async (req, res, next) => {
         try {
+            console.log(req.body.group_name)
             if (req.file) {
                 req.body.picture = req.file;
                 delete req.file;

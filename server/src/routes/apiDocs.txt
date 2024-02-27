@@ -180,6 +180,7 @@ returns:
 }
 
 /relationships/accept/friend/:id  (id is the id of the friend)
+PATCH:
 returns:
 {
     "success": true,

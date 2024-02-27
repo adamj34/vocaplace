@@ -1,12 +1,33 @@
-import { pictureToSignedUrl } from "../cloud/s3Client";
 import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
+import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { s3Instance, pictureToSignedUrl, PictureFolder } from "../cloud/s3Client"
+import sharp from "sharp";
+import crypto from "crypto";
 
 
-const createGroup = async (userId: string, groupName:string, groupBio?: string, groupPicture?: string) => {
+
+const createGroup = async (userId: string, groupName:string, groupBio?: string, groupPicture?: any) => {
     return await db.tx(async t => {
         const groupData = await t.groups.addGroup({group_name: groupName, bio: groupBio, picture: groupPicture});
         const data = await t.groups.addMember({group_id: groupData.id, user_id: userId, admin: true, accepted: true});
+
+        if (groupPicture) {
+            const pictureKey = crypto.createHash('sha256').update(userId).digest('hex');
+            const pictureURI = `${PictureFolder.GROUP}/${pictureKey}`;
+            const buffer = await sharp(groupPicture.buffer).resize(200, 200).toBuffer();
+            const uploadParams = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: pictureURI,
+                Body: buffer,
+                ContentType: groupPicture.mimetype,
+            };
+
+            await s3Instance.send(new PutObjectCommand(uploadParams));
+            groupData.picture = pictureURI;
+        }
+
+        t.groups.updateGroup({id: groupData.id, picture: groupData.picture});
 
         return {
             success: true,
