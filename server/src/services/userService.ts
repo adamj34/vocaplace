@@ -64,7 +64,7 @@ const deleteUser = async (userId: string) => {
 const deleteProfilePicture = async (userId: string) => {
     const user = await db.users.findById({id: userId});
     if (!user.picture) {
-        throw errorFactory('404', 'No profile picture found');
+        throw errorFactory('404', 'No profile picture to delete found');
     }
 
     const deleteParams = {

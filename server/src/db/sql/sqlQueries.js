@@ -16,7 +16,6 @@ const queries = {
     users: {
         add: sql('users/add.sql'),
         delete: sql('users/delete.sql'),
-        update: sql('users/update.sql'),
         find: sql('users/find.sql'),
     },
     questions: {

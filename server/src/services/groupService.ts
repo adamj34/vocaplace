@@ -80,6 +80,36 @@ const updateGroup = async (userId: string, groupId: number, updateData: {group_n
     })
 }
 
+const deleteGroupPicture = async (userId: string, groupId: number) => {
+    return await db.tx(async t => {
+        const groupData = await t.groups.findById({id: groupId});
+        if (!groupData) {
+            throw errorFactory('404', 'Group not found');
+        } else if (!groupData.picture) {
+            throw errorFactory('404', 'Group does not have a picture to delete');
+        }
+
+        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
+        if (!userRequestingData || !userRequestingData.admin) {
+            throw errorFactory('403', 'User is not an admin of this group');
+        }
+
+        const deleteParams = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: groupData.picture
+        };
+
+        // delete picture from s3 and if successful update group picture to null
+        await s3Instance.send(new DeleteObjectCommand(deleteParams));
+        await t.groups.deleteGroupPicture(groupId);
+
+        return {
+            success: true,
+            data: null
+        }
+    })
+}
+    
 const joinGroup = async (userId: string, groupName: string) => {
     return await db.tx(async t => {
         const groupData = await t.groups.findGroupIdByName({group_name: groupName});
@@ -187,6 +217,7 @@ const getGroupInfo = async (groupId: number) => {
 export default {
     createGroup,
     updateGroup,
+    deleteGroupPicture,
     joinGroup,
     getGroupInfo,
     deleteMember,

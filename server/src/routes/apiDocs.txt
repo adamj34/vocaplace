@@ -713,7 +713,7 @@ returns:
     }
 }
 
-/groups
+/groups/:id
 PATCH:
 expects e.g.:
 req.params = {id: 1}  // group id
@@ -724,6 +724,23 @@ req.body =
     picture: *picture file*
 }
 returns:
+{
+    "success": true,
+    "data": {
+        "id": 3,
+        "group_name": "new groupp",
+        "bio": "bio patched",
+        "picture": "group_pictures/fd294f9dd32b5fa2fea06c560bb503c6b6a9de98bb5322b3146ab2a2ea2a303f"
+    }
+}
+
+
+/groups/picture/:id
+DELETE:
+expects e.g.:
+req.params = {id: 1}  // group id
+returns:
+no content
 
 
 /groups/join

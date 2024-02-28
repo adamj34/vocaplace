@@ -58,6 +58,12 @@ const deleteMemberSchema = object({
     }).required()
 });
 
+const deleteGroupPictureSchema = object({
+    params: object({
+        id: number().integer().positive().required(),
+    }).required()
+});
+
 const updateMembershipSchema = object({
     body: object({
         user_id_to_update: string().uuid().trim().strict().required(),
@@ -74,5 +80,6 @@ export {
     joinGroupSchema,
     getGroupInfoSchema,
     deleteMemberSchema,
-    updateMembershipSchema
+    updateMembershipSchema,
+    deleteGroupPictureSchema,
 };

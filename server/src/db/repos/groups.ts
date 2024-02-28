@@ -62,6 +62,12 @@ class GroupsRepository {
         return this.db.one(updateQuery);
     }
 
+    deleteGroupPicture(id: number) {
+        const condition = pgp.as.format(' WHERE id = ${id}', {id});
+        const updateQuery = pgp.helpers.update({ picture: null }, null, 'groups') + condition;
+        return this.db.none(updateQuery);
+    }
+
     addMember(values: { group_id: number; user_id: string; admin: boolean; accepted: boolean; }) {
         return this.db.one('INSERT INTO group_membership (group_id, user_id, admin, accepted) VALUES(${group_id}, ${user_id}, ${admin}, ${accepted}) RETURNING *', values);
     }
