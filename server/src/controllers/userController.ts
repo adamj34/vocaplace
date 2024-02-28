@@ -36,8 +36,7 @@ const deleteProfilePicture = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        req.body.id = req.userId;
-        const response = await userService.updateUser(req.body);
+        const response = await userService.updateUser(req.userId, req.body);
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in updateUser controller');

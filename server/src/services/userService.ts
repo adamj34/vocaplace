@@ -82,29 +82,42 @@ const deleteProfilePicture = async (userId: string) => {
     };
 }
 
-const updateUser = async (userData: {id: string, username?: string, bio?: string, private_profile?: boolean, picture?: any}) => {
+const updateUser = async (userId: string, updateData: {username?: string, bio?: string, private_profile?: boolean, picture?: any}) => {
+    return await db.tx(async t => {
+        const userData = await t.users.findById({id: userId});
+        if (!userData) {
+            throw errorFactory('404', 'User not found');
+        }
 
-    if (userData.picture) {
-        const pictureKey = crypto.createHash('sha256').update(userData.id).digest('hex');
-        const pictureURI = `${PictureFolder.PROFILE}/${pictureKey}`;
-        const buffer = await sharp(userData.picture.buffer).resize(200, 200).toBuffer();
-        const uploadParams = {
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: pictureURI,
-            Body: buffer,
-            ContentType: userData.picture.mimetype,
-        }; 
+        const picture = updateData.picture;
+        delete updateData.picture;
+        let uploadParams;
+        if (picture) {
+            const pictureKey = crypto.createHash('sha256').update(userId).digest('hex');
+            const pictureURI = `${PictureFolder.PROFILE}/${pictureKey}`;
+            const buffer = await sharp(picture.buffer).resize(200, 200).toBuffer();
+            uploadParams = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: pictureURI,
+                Body: buffer,
+                ContentType: picture.mimetype,
+            };
+        } 
 
-        await s3Instance.send(new PutObjectCommand(uploadParams));
-        userData.picture = pictureURI;
-    } 
+        const data = await t.users.updateUser(userId, updateData);
 
-    const data = await db.users.update(userData);
+        // Only after the user is updated, upload the picture
+        if (picture) {
+            await s3Instance.send(new PutObjectCommand(uploadParams));
+            const pictureData = await t.users.updateUser(userId, { picture: uploadParams.Key });
+            data.picture = pictureData.picture;
+        }
 
-    return {
-        success: true,
-        data
-    };
+        return {
+            success: true,
+            data
+        }
+    })
 }
 
 const updatePoints = async (userId: string, points: number) => {

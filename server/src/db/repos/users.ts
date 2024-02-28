@@ -1,5 +1,7 @@
 import queries from "../sql/sqlQueries.js";
 import {IDatabase, IMain} from 'pg-promise';
+import { pgp } from "../connection/db";
+
 
 class UsersRepository {
     db: IDatabase<any>;
@@ -27,14 +29,10 @@ class UsersRepository {
         , value);
     }
 
-    update(values: { id: string; bio?: string; username?: string; private_profile?: boolean; picture?: string; }) {
-        return this.db.one(queries.users.update, {
-            id: values.id || null,
-            bio: values.bio || null,
-            username: values.username || null,
-            private_profile: values.private_profile === undefined ? null : values.private_profile,
-            picture: values.picture || null
-        });
+    updateUser(id: string, values: { bio?: string; username?: string; private_profile?: boolean; picture?: string; }) {
+        const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', {id});
+        const updateQuery = pgp.helpers.update(values, null, 'users') + condition;
+        return this.db.one(updateQuery);
     }
 
     updatePoints(values: { id: string; points: number; }) {
