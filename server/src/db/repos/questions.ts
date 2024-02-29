@@ -30,9 +30,8 @@ class QuestionsRepository {
         return this.db.many(queries.questions.repetitionOverview, values);
     }
 
-    async addToAnswered(values: { user_id: string, question_ids: number[]}) {
-        return await this.db.tx(async t => {
-            // const question_ids = JSON.parse(values.question_ids);
+    addToAnswered(values: { user_id: string, question_ids: number[]}) {
+        return this.db.tx(async t => {
             const question_ids = values.question_ids;
             const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
 
@@ -46,12 +45,11 @@ class QuestionsRepository {
                 WHERE
                     user_id = $<user_id>
                     AND question_id IN ($<question_ids:csv>)`;
-            return await t.none(delete_query, {user_id: values.user_id, question_ids: question_ids});
+            return t.none(delete_query, {user_id: values.user_id, question_ids: question_ids});
         })
     }
  
     addToRepetition(values: { user_id: string, question_ids: number[]}) {
-        // const question_ids = JSON.parse(values.question_ids);
         const question_ids = values.question_ids;
         const dataMulti = question_ids.map(item => ({user_id: values.user_id, question_id: item}));
 
