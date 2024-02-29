@@ -16,11 +16,11 @@ const s3Instance = new S3({
     }
 });
 
-const getPreSignedUrl = async (pictureName: string) => {
-    return await getSignedUrl(s3Instance,
+const getPreSignedUrl = (pictureName: string) => {
+    return getSignedUrl(s3Instance,
         new GetObjectCommand({Bucket: process.env.AWS_BUCKET_NAME, Key: pictureName}),
         {expiresIn: 120}
-    ) 
+    )
 };
 
 const pictureToSignedUrl = async (payload) => {
@@ -33,6 +33,7 @@ const pictureToSignedUrl = async (payload) => {
                 item.picture = await getPreSignedUrl(item.picture);
             }
         }));
+        // await Promise.all(payload.map(async item => item.picture : ))
         logger.info('Picture URLs signed'); 
     }
 

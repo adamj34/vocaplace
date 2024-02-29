@@ -29,8 +29,8 @@ const getUserData = async (userId: string, username: string) => {
     }
 }
 
-const getVisitedUserData = async (userId: string, visitedUserId: string) => {
-    return await db.task(async t => {
+const getVisitedUserData = (userId: string, visitedUserId: string) => {
+    return db.task(async t => {
         const visitedUser = await pictureToSignedUrl(await t.users.findById({id: visitedUserId}));
         const visitedUserFriends = await pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({id: visitedUserId}));
         const visitedUserGroups = await pictureToSignedUrl(await t.users.findGroupsByUserId({id: visitedUserId}));
@@ -82,8 +82,8 @@ const deleteProfilePicture = async (userId: string) => {
     };
 }
 
-const updateUser = async (userId: string, updateData: {username?: string, bio?: string, private_profile?: boolean, picture?: any}) => {
-    return await db.tx(async t => {
+const updateUser = (userId: string, updateData: {username?: string, bio?: string, private_profile?: boolean, picture?: any}) => {
+    return db.tx(async t => {
         const userData = await t.users.findById({id: userId});
         if (!userData) {
             throw errorFactory('404', 'User not found');

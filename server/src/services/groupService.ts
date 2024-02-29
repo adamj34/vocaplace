@@ -6,8 +6,8 @@ import sharp from "sharp";
 import crypto from "crypto";
 
 
-const createGroup = async (userId: string, groupName:string, groupBio?: string, groupPicture?: any) => {
-    return await db.tx(async t => {
+const createGroup = (userId: string, groupName:string, groupBio?: string, groupPicture?: any) => {
+    return db.tx(async t => {
         const groupData = await t.groups.addGroup({group_name: groupName, bio: groupBio, picture: groupPicture});
         const data = await t.groups.addMember({group_id: groupData.id, user_id: userId, admin: true, accepted: true});
 
@@ -26,7 +26,7 @@ const createGroup = async (userId: string, groupName:string, groupBio?: string, 
             groupData.picture = pictureURI;
         }
 
-        t.groups.updateGroup({id: groupData.id, picture: groupData.picture});
+        t.groups.updateGroup(groupData.id, {picture: groupData.picture});
 
         return {
             success: true,
@@ -35,10 +35,8 @@ const createGroup = async (userId: string, groupName:string, groupBio?: string, 
     })
 }
 
-const updateGroup = async (userId: string, groupId: number, updateData: {group_name?: string, bio?: string, picture?: any}) => {
-    return await db.tx(async t => {
-        console.log('data to update:')
-        console.log(updateData);
+const updateGroup = (userId: string, groupId: number, updateData: {group_name?: string, bio?: string, picture?: any}) => {
+    return db.tx(async t => {
         const groupData = await t.groups.findById({id: groupId});
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
@@ -80,8 +78,8 @@ const updateGroup = async (userId: string, groupId: number, updateData: {group_n
     })
 }
 
-const deleteGroupPicture = async (userId: string, groupId: number) => {
-    return await db.tx(async t => {
+const deleteGroupPicture = (userId: string, groupId: number) => {
+    return db.tx(async t => {
         const groupData = await t.groups.findById({id: groupId});
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
@@ -110,8 +108,8 @@ const deleteGroupPicture = async (userId: string, groupId: number) => {
     })
 }
     
-const joinGroup = async (userId: string, groupName: string) => {
-    return await db.tx(async t => {
+const joinGroup = (userId: string, groupName: string) => {
+    return db.tx(async t => {
         const groupData = await t.groups.findGroupIdByName({group_name: groupName});
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
@@ -131,8 +129,8 @@ const joinGroup = async (userId: string, groupName: string) => {
     })
 }
 
-const updateMembership = async (userId: string, userIdToBeAccepted: string, groupId: number) => {
-    return await db.tx(async t => {
+const updateMembership = (userId: string, userIdToBeAccepted: string, groupId: number) => {
+    return db.tx(async t => {
         const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
         if (!userRequestingData || !userRequestingData.admin) {
             throw errorFactory('403', 'User is not an admin of this group');
@@ -158,8 +156,8 @@ const updateMembership = async (userId: string, userIdToBeAccepted: string, grou
     })
 }
 
-const deleteMember = async (userId: string, userIdtoBeDeleted: string, groupId: number) => {
-    return await db.task(async t => {
+const deleteMember = (userId: string, userIdtoBeDeleted: string, groupId: number) => {
+    return db.task(async t => {
         //check if group exits
         const groupData = await t.groups.findById({id: groupId});
         if (!groupData) {
@@ -190,8 +188,8 @@ const deleteMember = async (userId: string, userIdtoBeDeleted: string, groupId: 
     })
 }
 
-const getGroupInfo = async (groupId: number) => {
-    return await db.task(async t => {
+const getGroupInfo = (groupId: number) => {
+    return db.task(async t => {
         const groupData = await pictureToSignedUrl(await t.groups.findById({id: groupId}));
         if (!groupData) {
             throw errorFactory('404', 'Group not found');

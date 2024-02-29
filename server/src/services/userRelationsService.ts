@@ -8,8 +8,8 @@ enum RelationshipState {
     FRIENDS = 'friends',
 }
 
-const sendFriendRequest = async (userId: string, friendId: string) => {
-    return await db.tx(async t => {
+const sendFriendRequest = (userId: string, friendId: string) => {
+    return db.tx(async t => {
         // adhere to the constraint that user1_id < user2_id
         if (userId === friendId) {
             throw new FrienshipConstraintError('Cannot add yourself as a friend');
@@ -136,10 +136,10 @@ const checkRelationship = async (userId: string, friendId: string) => {
     }
 }
 
-const checkPendingRequests = async (userId: string) => {
-    return await db.task(async t => {
+const checkPendingRequests = (userId: string) => {
+    return db.task(async t => {
         const pendingRequests = await t.user_relationships.getPendingRequests({id : userId});
-        const data = await Promise.all(pendingRequests.map(async user => await t.users.findById({id: user.user_id})));
+        const data = await Promise.all(pendingRequests.map(async user => t.users.findById({id: user.user_id})));
 
         return {
             success: true,

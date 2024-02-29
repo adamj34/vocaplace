@@ -2,7 +2,7 @@ import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
 
 
-const createQuestion = async (
+const createQuestion = (
     newQuestion: {
         unit: string, 
         topic: string, 
@@ -13,10 +13,10 @@ const createQuestion = async (
         difficulty: number
     }
 ) => {
-    return await db.tx(async () => {
+    return db.tx(async t => {
         // check if unit and topic exist
-        const unit = await db.units.findUnitIdByName({unit: newQuestion.unit});
-        const topic = await db.topics.findTopicIdByName({topic: newQuestion.topic});
+        const unit = await t.units.findUnitIdByName({unit: newQuestion.unit});
+        const topic = await t.topics.findTopicIdByName({topic: newQuestion.topic});
         if (!unit || !topic) {
             throw errorFactory('404', 'Unit or topic does not exist');
         }
@@ -29,7 +29,7 @@ const createQuestion = async (
             question_type: newQuestion.questionType,
             difficulty: +newQuestion.difficulty,
         };
-        const createdQuestion = await db.questions.add(question);
+        const createdQuestion = await t.questions.add(question);
 
         return {
             success: true,
