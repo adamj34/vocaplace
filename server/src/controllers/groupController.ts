@@ -16,6 +16,7 @@ const createGroup = async (req, res) => {
 
 const updateGroup = async (req, res) => {
     try {
+        console.log(req.body)
         const response = await groupService.updateGroup(req.userId, +req.params.id, req.body)
         res.status(httpStatus.OK).json(response);
     } catch (err) {

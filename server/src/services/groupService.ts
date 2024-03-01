@@ -1,9 +1,11 @@
 import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
 import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { s3Instance, pictureToSignedUrl, PictureFolder } from "../cloud/s3Client"
+import { s3Instance, PictureFolder } from "../cloud/s3Client"
+import { pictureToSignedUrl, invalidateCache } from "../cloud/cloudFrontClient"
 import sharp from "sharp";
 import crypto from "crypto";
+import logger from "../logger/logger";
 
 
 const createGroup = (userId: string, groupName:string, groupBio?: string, groupPicture?: any) => {
@@ -67,6 +69,11 @@ const updateGroup = (userId: string, groupId: number, updateData: {group_name?: 
         // Only after the group is updated, upload the picture
         if (picture) {
             await s3Instance.send(new PutObjectCommand(uploadParams));
+            // try {
+            //     await invalidateCache(groupData.picture);
+            // } catch (err) {
+            //     logger.error('Error invalidating cache for group picture', err);
+            // }
             const pictureData = await t.groups.updateGroup(groupId, { picture: uploadParams.Key });
             data.picture = pictureData.picture;
         }
@@ -99,6 +106,11 @@ const deleteGroupPicture = (userId: string, groupId: number) => {
 
         // delete picture from s3 and if successful update group picture to null
         await s3Instance.send(new DeleteObjectCommand(deleteParams));
+        // try {
+        //     await invalidateCache(groupData.picture);
+        // } catch (err) {
+        //     logger.error('Error invalidating cache for group picture', err);
+        // }
         await t.groups.deleteGroupPicture(groupId);
 
         return {
@@ -190,7 +202,7 @@ const deleteMember = (userId: string, userIdtoBeDeleted: string, groupId: number
 
 const getGroupInfo = (groupId: number) => {
     return db.task(async t => {
-        const groupData = await pictureToSignedUrl(await t.groups.findById({id: groupId}));
+        const groupData = pictureToSignedUrl(await t.groups.findById({id: groupId}));
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
@@ -199,7 +211,7 @@ const getGroupInfo = (groupId: number) => {
         const members = await t.groups.findMembersByGroupId({id: groupId});
         const membersData = await Promise.all(
             members.map(async member => {
-                const userData = await pictureToSignedUrl(await t.users.findById({id: member.user_id}));
+                const userData = pictureToSignedUrl(await t.users.findById({id: member.user_id}));
                 return {...userData, admin: member.admin};
             })
         );

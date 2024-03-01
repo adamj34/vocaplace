@@ -1,14 +1,16 @@
 import { db, pgp } from "../db/connection/db";
 import { errorFactory } from "../utils/errorFactory.js";
-import { s3Instance, pictureToSignedUrl, PictureFolder } from "../cloud/s3Client.js"
+import { s3Instance, PictureFolder } from "../cloud/s3Client"
+import { pictureToSignedUrl, invalidateCache } from "../cloud/cloudFrontClient";
 import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import sharp from "sharp";
 import crypto from "crypto";
+import logger from "../logger/logger";
 
 
 const getUserData = async (userId: string, username: string) => {
     try {
-        const data = await pictureToSignedUrl(await db.users.findById({id: userId}));
+        const data = pictureToSignedUrl(await db.users.findById({id: userId}));
 
         return {
             success: true,
@@ -31,9 +33,9 @@ const getUserData = async (userId: string, username: string) => {
 
 const getVisitedUserData = (userId: string, visitedUserId: string) => {
     return db.task(async t => {
-        const visitedUser = await pictureToSignedUrl(await t.users.findById({id: visitedUserId}));
-        const visitedUserFriends = await pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({id: visitedUserId}));
-        const visitedUserGroups = await pictureToSignedUrl(await t.users.findGroupsByUserId({id: visitedUserId}));
+        const visitedUser = pictureToSignedUrl(await t.users.findById({id: visitedUserId}));
+        const visitedUserFriends = pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({id: visitedUserId}));
+        const visitedUserGroups = pictureToSignedUrl(await t.users.findGroupsByUserId({id: visitedUserId}));
         const userRelationship = await t.user_relationships.checkRelationship({user1_id: userId, user2_id: visitedUserId});
         return {
             success: true,
@@ -53,6 +55,11 @@ const deleteUser = async (userId: string) => {
             Key: deletedUser.picture
         };
         await s3Instance.send(new DeleteObjectCommand(deleteParams));
+        try {
+            await invalidateCache(deletedUser.picture);
+        } catch (err) {
+            logger.error('Error invalidating cache for user picture', err);
+        }
     }
 
     return {
@@ -74,6 +81,11 @@ const deleteProfilePicture = async (userId: string) => {
 
     // delete from s3 and if successful from db
     await s3Instance.send(new DeleteObjectCommand(deleteParams));
+    // try {
+    //     await invalidateCache(user.picture);
+    // } catch (err) {
+    //     logger.error('Error invalidating cache for user picture', err);
+    // }
     await db.users.deleteProfilePicture({id: userId});
 
     return {
@@ -109,6 +121,11 @@ const updateUser = (userId: string, updateData: {username?: string, bio?: string
         // Only after the user is updated, upload the picture
         if (picture) {
             await s3Instance.send(new PutObjectCommand(uploadParams));
+            // try {
+            //     await invalidateCache(data.picture);
+            // } catch (err) {
+            //     logger.error('Error invalidating cache for user picture', err);
+            // }
             const pictureData = await t.users.updateUser(userId, { picture: uploadParams.Key });
             data.picture = pictureData.picture;
         }
@@ -130,7 +147,7 @@ const updatePoints = async (userId: string, points: number) => {
 }
 
 const getFriendsData = async (userId: string) => {
-    const friendsData = await pictureToSignedUrl(await db.user_relationships.findFriendsByUserId({id: userId}));
+    const friendsData = pictureToSignedUrl(await db.user_relationships.findFriendsByUserId({id: userId}));
     friendsData.sort((a, b) => b.points - a.points);
 
     return {
@@ -140,7 +157,7 @@ const getFriendsData = async (userId: string) => {
 }
 
 const getGroupsData = async (userId: string) => {
-    const groupsData = await pictureToSignedUrl(await db.users.findGroupsByUserId({id: userId}));
+    const groupsData = pictureToSignedUrl(await db.users.findGroupsByUserId({id: userId}));
 
     return {
         success: true,

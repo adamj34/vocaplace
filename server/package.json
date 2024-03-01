@@ -11,7 +11,9 @@
     "dev": "tsx --env-file=.env --env-file=.aws.env --watch-path=./src/cloud --watch-path=./src/controllers --watch-path=./src/db --watch-path=./src/routes --watch-path=./src/services --watch-path=./src/utils --watch-path=./src/validation ./src/server.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudfront": "^3.523.0",
     "@aws-sdk/client-s3": "^3.521.0",
+    "@aws-sdk/cloudfront-signer": "^3.523.0",
     "@aws-sdk/s3-request-presigner": "^3.521.0",
     "@types/multer": "^1.4.11",
     "cors": "^2.8.5",

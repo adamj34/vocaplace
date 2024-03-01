@@ -28,3 +28,7 @@ npm-debug.log
 .vscode
 
 .aws.env
+
+keys
+private_key_cdn.pem
+public_key_cdn.pem
