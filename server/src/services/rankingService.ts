@@ -13,8 +13,8 @@ const getTopUsersRanking = async () => {
 
 const getFriendsRanking = (userId: string) => {
     return db.task(async t => {
-        const friendsData = pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({id: userId}));
-        const userData = pictureToSignedUrl(await t.users.findById({id: userId}));
+        const friendsData = pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({ id: userId }));
+        const userData = pictureToSignedUrl(await t.users.findById({ id: userId }));
         friendsData.push(userData);
         friendsData.sort((a, b) => b.points - a.points);
 

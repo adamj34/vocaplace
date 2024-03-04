@@ -1,5 +1,5 @@
 import queries from "../sql/sqlQueries.js";
-import {IDatabase, IMain} from 'pg-promise';
+import { IDatabase, IMain } from 'pg-promise';
 
 
 class UnitsRepository {
@@ -24,7 +24,7 @@ class UnitsRepository {
         return this.db.one(queries.units.add, values);
     }
 
-    generalUserProgress(value: { id: string; }) { 
+    generalUserProgress(value: { id: string; }) {
         return this.db.many(queries.units.generalUserProgress, value);
     }
 

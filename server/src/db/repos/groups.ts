@@ -1,5 +1,5 @@
 import queries from "../sql/sqlQueries.js";
-import {IDatabase, IMain} from 'pg-promise';
+import { IDatabase, IMain } from 'pg-promise';
 import { pgp } from "../connection/db";
 
 
@@ -56,14 +56,14 @@ class GroupsRepository {
         return this.db.one('INSERT INTO groups (group_name, bio, picture) VALUES(${group_name}, ${bio}, ${picture}) RETURNING *', values);
     }
 
-    updateGroup(id: number, values: {group_name?: string; bio?: string; picture?: string; }) {
-        const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', {id});
+    updateGroup(id: number, values: { group_name?: string; bio?: string; picture?: string; }) {
+        const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', { id });
         const updateQuery = pgp.helpers.update(values, null, 'groups') + condition;
         return this.db.one(updateQuery);
     }
 
     deleteGroupPicture(id: number) {
-        const condition = pgp.as.format(' WHERE id = ${id}', {id});
+        const condition = pgp.as.format(' WHERE id = ${id}', { id });
         const updateQuery = pgp.helpers.update({ picture: null }, null, 'groups') + condition;
         return this.db.none(updateQuery);
     }
@@ -72,7 +72,7 @@ class GroupsRepository {
         return this.db.one('INSERT INTO group_membership (group_id, user_id, admin, accepted) VALUES(${group_id}, ${user_id}, ${admin}, ${accepted}) RETURNING *', values);
     }
 
-    removeMember(values: { user_id: string; group_id: number;}) {
+    removeMember(values: { user_id: string; group_id: number; }) {
         return this.db.none('DELETE FROM group_membership WHERE group_id = $<group_id> AND user_id = $<user_id>', values);
     }
 
@@ -89,7 +89,7 @@ class GroupsRepository {
         FROM
             groups
         WHERE group_name ILIKE $1
-        `,  ['%' + value.searchPhrase + '%']);
+        `, ['%' + value.searchPhrase + '%']);
     }
 }
 

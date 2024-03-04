@@ -15,7 +15,7 @@ const validate = (schema) => {
                 params: req.params,
             })
 
-            await schema.validate(castedReq, {strict: true});
+            await schema.validate(castedReq, { strict: true });
 
             req.body = castedReq.body;
             req.query = castedReq.query;
@@ -26,8 +26,8 @@ const validate = (schema) => {
             logger.error(error);
             return res.status(422).json({
                 name: error.name,
-                message: error.message, 
-                value: error.value, 
+                message: error.message,
+                value: error.value,
                 errors: error.errors
             });
         }

@@ -10,7 +10,7 @@ import logger from "../logger/logger";
 
 const getUserData = async (userId: string, username: string) => {
     try {
-        const data = pictureToSignedUrl(await db.users.findById({id: userId}));
+        const data = pictureToSignedUrl(await db.users.findById({ id: userId }));
 
         return {
             success: true,
@@ -19,7 +19,7 @@ const getUserData = async (userId: string, username: string) => {
     } catch (err) {
         // If no data is returned, add the user to the database
         if (err.code === pgp.errors.queryResultErrorCode.noData) {
-            const data = await db.users.add({id: userId, username: username});
+            const data = await db.users.add({ id: userId, username: username });
             data.picture = null;
             return {
                 success: true,
@@ -33,10 +33,10 @@ const getUserData = async (userId: string, username: string) => {
 
 const getVisitedUserData = (userId: string, visitedUserId: string) => {
     return db.task(async t => {
-        const visitedUser = pictureToSignedUrl(await t.users.findById({id: visitedUserId}));
-        const visitedUserFriends = pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({id: visitedUserId}));
-        const visitedUserGroups = pictureToSignedUrl(await t.users.findGroupsByUserId({id: visitedUserId}));
-        const userRelationship = await t.user_relationships.checkRelationship({user1_id: userId, user2_id: visitedUserId});
+        const visitedUser = pictureToSignedUrl(await t.users.findById({ id: visitedUserId }));
+        const visitedUserFriends = pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({ id: visitedUserId }));
+        const visitedUserGroups = pictureToSignedUrl(await t.users.findGroupsByUserId({ id: visitedUserId }));
+        const userRelationship = await t.user_relationships.checkRelationship({ user1_id: userId, user2_id: visitedUserId });
         return {
             success: true,
             user: visitedUser,
@@ -48,7 +48,7 @@ const getVisitedUserData = (userId: string, visitedUserId: string) => {
 }
 
 const deleteUser = async (userId: string) => {
-    const deletedUser = await db.users.delete({id: userId});
+    const deletedUser = await db.users.delete({ id: userId });
     if (deletedUser.picture) {
         const deleteParams = {
             Bucket: process.env.AWS_BUCKET_NAME,
@@ -69,7 +69,7 @@ const deleteUser = async (userId: string) => {
 }
 
 const deleteProfilePicture = async (userId: string) => {
-    const user = await db.users.findById({id: userId});
+    const user = await db.users.findById({ id: userId });
     if (!user.picture) {
         throw errorFactory('404', 'No profile picture to delete found');
     }
@@ -86,7 +86,7 @@ const deleteProfilePicture = async (userId: string) => {
     } catch (err) {
         logger.error('Error invalidating cache for user picture', err);
     }
-    await db.users.deleteProfilePicture({id: userId});
+    await db.users.deleteProfilePicture({ id: userId });
 
     return {
         success: true,
@@ -94,9 +94,9 @@ const deleteProfilePicture = async (userId: string) => {
     };
 }
 
-const updateUser = (userId: string, updateData: {username?: string, bio?: string, private_profile?: boolean, picture?: any}) => {
+const updateUser = (userId: string, updateData: { username?: string, bio?: string, private_profile?: boolean, picture?: any }) => {
     return db.tx(async t => {
-        const userData = await t.users.findById({id: userId});
+        const userData = await t.users.findById({ id: userId });
         if (!userData) {
             throw errorFactory('404', 'User not found');
         }
@@ -114,7 +114,7 @@ const updateUser = (userId: string, updateData: {username?: string, bio?: string
                 Body: buffer,
                 ContentType: picture.mimetype,
             };
-        } 
+        }
 
         let data;
         if (Object.keys(updateData).length > 0) {
@@ -143,7 +143,7 @@ const updateUser = (userId: string, updateData: {username?: string, bio?: string
 }
 
 const updatePoints = async (userId: string, points: number) => {
-    const data = await db.users.updatePoints({id: userId, points});
+    const data = await db.users.updatePoints({ id: userId, points });
 
     return {
         success: true,
@@ -152,7 +152,7 @@ const updatePoints = async (userId: string, points: number) => {
 }
 
 const getFriendsData = async (userId: string) => {
-    const friendsData = pictureToSignedUrl(await db.user_relationships.findFriendsByUserId({id: userId}));
+    const friendsData = pictureToSignedUrl(await db.user_relationships.findFriendsByUserId({ id: userId }));
     friendsData.sort((a, b) => b.points - a.points);
 
     return {
@@ -162,7 +162,7 @@ const getFriendsData = async (userId: string) => {
 }
 
 const getGroupsData = async (userId: string) => {
-    const groupsData = pictureToSignedUrl(await db.users.findGroupsByUserId({id: userId}));
+    const groupsData = pictureToSignedUrl(await db.users.findGroupsByUserId({ id: userId }));
 
     return {
         success: true,

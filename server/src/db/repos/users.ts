@@ -1,5 +1,5 @@
 import queries from "../sql/sqlQueries.js";
-import {IDatabase, IMain} from 'pg-promise';
+import { IDatabase, IMain } from 'pg-promise';
 import { pgp } from "../connection/db";
 
 
@@ -25,12 +25,12 @@ class UsersRepository {
             users
         SET
             picture = NULL
-        WHERE id = $<id>`
-        , value);
+        WHERE id = $<id>
+        `, value);
     }
 
     updateUser(id: string, values: { bio?: string; username?: string; private_profile?: boolean; picture?: string; }) {
-        const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', {id});
+        const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', { id });
         const updateQuery = pgp.helpers.update(values, null, 'users') + condition;
         return this.db.one(updateQuery);
     }
@@ -71,8 +71,8 @@ class UsersRepository {
         FROM
             users
         WHERE username ILIKE $1
-        `,  ['%' + value.searchPhrase + '%']);
-    } 
+        `, ['%' + value.searchPhrase + '%']);
+    }
 }
 
 export default UsersRepository;

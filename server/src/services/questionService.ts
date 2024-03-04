@@ -4,19 +4,19 @@ import { errorFactory } from "../utils/errorFactory.js";
 
 const createQuestion = (
     newQuestion: {
-        unit: string, 
-        topic: string, 
-        content: string, 
-        correctAnswers: string[], 
-        misleadingAnswers: string[], 
-        questionType: string, 
+        unit: string,
+        topic: string,
+        content: string,
+        correctAnswers: string[],
+        misleadingAnswers: string[],
+        questionType: string,
         difficulty: number
     }
 ) => {
     return db.tx(async t => {
         // check if unit and topic exist
-        const unit = await t.units.findUnitIdByName({unit: newQuestion.unit});
-        const topic = await t.topics.findTopicIdByName({topic: newQuestion.topic});
+        const unit = await t.units.findUnitIdByName({ unit: newQuestion.unit });
+        const topic = await t.topics.findTopicIdByName({ topic: newQuestion.topic });
         if (!unit || !topic) {
             throw errorFactory('404', 'Unit or topic does not exist');
         }
@@ -33,13 +33,13 @@ const createQuestion = (
 
         return {
             success: true,
-            data: {id: createdQuestion.id}
+            data: { id: createdQuestion.id }
         };
     })
 }
 
 const getQuiz = async (userId: string, unitId: number, topicId: number) => {
-    let data = await db.questions.getQuiz({user_id: userId, unit_id: unitId, topic_id: topicId})
+    let data = await db.questions.getQuiz({ user_id: userId, unit_id: unitId, topic_id: topicId })
     console.log(data)
     data = data[0];
     // answered_questions or unanswered_questions are always [] if there are no questions
@@ -55,7 +55,7 @@ const getQuiz = async (userId: string, unitId: number, topicId: number) => {
 }
 
 const addToAnswered = async (userId: string, questionIds: number[]) => {
-    const data = await db.questions.addToAnswered({user_id: userId, question_ids: questionIds})
+    const data = await db.questions.addToAnswered({ user_id: userId, question_ids: questionIds })
     return {
         success: true,
         data
@@ -63,7 +63,7 @@ const addToAnswered = async (userId: string, questionIds: number[]) => {
 }
 
 const addToRepetition = async (userId: string, questionIds: number[]) => {
-    const data = await db.questions.addToRepetition({user_id: userId, question_ids: questionIds})
+    const data = await db.questions.addToRepetition({ user_id: userId, question_ids: questionIds })
     return {
         success: true,
         data
@@ -71,7 +71,7 @@ const addToRepetition = async (userId: string, questionIds: number[]) => {
 }
 
 const getRepetition = async (userId: string) => {
-    const data = await db.questions.getRepetition({user_id: userId})
+    const data = await db.questions.getRepetition({ user_id: userId })
     return {
         success: true,
         data
@@ -79,7 +79,7 @@ const getRepetition = async (userId: string) => {
 }
 
 const getRepetitionOverview = async (userId: string) => {
-    const data = await db.questions.getRepetitionOverview({user_id: userId})
+    const data = await db.questions.getRepetitionOverview({ user_id: userId })
     return {
         success: true,
         data

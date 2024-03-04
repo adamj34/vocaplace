@@ -27,14 +27,14 @@ services:
         - action: sync
           path: ./server
           target: /opt/app
-          ignore: 
+          ignore:
             - node_modules
         - action: rebuild
           path: ./server/package.json
     depends_on:
       - db
       - keycloak
-    
+
   db:
     image: postgres:16-alpine3.18
     volumes:

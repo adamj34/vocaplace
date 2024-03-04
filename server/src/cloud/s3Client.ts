@@ -25,5 +25,5 @@ enum PictureFolder {
 
 export {
     s3Instance,
-    PictureFolder 
+    PictureFolder
 };

@@ -1,6 +1,6 @@
 import { IClient } from "pg-promise/typescript/pg-subset.js";
 import queries from "../sql/sqlQueries.js";
-import {IDatabase, IMain} from 'pg-promise';
+import { IDatabase, IMain } from 'pg-promise';
 
 
 class UserRelationshipsRepository {
@@ -39,8 +39,8 @@ class UserRelationshipsRepository {
             FROM user_relationships
             WHERE user1_id = $<id> AND relationship = 'friends'
         ) AS friends
-        JOIN users u ON u.id = friends.friend_id`
-        , value);
+        JOIN users u ON u.id = friends.friend_id
+        `, value);
     }
 
     getPendingRequests(value: { id: string; }) {
@@ -55,8 +55,8 @@ class UserRelationshipsRepository {
         WHERE 
             (user2_id = $<id> AND relationship = 'pending_user1_user2') 
             OR 
-            (user1_id = $<id> AND relationship = 'pending_user2_user1')`
-        , value);
+            (user1_id = $<id> AND relationship = 'pending_user2_user1')
+            `, value);
     }
 }
 

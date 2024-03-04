@@ -31,7 +31,7 @@ const invalidateCache = (pictureUri: string) => {
             CallerReference: Date.now().toString(),
             Paths: {
                 Quantity: 1,
-                Items: [ "/" + pictureUri ]
+                Items: ["/" + pictureUri]
             }
         }
     };
@@ -52,7 +52,7 @@ const getPreSignedUrl = (pictureName: string) => {
 const pictureToSignedUrl = (payload) => {
     if (typeof payload === 'object' && payload.picture) {
         payload.picture = getPreSignedUrl(payload.picture);
-        logger.info('Picture URL signed');  
+        logger.info('Picture URL signed');
     } else if (Array.isArray(payload) && payload.every(item => typeof item === 'object')) {
         for (const item of payload) {
             if (item.picture) {
@@ -60,7 +60,7 @@ const pictureToSignedUrl = (payload) => {
             }
         }
 
-        logger.info('Picture URLs signed'); 
+        logger.info('Picture URLs signed');
     }
 
     return payload;

@@ -55,9 +55,9 @@ class InternalServerError extends CustomError {
     }
 }
 
-class FrienshipConstraintError extends CustomError {
+class FriendshipConstraintError extends CustomError {
     constructor(message?: string) {
-        super(message, 'FrienshipConstraintError', 'Friendship constraints violated', httpStatus.UNPROCESSABLE_ENTITY);
+        super(message, 'FriendshipConstraintError', 'Friendship constraints violated', httpStatus.UNPROCESSABLE_ENTITY);
     }
 }
 
@@ -96,8 +96,8 @@ export {
     NoDataError,
     NotFoundError,
     InternalServerError,
-    FrienshipConstraintError,
+    FriendshipConstraintError,
     InvalidInputError,
     CustomError,
-    errorFactory 
+    errorFactory
 }

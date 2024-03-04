@@ -1,5 +1,5 @@
 import { db, pgp } from "../db/connection/db";
-import { errorFactory, FrienshipConstraintError } from "../utils/errorFactory.js";
+import { errorFactory, FriendshipConstraintError } from "../utils/errorFactory.js";
 import { pictureToSignedUrl } from "../cloud/cloudFrontClient";
 
 
@@ -13,7 +13,7 @@ const sendFriendRequest = (userId: string, friendId: string) => {
     return db.tx(async t => {
         // adhere to the constraint that user1_id < user2_id
         if (userId === friendId) {
-            throw new FrienshipConstraintError('Cannot add yourself as a friend');
+            throw new FriendshipConstraintError('Cannot add yourself as a friend');
         } else {
             let users;
             if (userId < friendId) {
@@ -39,7 +39,7 @@ const sendFriendRequest = (userId: string, friendId: string) => {
                     data
                 };
             } else {
-                throw new FrienshipConstraintError('You are already friends or have a pending request with this user');
+                throw new FriendshipConstraintError('You are already friends or have a pending request with this user');
             }
         }
     })
@@ -47,19 +47,19 @@ const sendFriendRequest = (userId: string, friendId: string) => {
 
 const acceptFriendRequest = async (userId: string, friendId: string) => {
     if (userId === friendId) {
-        throw new FrienshipConstraintError('Cannot add yourself as a friend');
+        throw new FriendshipConstraintError('Cannot add yourself as a friend');
     }
 
     let users;
     if (userId < friendId) {
-        users = {user1_id: userId, user2_id: friendId};
+        users = { user1_id: userId, user2_id: friendId };
     } else {
-        users = {user1_id: friendId, user2_id: userId};
+        users = { user1_id: friendId, user2_id: userId };
     }
     users.relationship = RelationshipState.FRIENDS;
 
     const data = await db.user_relationships.acceptFriend(users)
-    
+
     return {
         success: true,
         data
@@ -68,14 +68,14 @@ const acceptFriendRequest = async (userId: string, friendId: string) => {
 
 const deleteReceivedFriendRequest = async (userId: string, friendId: string) => {
     if (userId === friendId) {
-        throw new FrienshipConstraintError('Cannot delete friend request from yourself');
+        throw new FriendshipConstraintError('Cannot delete friend request from yourself');
     }
 
     let users;
     if (userId < friendId) {
-        users = {user1_id: userId, user2_id: friendId, relationship: RelationshipState.PENDING_USER2_USER1};
+        users = { user1_id: userId, user2_id: friendId, relationship: RelationshipState.PENDING_USER2_USER1 };
     } else {
-        users = {user1_id: friendId, user2_id: userId, relationship: RelationshipState.PENDING_USER1_USER2};
+        users = { user1_id: friendId, user2_id: userId, relationship: RelationshipState.PENDING_USER1_USER2 };
     }
 
     const data = await db.user_relationships.deleteRelationship(users);
@@ -88,14 +88,14 @@ const deleteReceivedFriendRequest = async (userId: string, friendId: string) => 
 
 const deleteSentFriendRequest = async (userId: string, friendId: string) => {
     if (userId === friendId) {
-        throw new FrienshipConstraintError('Cannot delete friend request sent to yourself');
+        throw new FriendshipConstraintError('Cannot delete friend request sent to yourself');
     }
 
     let users;
     if (userId < friendId) {
-        users = {user1_id: userId, user2_id: friendId, relationship: RelationshipState.PENDING_USER1_USER2};
+        users = { user1_id: userId, user2_id: friendId, relationship: RelationshipState.PENDING_USER1_USER2 };
     } else {
-        users = {user1_id: friendId, user2_id: userId, relationship: RelationshipState.PENDING_USER2_USER1};
+        users = { user1_id: friendId, user2_id: userId, relationship: RelationshipState.PENDING_USER2_USER1 };
     }
 
     const data = await db.user_relationships.deleteRelationship(users);
@@ -119,15 +119,15 @@ const checkRelationship = async (userId: string, friendId: string) => {
     } else {
         let users;
         if (userId < friendId) {
-            users = {user1_id: userId, user2_id: friendId};
+            users = { user1_id: userId, user2_id: friendId };
         } else {
-            users = {user1_id: friendId, user2_id: userId};
+            users = { user1_id: friendId, user2_id: userId };
         }
 
         let data = await db.user_relationships.checkRelationship(users);
         if (!data) {
             data = users;
-            data.relationship = null; 
+            data.relationship = null;
         }
 
         return {
@@ -139,8 +139,8 @@ const checkRelationship = async (userId: string, friendId: string) => {
 
 const checkPendingRequests = (userId: string) => {
     return db.task(async t => {
-        const pendingRequests = await t.user_relationships.getPendingRequests({id : userId});
-        const data = pictureToSignedUrl(await Promise.all(pendingRequests.map(async user => t.users.findById({id: user.user_id}))));
+        const pendingRequests = await t.user_relationships.getPendingRequests({ id: userId });
+        const data = pictureToSignedUrl(await Promise.all(pendingRequests.map(async user => t.users.findById({ id: user.user_id }))));
 
         return {
             success: true,
@@ -151,14 +151,14 @@ const checkPendingRequests = (userId: string) => {
 
 const deleteFriend = async (userId: string, friendId: string) => {
     if (userId === friendId) {
-        throw new FrienshipConstraintError('Cannot delete yourself from friends');
+        throw new FriendshipConstraintError('Cannot delete yourself from friends');
     }
 
     let users;
     if (userId < friendId) {
-        users = {user1_id: userId, user2_id: friendId};
+        users = { user1_id: userId, user2_id: friendId };
     } else {
-        users = {user1_id: friendId, user2_id: userId};
+        users = { user1_id: friendId, user2_id: userId };
     }
     users.relationship = RelationshipState.FRIENDS;
 

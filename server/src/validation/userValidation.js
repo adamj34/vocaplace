@@ -1,7 +1,7 @@
 import { object, string, boolean, number, mixed } from 'yup';
 
 
-const getVistedUserIdSchema = object({
+const getVisitedUserIdSchema = object({
     params: object({
         visitedUserId: string().uuid().trim().strict().required(),
     }).required()
@@ -23,8 +23,8 @@ const updateUserSchema = object({
     })
     .required()
     .test('body-not-empty',
-          'At least one field must be filled',
-           value => Object.keys(value).length > 0)
+        'At least one field must be filled',
+        value => Object.keys(value).length > 0)
 });
 
 const updatePointsSchema = object({
@@ -35,7 +35,7 @@ const updatePointsSchema = object({
 
 
 export {
-    getVistedUserIdSchema,
+    getVisitedUserIdSchema,
     updateUserSchema,
     updatePointsSchema,
 };

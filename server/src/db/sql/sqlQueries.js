@@ -4,7 +4,7 @@ const { QueryFile } = pgPromise;
 // Helper for linking to external query files
 function sql(file) {
     const fullPath = new URL(file, import.meta.url).pathname; // generating full path;
-    const currQueryFile =  new QueryFile(fullPath, {minify: true});
+    const currQueryFile = new QueryFile(fullPath, { minify: true });
     if (currQueryFile.error) {
         console.error(currQueryFile.error);
     }

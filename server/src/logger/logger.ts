@@ -18,7 +18,7 @@ const logger = pino({
                     colorize: true,
                     ignore: "pid,hostname",
                 }
-            } 
+            }
         ]
     },
 });

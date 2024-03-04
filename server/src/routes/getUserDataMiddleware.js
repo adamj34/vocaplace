@@ -2,7 +2,7 @@ import { decode } from 'jsonwebtoken';
 import { userDataSchema } from '../validation/userIdAndUsernameValidation.js';
 import logger from '../logger/logger';
 
-// Middleware to extract user ID and preffered_username from token
+// Middleware to extract user ID and preferred_username from token
 const getUserData = async (req, res, next) => {
 
     const token = req.headers.authorization.split(' ')[1]; // Extract the token from the Authorization header

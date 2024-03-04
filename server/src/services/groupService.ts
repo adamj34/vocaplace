@@ -8,10 +8,10 @@ import crypto from "crypto";
 import logger from "../logger/logger";
 
 
-const createGroup = (userId: string, groupName:string, groupBio?: string, groupPicture?: any) => {
+const createGroup = (userId: string, groupName: string, groupBio?: string, groupPicture?: any) => {
     return db.tx(async t => {
-        const groupData = await t.groups.addGroup({group_name: groupName, bio: groupBio, picture: groupPicture});
-        const data = await t.groups.addMember({group_id: groupData.id, user_id: userId, admin: true, accepted: true});
+        const groupData = await t.groups.addGroup({ group_name: groupName, bio: groupBio, picture: groupPicture });
+        const data = await t.groups.addMember({ group_id: groupData.id, user_id: userId, admin: true, accepted: true });
 
         if (groupPicture) {
             const pictureKey = crypto.createHash('sha256').update(userId).digest('hex');
@@ -28,7 +28,7 @@ const createGroup = (userId: string, groupName:string, groupBio?: string, groupP
             groupData.picture = pictureURI;
         }
 
-        t.groups.updateGroup(groupData.id, {picture: groupData.picture});
+        t.groups.updateGroup(groupData.id, { picture: groupData.picture });
 
         return {
             success: true,
@@ -37,14 +37,14 @@ const createGroup = (userId: string, groupName:string, groupBio?: string, groupP
     })
 }
 
-const updateGroup = (userId: string, groupId: number, updateData: {group_name?: string, bio?: string, picture?: any}) => {
+const updateGroup = (userId: string, groupId: number, updateData: { group_name?: string, bio?: string, picture?: any }) => {
     return db.tx(async t => {
-        const groupData = await t.groups.findById({id: groupId});
+        const groupData = await t.groups.findById({ id: groupId });
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
 
-        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
+        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
         if (!userRequestingData || !userRequestingData.admin) {
             throw errorFactory('403', 'User is not an admin of this group');
         }
@@ -62,7 +62,7 @@ const updateGroup = (userId: string, groupId: number, updateData: {group_name?: 
                 Body: buffer,
                 ContentType: picture.mimetype,
             };
-        } 
+        }
 
         let data;
         if (Object.keys(updateData).length > 0) {
@@ -92,14 +92,14 @@ const updateGroup = (userId: string, groupId: number, updateData: {group_name?: 
 
 const deleteGroupPicture = (userId: string, groupId: number) => {
     return db.tx(async t => {
-        const groupData = await t.groups.findById({id: groupId});
+        const groupData = await t.groups.findById({ id: groupId });
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         } else if (!groupData.picture) {
             throw errorFactory('404', 'Group does not have a picture to delete');
         }
 
-        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
+        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
         if (!userRequestingData || !userRequestingData.admin) {
             throw errorFactory('403', 'User is not an admin of this group');
         }
@@ -124,21 +124,21 @@ const deleteGroupPicture = (userId: string, groupId: number) => {
         }
     })
 }
-    
+
 const joinGroup = (userId: string, groupName: string) => {
     return db.tx(async t => {
-        const groupData = await t.groups.findGroupIdByName({group_name: groupName});
+        const groupData = await t.groups.findGroupIdByName({ group_name: groupName });
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
-        const members = await t.groups.findMembersByGroupId({id: groupData.id});
+        const members = await t.groups.findMembersByGroupId({ id: groupData.id });
         const isMember = members.some(member => member.user_id === userId);
         if (isMember) {
             throw errorFactory('23505', 'User is already a member of this group or already sent a request to join this group.');
         }
 
-        const data = await t.groups.addMember({group_id: groupData.id, user_id: userId, admin: false, accepted: false});
-        
+        const data = await t.groups.addMember({ group_id: groupData.id, user_id: userId, admin: false, accepted: false });
+
         return {
             success: true,
             data: data.group_id,
@@ -148,24 +148,24 @@ const joinGroup = (userId: string, groupName: string) => {
 
 const updateMembership = (userId: string, userIdToBeAccepted: string, groupId: number) => {
     return db.tx(async t => {
-        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
+        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
         if (!userRequestingData || !userRequestingData.admin) {
             throw errorFactory('403', 'User is not an admin of this group');
         }
 
-        const groupData = await t.groups.findById({id: groupId});
+        const groupData = await t.groups.findById({ id: groupId });
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
 
-        const members = await t.groups.findMembersByGroupId({id: groupId});
+        const members = await t.groups.findMembersByGroupId({ id: groupId });
         const isMember = members.some(member => member.user_id === userIdToBeAccepted);
         if (!isMember) {
             throw errorFactory('404', 'User is not a member of this group');
         }
 
-        await t.groups.updateMembership({user_id: userIdToBeAccepted, group_id: groupId, accepted: true});
-        
+        await t.groups.updateMembership({ user_id: userIdToBeAccepted, group_id: groupId, accepted: true });
+
         return {
             success: true,
             data: null
@@ -173,31 +173,31 @@ const updateMembership = (userId: string, userIdToBeAccepted: string, groupId: n
     })
 }
 
-const deleteMember = (userId: string, userIdtoBeDeleted: string, groupId: number) => {
+const deleteMember = (userId: string, userIdToBeDeleted: string, groupId: number) => {
     return db.task(async t => {
         //check if group exits
-        const groupData = await t.groups.findById({id: groupId});
+        const groupData = await t.groups.findById({ id: groupId });
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
 
         // check if user is a member of the group
-        const members = await t.groups.findMembersByGroupId({id: groupId});
-        const isMember = members.some(member => member.user_id === userIdtoBeDeleted);
+        const members = await t.groups.findMembersByGroupId({ id: groupId });
+        const isMember = members.some(member => member.user_id === userIdToBeDeleted);
         if (!isMember) {
             throw errorFactory('404', 'User is not a member of this group');
         }
 
-        // admin is deleting a member (userId === userIdtoBeDeleted - user is leaving the group himself)
-        if (userId !== userIdtoBeDeleted) {
-            const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
+        // admin is deleting a member (userId === userIdToBeDeleted - user is leaving the group himself)
+        if (userId !== userIdToBeDeleted) {
+            const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
             if (!userRequestingData || !userRequestingData.admin) {
                 throw errorFactory('403', 'User is not an admin of this group');
             }
         }
 
-        await t.groups.removeMember({user_id: userIdtoBeDeleted, group_id: groupId});
-        
+        await t.groups.removeMember({ user_id: userIdToBeDeleted, group_id: groupId });
+
         return {
             success: true,
             data: null
@@ -207,20 +207,20 @@ const deleteMember = (userId: string, userIdtoBeDeleted: string, groupId: number
 
 const getGroupInfo = (groupId: number) => {
     return db.task(async t => {
-        const groupData = pictureToSignedUrl(await t.groups.findById({id: groupId}));
+        const groupData = pictureToSignedUrl(await t.groups.findById({ id: groupId }));
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
 
         // add members to groupData
-        const members = await t.groups.findMembersByGroupId({id: groupId});
+        const members = await t.groups.findMembersByGroupId({ id: groupId });
         const membersData = await Promise.all(
             members.map(async member => {
-                const userData = pictureToSignedUrl(await t.users.findById({id: member.user_id}));
-                return {...userData, admin: member.admin};
+                const userData = pictureToSignedUrl(await t.users.findById({ id: member.user_id }));
+                return { ...userData, admin: member.admin };
             })
         );
-        
+
         return {
             success: true,
             group: groupData,

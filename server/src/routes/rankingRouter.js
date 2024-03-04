@@ -7,5 +7,5 @@ router
     .get('/top', rankingController.getTopUsersRanking)
     .get('/friends', rankingController.getFriendsRanking);
 
-    
+
 export default router;

@@ -1,5 +1,5 @@
 import queries from "../sql/sqlQueries.js";
-import {IDatabase, IMain} from 'pg-promise';
+import { IDatabase, IMain } from 'pg-promise';
 
 
 class TopicsRepository {
