@@ -116,7 +116,12 @@ const updateUser = (userId: string, updateData: {username?: string, bio?: string
             };
         } 
 
-        const data = await t.users.updateUser(userId, updateData);
+        let data;
+        if (Object.keys(updateData).length > 0) {
+            data = await t.users.updateUser(userId, updateData);
+        } else {
+            data = userData;
+        }
 
         // Only after the user is updated, upload the picture
         if (picture) {

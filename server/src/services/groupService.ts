@@ -64,7 +64,12 @@ const updateGroup = (userId: string, groupId: number, updateData: {group_name?: 
             };
         } 
 
-        const data = await t.groups.updateGroup(groupId, updateData);
+        let data;
+        if (Object.keys(updateData).length > 0) {
+            data = await t.groups.updateGroup(groupId, updateData);
+        } else {
+            data = groupData;
+        }
 
         // Only after the group is updated, upload the picture
         if (picture) {
@@ -183,7 +188,7 @@ const deleteMember = (userId: string, userIdtoBeDeleted: string, groupId: number
             throw errorFactory('404', 'User is not a member of this group');
         }
 
-        // admin is deleting a member
+        // admin is deleting a member (userId === userIdtoBeDeleted - user is leaving the group himself)
         if (userId !== userIdtoBeDeleted) {
             const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({user_id: userId, group_id: groupId});
             if (!userRequestingData || !userRequestingData.admin) {

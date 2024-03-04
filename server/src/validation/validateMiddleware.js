@@ -3,6 +3,7 @@ import logger from '../logger/logger';
 
 const validate = (schema) => {
     return async (req, res, next) => {
+
         try {
             if (req.file) {
                 req.body.picture = req.file;

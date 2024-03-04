@@ -35,6 +35,7 @@ const deleteProfilePicture = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+    console.log('body')
     try {
         const response = await userService.updateUser(req.userId, req.body);
         res.status(httpStatus.OK).json(response);
