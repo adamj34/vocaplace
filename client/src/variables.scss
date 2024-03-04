@@ -1,0 +1,37 @@
+$theme: #923b2f;
+$theme-darker: #7b2e24;
+$gray: #303641;
+$gray-darker: #1f2229;
+$darkgray: #1d2026;
+$darkgray-darker: #12151a;
+
+$theme-gradient: linear-gradient($theme, $theme-darker);
+$gray-gradient: linear-gradient($gray, $gray-darker);
+$darkgray-gradient: linear-gradient($darkgray, $darkgray-darker);
+
+@mixin box-shadow {
+    box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+}
+
+@mixin  border-radius-big {
+    border-radius: 12px;
+}
+@mixin border-radius-small {
+    border-radius: 5px;
+}
+
+@mixin transition {
+    transition: 0.4s;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+input {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 100%;
+}

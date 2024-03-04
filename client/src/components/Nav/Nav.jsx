@@ -1,3 +1,4 @@
+// import './style.scss';
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useKeycloak } from "@react-keycloak/web";
@@ -11,9 +12,9 @@ function SearchBar() {
     const navigate = useNavigate()
     const [SearchQuery, SetQuery] = useState("");
     return (
-        <form id='SearchBar' onSubmit={(e)=>{e.preventDefault(); if (SearchQuery.length > 0) {navigate({pathname:`/search`,search:`?q=${SearchQuery}`})}}}>
+        <form id='searchbar' onSubmit={(e)=>{e.preventDefault(); if (SearchQuery.length > 0) {navigate({pathname:`/search`,search:`?q=${SearchQuery}`})}}}>
             <FaSearch id='icon'/>
-            <input id='search' placeholder='Search...' value={SearchQuery} onChange={(e)=>{SetQuery(e.target.value)}}></input>
+            <input id='search' placeholder='Search' value={SearchQuery} onChange={(e)=>{SetQuery(e.target.value)}}></input>
         </form>
     )
 }

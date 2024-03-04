@@ -13,7 +13,6 @@ function CheckQuestions(checkedstate, DispatchQuestionsData) {
     const incorrectids = []
     let points = 0
 
-    console.log(checkedstate)
     for (let i = 0; i < Object.keys(checkedstate).length; i++) {
         if (checkedstate[i].selected.sort().toString() == checkedstate[i].correct_answers.sort().toString()) { // correct
             correctids.push(checkedstate[i].question_id)
@@ -83,6 +82,28 @@ function Question(p) {
                             <div id='answer' key={i} 
                                 className={`${p.QuestionsData[p.i].selected.includes(q) ? 'selected' : ''} ${p.Finished ? 'disabled' : '' }`}
                                 onClick={()=>{
+                                    if (!p.Finished) {
+                                        let selected = p.QuestionsData[p.i].selected
+                                        if (selected.includes(q)) {
+                                            selected = selected.filter(x => x != q)
+                                        } else {
+                                            selected.push(q)
+                                        }
+                                        p.DispatchQuestionsData({ type: 'UPDATESELECTED', i: p.i, selected })
+                                    }
+                                }}>
+                                {q}
+                            </div>
+                        )
+                    })}
+                </div>)}
+
+                {p.data.question_type == 'order' && (<div id="order">
+                    {p.QuestionsData[p.i].answer_options.map((q, i) => {
+                        return (
+                            <div id='answer' key={i}
+                                className={`${p.QuestionsData[p.i].selected.includes(q) ? 'selected' : ''} ${p.Finished ? 'disabled' : ''}`}
+                                onClick={() => {
                                     if (!p.Finished) {
                                         let selected = p.QuestionsData[p.i].selected
                                         if (selected.includes(q)) {

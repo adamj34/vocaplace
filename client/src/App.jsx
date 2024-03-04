@@ -32,10 +32,11 @@ function App() {
   useEffect(() => {
     if (keycloak.authenticated) {
       DataService.SetToken(keycloak.token)
-      keycloak.loadUserProfile().then(async (d) => {
+      keycloak.loadUserProfile().then(async () => {
         const userdata = await DataService.GetUserData()
         SetUserData(userdata.data)
         SetAppReady(true)
+        console.log("UserData: ",userdata.data)
       })}
     } ,[initialized])
 

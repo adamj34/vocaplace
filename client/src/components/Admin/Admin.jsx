@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from 'react';
-import TagsInput from 'react-tagsinput'
 import { AccessDenied } from '../AccessDenied';
 import { useKeycloak } from '@react-keycloak/web';
 import { AppContext } from '../../App';

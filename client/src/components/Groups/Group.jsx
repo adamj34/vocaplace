@@ -11,6 +11,11 @@ export function Group() {
     document.title = `VocaPlace | Group name`
     const C = useContext(AppContext);
     const [GroupData, SetGroupData] = useState({group:{}, members:[]});
+
+    function IsGroupAdmin(userid) {
+        const user = GroupData.members.find(m => m.id === userid)
+        return user && user.admin === true
+    }
     
     const chatmessages = [ // placeholder
         { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'joe', content: 'hello there', posted: '14:05'},
@@ -57,6 +62,7 @@ export function Group() {
                                 <div id='pfp' style={{ backgroundImage: `url(${u.picture || placeholderpfp})`, height: 30, width: 30 }}></div>
                                 <p id="username">{u.username} {u.admin && (<i className="fas fa-crown" />)}</p>
                             </div>
+                            <i className='fas fa-trash'></i>
                         </Link>)
                     })}
                 </div>
@@ -83,6 +89,16 @@ export function Group() {
                         })}
                 </div>
 
+            </div>
+            <div id='right'>
+                <div id='user'>
+                        <div id='pfp' style={{ backgroundImage: `url(${C.UserData.pfp || placeholderpfp})`, height: 80, width: 80 }}></div>
+                        <div id='data'>
+                            <p id="username">{C.UserData.username}</p>
+                            <p id='role'>{IsGroupAdmin(C.UserData.userid) ? "Group Owner" : "Group Member"}</p>
+                        </div>
+                </div>
+                <button className='button'>Leave Group</button>
             </div>
 
 

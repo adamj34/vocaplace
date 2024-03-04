@@ -1,3 +1,4 @@
+// import './style.scss';
 import { useParams } from 'react-router-dom';
 import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
 import {FaHandsHelping, FaUserFriends} from 'react-icons/fa';
@@ -26,8 +27,7 @@ export function Profile() {
     const C = useContext(AppContext);
     const { id } = useParams()
     const [ProfileData, SetProfileData] = useState({});
-    const [isFriend, setIsFriend] = useState(false);
-    
+
     document.title = `VocaPlace | username`
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
@@ -37,28 +37,42 @@ export function Profile() {
                 SetProfileData(data)
                 console.log(data)
                 SetLoading(false)
-                isFriendCheck();
             })
         }
     }, [C.AppReady,id])
 
-    const isFriendCheck = async () => {
-       try{
-        const friendStatus = await DataService.IsFriend(id);
-        setIsFriend(friendStatus)
-        console.log(friendStatus)
-       }catch(err){
-            console.error(err)
-         }
-    }
 
-    const handleAddFriend = () => {
-        DataService.SendFriendRequest(id).then((res) => {
-            console.log(res)
-        }).catch((err) => {
-            console.log(err)
+    function SendInvite() {
+        DataService.SendFriendRequest(id).then((relationship) => {
+            SetProfileData({...ProfileData, relationship})
+            console.log(relationship)
         })
     }
+
+    function AcceptInvite() {
+        DataService.AcceptFriendRequest(id).then((res) => {
+            SetProfileData({ ...ProfileData, relationship: 'friends' })
+        })
+    }
+
+    function DeleteFriend() {
+        DataService.DeleteFriend(id).then((res) => {
+            SetProfileData({...ProfileData, relationship:null})
+        })
+    }
+
+    function CancelInvite() {
+        DataService.CancelFriendRequest(id).then((res) => {
+            SetProfileData({ ...ProfileData, relationship: null })
+        })
+    }
+
+    function DeleteInvite() {
+        DataService.DeleteFriendRequest(id).then((res) => {
+            SetProfileData({ ...ProfileData, relationship: null })
+        })
+    }
+
 
     return (
         Loading ? <div>Loading</div> :
@@ -79,9 +93,15 @@ export function Profile() {
                 {(id === C.UserData.id) ? 
                     <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
-                        {isFriendCheck && <button className='button' onClick={handleAddFriend}>Add Friend</button>}
-                        <button className='button'>Invite to Group</button>
-                        <button className='button' >Message</button>
+                        {ProfileData.relationship == null && <button className='button' onClick={SendInvite}>Add Friend</button>}
+                        {(ProfileData.relationship && ProfileData.relationship.relationship == 'pending_user2_user1' && ProfileData.relationship.user1_id == id) && <button className='button' onClick={CancelInvite}>Cancel Invite</button>}
+                        {(ProfileData.relationship && ProfileData.relationship.relationship == 'pending_user2_user1' && ProfileData.relationship.user2_id == id) && (<>
+                            <p>This user has sent you a friend request.</p>
+                            <button className='button' onClick={AcceptInvite}>Accept</button>
+                            <p>or</p>
+                            <button className='button' onClick={DeleteInvite}>Delete</button>
+                        </>)}
+                        {ProfileData.relationship == 'friends' && <button className='button' onClick={DeleteFriend}>Remove Friend</button>}
                     </div>
                 }
                 
@@ -90,7 +110,7 @@ export function Profile() {
                 <div id='friends'>
                     <div id='title'>
                         <FaHandsHelping id='icon'/>
-                        <p>{ProfileData.friends.length} Friends</p>
+                        <p>{ProfileData.friends.length} Friend{ProfileData.friends.length != 1 && 's'}</p>
                     </div>
                     <ul id='content'>
                         {/* {friends.map((x) => {return <ListElement data={x} page='profile' key={x.name}/>})} */}
@@ -99,7 +119,7 @@ export function Profile() {
                 <div id='groups'>
                     <div id='title'>
                         <FaUserFriends id='icon'/>
-                        <p>{ProfileData.groups.length} Groups</p>
+                        <p>{ProfileData.groups.length} Group{ProfileData.groups.length != 1 && 's'}</p>
                     </div>
                     <ul id='content'>
                         {/* {groups.map((x) => {return <ListElement data={x} page='group' key={x.name}/>})} */}

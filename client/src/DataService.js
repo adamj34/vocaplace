@@ -26,7 +26,13 @@ export default {
     },
 
     async UpdateUserData(data) { // expects: keycloak token in header, body {nickname, bio, private_profile, picture}
-        await Server.patch(`/user`, data)
+        console.log(data)
+        await Server.patch(`/user`, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: data
+        })
     },
 
     async UpdatePoints(points) {
@@ -43,7 +49,8 @@ export default {
     },
 
     async SendFriendRequest(userid) {
-        await Server.post(`/relationships/request/friend/${userid}`)
+        const res = await Server.post(`/relationships/request/friend/${userid}`)
+        return res.data.data
     },
 
     async GetFriendRequests() {
@@ -52,18 +59,26 @@ export default {
     },
 
     async AcceptFriendRequest(userid) {
-        await Server.patch(`/relationships/accept/friend/${userid}`)
+        const res = await Server.patch(`/relationships/accept/friend/${userid}`)
         return true
     },
 
-    async IsFriend(userid) {
-        const res = await Server.get(`/relationships/check/user/${userid}`)
-        if (res.data.relationship == 'friends') {
-            return true
-        } else { // null
-            return false
-        }
+    async CancelFriendRequest(userid) { // sent
+        await Server.delete(`/relationships/request/sent/friend/${userid}`)
     },
+
+    async DeleteFriendRequest(userid) { // received
+        await Server.delete(`/relationships/request/received/friend/${userid}`)
+    },
+
+    // async IsFriend(userid) {
+    //     const res = await Server.get(`/relationships/check/user/${userid}`)
+    //     if (res.data.relationship == 'friends') {
+    //         return true
+    //     } else { // null
+    //         return false
+    //     }
+    // },
 
     async DeleteFriend(userid) {
         await Server.delete(`/relationships/friend/${userid}`)

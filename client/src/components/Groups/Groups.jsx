@@ -38,7 +38,6 @@ export function Groups() {
         if (C.AppReady) {
             DataService.GetUserGroups().then((data) => {
                 SetGroups(data.data)
-                console.log(data.data)
             })
         }
     }, [C.AppReady])
