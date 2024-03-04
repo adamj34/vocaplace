@@ -81,11 +81,11 @@ const deleteProfilePicture = async (userId: string) => {
 
     // delete from s3 and if successful from db
     await s3Instance.send(new DeleteObjectCommand(deleteParams));
-    // try {
-    //     await invalidateCache(user.picture);
-    // } catch (err) {
-    //     logger.error('Error invalidating cache for user picture', err);
-    // }
+    try {
+        await invalidateCache(user.picture);
+    } catch (err) {
+        logger.error('Error invalidating cache for user picture', err);
+    }
     await db.users.deleteProfilePicture({id: userId});
 
     return {
@@ -126,11 +126,11 @@ const updateUser = (userId: string, updateData: {username?: string, bio?: string
         // Only after the user is updated, upload the picture
         if (picture) {
             await s3Instance.send(new PutObjectCommand(uploadParams));
-            // try {
-            //     await invalidateCache(data.picture);
-            // } catch (err) {
-            //     logger.error('Error invalidating cache for user picture', err);
-            // }
+            try {
+                await invalidateCache(data.picture);
+            } catch (err) {
+                logger.error('Error invalidating cache for user picture', err);
+            }
             const pictureData = await t.users.updateUser(userId, { picture: uploadParams.Key });
             data.picture = pictureData.picture;
         }

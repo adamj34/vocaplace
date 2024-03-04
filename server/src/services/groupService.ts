@@ -74,11 +74,11 @@ const updateGroup = (userId: string, groupId: number, updateData: {group_name?: 
         // Only after the group is updated, upload the picture
         if (picture) {
             await s3Instance.send(new PutObjectCommand(uploadParams));
-            // try {
-            //     await invalidateCache(groupData.picture);
-            // } catch (err) {
-            //     logger.error('Error invalidating cache for group picture', err);
-            // }
+            try {
+                await invalidateCache(groupData.picture);
+            } catch (err) {
+                logger.error('Error invalidating cache for group picture', err);
+            }
             const pictureData = await t.groups.updateGroup(groupId, { picture: uploadParams.Key });
             data.picture = pictureData.picture;
         }
@@ -111,11 +111,11 @@ const deleteGroupPicture = (userId: string, groupId: number) => {
 
         // delete picture from s3 and if successful update group picture to null
         await s3Instance.send(new DeleteObjectCommand(deleteParams));
-        // try {
-        //     await invalidateCache(groupData.picture);
-        // } catch (err) {
-        //     logger.error('Error invalidating cache for group picture', err);
-        // }
+        try {
+            await invalidateCache(groupData.picture);
+        } catch (err) {
+            logger.error('Error invalidating cache for group picture', err);
+        }
         await t.groups.deleteGroupPicture(groupId);
 
         return {

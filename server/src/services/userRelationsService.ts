@@ -1,5 +1,6 @@
 import { db, pgp } from "../db/connection/db";
 import { errorFactory, FrienshipConstraintError } from "../utils/errorFactory.js";
+import { pictureToSignedUrl } from "../cloud/cloudFrontClient";
 
 
 enum RelationshipState {
@@ -139,7 +140,7 @@ const checkRelationship = async (userId: string, friendId: string) => {
 const checkPendingRequests = (userId: string) => {
     return db.task(async t => {
         const pendingRequests = await t.user_relationships.getPendingRequests({id : userId});
-        const data = await Promise.all(pendingRequests.map(async user => t.users.findById({id: user.user_id})));
+        const data = pictureToSignedUrl(await Promise.all(pendingRequests.map(async user => t.users.findById({id: user.user_id}))));
 
         return {
             success: true,
