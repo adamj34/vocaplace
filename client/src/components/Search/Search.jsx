@@ -13,7 +13,7 @@ function ListElement(p) {
         <li>
             <Link to={"../" + p.page + "/" + p.data.id} className='hovertext'>
                 <div id='listitem'>
-                    <img src={p.data.pic || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
+                    <img src={p.data.picture || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
                     <p>{p.data.username || p.data.group_name || 'undefined'}</p>
                 </div>
             </Link>

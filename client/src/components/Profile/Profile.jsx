@@ -8,14 +8,26 @@ import { AppContext } from '../../App';
 import DataService from '../../DataService';
 import { DateFormat } from '../../helpers/DateFormat';
 
+function SetRelationship(rel, me) {
+    if (!rel) {
+        return null
+    } else if ((rel.relationship === 'pending_user1_user2' && rel.user1_id === me) || (rel.relationship === 'pending_user2_user1' && rel.user2_id === me)) {
+        return 'i_invited_them'
+    } else if ((rel.relationship === 'pending_user1_user2' && rel.user2_id === me) || (rel.relationship === 'pending_user2_user1' && rel.user1_id === me)) {
+        return 'they_invited_me'
+    } else if (rel.relationship === 'friends') {
+        return 'friends'
+    }
+}
+
 
 function ListElement(p) {
     return (
         <li>
-            <Link to={"../"+p.page+"/"+"321"} className='hovertext'>
+            <Link to={`../${p.page}/${p.data.id}`} className='hovertext'>
                 <div id='listitem'>
-                    <img src={p.data.pic || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
-                    <p>{p.data.name || 'undefined'}</p>
+                    <img src={p.data.picture || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
+                    <p>{p.data.username || p.data.group_name}</p>
                 </div>
             </Link>
         </li>
@@ -34,17 +46,17 @@ export function Profile() {
     useEffect(() => {
         if (C.AppReady) {
             DataService.GetProfileData(id).then((data)=> {
-                SetProfileData(data)
+                SetProfileData({...data, relationship:SetRelationship(data.relationship, C.UserData.id)})
                 console.log(data)
                 SetLoading(false)
             })
         }
-    }, [C.AppReady,id])
+    }, [C.AppReady, id])
 
 
     function SendInvite() {
         DataService.SendFriendRequest(id).then((relationship) => {
-            SetProfileData({...ProfileData, relationship})
+            SetProfileData({...ProfileData, relationship:SetRelationship(relationship, C.UserData.id)})
             console.log(relationship)
         })
     }
@@ -93,15 +105,15 @@ export function Profile() {
                 {(id === C.UserData.id) ? 
                     <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
-                        {ProfileData.relationship == null && <button className='button' onClick={SendInvite}>Add Friend</button>}
-                        {(ProfileData.relationship && ProfileData.relationship.relationship == 'pending_user2_user1' && ProfileData.relationship.user1_id == id) && <button className='button' onClick={CancelInvite}>Cancel Invite</button>}
-                        {(ProfileData.relationship && ProfileData.relationship.relationship == 'pending_user2_user1' && ProfileData.relationship.user2_id == id) && (<>
+                        {!ProfileData.relationship && <button className='button' onClick={SendInvite}>Add Friend</button>}
+                        {ProfileData.relationship === 'i_invited_them' && <button className='button' onClick={CancelInvite}>Cancel Invite</button>}
+                        {ProfileData.relationship === 'they_invited_me' && (<>
                             <p>This user has sent you a friend request.</p>
                             <button className='button' onClick={AcceptInvite}>Accept</button>
                             <p>or</p>
                             <button className='button' onClick={DeleteInvite}>Delete</button>
                         </>)}
-                        {ProfileData.relationship == 'friends' && <button className='button' onClick={DeleteFriend}>Remove Friend</button>}
+                        {ProfileData.relationship === 'friends' && <button className='button' onClick={DeleteFriend}>Remove Friend</button>}
                     </div>
                 }
                 
@@ -110,19 +122,19 @@ export function Profile() {
                 <div id='friends'>
                     <div id='title'>
                         <FaHandsHelping id='icon'/>
-                        <p>{ProfileData.friends.length} Friend{ProfileData.friends.length != 1 && 's'}</p>
+                        <p>{ProfileData.friends.length} Friend{ProfileData.friends.length !== 1 && 's'}</p>
                     </div>
                     <ul id='content'>
-                        {/* {friends.map((x) => {return <ListElement data={x} page='profile' key={x.name}/>})} */}
+                        {ProfileData.friends.map((x) => {return <ListElement data={x} page='profile' key={x.id}/>})}
                     </ul>
                 </div>
                 <div id='groups'>
                     <div id='title'>
                         <FaUserFriends id='icon'/>
-                        <p>{ProfileData.groups.length} Group{ProfileData.groups.length != 1 && 's'}</p>
+                        <p>{ProfileData.groups.length} Group{ProfileData.groups.length !== 1 && 's'}</p>
                     </div>
                     <ul id='content'>
-                        {/* {groups.map((x) => {return <ListElement data={x} page='group' key={x.name}/>})} */}
+                        {ProfileData.groups.map((x) => {return <ListElement data={x} page='groups' key={x.id}/>})}
                     </ul>
                 </div>
             </div>

@@ -26,13 +26,12 @@ export default {
     },
 
     async UpdateUserData(data) { // expects: keycloak token in header, body {nickname, bio, private_profile, picture}
-        console.log(data)
-        await Server.patch(`/user`, {
+        const res = await Server.patch(`/user`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
-            body: data
         })
+        return res.data
     },
 
     async UpdatePoints(points) {

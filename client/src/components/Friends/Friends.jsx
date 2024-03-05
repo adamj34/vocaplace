@@ -7,18 +7,14 @@ import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
 
-const initialFreiendsData = [
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-    { username: "Bill", points: 117 },
-];
+// const initialFreiendsData = [
+//     { username: "Bill", points: 117 },
+//     { username: "Bill", points: 117 },
+//     { username: "Bill", points: 117 },
+//     { username: "Bill", points: 117 },
+//     { username: "Bill", points: 117 },
+//     { username: "Bill", points: 117 },
+// ];
 
 export function Friends() {
     const { keycloak } = useKeycloak();
@@ -31,15 +27,16 @@ export function Friends() {
     const C = useContext(AppContext);
     useEffect(() => {
         if(C.AppReady && !isUpdated){
-            // Getingfriends
+
             DataService.GetFriends().then((res) => {
                 setFriends(res.data);
             }).catch((err) => {
                 console.log(err);
             });
-            // Getting friend requests
+
             DataService.GetFriendRequests().then((res) => {
                 setFriendRequests(res.data);
+                console.log(res.data)
             }).catch((err) => {
                 console.log(err);
             });
@@ -57,8 +54,12 @@ export function Friends() {
             console.log(err)
         })
     }
-    const handleDecline = () => {
-        console.log("Decline")
+    const handleDecline = (userId) => {
+        DataService.DeleteFriendRequest(userId).then((res) => {
+            setIsUpdated(false)
+        }).catch((err) => {
+            console.log(err)
+        })
     }
     const handleRemove = (userId) => {
         DataService.DeleteFriend(userId).then((res) => {
@@ -119,7 +120,7 @@ export function Friends() {
                                         </Link>
                                     <div id="friend-request-buttons">
                                         <button className="button" onClick={() => handleAccept(user.id)} id="accept">Accept</button>
-                                        <button className="button" onClick={handleDecline} id="decline">Decline</button>
+                                        <button className="button" onClick={() => handleDecline(user.id)} id="decline">Decline</button>
                                     </div>
                                 </div>
                             </div>))}

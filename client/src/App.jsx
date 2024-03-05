@@ -36,13 +36,13 @@ function App() {
         const userdata = await DataService.GetUserData()
         SetUserData(userdata.data)
         SetAppReady(true)
-        console.log("UserData: ",userdata.data)
+        // console.log("UserData: ",userdata.data)
       })}
     } ,[initialized])
 
   return (
     <div id="App">
-      <AppContext.Provider value={{UserData,SetUserData,AppReady}}>
+      <AppContext.Provider value={{UserData, SetUserData, AppReady}}>
         <Nav/>
         <Routes>
           <Route path='' element={<Home/>}/>

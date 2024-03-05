@@ -190,7 +190,7 @@ input[type="file"] {
         display: flex;
         color: inherit;
         font-size: 150%;
-        // transition: 0.4s;
+        transition: 0.4s;
         &:hover {
           color: $themecolor;
         }

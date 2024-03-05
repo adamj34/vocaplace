@@ -21,8 +21,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set DISABLE_ESLINT_PLUGIN=true && react-scripts start",
-    "startall": "docker-compose -f ../docker-compose.yaml up -d --build && npm start",
+    "start": "react-scripts start",
+    "dev": "docker compose down && docker-compose -f ../docker-compose.yaml up -d --build && npm start",
+    "down": "docker compose down",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
