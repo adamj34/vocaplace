@@ -30,7 +30,15 @@ returns:
 {
     "success": true,
     "data": {
-        "id": "223e4567-e89b-12d3-a456-426614174005"
+        "id": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+        "username": "q",
+        "bio": "new new new",
+        "picture": "https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/fd294f9dd32b5fa2fea06c560bb503c6b6a9de98bb5322b3146ab2a2ea2a303f?Expires=1709635164&Key-Pair-Id=K3ADYJR92CMAGL&Signature=LS~ze-YITtrXfdgtj~3thVbtWAt5ijEV3jx5iVIl~ch2qZ586tUIvG376mpCZZPGaw679nQCdCD3dK~6uDI8-jPSG3FJPXbsuri0Ba1g9tRRlqGuoLy78DrWp7~XmjjRnfrJSsAiXHxVvL5PkXMC0M6seG8vu82SM8EtWZM~Tt4-chBAw68Q7GskKp2DebqiWZF5uX2XziO5U6dxJK1tiAxdZ7HYZDxL7tXGgGJTI2zBpahzdNW74Iqp5Rigc1EbNrgtc0LmrdOG8dkClZp~pw1oRn0v3eSzbFPDUMzV6kWuNV0C7lnAp1GVdiUNfaftERt-X87GYi5vlosjQSSa6w__",
+        "private_profile": true,
+        "points": 0,
+        "ongoing_streak": 0,
+        "last_active": "2024-02-27T10:34:38.609Z",
+        "created_at": "2024-02-27T10:34:38.609Z"
     }
 }
 
