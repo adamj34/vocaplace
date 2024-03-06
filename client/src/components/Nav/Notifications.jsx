@@ -1,28 +1,26 @@
 import React, { useState } from "react";
-import { FaBell } from "react-icons/fa";
+import Icon from "../Icon";
 
 export default function Notifications({ messages }) {
-    const [showMessages, setShowMessages] = useState(false);
+    const [ShowMessages, SetShowMessages] = useState(false);
 
     return (
-        <div id='notifications' onClick={()=>setShowMessages(!showMessages)} style={{marginRight:`${messages.length}px`}}>
-            <FaBell id='icon' />
-            {!showMessages && messages.length > 0 && (
+        <aside id='notifications' onClick={() => SetShowMessages(!ShowMessages)} style={{ marginRight: `${messages.length}px` }} className={ShowMessages ? 'open' : ''}>
+            <Icon icon='bell'/>
+            {!ShowMessages && messages.length > 0 && 
                 <p id='count'>{messages.length}</p>
-            )}
+            }
 
-            {showMessages && (
-                <div id="messageWindow">
+            {ShowMessages && 
+                <section id="window" onMouseLeave={() => SetShowMessages(false) }>
                     <p id="title">Notifications</p>
-                    <div id="message-scroll">
+                    <div id="messages">
                         {messages.map((message, index) => (
-                            <div key={index} id='message'>
-                                {message}
-                            </div>
+                            <p key={index} id='message'>{message}</p>
                         ))}
                     </div>
-                </div>
-            )}
-        </div>
+                </section>
+            }
+        </aside>
     );
 }

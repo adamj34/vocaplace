@@ -1,8 +1,8 @@
 
 export function Footer() {
     return (
-        <div id='footer'>
+        <footer id='footer'>
             © 2023-2024
-        </div>
+        </footer>
     )
 }
