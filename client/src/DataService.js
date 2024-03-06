@@ -70,15 +70,6 @@ export default {
         await Server.delete(`/relationships/request/received/friend/${userid}`)
     },
 
-    // async IsFriend(userid) {
-    //     const res = await Server.get(`/relationships/check/user/${userid}`)
-    //     if (res.data.relationship == 'friends') {
-    //         return true
-    //     } else { // null
-    //         return false
-    //     }
-    // },
-
     async DeleteFriend(userid) {
         await Server.delete(`/relationships/friend/${userid}`)
         return true
@@ -159,8 +150,11 @@ export default {
     },
 
     async CreateGroup(group) {
-        const res = await Server.post(`/groups`, group)
-        return res.data
+        await Server.post(`/user`, group, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        })
     },
 
     async GetGroupData(groupid) {

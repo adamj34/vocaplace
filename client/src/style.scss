@@ -5,6 +5,8 @@ $maingraygradientbottom: #1f2229;
 $darkgray: #1d2026;
 $darkgraygradientbottom: #12151a;
 
+$transition: 0.3s;
+
 @import "./icons/scss/fontawesome.scss";
 @import "./icons/scss/solid.scss";
 
@@ -26,22 +28,15 @@ body {
     font-size: 90%;
     cursor: pointer;
   }
-  h1,
-  h2,
-  h3,
-  h4 {
+  h1, h2, h3, h4 {
     font-weight: normal;
   }
 }
 
-#profilepic,
-#editprofilepic {
+#pfp {
   border-radius: 50%;
-  #pfp {
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-  }
+  background-size: cover;
+  background-position: center;
 }
 
 .button {
@@ -53,13 +48,21 @@ body {
   background-image: linear-gradient($themecolor, $themecolorgradientbottom);
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
   color: white;
-  transition: 0.4s;
+  transition: $transition;
   letter-spacing: 1px;
   min-width: 100px;
+  &.light {
+    background: rgba(255, 255, 255, 0);
+    outline: 2px solid $themecolor;
+    outline-offset: -2px;
+    color: $themecolor;
+    box-sizing: border-box;
+  }
   &:hover {
     background-color: white;
     background-image: none;
     color: $themecolor;
+    outline-color: white;
   }
 }
 
@@ -71,7 +74,7 @@ body {
   border: 2px solid $maingray;
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
   color: white;
-  transition: 0.4s;
+  transition: $transition;
   letter-spacing: 1px;
   font-size: 100%;
   min-width: 100px;
@@ -94,38 +97,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px;
-
-    .react-tagsinput-tag {
-      display: flex;
-      gap: 4px;
-      ::before {
-        content: "×";
-      }
-      .react-tagsinput-remove {
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.4s;
-        &:hover {
-          color: $themecolor;
-        }
-      }
-    }
-    .react-tagsinput-input {
-      background-color: $maingray;
-      font-family: inherit;
-      color: white;
-      padding: 6px 10px;
-      font-size: 110%;
-      border-radius: 5px;
-      border: 2px solid $maingray;
-      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
-      outline: none;
-      transition: 0.3s;
-      width: 100%;
-      &:focus {
-        border: 2px solid $themecolor;
-      }
-    }
   }
 }
 
@@ -139,7 +110,7 @@ body {
   border: 2px solid $maingray;
   box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
   outline: none;
-  transition: 0.3s;
+  transition: $transition;
   &:focus {
     border: 2px solid $themecolor;
   }
@@ -157,7 +128,7 @@ input[type="file"] {
 .hovertext {
   color: white;
   text-decoration: none;
-  transition: 0.4s;
+  transition: $transition;
   &:hover {
     color: $themecolor;
   }
@@ -190,7 +161,7 @@ input[type="file"] {
         display: flex;
         color: inherit;
         font-size: 150%;
-        transition: 0.4s;
+        transition: $transition;
         &:hover {
           color: $themecolor;
         }
@@ -205,7 +176,7 @@ input[type="file"] {
       border-radius: 5px;
       border: 2px solid $maingray;
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
-      transition: 0.4s;
+      transition: $transition;
     
       input {
         font-family: inherit;
@@ -216,14 +187,14 @@ input[type="file"] {
         outline: none;
         width: 300px;
         opacity: 0.3;
-        transition: 0.4s;
+        transition: $transition;
         &::placeholder {
           color: white;
         }
       }
       #icon {
         opacity: 0.3;
-        transition: 0.4s;
+        transition: $transition;
       }
       &:focus-within {
         border: 2px solid $themecolor;
@@ -262,12 +233,12 @@ input[type="file"] {
         position: absolute;
         left: 14px;
         top: -10px;
-        transition: 0.4s;
+        transition: $transition;
         font-size: 90%;
       }
       #icon {
         font-size: 150%;
-        transition: 0.4s;
+        transition: $transition;
       }
       &:hover {
         #icon {
@@ -317,7 +288,7 @@ input[type="file"] {
         padding: 6px;
         margin-right: 10px;
         border-bottom: 2px solid $darkgray;
-        transition: 0.4s;
+        transition: $transition;
 
         &:hover {
           color: $themecolor;
@@ -428,7 +399,7 @@ input[type="file"] {
           font-size: 150%;
         }
         p {
-          transition: 0.4s;
+          transition: $transition;
         }
       }
       &:hover {
@@ -452,7 +423,7 @@ input[type="file"] {
       display: flex;
       align-items: flex-start;
       gap: 30px;
-      #profilepic {
+      #pfp {
         border: 6px solid $themecolor;
         box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
         margin-top: 30px;
@@ -464,8 +435,7 @@ input[type="file"] {
         margin-top: 30px;
         #pfp {
           cursor: pointer;
-          border-radius: 50%;
-          transition: 0.2s;
+          transition: $transition;
         }
         label {
           #icon {
@@ -476,7 +446,7 @@ input[type="file"] {
             bottom: 80px;
             left: 80px;
             font-size: 250%;
-            transition: 0.2s;
+            transition: $transition;
           }
         }
         &:hover {
@@ -500,6 +470,10 @@ input[type="file"] {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      #or {
+        margin: 0;
+        text-align: center;
+      }
     }
   }
   #data {
@@ -571,7 +545,7 @@ input[type="file"] {
     background-image: linear-gradient($darkgray, $darkgraygradientbottom);
     #bar {
       width: 0;
-      transition: 0.4s;
+      transition: $transition;
       border-radius: 20px;
       background-color: $themecolor;
       background-image: linear-gradient($themecolor, $themecolorgradientbottom);
@@ -659,7 +633,7 @@ input[type="file"] {
           label > a {
             color: white;
             text-decoration: none;
-            transition: 0.3s;
+            transition: $transition;
             &:hover {
               color: $themecolor;
             }
@@ -669,7 +643,7 @@ input[type="file"] {
             #iconbutton {
               padding: 6px;
               font-size: 160%;
-              transition: 0.3s;
+              transition: $transition;
               cursor: pointer;
               margin: 0;
               &:hover {
@@ -717,7 +691,7 @@ input[type="file"] {
     border-radius: 12px;
     padding: 10px;
     max-width: 250px;
-    transition: 0.4s;
+    transition: $transition;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     position: absolute;
     #select-scroll {
@@ -732,7 +706,7 @@ input[type="file"] {
       div {
         padding: 6px;
         margin-right: 10px;
-        transition: 0.4s;
+        transition: $transition;
         &:not(.disabled) {
           cursor: pointer;
           &:hover {
@@ -817,7 +791,7 @@ input[type="file"] {
           );
           box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
           color: white;
-          transition: 0.4s;
+          transition: $transition;
           letter-spacing: 1px;
           min-width: 100px;
           text-align: center;
@@ -951,7 +925,7 @@ input[type="file"] {
     text-decoration: none;
     color: white;
     #username {
-      transition: 0.3s;
+      transition: $transition;
     }
     &:hover {
       #username {
@@ -962,11 +936,6 @@ input[type="file"] {
   #user {
     display: flex;
     gap: 5px;
-    #pfp {
-      border-radius: 50%;
-      background-size: cover;
-      background-position: center;
-    }
   }
 
   #columns {
@@ -1006,14 +975,14 @@ input[type="file"] {
 }
 
 #Friends {
-  h3{
+  h3 {
     text-transform: uppercase;
   }
   a {
     text-decoration: none;
     color: white;
     #username {
-      transition: 0.3s;
+      transition: $transition;
     }
     &:hover {
       #username {
@@ -1021,107 +990,83 @@ input[type="file"] {
       }
     }
   }
-  #friends-container {
+  #content {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 30px;
+    gap: 100px;
 
-    #friends-list-container {
+    #friends {
       display: flex;
       flex-direction: column;
-      border-right: $themecolor solid 3px;
-      height: 100%;
-      
-      #friends-list {
+      #nofriends {
+        margin-left: 20px;
+      }
+      #friendlist {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 20px;
+        margin: 20px;
+        #friend {
+          display: flex;
+          align-items: center;
+          gap: 50px;
+          justify-content: space-between;
+          box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+          border-radius: 12px;
+          background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+          padding: 20px;
+        }
       }
     }
-  }
-}
-#friend-requests {
-  #friend-requests-list {
-    #friend-request {        
-        #user {
+
+    #friend-requests {
+      #friend-requests-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        #request {        
+          #user {
             display: flex;
             align-items: center;
-            padding: 10px;
-            margin: 0 20px;
             box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-            background-color: $darkgray;
             border-radius: 12px;
             background-image: linear-gradient($darkgray, $darkgraygradientbottom);
             padding: 10px 20px;
-            justify-content: space-evenly;
-            width: 250px;
-            #pfp {
-              border-radius: 50%;
-          
-              background-size: cover;
-              background-position: center;
+            justify-content: space-between;
+            #buttons {
+              display: flex;
+              gap: 10px;
             }
-            #username {
-              text-transform: uppercase;
-              font-size: 130%;
-              width: fit-content;
-              text-align: center;
-            }
-          #friend-box{
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            width: 100%;}
-          #friend-request-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            button {
-              font-size: medium;
-            }
-            
           }
+        }
       }
     }
-  }
-}
-#friend {
-  display: flex;
-  align-items: center;
-  width: 350px;
-  gap: 10px;
-  margin: 0 20px;
-  box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-  background-color: $darkgray;
-  border-radius: 12px;
-  background-image: linear-gradient($darkgray, $darkgraygradientbottom);
-  padding: 10px 20px;
-  #pfp {
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-  }
-  #username {
-    text-transform: uppercase;
-    font-size: 130%;
+    #friend-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      #username {
+        font-size: 120%;
+      }
+    }
   }
 }
 
 
 #Groups {
   #content {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 100px;
-  a {
-    text-decoration: none;
-    color: white;
-    &:hover {
-      h3 {
-        color: $themecolor;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 100px;
+    a {
+      text-decoration: none;
+      color: white;
+      &:hover {
+        h3 {
+          color: $themecolor;
+        }
       }
     }
-  }
     #grouplist {
       margin: 20px;
       display: flex;
@@ -1136,14 +1081,9 @@ input[type="file"] {
         border-radius: 12px;
         background-image: linear-gradient($darkgray, $darkgraygradientbottom);
         padding: 20px;
-        #pfp {
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-          }
         #groupdata {
           h3 {
-            transition: 0.3s;
+            transition: $transition;
           }
         }
 
@@ -1178,11 +1118,6 @@ input[type="file"] {
                 font-size: 90%;
               }
               cursor: pointer;
-            }
-            #pfp {
-              border-radius: 50%;
-              background-size: cover;
-              background-position: center;
             }
           }
         }
@@ -1233,14 +1168,9 @@ input[type="file"] {
       display: flex;
       gap: 8px;
       align-items: center;
-      transition: 0.3s;
+      transition: $transition;
       &:hover {
         color: $themecolor;
-      }
-      #pfp {
-        border-radius: 50%;
-        background-size: cover;
-        background-position: center;
       }
     }
 

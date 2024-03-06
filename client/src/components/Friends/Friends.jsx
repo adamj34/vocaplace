@@ -7,69 +7,54 @@ import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
 
-// const initialFreiendsData = [
-//     { username: "Bill", points: 117 },
-//     { username: "Bill", points: 117 },
-//     { username: "Bill", points: 117 },
-//     { username: "Bill", points: 117 },
-//     { username: "Bill", points: 117 },
-//     { username: "Bill", points: 117 },
-// ];
+const placeholder = [
+    { username: "Bill", points: 117 },
+    { username: "Bill", points: 117 },
+    { username: "Bill", points: 117 },
+    { username: "Bill", points: 117 },
+    { username: "Bill", points: 117 },
+    { username: "Bill", points: 117 },
+];
 
 export function Friends() {
-    const { keycloak } = useKeycloak();
-    const [friends, setFriends] = useState([]);
-    const [friendRequests, setFriendRequests] = useState([]);
-    const [isUpdated, setIsUpdated] = useState(false);
-    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-
-    
+    document.title = `VocaPlace | Friends`
     const C = useContext(AppContext);
+    const [Friends, SetFriends] = useState([]);
+    const [FriendRequests, SetFriendRequests] = useState([]);
+    const [Updated, SetUpdated] = useState(false);
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    
     useEffect(() => {
-        if(C.AppReady && !isUpdated){
-
+        if(C.AppReady && !Updated){
             DataService.GetFriends().then((res) => {
-                setFriends(res.data);
-            }).catch((err) => {
-                console.log(err);
-            });
-
+                SetFriends(res.data);
+            })
             DataService.GetFriendRequests().then((res) => {
-                setFriendRequests(res.data);
-                console.log(res.data)
-            }).catch((err) => {
-                console.log(err);
-            });
-            setIsUpdated(true);
+                SetFriendRequests(res.data);
+            })
+            SetUpdated(true);
         }
-    }, [C.AppReady,isUpdated]);
+    }, [C.AppReady,Updated]);
+
+    const { keycloak } = useKeycloak();
     if (!keycloak.authenticated) {return <LoginRequired/>}
 
-    document.title = `VocaPlace | Friends`
-    const handleAccept = (userId) => {
-        DataService.AcceptFriendRequest(userId).then((res) => {
-            setIsUpdated(false);
-            
-        }).catch((err) => {
-            console.log(err)
+    function AcceptFriendRequest(userid) {
+        DataService.AcceptFriendRequest(userid).then((res) => {
+            SetUpdated(false);
         })
     }
-    const handleDecline = (userId) => {
-        DataService.DeleteFriendRequest(userId).then((res) => {
-            setIsUpdated(false)
-        }).catch((err) => {
-            console.log(err)
+    function DeclineFriendRequest(userid) {
+        DataService.DeleteFriendRequest(userid).then((res) => {
+            SetUpdated(false)
         })
     }
-    const handleRemove = (userId) => {
-        DataService.DeleteFriend(userId).then((res) => {
-            setIsUpdated(false);
-            
+    function RemoveFriend(userid, username) {
+        if (window.confirm(`Are you sure you want to remove ${username} from friends?`)) {
+            DataService.DeleteFriend(userid).then((res) => {
+                SetUpdated(false);   
+            })
         }
-        ).catch((err) => {
-            console.log(err)
-        })
-
     }
 
 
@@ -79,48 +64,43 @@ export function Friends() {
                 <h1>Friends</h1>
                 <p>Manage your friends.</p>
             </div>
-            <div id="friends-container">
 
-                <div id="friend-requests">
-                    <h3>Friends List</h3>
-                    {friends.length > 0 && <p>You have {friends.length} friends.</p>}
-                    <div id="friend-requests-list">
-                        {friends.length === 0 && <p>You have no friends yet.</p>}
-                        {friends.map((friend) => (
-                            <div key={friend.id} id="friend-request">
-                                <div id="user">
+            
+            <div id="content">
+                <div id="friends">
+                    {Friends.length === 0 && <p id="nofriends">You have no friends yet.</p>}
+                    <div id="friendlist">
+                        {Friends.map((friend) => (
+                            <div key={friend.id} id="friend">
                                 <Link to={`/profile/${friend.id}`}>
-                                    <div  id="friend-box">
+                                    <div id="friend-box">
                                         <div id='pfp' style={{ backgroundImage: `url(${friend.picture || placeholderpfp})`, height: 50, width: 50 }}></div>
                                         <p id="username">{friend.username}</p>
                                     </div>
                                 </Link>
-                                <div id="friend-request-buttons">
-
-                                    <button className="button" onClick={()=>handleRemove(friend.id)} id="remove">Remove</button>
-                                </div>
+                                <div id="buttons">
+                                    <button className="button light" onClick={()=>RemoveFriend(friend.id, friend.username)} id="remove">Remove</button>
                                 </div>
                             </div>
-                    ))}
-
+                         ))}
                     </div>
                 </div>
                     <div id="friend-requests">
-                        <h3>Friend Requests</h3>
+                        { FriendRequests.length > 0 && <h3>Pending Friend Requests {FriendRequests.length > 0 ? `(${FriendRequests.length})` : ''}</h3>}
+                        {FriendRequests.length === 0 && <p>You have no friend requests.</p>}
                         <div id="friend-requests-list">
-                        { friendRequests.length === 0 && <p>You have no friend requests.</p>}
-                        { friendRequests.map((user) => (
-                            <div key={user.id} id="friend-request">
+                        { FriendRequests.map((user) => (
+                            <div key={user.id} id="request">
                                 <div id="user">
-                                        <Link  to={`/profile/${user.id}`}>
-                                    <div id="friend-box">
-                                        <div id='pfp' style={{ backgroundImage: `url(${ user.picture||placeholderpfp})`, height: 50, width:50 }}></div>
-                                        <p id="username">{user.username}</p>
-                                    </div>
-                                        </Link>
-                                    <div id="friend-request-buttons">
-                                        <button className="button" onClick={() => handleAccept(user.id)} id="accept">Accept</button>
-                                        <button className="button" onClick={() => handleDecline(user.id)} id="decline">Decline</button>
+                                    <Link  to={`/profile/${user.id}`}>
+                                        <div id="friend-box">
+                                            <div id='pfp' style={{ backgroundImage: `url(${ user.picture||placeholderpfp})`, height: 50, width:50 }}></div>
+                                            <p id="username">{user.username}</p>
+                                        </div>
+                                    </Link>
+                                    <div id="buttons">
+                                        <button className="button" onClick={() => AcceptFriendRequest(user.id)} id="accept">Accept</button>
+                                        <button className="button light" onClick={() => DeclineFriendRequest(user.id)} id="decline">Decline</button>
                                     </div>
                                 </div>
                             </div>))}

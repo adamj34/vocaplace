@@ -30,9 +30,9 @@ export function Groups() {
     const [Groups, SetGroups] = useState([]);
 
     const [NewGroupData, SetNewGroupData] = useState([]);
+    const [NewGroupImagePreview, SetNewGroupImagePreview] = useState(null);
     const [Submitting, SetSubmitting] = useState(false);
     const [ErrorMessage, SetErrorMessage] = useState('');
-
     
     useEffect(() => {
         if (C.AppReady) {
@@ -54,6 +54,7 @@ export function Groups() {
 
             <div id="content">
                 <div id="grouplist">
+                    {Groups.length === 0 && <p>You haven't joined any groups yet.</p>}
                     {Groups.map((g, i) => {
                         return (
                             <Link key={i} to={`/groups/${g.id}`}>
@@ -70,7 +71,7 @@ export function Groups() {
                 </div>
 
                 <div id="groupcreator">
-                    <h3>Create New Group:</h3>
+                    <h3>Create New Group</h3>
                     <form>
                         <div id='field'>
                             <label>Group Name:</label>
@@ -81,15 +82,25 @@ export function Groups() {
                             <TextareaAutosize id='bio' className='input' minRows={4} maxLength={300} placeholder='We love learning English!' onChange={(e) => { SetNewGroupData({ ...NewGroupData, bio: e.target.value }) }} ></TextareaAutosize>
                         </div>
                         <div id='field'>
-                            <label>Group Picture:</label>
+                            <span>Group Picture {NewGroupData.picture && `(${Math.ceil(NewGroupData.picture.size / 1024)}KB)`}:</span>
                             <div id="pic">
                                 <label for="picinput">
                                     <p id="inputbutton" className="button" onclick="document.getElementById('picinput').click()">Upload</p>
-                                    <input type='file' id='picinput' onChange={(e) => {if (e.target.files && e.target.files.length > 0) {SetNewGroupData({ ...C.UserData, 'picture': URL.createObjectURL(e.target.files[0]) })} }} ></input>
+                                    <input type='file' id='picinput' 
+                                        onChange={(e) => {
+                                            if (e.target.files && e.target.files.length === 1) {
+                                                SetNewGroupImagePreview(URL.createObjectURL(e.target.files[0]))
+                                                SetNewGroupData({ ...NewGroupData, 'picture': e.target.files[0] })
+                                            } else {
+                                                SetNewGroupImagePreview(null);
+                                                SetNewGroupData({ ...NewGroupData, 'picture': null })
+                                            }
+                                        }}>
+                                    </input>
                                 </label>
                                 
                                 
-                                <div id='pfp' style={{ backgroundImage: `url(${NewGroupData.picture || placeholderpfp})`, height: 60, width: 60 }}></div>
+                                <div id='pfp' style={{ backgroundImage: `url(${NewGroupImagePreview || placeholderpfp})`, height: 60, width: 60 }}></div>
                             </div>
                             
                         </div>
@@ -100,15 +111,20 @@ export function Groups() {
                             SetSubmitting(true)
                             if (!NewGroupData.group_name) {
                                 SetErrorMessage("You must enter group name!")
-                            } else if (NewGroupData.group_name.length < 5) {
-                                SetErrorMessage("Group name must contain at least five characters!")
+                            } else if (NewGroupData.group_name.length < 5 || NewGroupData.group_name.length > 20) {
+                                SetErrorMessage("Group name must contain between 5 and 20 characters!")
+                            } else if (NewGroupData.bio && NewGroupData.bio.length > 100) {
+                                SetErrorMessage("Group description cannot contain more than 100 characters!")
+                            } else if (NewGroupData.picture && NewGroupData.picture.size > 1000000) {
+                                SetErrorMessage("Picture file cannot be bigger than 1MB!")
                             } else {
                                 SetErrorMessage("")
-                                DataService.CreateGroup(NewGroupData).then((d) => { // d.data.id
-                                    navigate(`/groups/${d.data.id}`)
-                                }).catch(() => {
-                                    SetErrorMessage("Failed to submit!")
-                                })
+                                console.log(NewGroupData)
+                                // DataService.CreateGroup(NewGroupData).then((d) => { // d.data.id
+                                //     navigate(`/groups/${d.data.id}`)
+                                // }).catch(() => {
+                                //     SetErrorMessage("Failed to submit!")
+                                // })
                             }
                             SetSubmitting(false)
                         }}>Create Group</button>

@@ -26,7 +26,7 @@ function ListElement(p) {
         <li>
             <Link to={`../${p.page}/${p.data.id}`} className='hovertext'>
                 <div id='listitem'>
-                    <img src={p.data.picture || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
+                    <img src={p.data.picture || placeholderpfp} height={33} id='pfp' alt='profilepicture'></img>
                     <p>{p.data.username || p.data.group_name}</p>
                 </div>
             </Link>
@@ -91,9 +91,7 @@ export function Profile() {
         <div id="Profile">
             <div id='banner'>
                 <div id='left'>
-                    <div id='profilepic'>
-                        <div id='pfp' style={{ backgroundImage: `url(${ProfileData.user.picture || placeholderpfp})`, height: 200, width:200 }}></div>
-                    </div>
+                    <div id='pfp' style={{ backgroundImage: `url(${ProfileData.user.picture || placeholderpfp})`, height: 200, width:200 }}></div>
                     <div id='side'>
                         <h1 id='username'>{ProfileData.user.username}</h1>
                         <p>Member since {DateFormat(ProfileData.user.created_at)}</p>
@@ -106,12 +104,12 @@ export function Profile() {
                     <div id='buttons'><Link to='./edit'><button className='button'>Edit Profile</button></Link></div> : 
                     <div id='buttons'>
                         {!ProfileData.relationship && <button className='button' onClick={SendInvite}>Add Friend</button>}
-                        {ProfileData.relationship === 'i_invited_them' && <button className='button' onClick={CancelInvite}>Cancel Invite</button>}
+                        {ProfileData.relationship === 'i_invited_them' && <button className='button light' onClick={CancelInvite}>Cancel Invite</button>}
                         {ProfileData.relationship === 'they_invited_me' && (<>
                             <p>This user has sent you a friend request.</p>
                             <button className='button' onClick={AcceptInvite}>Accept</button>
-                            <p>or</p>
-                            <button className='button' onClick={DeleteInvite}>Delete</button>
+                            <p id='or'>or</p>
+                            <button className='button light' onClick={DeleteInvite}>Delete</button>
                         </>)}
                         {ProfileData.relationship === 'friends' && <button className='button' onClick={DeleteFriend}>Remove Friend</button>}
                     </div>
