@@ -5,7 +5,7 @@ import { AppContext } from '../../App';
 import DataService from '../../DataService';
 import { useKeycloak } from '@react-keycloak/web';
 import { LoginRequired } from '../LoginRequired';
-import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
+import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 
 
 function ListElement(p) {

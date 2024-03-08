@@ -3,7 +3,7 @@ import { LoginRequired } from "../LoginRequired";
 import { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
+import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
 

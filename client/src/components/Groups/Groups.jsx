@@ -2,13 +2,13 @@ import { useKeycloak } from "@react-keycloak/web";
 import { LoginRequired } from "../LoginRequired";
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../App";
-import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
+import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import { Link, useNavigate } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize';
 import DataService from "../../DataService";
 
 
-const groups = [
+const placeholder = [
     {
         "id": 1,
         "group_name": "Englovers",
@@ -120,11 +120,11 @@ export function Groups() {
                             } else {
                                 SetErrorMessage("")
                                 console.log(NewGroupData)
-                                // DataService.CreateGroup(NewGroupData).then((d) => { // d.data.id
-                                //     navigate(`/groups/${d.data.id}`)
-                                // }).catch(() => {
-                                //     SetErrorMessage("Failed to submit!")
-                                // })
+                                DataService.CreateGroup(NewGroupData).then((d) => {
+                                    navigate(`/groups/${d.data.id}`)
+                                }).catch(() => {
+                                    SetErrorMessage("Failed to submit!")
+                                })
                             }
                             SetSubmitting(false)
                         }}>Create Group</button>

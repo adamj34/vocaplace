@@ -1,6 +1,6 @@
 // import './style.scss';
 import { useParams } from 'react-router-dom';
-import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
+import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import {FaHandsHelping, FaUserFriends} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';

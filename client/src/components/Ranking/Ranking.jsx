@@ -4,7 +4,7 @@ import { LoginRequired } from "../LoginRequired";
 import DataService from "../../DataService";
 import { AppContext } from '../../App';
 import { Link } from 'react-router-dom';
-import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
+import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 
 
 

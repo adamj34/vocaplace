@@ -4,7 +4,7 @@ import { AppContext } from '../../App';
 import DataService from '../../DataService';
 import { useKeycloak } from '@react-keycloak/web';
 import { LoginRequired } from '../LoginRequired';
-import placeholderpfp from '../Nav/PlaceholderProfilePic.png'
+import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 
 export function Group() {
     const { id } = useParams()
@@ -92,7 +92,7 @@ export function Group() {
             </div>
             <div id='right'>
                 <div id='user'>
-                        <div id='pfp' style={{ backgroundImage: `url(${C.UserData.pfp || placeholderpfp})`, height: 80, width: 80 }}></div>
+                        <div id='pfp' style={{ backgroundImage: `url(${C.UserData.picture || placeholderpfp})`, height: 80, width: 80 }}></div>
                         <div id='data'>
                             <p id="username">{C.UserData.username}</p>
                             <p id='role'>{IsGroupAdmin(C.UserData.userid) ? "Group Owner" : "Group Member"}</p>

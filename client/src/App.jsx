@@ -7,7 +7,6 @@ import { NotFound } from './components/NotFound.jsx';
 import { Home } from './components/Home/Home.jsx';
 import { Profile } from './components/Profile/Profile.jsx';
 import { Group } from'./components/Groups/Group.jsx'
-import { SubmitTask } from './components/SubmitTask/SubmitTask.jsx';
 import { Nav } from './components/Nav/Nav.jsx';
 import { Footer } from './components/Nav/Footer.jsx'
 import { Units } from './components/Units/Units.jsx'
@@ -38,7 +37,7 @@ function App() {
         SetAppReady(true)
         // console.log("UserData: ",userdata.data)
       })}
-    } ,[initialized])
+    } ,[keycloak, initialized])
 
   return (
     <div id="App">
@@ -49,7 +48,6 @@ function App() {
           <Route path='profile/:id' element={<Profile/>}/>
           <Route path='profile/:id/edit' element={<EditProfile/>}/>
           <Route path='groups/:id' element={<Group/>}/>
-          <Route path='task/submit' element={<SubmitTask/>}/>
           <Route path='repetitions' element={<Repetitions />} />
           <Route path='repetitions/set' element={<Questions type='repetition'/>} />
           <Route path='units/:unitid/:topicid' element={<Questions type='normal'/>} />

@@ -150,11 +150,12 @@ export default {
     },
 
     async CreateGroup(group) {
-        await Server.post(`/user`, group, {
+        const res = await Server.post(`/groups`, group, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
         })
+        return res.data
     },
 
     async GetGroupData(groupid) {
