@@ -1,11 +1,11 @@
 import { useSearchParams, Link, Navigate } from 'react-router-dom';
 import {useEffect, useState, useContext} from 'react';
-import { FaUser, FaUserFriends } from 'react-icons/fa';
 import { AppContext } from '../../App';
 import DataService from '../../DataService';
 import { useKeycloak } from '@react-keycloak/web';
 import { LoginRequired } from '../LoginRequired';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
+import Icon from '../Icon';
 
 
 function ListElement(p) {
@@ -51,7 +51,7 @@ export function Search() {
             <div id='data'>
                 <div id='friends'>
                     <div id='title'>
-                        <FaUser id='icon' />
+                        <Icon icon='user-friends'/>
                         <p>{SearchData.matchedUsers.length} Users</p>
                     </div>
                     <ul id='content'>
@@ -61,7 +61,7 @@ export function Search() {
                 </div>
                 <div id='groups'>
                     <div id='title'>
-                        <FaUserFriends id='icon' />
+                        <Icon icon='people-group'/>
                         <p>{SearchData.matchedGroups.length} Groups</p>
                     </div>
                     <ul id='content'>

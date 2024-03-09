@@ -59,7 +59,6 @@ function App() {
           <Route path='ranking' element={<Ranking />} />
           <Route path='search' element={<Search />} />
 
-
           <Route path='*' element={<NotFound/>}/>
         </Routes>
         <Footer/>

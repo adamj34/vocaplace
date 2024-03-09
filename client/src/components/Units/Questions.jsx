@@ -4,9 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import { useContext, useState, useEffect, useReducer } from "react";
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
-import { FaStar, FaCheck } from 'react-icons/fa';
-import { FaXmark } from "react-icons/fa6";
 import { ShuffleArray } from "../../helpers/ShuffleArray";
+import Icon from "../Icon";
 
 function CheckQuestions(checkedstate, DispatchQuestionsData) {
     const correctids = []
@@ -55,22 +54,21 @@ const QuestionsReducer = (state, action) => {
 
 function Question(p) {
     const stars = Array.from({ length: p.data.difficulty }, (_,i) => i + 1)
-    console.log(p.data)
 
     return (
         <div id="question">
             <div id="title">
                 <div id="left">
-                    {p.i + 1}. {p.data.question_type == 'pick' && p.data.content} {p.data.question_type == 'fill' && ('Fill in the gap to make a sentence: ' + p.data.content.replace('_', '_____'))} {p.data.question_type == 'order' && p.data.content}
+                    {p.i + 1}. {p.data.question_type == 'pick' && p.data.content} {p.data.question_type == 'fill' && ('Fill in the gap to make a sentence: ' + p.data.content.replace('_', '__________c'))} {p.data.question_type == 'order' && p.data.content}
                 </div>
                 <div id="right">
                     {!p.Finished ? 
                     stars.map((i) => (
-                        <FaStar key={i} id='icon' />
+                        <Icon icon='star' key={i}/>
                     )) : 
                         p.QuestionsData[p.i].correct ? 
-                        <FaCheck id='icon' />
-                        : <FaXmark id='icon' className="wrong" />
+                        <Icon icon='check'/>
+                        : <Icon icon='x'/>
                     }
                 </div>
             </div>

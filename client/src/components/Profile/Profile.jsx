@@ -1,7 +1,7 @@
 // import './style.scss';
 import { useParams } from 'react-router-dom';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
-import {FaHandsHelping, FaUserFriends} from 'react-icons/fa';
+import Icon from '../Icon';
 import { Link } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../../App';
@@ -119,7 +119,7 @@ export function Profile() {
             <div id='data'>
                 <div id='friends'>
                     <div id='title'>
-                        <FaHandsHelping id='icon'/>
+                        <Icon icon='user-friends'/>
                         <p>{ProfileData.friends.length} Friend{ProfileData.friends.length !== 1 && 's'}</p>
                     </div>
                     <ul id='content'>
@@ -128,7 +128,7 @@ export function Profile() {
                 </div>
                 <div id='groups'>
                     <div id='title'>
-                        <FaUserFriends id='icon'/>
+                        <Icon icon='people-group'/>
                         <p>{ProfileData.groups.length} Group{ProfileData.groups.length !== 1 && 's'}</p>
                     </div>
                     <ul id='content'>

@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
-import {FaPen} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AppContext } from '../../App';
@@ -8,6 +7,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { AccessDenied } from '../AccessDenied'
 import { DateFormat } from '../../helpers/DateFormat';
 import DataService from '../../DataService';
+import Icon from '../Icon';
 
 
 function UpdateUserData(data) {
@@ -46,7 +46,7 @@ export function EditProfile() {
                         <div id='editprofilepic'> 
                             <label htmlFor="picinput" id='label'>
                                 <div id='pfp' style={{ backgroundImage: `url(${PicturePreview || C.UserData.picture || placeholderpfp})`, height: 200, width:200 }}></div>
-                                <i><FaPen id='icon'/></i>
+                                <Icon icon='pen'/>
                             </label>
                             <input type='file' id='picinput' onChange={(e) => { if (e.target.files.length === 1) {SetPicturePreview(URL.createObjectURL(e.target.files[0])); SetData({...Data, 'picture':e.target.files[0]})}}}></input>
                         </div>
@@ -65,8 +65,8 @@ export function EditProfile() {
                 </div>
                 <div id='buttons'>
                     <button className='button' onClick={()=>{UpdateUserData(Data)}}>Save Changes</button>
-                    <button className='button'>Set profile to {privateprofile == false ? 'private' : "public"}</button>
-                    <Link to="./../"><button className='button' onClick={() => {window.confirm('Are you sure you want to leave?')}}>Back</button></Link>
+                    {/* <button className='button'>Set profile to {privateprofile == false ? 'private' : "public"}</button> */}
+                    <Link to="./../"><button className='button light' onClick={() => {window.confirm('Are you sure you want to leave?')}}>Back</button></Link>
                 </div>
             </div>
            

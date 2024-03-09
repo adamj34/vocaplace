@@ -4,6 +4,7 @@ import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
 import { Link } from "react-router-dom";
+import Icon from "../Icon";
 
 
 
@@ -37,7 +38,7 @@ export function Repetitions() {
                     return (
                         <div id='unit' key={i}>
                             <div id="subheader">
-                                <i id='icon' className={"fa-solid fa-" + (u.unit_icon || "book")}></i>
+                                <Icon icon={u.unit_icon || 'book'}/>
                                 <p>{u.unit}</p>
                             </div>
                             
@@ -45,7 +46,7 @@ export function Repetitions() {
                                 {u.topics.map((t,i)=>{
                                     return (
                                         <li key={i}>
-                                            <i id='icon' className={"fa-solid fa-" + (t.topic_icon || "book")}></i>
+                                            <Icon icon={t.topic_icon || 'book'} />
                                             <p>{t.topic}: {t.repetition_questions} mistake{t.repetition_questions > 1 && 's'}</p>
                                         </li>
                                     )
