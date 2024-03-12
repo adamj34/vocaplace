@@ -118,12 +118,12 @@ INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, q
 VALUES (1, 'What is a polite way to ask about someone''s name?', '{"What is your name?", "May I ask your name?"}', '{"Who are you?", "What is this?"}', 'pick', 1);
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (1, 'Which question can be used to ask about someone about their interests or hobbies?', '{"What do you do for fun?"}', '{"How are you?", "What is your name?", "Do you like me?"}', 'pick', 1);
--- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
--- VALUES (1, 'Put the words in the correct order to translate: "Miło mi cię poznać."', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
--- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
--- VALUES (1, 'Put the words in the correct order to translate: "Miło cię widzieć."', '{"Nice to see you"}', '{"Nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
--- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
--- VALUES (1, 'How are you ...?', '{"doing"}', '{"doing", "going", "feeling", "being"}', 'fill', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'Miło mi cię poznać.', '{"nice to meet you"}', '{"nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'Miło cię widzieć', '{"Nice to see you"}', '{"Nice", "cat", "for", "to", "meet", "am", "you"}', 'order', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (1, 'How are you _?', '{"doing"}', '{"doing", "going", "feeling", "being"}', 'fill', 1);
 
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (2, 'Which of these are odd numbers?', '{"sixty five", "eleven"}', '{"six", "twenty eight", "seventy two"}', 'pick', 1);
@@ -149,8 +149,8 @@ VALUES (3, 'What is the last day of the week?', '{"Friday"}', '{"Tuesday", "Mond
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 -- VALUES (3, 'Put the words in the correct order to translate: "Jaki jest jutro dzień?"', '{"What day is it tomorrow?"}', '{"What", "tomorrow?", "day", "month", "is", "today?", "yesterday", "it"}', 'order', 2);
 
--- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
--- VALUES (4, 'What is your favorite vacation ...?', '{"destination"}', '{"destination", "world", "land", "cottage"}', 'fill', 1);
+INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
+VALUES (4, 'What is your favorite vacation _?', '{"destination"}', '{"destination", "world", "land", "cottage"}', 'fill', 1);
 
 INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 VALUES (4, 'Which of these are vehicles?', '{"Train", "Car", "Plane"}', '{"Drawer", "Crane"}', 'pick', 1);

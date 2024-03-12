@@ -5,23 +5,22 @@ import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
 import ProgressBar from "./ProgressBar";
+import Icon from "../Icon";
 
 
-function Button(p) {
+function Button({data}) {
     return (
         <div id='button'>
-            <Link to={p.data.topicid}>
+            <Link to={data.topicid}>
                 <div id='title' className="hovertext">
-                    <i id='icon' className="fa-solid fa-book"></i>
-                    <p>{p.data.topic}</p>
+                    <Icon icon={data.topic_icon || 'feather'}/>
+                    <p>{data.topic}</p>
                 </div>
             </Link>
-            <ProgressBar completion={parseFloat(p.data.completion_ratio) * 100} />
+            <ProgressBar completion={parseFloat(data.completion_ratio) * 100} />
         </div>
     )
 }
-
-
 
 export function Topics() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -30,7 +29,6 @@ export function Topics() {
     const [Topics, SetTopics] = useState([]);
     const [UnitName, SetUnitName] = useState('');
     const { unitid } = useParams()
-
     document.title = `VocaPlace | ${UnitName}`
 
     useEffect(() => {
@@ -41,7 +39,6 @@ export function Topics() {
                 })
                 SetTopics(formatted)
                 SetUnitName(data.unit)
-                console.log(formatted)
             })
         }
     }, [C.AppReady])

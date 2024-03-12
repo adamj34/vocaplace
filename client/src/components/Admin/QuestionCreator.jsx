@@ -79,7 +79,7 @@ export function QuestionCreator(p) {
 
                 {Data.questionType && (<div id='field'>
                     <label>Question:</label>
-                    <input className='input' placeholder={(Data.questionType == 'connect' && "Connect the words with their meaning in English.") || (Data.questionType == 'order' && "Put the words in the correct order to translate: 'Ona ma psa.'") || (Data.questionType == 'pick' && "Which of these are vehicles?") || (Data.questionType == 'fill' && 'The dog quickly _ the thief who tried to enter the house.') || ""} onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
+                    <input className='input' placeholder={(Data.questionType == 'connect' && "Connect the words with their meaning in English.") || (Data.questionType == 'order' && "Ona ma psa.") || (Data.questionType == 'pick' && "Which of these are vehicles?") || (Data.questionType == 'fill' && 'The dog quickly _ the thief who tried to enter the house.') || ""} onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
                 </div>)}
 
                 {(Data.questionType == 'pick' || Data.questionType == 'fill') && (<div id='field'>

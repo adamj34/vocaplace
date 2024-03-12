@@ -84,9 +84,17 @@ export default {
         const res = await Server.get(`/units/progress/${unitid}`)
         return res.data
     },
-    async GenerateQuiz(unitid, topicid) {
-        const res = await Server.get(`/questions/quiz/?unitId=${unitid}&topicId=${topicid}`)
-        return res.data
+    
+    async GenerateQuiz(type, unitid, topicid) {
+        if (type === 'normal') {
+            const res = await Server.get(`/questions/quiz/?unitId=${unitid}&topicId=${topicid}`)
+            res.data.data = res.data.data.unansweredQuestions.concat(res.data.data.answeredQuestions)
+            return res.data
+        } else if (type === 'repetition') {
+            const res = await Server.get(`/questions/repetition`)
+            return res.data
+        }
+        
     },
 
     async GetProfileData(userid) {
@@ -126,11 +134,6 @@ export default {
 
     async GetRepetitions() {
         const res = await Server.get(`/questions/repetition/overview`)
-        return res.data
-    },
-
-    async GenerateRepetitionQuiz() {
-        const res = await Server.get(`/questions/repetition`)
         return res.data
     },
 

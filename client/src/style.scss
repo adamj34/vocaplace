@@ -25,7 +25,6 @@ body {
   letter-spacing: 1px;
   button {
     font-family: inherit;
-    font-size: 90%;
     cursor: pointer;
   }
   h1, h2, h3, h4 {
@@ -51,6 +50,8 @@ body {
   transition: $transition;
   letter-spacing: 1px;
   min-width: 100px;
+  text-decoration: none;
+  font-size: 90%;
   &.light {
     background: rgba(255, 255, 255, 0);
     outline: 2px solid $themecolor;
@@ -403,8 +404,7 @@ input[type="file"] {
   }
 }
 
-#Profile,
-#EditProfile {
+#Profile {
   min-height: 100vh;
   #banner {
     padding: 60px 10%;
@@ -415,44 +415,56 @@ input[type="file"] {
       display: flex;
       align-items: flex-start;
       gap: 30px;
-      #pfp {
+      #profilepic {
         border: 6px solid $themecolor;
         box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
         margin-top: 30px;
+        @extend #pfp
       }
-      #editprofilepic {
-        border: 6px solid $themecolor;
-        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-        position: relative;
-        margin-top: 30px;
-        #pfp {
-          cursor: pointer;
-          transition: $transition;
-        }
-        label {
-          #icon {
-            cursor: pointer;
-            filter: opacity(0.1);
-            color: white;
-            position: absolute;
-            bottom: 80px;
-            left: 80px;
-            font-size: 250%;
-            transition: $transition;
-          }
-        }
-        &:hover {
+      #pfp-editor {
+        display: flex;
+        flex-direction: column;
+        #editprofilepic {
+          border: 6px solid $themecolor;
+          box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+          border-radius: 50%;
+          position: relative;
+          margin-top: 30px;
           #pfp {
-            filter: brightness(0.3);
+            cursor: pointer;
+            transition: $transition;
+            border: none;
           }
-          #icon {
-            filter: opacity(1);
+          label {
+            #icon {
+              cursor: pointer;
+              filter: opacity(0.3);
+              color: white;
+              position: absolute;
+              bottom: 80px;
+              left: 80px;
+              font-size: 250%;
+              transition: $transition;
+            }
+          }
+          &:hover {
+            #pfp {
+              filter: brightness(0.4);
+            }
+            #icon {
+              filter: opacity(1);
+            }
           }
         }
+        #removepic {
+          margin-top: 15px;
+          max-width: 80%;
+          align-self: center;
+        }
       }
-      #username {
-        text-transform: uppercase;
-      }
+    }
+    #data {
+      min-width: 60%
     }
     #buttons {
       a > button {
@@ -468,7 +480,7 @@ input[type="file"] {
       }
     }
   }
-  #data {
+  #social {
     display: grid;
     grid-template-columns: 40% 40%;
     gap: 20px;

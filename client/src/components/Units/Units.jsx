@@ -6,18 +6,19 @@ import { useContext } from "react";
 import { AppContext } from '../../App';
 import { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
+import Icon from "../Icon";
 
-function Button(p) {
-    console.log(p.data)
+
+function Button({ data }) {
     return (
         <div id='button'>
-            <Link to={p.data.unitid}>
+            <Link to={data.unitid}>
                 <div id='title' className="hovertext">
-                    <i id='icon' className={"fa-solid fa-"+(p.data.unit_icon || "book")}></i>
-                    <p>{p.data.unit}</p>
+                    <Icon icon={data.unit_icon || 'book'} />
+                    <p>{data.unit}</p>
                 </div>
             </Link>
-            <ProgressBar completion={parseFloat(p.data.completion_ratio)*100}/>
+            <ProgressBar completion={parseFloat(data.completion_ratio) * 100} />
         </div>
     )
 }

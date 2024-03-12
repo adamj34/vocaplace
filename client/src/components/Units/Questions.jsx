@@ -13,7 +13,11 @@ function CheckQuestions(checkedstate, DispatchQuestionsData) {
     let points = 0
 
     for (let i = 0; i < Object.keys(checkedstate).length; i++) {
-        if (checkedstate[i].selected.sort().toString() == checkedstate[i].correct_answers.sort().toString()) { // correct
+        console.log(checkedstate[i])
+        if (
+            (checkedstate[i].question_type === 'pick' && checkedstate[i].selected.sort().toString() === checkedstate[i].correct_answers.sort().toString()) ||
+            (checkedstate[i].question_type === 'fill' && checkedstate[i].correct_answers.includes(checkedstate[i].selected[0]))
+            ) {
             correctids.push(checkedstate[i].question_id)
             points += checkedstate[i].difficulty * 10
             DispatchQuestionsData({type:'SETASCORRECT', i})
@@ -31,11 +35,12 @@ const QuestionsReducer = (state, action) => {
     switch (action.type) {
         case "INIT":
             const newstate = {...state}
-            newstate[action.i] = {selected:[], answer_options:action.answer_options,difficulty:action.difficulty, correct:false, correct_answers:action.correct_answers, question_id: action.question_id}
+            newstate[action.i] = {selected:[], answer_options:action.answer_options,difficulty:action.difficulty, correct:false, correct_answers:action.correct_answers, question_id: action.question_id, question_type:action.question_type}
             return newstate
         case "UPDATESELECTED":
             const updatedstate = {...state}
             updatedstate[action.i].selected = action.selected
+            console.log(action.selected)
             return updatedstate
         
         case "SETASCORRECT":
@@ -59,7 +64,10 @@ function Question(p) {
         <div id="question">
             <div id="title">
                 <div id="left">
-                    {p.i + 1}. {p.data.question_type == 'pick' && p.data.content} {p.data.question_type == 'fill' && ('Fill in the gap to make a sentence: ' + p.data.content.replace('_', '__________c'))} {p.data.question_type == 'order' && p.data.content}
+                    {p.i + 1 + '. '}
+                    {p.data.question_type == 'pick' && p.data.content}
+                    {p.data.question_type == 'fill' && ('Fill the gap: ' + p.data.content.replace('_', '________'))}
+                    {p.data.question_type == 'order' && ('Put the words in the correct order to translate: ' + p.data.content)}
                 </div>
                 <div id="right">
                     {!p.Finished ? 
@@ -119,7 +127,11 @@ function Question(p) {
                 </div>)}
 
                 {p.data.question_type == 'fill' && (<div id="fill">
-                    <input className='input' placeholder='Enter your answer.' />
+                    <input className='input' placeholder={!p.Finished ? 'Enter your answer.' : '' }
+                        disabled={p.Finished}
+                        onChange={(e) => {
+                            p.DispatchQuestionsData({ type: 'UPDATESELECTED', i: p.i, selected:[e.target.value] })
+                        }}/>
                 </div>)}
 
             </div>
@@ -138,7 +150,7 @@ function Question(p) {
 }
 
 
-export function Questions(p) {
+export function Questions({type}) {
     document.title = `VocaPlace | Questions`
 
     const { unitid, topicid } = useParams()
@@ -147,29 +159,43 @@ export function Questions(p) {
     const [Finished, SetFinished] = useState(false);
     const [QuestionsData, DispatchQuestionsData] = useReducer(QuestionsReducer, {})
 
+    // useEffect(() => {
+    //     if (C.AppReady) {
+    //         if (type == 'normal') {
+    //             DataService.GenerateQuiz(type,unitid,topicid).then((data) => {
+    //                 const questions = ShuffleArray(data.data)
+    //                 questions.forEach((q, i) => {
+    //                     const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
+                        
+    //                     DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id, question_type:questions[i].question_type })
+    //                 })
+    //                 SetQuestions(questions)
+    //             })
+    //         } else if (type == 'repetition') {
+    //             console.log('this is a repetition quiz')
+    //             DataService.GenerateQuiz(type).then((data) => {
+    //                 const questions = ShuffleArray(data.data)
+    //                 questions.forEach((q, i) => {
+    //                     const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
+    //                     DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
+    //                 })
+    //                 SetQuestions(questions)
+    //             })
+    //         }
+    //     }
+    // }, [C.AppReady])
+
     useEffect(() => {
         if (C.AppReady) {
-            if (p.type == 'normal') {
-                DataService.GenerateQuiz(unitid,topicid).then((data) => {
-                    const questions = ShuffleArray(data.data.unansweredQuestions.concat(data.data.answeredQuestions))
-                    questions.forEach((q, i) => {
-                        const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-                        
-                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id })
-                    })
-                    SetQuestions(questions)
-                })
-            } else if (p.type == 'repetition') {
-                console.log('this is a repetition quiz')
-                DataService.GenerateRepetitionQuiz().then((data) => {
+                DataService.GenerateQuiz(type, unitid, topicid).then((data) => {
                     const questions = ShuffleArray(data.data)
                     questions.forEach((q, i) => {
                         const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-                        DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
+
+                        DispatchQuestionsData({ type: 'INIT', i, answer_options, difficulty: questions[i].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id, question_type: questions[i].question_type })
                     })
                     SetQuestions(questions)
                 })
-            }
         }
     }, [C.AppReady])
 
@@ -179,14 +205,10 @@ export function Questions(p) {
 
     return (
         <div id="Questions">
-            {p.type == 'normal' && (<div id='header'>
-                <h1>Questions</h1>
-                <p>Here's your set of questions. Good luck!</p>
-            </div>)}
-            {p.type == 'repetition' && (<div id='header'>
-                <h1>Repetition</h1>
-                <p>Here's your set of previously incorrect questions. Good luck!</p>
-            </div>)}
+            <div id='header'>
+                <h1>{type === 'normal' ? 'Questions' : 'Repetition'}</h1>
+                <p>Here's your set of {type === 'repetition' && 'previously incorrect'} questions. Good luck!</p>
+            </div>
 
 
             {Finished && (
@@ -218,9 +240,10 @@ export function Questions(p) {
                         DataService.UpdatePoints(result.points).then(() => {
                             console.log('updated points')
                         })
+                        console.log('saved')
 
                     }
-                    if (result.incorrectids.length > 0 && p.type != 'repetition') {
+                    if (result.incorrectids.length > 0 && type != 'repetition') {
                         DataService.SaveRepetitions(result.incorrectids).then(() => {
                             console.log('saved repetitions')
                         })
