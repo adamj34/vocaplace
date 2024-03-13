@@ -16,7 +16,8 @@ function CheckQuestions(checkedstate, DispatchQuestionsData) {
         console.log(checkedstate[i])
         if (
             (checkedstate[i].question_type === 'pick' && checkedstate[i].selected.sort().toString() === checkedstate[i].correct_answers.sort().toString()) ||
-            (checkedstate[i].question_type === 'fill' && checkedstate[i].correct_answers.includes(checkedstate[i].selected[0]))
+            (checkedstate[i].question_type === 'fill' && checkedstate[i].correct_answers.includes(checkedstate[i].selected[0])) ||
+            (checkedstate[i].question_type === 'order' && checkedstate[i].selected.toString() === checkedstate[i].correct_answers.toString())
             ) {
             correctids.push(checkedstate[i].question_id)
             points += checkedstate[i].difficulty * 10
@@ -67,7 +68,7 @@ function Question(p) {
                     {p.i + 1 + '. '}
                     {p.data.question_type == 'pick' && p.data.content}
                     {p.data.question_type == 'fill' && ('Fill the gap: ' + p.data.content.replace('_', '________'))}
-                    {p.data.question_type == 'order' && ('Put the words in the correct order to translate: ' + p.data.content)}
+                    {p.data.question_type == 'order' && ("Put the words in the correct order to translate: '" + p.data.content+"'")}
                 </div>
                 <div id="right">
                     {!p.Finished ? 
@@ -105,25 +106,45 @@ function Question(p) {
                 </div>)}
 
                 {p.data.question_type == 'order' && (<div id="order">
-                    {p.QuestionsData[p.i].answer_options.map((q, i) => {
-                        return (
-                            <div id='answer' key={i}
-                                className={`${p.QuestionsData[p.i].selected.includes(q) ? 'selected' : ''} ${p.Finished ? 'disabled' : ''}`}
-                                onClick={() => {
-                                    if (!p.Finished) {
-                                        let selected = p.QuestionsData[p.i].selected
-                                        if (selected.includes(q)) {
-                                            selected = selected.filter(x => x != q)
-                                        } else {
-                                            selected.push(q)
+                    <div id="selected">
+                        {p.QuestionsData[p.i].selected.map((q, i) => {
+                            return (
+                                <div id='answer' key={i}
+                                    className={`selected ${p.Finished ? 'disabled' : ''}`}
+                                    onClick={() => {
+                                        if (!p.Finished) {
+                                            let selected = p.QuestionsData[p.i].selected
+                                            if (selected.includes(q)) {
+                                                selected = selected.filter(x => x != q)
+                                            }
+                                            p.DispatchQuestionsData({ type: 'UPDATESELECTED', i: p.i, selected })
                                         }
-                                        p.DispatchQuestionsData({ type: 'UPDATESELECTED', i: p.i, selected })
-                                    }
-                                }}>
-                                {q}
-                            </div>
-                        )
-                    })}
+                                    }}>
+                                    {q}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <br/>
+                    <div id="options">
+                        {p.QuestionsData[p.i].answer_options.filter(x=>!p.QuestionsData[p.i].selected.includes(x)).map((q, i) => {
+                            return (
+                                <div id='answer' key={i}
+                                    className={`${p.Finished ? 'disabled' : ''}`}
+                                    onClick={() => {
+                                        if (!p.Finished) {
+                                            let selected = p.QuestionsData[p.i].selected
+                                            if (!selected.includes(q)) {
+                                                selected.push(q)
+                                            }
+                                            p.DispatchQuestionsData({ type: 'UPDATESELECTED', i: p.i, selected })
+                                        }
+                                    }}>
+                                    {q}
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>)}
 
                 {p.data.question_type == 'fill' && (<div id="fill">
@@ -137,12 +158,26 @@ function Question(p) {
             </div>
             {(p.Finished && !p.QuestionsData[p.i].correct) && (
                 <div id="correctanswers">
-                    <p>Correct answers:</p>
-                    {p.data.correct_answers.map((x, i) => {
-                        return <li key={i}>
-                            {x}
-                        </li>
-                    })}
+                    {p.data.question_type === 'pick' && <>
+                        <p>Correct answers:</p>
+                        {p.data.correct_answers.map((x, i) => {
+                            return <li key={i}>
+                                {x}
+                            </li>
+                        })}
+                    </>}
+                    {p.data.question_type === 'order' && <>
+                        <p>Correct answer:</p>
+                        <li>{p.data.correct_answers.join(' ')}</li>
+                    </>}
+                    {p.data.question_type === 'fill' && <>
+                        <p>Possible answers:</p>
+                        {p.data.correct_answers.map((x, i) => {
+                            return <li key={i}>
+                                {x}
+                            </li>
+                        })}
+                    </>}
                 </div>
             )}
         </div>

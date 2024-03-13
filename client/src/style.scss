@@ -778,6 +778,12 @@ input[type="file"] {
           display: flex;
           gap: 20px;
         }
+        #order {
+          #selected, #options {
+            display: flex;
+            gap: 10px;
+          }
+        }
         input {
           width: 40%;
         }

@@ -46,7 +46,7 @@ export function Repetitions() {
                                 {u.topics.map((t,i)=>{
                                     return (
                                         <li key={i}>
-                                            <Icon icon={t.topic_icon || 'book'} />
+                                            <Icon icon={t.topic_icon || 'feather'} />
                                             <p>{t.topic}: {t.repetition_questions} mistake{t.repetition_questions > 1 && 's'}</p>
                                         </li>
                                     )
