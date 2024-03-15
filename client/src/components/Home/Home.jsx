@@ -14,8 +14,8 @@ const offering = {
 const links = {
     'units': { title: 'Units', icon: 'book', description: 'Continue learning new words and phrases.' },
     'revisions': { title: 'Revisions', icon: 'brain', description: 'Review your previous mistakes.' },
-    'friends': offering.friends,
-    'groups': offering.groups,
+    'friends': {...offering.friends, title: 'Friends'},
+    'groups': {...offering.groups, title: 'Groups'},
     'ranking': offering.ranking,
     'profile': { title: 'Profile', icon: 'pen', description: 'View and customize your profile.'}
 }

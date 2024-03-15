@@ -1155,13 +1155,31 @@ input[type="file"] {
       background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       padding: 10px 20px;
       #memberlist {
-        max-height: 200px;
+        max-height: 400px;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column-reverse;
         &::-webkit-scrollbar-track {
           background: none;
         }
         &::-webkit-scrollbar-thumb {
           background-color: $maingray;
+        }
+        #member {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          #buttons {
+            display: flex;
+            gap: 5px;
+            #icon {
+              cursor: pointer;
+              transition: $transition;
+              &:hover {
+                color: $themecolor;
+              }
+            }
+          }
         }
       }
     }
@@ -1198,6 +1216,8 @@ input[type="file"] {
       }
       #window {
         padding: 10px;
+        max-height: 400px;
+        overflow-y: auto;
         #message {
           &:not(:first-of-type) #messagedata {
             margin-top: 20px;
@@ -1217,6 +1237,19 @@ input[type="file"] {
           }
           #messagecontent {
             margin: 4px 38px;
+            #icon {
+              opacity: 0;
+              transition: $transition;
+              cursor: pointer;
+              &:hover {
+                color: $themecolor;
+              }
+            }
+            &:hover {
+              #icon {
+                opacity: 1;
+              }
+            }
           }
         }
         // max-height: 200px;
@@ -1226,6 +1259,21 @@ input[type="file"] {
         }
         &::-webkit-scrollbar-thumb {
           background-color: $maingray;
+        }
+      }
+    }
+    #right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      #buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        #admin {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
         }
       }
     }

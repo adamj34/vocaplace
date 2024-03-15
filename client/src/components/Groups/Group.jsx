@@ -5,12 +5,16 @@ import DataService from '../../DataService';
 import { useKeycloak } from '@react-keycloak/web';
 import { LoginRequired } from '../LoginRequired';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
+import Icon from '../Icon';
+import TextareaAutosize from 'react-textarea-autosize';
 
 export function Group() {
     const { id } = useParams()
     document.title = `VocaPlace | Group name`
     const C = useContext(AppContext);
     const [GroupData, SetGroupData] = useState({group:{}, members:[]});
+    const [ManagingGroup, SetManagingGroup] = useState(false);
+    const [UpdatedGroupData, SetUpdatedGroupData] = useState({group_name:GroupData.group.group_name});
 
     function IsGroupAdmin(userid) {
         const user = GroupData.members.find(m => m.id === userid)
@@ -25,6 +29,14 @@ export function Group() {
         { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test2' },
         { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test3' },
         { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4' },
+        { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'test', content: 'test4' },
     ]
 
     useEffect(() => {
@@ -46,7 +58,7 @@ export function Group() {
         <div id="Group">
             <div id='header'>
                 <h1>{GroupData.group.group_name}</h1>
-                <p>{GroupData.group.bio}</p>
+                <p>{GroupData.group.bio || 'The owner of this group was too busy studying to set a description...'}</p>
             </div>
 
             <div id='content'>
@@ -57,13 +69,19 @@ export function Group() {
                 <div id='memberlist'>
                     {GroupData.members.map((u, i) => {
                         return (
-                        <Link key={i} to={`/profile/${u.id}`}>
-                            <div id="user">
-                                <div id='pfp' style={{ backgroundImage: `url(${u.picture || placeholderpfp})`, height: 30, width: 30 }}></div>
-                                <p id="username">{u.username} {u.admin && (<i className="fas fa-crown" />)}</p>
-                            </div>
-                            <i className='fas fa-trash'></i>
-                        </Link>)
+                            <div key={i} id='member'>
+                                <Link key={i} to={`/profile/${u.id}`}>
+                                    <div id="user">
+                                        <div id='pfp' style={{ backgroundImage: `url(${u.picture || placeholderpfp})`, height: 30, width: 30 }}></div>
+                                        <p id="username">{u.username} {u.admin && (<Icon icon='crown' />)}</p>
+                                    </div>
+                                </Link>
+                                {ManagingGroup && <div id='buttons'>
+                                    {IsGroupAdmin(C.UserData.id) && <Icon icon='trash' />}
+                                    {IsGroupAdmin(C.UserData.id) && <Icon icon='star' />}
+                                </div>}
+                                
+                            </div>)
                     })}
                 </div>
             </div>
@@ -84,7 +102,7 @@ export function Group() {
                                     </Link>
                                     <p id='time'>{m.posted}</p>
                                 </div> : null}
-                                <p id='messagecontent'>{m.content}</p>
+                                    <p id='messagecontent'>{m.content} {IsGroupAdmin(C.UserData.id) && <Icon icon='trash'/>}</p>
                             </div>)
                         })}
                 </div>
@@ -98,7 +116,24 @@ export function Group() {
                             <p id='role'>{IsGroupAdmin(C.UserData.userid) ? "Group Owner" : "Group Member"}</p>
                         </div>
                 </div>
-                <button className='button'>Leave Group</button>
+                <div id='buttons'>
+                    {IsGroupAdmin(C.UserData.id) && <div id='admin'>
+                            {!ManagingGroup && <button className='button' onClick={() => { SetManagingGroup(true) }}>Manage Group</button>}
+                            {ManagingGroup && <>
+                            <div id='field'>
+                                <label>Group Name:</label>
+                                <input className='input' placeholder={GroupData.group.group_name} onChange={(e) => { SetUpdatedGroupData({ ...UpdatedGroupData, group_name: e.target.value }) }} />
+                            </div>
+                            <div id='field'>
+                                <label>Group Description:</label>
+                                <TextareaAutosize id='bio' className='input' minRows={4} maxLength={300} placeholder={GroupData.group.bio} onChange={(e) => { SetUpdatedGroupData({ ...UpdatedGroupData, bio: e.target.value }) }} ></TextareaAutosize>
+                            </div>
+                            <button className='button' onClick={() => { SetManagingGroup(false) }}>Save Changes</button>
+                            <button className='button light' onClick={() => { SetManagingGroup(false) }}>Discard Changes</button>
+                            </>}
+                    </div>}
+                    {!ManagingGroup && <button className='button light'>Leave Group</button>}
+                </div>
             </div>
 
 
