@@ -10,7 +10,8 @@ import Icon from '../Icon';
 
 function SearchBar() {
     const navigate = useNavigate()
-    const [SearchQuery, SetQuery] = useState("");
+    const [SearchQuery, SetQuery] = useState("")
+    
     return (
         <form id='searchbar' onSubmit={(e)=>{e.preventDefault(); if (SearchQuery.length > 0) {navigate({pathname:`/search`,search:`?q=${SearchQuery}`}); SetQuery('')}}}>
             <Icon icon='search'/>
@@ -22,7 +23,6 @@ function SearchBar() {
 export function Nav() {
     const C = useContext(AppContext);
     const { keycloak } = useKeycloak();
-    const notifications = ["Message 1", "Message 2", "Message 3","Message 1", "Message 2", "Message 3","Message 1", "Message 2", "Message 3","Message 1", "Message 2", "Message 3"]// placeholder
 
     if (!keycloak.authenticated) {
         return (
@@ -69,7 +69,7 @@ export function Nav() {
                     <SearchBar/>
                 </section>
                 <section id='right'>
-                    <Notifications messages={notifications}/>
+                    <Notifications/>
                     <Link to={"/profile/"+C.UserData.id} id='profile' className='hovertext'>
                         <span id='username' >{C.UserData.username}</span>
                         <div id='pfp' style={{ backgroundImage: `url(${C.UserData.picture || placeholderpfp})`, height: 40, width:40 }}/>
