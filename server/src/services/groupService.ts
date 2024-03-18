@@ -14,7 +14,7 @@ const createGroup = (userId: string, groupName: string, groupBio?: string, group
         const data = await t.groups.addMember({ group_id: groupData.id, user_id: userId, admin: true, accepted: true });
 
         if (groupPicture) {
-            const pictureKey = crypto.createHash('sha256').update(groupData.id).digest('hex');
+            const pictureKey = crypto.createHash('sha256').update(String(groupData.id)).digest('hex');
             const pictureURI = `${PictureFolder.GROUP}/${pictureKey}`;
             const buffer = await sharp(groupPicture.buffer).resize(200, 200).toBuffer();
             const uploadParams = {
@@ -53,7 +53,7 @@ const updateGroup = (userId: string, groupId: number, updateData: { group_name?:
         delete updateData.picture;
         let uploadParams;
         if (picture) {
-            const pictureKey = crypto.createHash('sha256').update(groupData.id).digest('hex');
+            const pictureKey = crypto.createHash('sha256').update(String(groupData.id)).digest('hex');
             const pictureURI = `${PictureFolder.GROUP}/${pictureKey}`;
             const buffer = await sharp(picture.buffer).resize(200, 200).toBuffer();
             uploadParams = {
@@ -141,7 +141,7 @@ const joinGroup = (userId: string, groupName: string) => {
 
         return {
             success: true,
-            data: data.group_id,
+            data: {"group_id": data.group_id},
         }
     })
 }

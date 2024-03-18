@@ -29,7 +29,7 @@ class UsersRepository {
         `, value);
     }
 
-    updateUser(id: string, values: { bio?: string; username?: string; private_profile?: boolean; picture?: string; }) {
+    updateUser(id: string, values: { bio?: string; private_profile?: boolean; picture?: string; }) {
         const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', { id });
         const updateQuery = pgp.helpers.update(values, null, 'users') + condition;
         return this.db.one(updateQuery);

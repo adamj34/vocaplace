@@ -9,7 +9,6 @@ const getVisitedUserIdSchema = object({
 
 const updateUserSchema = object({
     body: object({
-        username: string().trim().strict().optional(),
         bio: string().max(500).trim().strict().optional(),
         picture: mixed()
             .test('file-size', 'The file is too large', pic => {

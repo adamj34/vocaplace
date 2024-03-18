@@ -94,7 +94,7 @@ const deleteProfilePicture = async (userId: string) => {
     };
 }
 
-const updateUser = (userId: string, updateData: { username?: string, bio?: string, private_profile?: boolean, picture?: any }) => {
+const updateUser = (userId: string, updateData: { bio?: string, private_profile?: boolean, picture?: any }) => {
     return db.tx(async t => {
         const userData = await t.users.findById({ id: userId });
         if (!userData) {
