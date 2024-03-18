@@ -90,6 +90,42 @@ const updateGroup = (userId: string, groupId: number, updateData: { group_name?:
     })
 }
 
+const deleteGroup = (userId: string, groupId: number) => {
+    return db.tx(async t => {
+        const groupData = await t.groups.findById({ id: groupId });
+        if (!groupData) {
+            throw errorFactory('404', 'Group not found');
+        }
+
+        const userRequestingData = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
+        if (!userRequestingData || !userRequestingData.admin) {
+            throw errorFactory('403', 'User is not an admin of this group');
+        }
+
+        const deleteParams = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: groupData.picture
+        };
+
+        // delete picture from s3
+        if (groupData.picture) {
+            await s3Instance.send(new DeleteObjectCommand(deleteParams));
+            try {
+                await invalidateCache(groupData.picture);
+            } catch (err) {
+                logger.error('Error invalidating cache for group picture', err);
+            }
+        }
+
+        await t.groups.deleteGroup({ id: groupId });
+
+        return {
+            success: true,
+            data: null
+        }
+    })
+}
+
 const deleteGroupPicture = (userId: string, groupId: number) => {
     return db.tx(async t => {
         const groupData = await t.groups.findById({ id: groupId });
@@ -232,6 +268,7 @@ const getGroupInfo = (groupId: number) => {
 export default {
     createGroup,
     updateGroup,
+    deleteGroup,
     deleteGroupPicture,
     joinGroup,
     getGroupInfo,

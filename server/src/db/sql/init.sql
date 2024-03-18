@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS groups (
 CREATE TABLE IF NOT EXISTS group_membership (
   id SERIAL PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id),
-  group_id INTEGER NOT NULL REFERENCES groups(id),
+  group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
   admin BOOLEAN NOT NULL DEFAULT false,
   accepted BOOLEAN NOT NULL DEFAULT false,
   UNIQUE(user_id, group_id),

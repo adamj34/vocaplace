@@ -43,7 +43,7 @@ const joinGroupSchema = object({
     }).required()
 });
 
-const getGroupInfoSchema = object({
+const groupIdSchema = object({
     params: object({
         id: number().integer().positive().required(),
     }).required()
@@ -55,12 +55,6 @@ const deleteMemberSchema = object({
     }).required(),
     params: object({
         id: number().integer().positive().required(),  // group id
-    }).required()
-});
-
-const deleteGroupPictureSchema = object({
-    params: object({
-        id: number().integer().positive().required(),
     }).required()
 });
 
@@ -78,8 +72,7 @@ export {
     createGroupSchema,
     updateGroupSchema,
     joinGroupSchema,
-    getGroupInfoSchema,
+    groupIdSchema,
     deleteMemberSchema,
-    updateMembershipSchema,
-    deleteGroupPictureSchema,
+    updateMembershipSchema
 };

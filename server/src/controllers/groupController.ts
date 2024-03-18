@@ -25,6 +25,16 @@ const updateGroup = async (req, res) => {
     }
 }
 
+const deleteGroup = async (req, res) => {
+    try {
+        const response = await groupService.deleteGroup(req.userId, +req.params.id)
+        res.status(httpStatus.NO_CONTENT).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in deleteGroup controller');
+        handleError(err, res)
+    }
+}
+
 const deleteGroupPicture = async (req, res) => {
     try {
         const response = await groupService.deleteGroupPicture(req.userId, +req.params.id)
@@ -79,6 +89,7 @@ const getGroupInfo = async (req, res) => {
 export default {
     createGroup,
     updateGroup,
+    deleteGroup,
     deleteGroupPicture,
     joinGroup,
     getGroupInfo,

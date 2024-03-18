@@ -56,6 +56,10 @@ class GroupsRepository {
         return this.db.one('INSERT INTO groups (group_name, bio, picture) VALUES(${group_name}, ${bio}, ${picture}) RETURNING *', values);
     }
 
+    deleteGroup(value: { id: number; }) {
+        return this.db.none('DELETE FROM groups WHERE id = ${id}', value);
+    }
+
     updateGroup(id: number, values: { group_name?: string; bio?: string; picture?: string; }) {
         const condition = pgp.as.format(' WHERE id = ${id} RETURNING *', { id });
         const updateQuery = pgp.helpers.update(values, null, 'groups') + condition;
