@@ -45,7 +45,8 @@ class GroupsRepository {
         return this.db.any(`
             SELECT
                 user_id,
-                admin
+                admin,
+                accepted
             FROM
                 group_membership
             WHERE group_id = $<id>
@@ -82,6 +83,10 @@ class GroupsRepository {
 
     updateMembership(values: { user_id: string; group_id: number; accepted: boolean; }) {
         return this.db.one('UPDATE group_membership SET accepted = $<accepted> WHERE group_id = $<group_id> AND user_id = $<user_id> RETURNING *', values);
+    }
+
+    updateAdminStatus(values: { user_id: string; group_id: number; admin: boolean; }) {
+        return this.db.one('UPDATE group_membership SET admin = $<admin> WHERE group_id = $<group_id> AND user_id = $<user_id> RETURNING *', values);
     }
 
     searchByGroupname(value: { searchPhrase: string; }) {

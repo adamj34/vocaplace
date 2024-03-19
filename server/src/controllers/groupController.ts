@@ -65,6 +65,16 @@ const updateMembership = async (req, res) => {
     }
 }
 
+const passAdminRights = async (req, res) => {
+    try {
+        const response = await groupService.passAdminRights(req.userId, req.body.user_id_to_make_admin, +req.params.id)
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in passAdminRights controller');
+        handleError(err, res)
+    }
+}
+
 const deleteMember = async (req, res) => {
     try {
         const response = await groupService.deleteMember(req.userId, req.body.user_id_to_delete, +req.params.id)
@@ -94,5 +104,6 @@ export default {
     joinGroup,
     getGroupInfo,
     deleteMember,
-    updateMembership
+    updateMembership,
+    passAdminRights
 }

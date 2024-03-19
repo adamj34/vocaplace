@@ -67,6 +67,15 @@ const updateMembershipSchema = object({
     }).required()
 });
 
+const passAdminRightsSchema = object({
+    body: object({
+        user_id_to_make_admin: string().uuid().trim().strict().required(),
+    }).required(),
+    params: object({
+        id: number().integer().positive().required(),  // group id
+    }).required()
+});
+
 
 export {
     createGroupSchema,
@@ -74,5 +83,6 @@ export {
     joinGroupSchema,
     groupIdSchema,
     deleteMemberSchema,
-    updateMembershipSchema
+    updateMembershipSchema,
+    passAdminRightsSchema
 };
