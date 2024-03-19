@@ -2,8 +2,6 @@ import { useParams, Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { AppContext } from '../../App';
 import DataService from '../../DataService';
-import { useKeycloak } from '@react-keycloak/web';
-import { LoginRequired } from '../LoginRequired';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import Icon from '../Icon';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -50,13 +48,9 @@ export function Group() {
                 data.members.push({ ...data.members[0] })
                 SetGroupData(data)
                 document.title = `VocaPlace | ${data.group.group_name}`
-                console.log(data)
             })
         }
-    }, [C.AppReady])
-
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) { return <LoginRequired /> }
+    }, [C.AppReady, id])
 
     return (
         <div id="Group">
@@ -96,7 +90,7 @@ export function Group() {
                         {chatmessages.map((m, i) => {
                             return (
                             <div id='message'>
-                                {(i == 0 || chatmessages[i - 1].username != m.username) ?
+                                {(i === 0 || chatmessages[i - 1].username !== m.username) ?
                                     <div id='messagedata'>
                                     <Link key={i} to={`/profile/${m.id}`}>
                                          <div id="user">

@@ -44,7 +44,7 @@ export function Nav() {
             <header id="Nav">
                 <section id='left'>
                     <Link to="">
-                        <img id='websitelogo' src={websitelogo}></img>
+                        <img id='websitelogo' alt='logo' src={websitelogo}></img>
                     </Link>
                     <nav id='links'>
                         <Link to='units'>

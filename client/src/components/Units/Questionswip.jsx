@@ -1,5 +1,3 @@
-import { useKeycloak } from "@react-keycloak/web";
-import { LoginRequired } from "../LoginRequired";
 import { Link, useParams } from "react-router-dom";
 import { useContext, useState, useEffect, useReducer } from "react";
 import { AppContext } from "../../App";
@@ -161,10 +159,6 @@ export function Questions({type}) {
             })
         }
     }, [C.AppReady])
-
-
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) { return <LoginRequired /> }
 
     return (
         <div id="Questions">

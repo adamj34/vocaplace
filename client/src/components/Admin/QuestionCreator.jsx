@@ -3,7 +3,6 @@ import DataService from "../../DataService";
 
 
 function Validate(Data) {
-    // console.log(Data)
     if (!Data.topic || !Data.unit) {
         return "You must choose a unit and a topic!"
     } else if (!Data.questionType) {

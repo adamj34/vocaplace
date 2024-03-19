@@ -2,8 +2,6 @@ import { useSearchParams, Link, Navigate } from 'react-router-dom';
 import {useEffect, useState, useContext} from 'react';
 import { AppContext } from '../../App';
 import DataService from '../../DataService';
-import { useKeycloak } from '@react-keycloak/web';
-import { LoginRequired } from '../LoginRequired';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import Icon from '../Icon';
 
@@ -25,22 +23,18 @@ function ListElement(p) {
 export function Search() {
     const [ Params ] = useSearchParams();
     const [SearchData, SetSearchData] = useState({matchedGroups:[], matchedUsers:[]})
-    document.title = `VocaPlace | ${Params.get('q')}`
     const C = useContext(AppContext);
 
     useEffect(() => {
         if (C.AppReady) {
             DataService.GetSearchResults(Params.get('q')).then((data) => {
                 SetSearchData(data.data)
-                console.log(data.data)
+                document.title = `VocaPlace | ${Params.get('q')}`
             })
         }
     }, [C.AppReady, Params])
 
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) { return <LoginRequired /> }
-
-    if (!Params.get('q') || Params.get('q').length == 0) {return (<Navigate replace to="/"/>)}
+    if (!Params.get('q') || Params.get('q').length === 0) {return (<Navigate replace to="/"/>)}
 
     return (
         <div id="Search">

@@ -7,6 +7,7 @@ import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../../App';
 import DataService from '../../DataService';
 import { DateFormat } from '../../helpers/DateFormat';
+import { LoadingScreen } from '../LoadingScreen';
 import TextareaAutosize from 'react-textarea-autosize';
 
 function SetRelationship(rel, me) {
@@ -20,24 +21,6 @@ function SetRelationship(rel, me) {
         return 'friends'
     }
 }
-
-function UpdateUserData(data) {
-    if (!data.picture || data.picture.size < 1000000) {
-        console.log(data)
-    } else {
-        console.log('file too big')
-    }
-    // DataService.UpdateUserData(data).then((res) => {
-    //     if (data.picture) {
-    //         console.log(res)
-    //         // C.SetUserData(...C.UserData, picture)
-    //     }
-    //     console.log('updated')
-    // }).catch((e) => {
-    //     console.log(e)
-    // })
-}
-
 function ListElement(p) {
     return (
         <li>
@@ -52,27 +35,28 @@ function ListElement(p) {
 }
 
 export function Profile() {
-    const [Loading, SetLoading] = useState(true);
     const C = useContext(AppContext);
     const { id } = useParams()
     const [ProfileData, SetProfileData] = useState({});
+    const [LoadingProfile, SetLoadingProfile] = useState(true);
 
     const [EditingProfile, SetEditingProfile] = useState(false);
     const [EditingData, SetEditingData] = useState({});
     const [PicturePreview, SetPicturePreview] = useState(null);
-
-    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    const [PictureWillBeDeleted, SetPictureWillBeDeleted] = useState(false);
+    const [ErrorMessage, SetErrorMessage] = useState('');
+    const [Saving, SetSaving] = useState(false);
 
     useEffect(() => {
         if (C.AppReady) {
             DataService.GetProfileData(id).then((data)=> {
                 SetProfileData({...data, relationship:SetRelationship(data.relationship, C.UserData.id)})
                 document.title = `VocaPlace | ${data.user.username}`
-                console.log(data)
-                SetLoading(false)
+                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                SetLoadingProfile(false)
             })
         }
-    }, [C.AppReady, id])
+    }, [C.AppReady, id, C.UserData.id])
 
 
     function SendInvite() {
@@ -106,49 +90,111 @@ export function Profile() {
         })
     }
 
-    function DeletePicture() { // state only IDK FIGURE THIS OUT
-        const data = {...EditingData}
-        delete data.picture // deleted in separate endpoint
-        SetEditingData(data)
-        SetPicturePreview('deleted')
+    function AddNewPicture(file) {
+        if (file && file.type.startsWith('image')) {
+            SetPicturePreview(URL.createObjectURL(file))
+            SetEditingData({ ...EditingData, 'picture': file })
+            SetPictureWillBeDeleted(false)
+        }
+    }
+
+    function DeletePicture() {
+        const datawithoutpic = {...EditingData}
+        delete datawithoutpic.picture
+        SetEditingData(datawithoutpic)
+        SetPicturePreview(placeholderpfp)
+        SetPictureWillBeDeleted(true)
+    }
+
+    function UpdateUserData() {
+        SetErrorMessage('')
+
+        if ( Object.keys(EditingData).length > 0 ) { // nothing to update
+            if (!EditingData.picture || EditingData.picture.size < 1000000) {
+                SetSaving(true)
+                DataService.UpdateUserData(EditingData).then((res) => {
+                    C.SetUserData(res.data)
+                    SetProfileData({...ProfileData, user:res.data})
+
+                    if (PictureWillBeDeleted) {
+                        DataService.DeleteProfilePicture().then(() => {
+                            C.SetUserData({ ...C.UserData, picture: null })
+                            SetProfileData({ ...ProfileData, user: { ...ProfileData.user, picture: null } })
+                            SetSaving(false)
+                            ResetEditor()
+                        }).catch((e) => {
+                            SetErrorMessage('There was an error while updating your profile.')
+                            SetSaving(false)
+                        })
+                    } else {
+                        SetSaving(false)
+                        ResetEditor()
+                    }   
+                }).catch((e) => {
+                    SetErrorMessage('There was an error while updating your profile.')
+                    SetSaving(false)
+                })
+            } else {
+                SetErrorMessage('Picture file has to be smaller than 1MB!')
+            }
+        } else {
+            if (PictureWillBeDeleted && C.UserData.picture) {
+                SetSaving(true)
+                DataService.DeleteProfilePicture().then(() => {
+                    C.SetUserData({ ...C.UserData, picture: null })
+                    SetProfileData({ ...ProfileData, user: { ...ProfileData.user, picture: null } })
+                    SetSaving(false)
+                    ResetEditor()
+                }).catch((e) => {
+                    SetErrorMessage('There was an error while updating your profile.')
+                    SetSaving(false)
+                })
+            } else {
+                ResetEditor()
+            }
+        }
+    }
+
+    function ResetEditor() {
+        SetEditingProfile(false)
+        SetEditingData({})
+        SetPicturePreview(null)
+        SetPictureWillBeDeleted(false)
+        SetErrorMessage('')
     }
 
 
     return (
-        Loading ? <div>Loading</div> :
-        <div id="Profile">
+        LoadingProfile ? <LoadingScreen/>  : <div id="Profile">
             <div id='banner'>
                 <div id='left'>
-                    {!EditingProfile && <div id='profilepic' style={{ backgroundImage: `url(${ProfileData.user.picture || placeholderpfp})`, height: 200, width:200 }}></div>}
-                    {EditingProfile && <div id='pfp-editor'>
-                        <div id='editprofilepic'> 
-                            <label htmlFor="picinput" id='label'>
-                                <div id='pfp' style={{ backgroundImage: `url(${(PicturePreview == 'deleted' && placeholderpfp) || PicturePreview || C.UserData.picture || placeholderpfp})`, height: 200, width:200 }}></div>
-                                <Icon icon='pen'/>
-                            </label>
-                                <input type='file' id='picinput' key={Date.now()} onChange={(e) => { if (e.target.files.length === 1 & e.target.files[0].type.startsWith('image')) {SetPicturePreview(URL.createObjectURL(e.target.files[0])); SetEditingData({...EditingData, 'picture':e.target.files[0]})}}}></input>
-                        </div>
-                        {(PicturePreview !== 'deleted' && (EditingData.picture || C.UserData.picture)) && <button className='button light' id='removepic' onClick={DeletePicture}>Remove Picture</button>}
-                        {EditingData.picture != null && <div id='picinfo'>
-                            <p id='size'>{`File size: ${Math.ceil(EditingData.picture.size/1024)}KB`}</p>
-                            <p id='error'>{EditingData.picture.size > 1000000 && 'File is too big!'}</p>
+                    <div id='pfp-section'>
+                        <div id='pfp' style={{ backgroundImage: `url(${PicturePreview || ProfileData.user.picture || placeholderpfp})`, height: 200, width:200 }}></div>
+                        {EditingProfile && <div id='editor'>
+                                {!Saving && <label htmlFor="picinput" className='button'>Upload new picture</label>}
+                                <input type='file' id='picinput' className='button' key={Date.now()} onChange={(e) => AddNewPicture(e.target.files[0])}></input>
+                                {!Saving && <button className='button light' id='removepic' onClick={DeletePicture}>Remove Picture</button>}
+                                {(!Saving && EditingData.picture != null) && <span id='size'>{`File size: ${Math.ceil(EditingData.picture.size / 1024)}KB`}</span>}
                         </div>}
-                    </div>}
+                    </div>
 
                     <div id='data'>
                         <h1 id='username'>{ProfileData.user.username}</h1>
                         <p>Member since {DateFormat(ProfileData.user.created_at)}</p>
                         <p>{ProfileData.user.ongoing_streak} streak</p>
                         <p>{ProfileData.user.points} points</p>
-                        {!EditingProfile && <p>{ProfileData.user.bio}</p>}
-                        {EditingProfile && <TextareaAutosize id='bio' className='input' minRows={3} maxLength={400} defaultValue={C.UserData.bio} onChange={(e) => { SetEditingData({ ...EditingData, 'bio': e.target.value }) }} ></TextareaAutosize>}
+                        {!EditingProfile ? <p>{ProfileData.user.bio}</p> :
+                        <TextareaAutosize id='bio' className='input' minRows={3} maxLength={400} defaultValue={C.UserData.bio} disabled={Saving} onChange={(e) => { SetEditingData({ ...EditingData, 'bio': e.target.value }) }} ></TextareaAutosize>}
                     </div>
                 </div>
                 {(id === C.UserData.id) ? // self only
                     <div id='buttons'> 
                         {!EditingProfile && <button className='button' onClick={()=>SetEditingProfile(true)}>Edit Profile</button>}
-                        {EditingProfile && <button className='button' onClick={()=>UpdateUserData(EditingData)}>Save Changes</button>}
-                        {EditingProfile && <button className='button light' onClick={() => {SetEditingProfile(false); SetEditingData({}); SetPicturePreview(null)}}>Discard Changes</button>}
+                        {EditingProfile && <>
+                        <button className='button' onClick={UpdateUserData} disabled={Saving}>{Saving ? 'Saving' : 'Save Changes'}</button>
+                        {!Saving && <button className='button light' onClick={ResetEditor}>Discard Changes</button>}
+                        <p>{ErrorMessage}</p>
+                        </>}
                     </div> 
                 
                 // friends
@@ -166,7 +212,7 @@ export function Profile() {
                 }
                 
             </div>
-            <div id='social'>
+            {!EditingProfile && <div id='social'>
                 <div id='friends'>
                     <div id='title'>
                         <Icon icon='user-friends'/>
@@ -185,7 +231,7 @@ export function Profile() {
                         {ProfileData.groups.map((x) => {return <ListElement data={x} page='groups' key={x.id}/>})}
                     </ul>
                 </div>
-            </div>
+            </div>}
            
 
             

@@ -440,63 +440,35 @@ input[type="file"] {
   min-height: 100vh;
   #banner {
     padding: 60px 10%;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 30px;
     #left {
-      width: 80%;
       display: flex;
       align-items: flex-start;
       gap: 30px;
-      #profilepic {
-        border: 6px solid $themecolor;
-        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-        margin-top: 30px;
-        @extend #pfp
-      }
-      #pfp-editor {
+      #pfp-section {
         display: flex;
         flex-direction: column;
-        #editprofilepic {
+        gap: 20px;
+        #pfp {
           border: 6px solid $themecolor;
           box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-          border-radius: 50%;
-          position: relative;
           margin-top: 30px;
-          #pfp {
-            cursor: pointer;
-            transition: $transition;
-            border: none;
-          }
-          label {
-            #icon {
-              cursor: pointer;
-              filter: opacity(0.3);
-              color: white;
-              position: absolute;
-              bottom: 80px;
-              left: 80px;
-              font-size: 250%;
-              transition: $transition;
-            }
-          }
-          &:hover {
-            #pfp {
-              filter: brightness(0.4);
-            }
-            #icon {
-              filter: opacity(1);
-            }
-          }
         }
-        #removepic {
-          margin-top: 15px;
-          max-width: 80%;
-          align-self: center;
+        #editor {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          label {
+            text-align: center;
+            cursor: pointer;
+          }
         }
       }
     }
     #data {
-      min-width: 60%
+      width: 100%;
     }
     #buttons {
       a > button {
@@ -538,6 +510,8 @@ input[type="file"] {
     #content {
       margin-top: 20px;
       list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       li {
         display: flex;
         align-items: center;
@@ -1329,6 +1303,28 @@ input[type="file"] {
       }
     }
   }
+}
+
+#Loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 100vh;
+  i {
+    padding: 5px;
+    background-color: white;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; margin-bottom: 30px; }
+  }
+  // #one { animation-delay: 0.2s; }
+  #two { animation-delay: 0.2s; }
+  #three { animation-delay: 0.4s; }
 }
 
 

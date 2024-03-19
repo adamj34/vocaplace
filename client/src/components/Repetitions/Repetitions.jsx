@@ -1,5 +1,3 @@
-import { useKeycloak } from "@react-keycloak/web";
-import { LoginRequired } from "../LoginRequired";
 import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
@@ -22,9 +20,6 @@ export function Repetitions() {
             })
         }
     }, [C.AppReady])
-
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) { return <LoginRequired /> }
 
     return (
         <div id="Repetitions">

@@ -1,5 +1,3 @@
-import { useKeycloak } from "@react-keycloak/web";
-import { LoginRequired } from "../LoginRequired";
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../App";
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
@@ -42,9 +40,6 @@ export function Groups() {
             })
         }
     }, [C.AppReady])
-
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) {return <LoginRequired/>}
 
     return (
         <div id="Groups">

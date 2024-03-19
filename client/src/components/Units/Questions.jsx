@@ -1,5 +1,3 @@
-import { useKeycloak } from "@react-keycloak/web";
-import { LoginRequired } from "../LoginRequired";
 import { Link, useParams } from "react-router-dom";
 import { useContext, useState, useEffect, useReducer } from "react";
 import { AppContext } from "../../App";
@@ -66,9 +64,9 @@ function Question(p) {
             <div id="title">
                 <div id="left">
                     {p.i + 1 + '. '}
-                    {p.data.question_type == 'pick' && p.data.content}
-                    {p.data.question_type == 'fill' && ('Fill the gap: ' + p.data.content.replace('_', '________'))}
-                    {p.data.question_type == 'order' && ("Put the words in the correct order to translate: '" + p.data.content+"'")}
+                    {p.data.question_type === 'pick' && p.data.content}
+                    {p.data.question_type === 'fill' && ('Fill the gap: ' + p.data.content.replace('_', '________'))}
+                    {p.data.question_type === 'order' && ("Put the words in the correct order to translate: '" + p.data.content+"'")}
                 </div>
                 <div id="right">
                     {!p.Finished ? 
@@ -83,7 +81,7 @@ function Question(p) {
             </div>
             <div id="answers">
 
-                {p.data.question_type == 'pick' && (<div id="pick">
+                {p.data.question_type === 'pick' && (<div id="pick">
                     {p.QuestionsData[p.i].answer_options.map((q,i)=> {
                         return (
                             <div id='answer' key={i} 
@@ -92,7 +90,7 @@ function Question(p) {
                                     if (!p.Finished) {
                                         let selected = p.QuestionsData[p.i].selected
                                         if (selected.includes(q)) {
-                                            selected = selected.filter(x => x != q)
+                                            selected = selected.filter(x => x !== q)
                                         } else {
                                             selected.push(q)
                                         }
@@ -105,7 +103,7 @@ function Question(p) {
                     })}
                 </div>)}
 
-                {p.data.question_type == 'order' && (<div id="order">
+                {p.data.question_type === 'order' && (<div id="order">
                     <div id="selected">
                         {p.QuestionsData[p.i].selected.map((q, i) => {
                             return (
@@ -115,7 +113,7 @@ function Question(p) {
                                         if (!p.Finished) {
                                             let selected = p.QuestionsData[p.i].selected
                                             if (selected.includes(q)) {
-                                                selected = selected.filter(x => x != q)
+                                                selected = selected.filter(x => x !== q)
                                             }
                                             p.DispatchQuestionsData({ type: 'UPDATESELECTED', i: p.i, selected })
                                         }
@@ -147,7 +145,7 @@ function Question(p) {
                     </div>
                 </div>)}
 
-                {p.data.question_type == 'fill' && (<div id="fill">
+                {p.data.question_type === 'fill' && (<div id="fill">
                     <input className='input' placeholder={!p.Finished ? 'Enter your answer.' : '' }
                         disabled={p.Finished}
                         onChange={(e) => {
@@ -232,11 +230,7 @@ export function Questions({type}) {
                     SetQuestions(questions)
                 })
         }
-    }, [C.AppReady])
-
-
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) { return <LoginRequired /> }
+    }, [C.AppReady, type, unitid, topicid])
 
     return (
         <div id="Questions">
@@ -278,7 +272,7 @@ export function Questions({type}) {
                         console.log('saved')
 
                     }
-                    if (result.incorrectids.length > 0 && type != 'repetition') {
+                    if (result.incorrectids.length > 0 && type !== 'repetition') {
                         DataService.SaveRepetitions(result.incorrectids).then(() => {
                             console.log('saved repetitions')
                         })

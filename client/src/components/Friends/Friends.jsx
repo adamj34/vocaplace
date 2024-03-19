@@ -1,5 +1,3 @@
-import { useKeycloak } from "@react-keycloak/web";
-import { LoginRequired } from "../LoginRequired";
 import { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
@@ -35,9 +33,6 @@ export function Friends() {
             SetUpdated(true);
         }
     }, [C.AppReady,Updated]);
-
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) {return <LoginRequired/>}
 
     function AcceptFriendRequest(userid) {
         DataService.AcceptFriendRequest(userid).then((res) => {

@@ -1,6 +1,4 @@
 import { useState, useContext, useEffect } from 'react';
-import { useKeycloak } from "@react-keycloak/web";
-import { LoginRequired } from "../LoginRequired";
 import DataService from "../../DataService";
 import { AppContext } from '../../App';
 import { Link } from 'react-router-dom';
@@ -33,7 +31,6 @@ const initialTopGroupsData = [
 
 export function Ranking() {
     const C = useContext(AppContext);
-    const { keycloak } = useKeycloak();
     const [meAndFriendsData, setMeAndFriendsData] = useState([]);
     const [topUsersData, setTopUsersData] = useState([]);
     const [topGroupsData, setTopGroupData] = useState([]);
@@ -65,10 +62,6 @@ export function Ranking() {
         });    
         }
     }, [C.AppReady]);
-
-    if (!keycloak.authenticated) {
-        return <LoginRequired />;
-    }
 
     document.title = `VocaPlace | Revisions`;
 

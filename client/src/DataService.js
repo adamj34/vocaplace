@@ -9,13 +9,11 @@ const Server = axios.create({
     }
 })
 
-export default {
 
-    SetToken(token) {
+const functions = {
+
+    async GetUserData(token) {
         Server.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    },
-
-    async GetUserData() {
         const res = await Server.get(`/user`)
         return res.data
     },
@@ -58,7 +56,7 @@ export default {
     },
 
     async AcceptFriendRequest(userid) {
-        const res = await Server.patch(`/relationships/accept/friend/${userid}`)
+        await Server.patch(`/relationships/accept/friend/${userid}`)
         return true
     },
 
@@ -165,6 +163,7 @@ export default {
         const res = await Server.get(`/groups/${groupid}`)
         return res.data
     },
-   
-   
+     
 }
+
+export default functions

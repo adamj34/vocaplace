@@ -1,5 +1,3 @@
-import { useKeycloak } from "@react-keycloak/web";
-import { LoginRequired } from "../LoginRequired";
 import { Link } from "react-router-dom";
 import DataService from "../../DataService";
 import { useContext } from "react";
@@ -40,9 +38,6 @@ export function Units() {
             })
         }
     }, [C.AppReady])
-
-    const { keycloak } = useKeycloak();
-    if (!keycloak.authenticated) {return <LoginRequired/>}
 
     return (
         <div id="Units">
