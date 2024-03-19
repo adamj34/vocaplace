@@ -21,11 +21,11 @@
 * Rozwiązywanie quizów o różnych typach pytań i poziomie trudności
   * Informowanie na bieżąco o stanie nauki
 * Zbieranie punktów za rozwiązywanie zadań i *streak*
-* Możliwość powtarzania błędnych pytań lub określonych słówek
+* Możliwość powtarzania błędnych pytań
 * Dodawanie użytkowników do znajomych
 * Tworzenie i dołączanie do grup
   * Ranking i czat grupowy
-* Globalny ranking (punkty i *streak*)
+* Globalny ranking
 * Panel administratora
   * Tworzenie działów (unit), tematów (topic) i pytań (question)
   * Zarządzanie grupami i użytkownikami
