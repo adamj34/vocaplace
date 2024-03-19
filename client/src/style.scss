@@ -300,6 +300,23 @@ input[type="file"] {
               }
             }
           }
+          #clear {
+            opacity: 0.4;
+            transition: $transition;
+            margin: 8px;
+            margin-bottom: 0;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 90%;
+            cursor: pointer;
+            &:hover {
+              opacity: 1;
+            }
+          }
+          #empty {
+            margin: 8px;
+            opacity: 0.4;
+          }
         }
       }
     }
@@ -1277,6 +1294,25 @@ input[type="file"] {
         }
       }
     }
+
+    #hiddenchat {
+      box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+      background-color: $darkgray;
+      border-radius: 12px;
+      background-image: linear-gradient($darkgray, $darkgraygradientbottom);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      #title {
+        text-transform: uppercase;
+      }
+      grid-column: span 2;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
     #right {
       display: flex;
       flex-direction: column;

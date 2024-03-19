@@ -36,8 +36,9 @@ export function Groups() {
     
     useEffect(() => {
         if (C.AppReady) {
-            DataService.GetUserGroups().then((data) => {
-                SetGroups(data.data)
+            DataService.GetUserGroups().then((res) => {
+                SetGroups(res.data)
+                console.log(res.data)
             })
         }
     }, [C.AppReady])
@@ -84,16 +85,13 @@ export function Groups() {
                         <div id='field'>
                             <span>Group Picture {NewGroupData.picture && `(${Math.ceil(NewGroupData.picture.size / 1024)}KB)`}:</span>
                             <div id="pic">
-                                <label for="picinput">
+                                <label htmlFor="picinput">
                                     <p id="inputbutton" className="button" onclick="document.getElementById('picinput').click()">Upload</p>
                                     <input type='file' id='picinput' 
                                         onChange={(e) => {
                                             if (e.target.files && e.target.files.length === 1) {
                                                 SetNewGroupImagePreview(URL.createObjectURL(e.target.files[0]))
                                                 SetNewGroupData({ ...NewGroupData, 'picture': e.target.files[0] })
-                                            } else {
-                                                SetNewGroupImagePreview(null);
-                                                SetNewGroupData({ ...NewGroupData, 'picture': null })
                                             }
                                         }}>
                                     </input>
@@ -106,6 +104,8 @@ export function Groups() {
                         </div>
 
                         <p id="error">{ErrorMessage}</p>
+
+                        
 
                         <button type='button' className='button' disabled={Submitting} onClick={() => {
                             SetSubmitting(true)
@@ -123,7 +123,7 @@ export function Groups() {
                                 DataService.CreateGroup(NewGroupData).then((d) => {
                                     navigate(`/groups/${d.data.id}`)
                                 }).catch(() => {
-                                    SetErrorMessage("Failed to submit!")
+                                    SetErrorMessage("Failed to create group!")
                                 })
                             }
                             SetSubmitting(false)

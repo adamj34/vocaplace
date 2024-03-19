@@ -10,7 +10,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 export function Group() {
     const { id } = useParams()
-    document.title = `VocaPlace | Group name`
     const C = useContext(AppContext);
     const [GroupData, SetGroupData] = useState({group:{}, members:[]});
     const [ManagingGroup, SetManagingGroup] = useState(false);
@@ -19,6 +18,10 @@ export function Group() {
     function IsGroupAdmin(userid) {
         const user = GroupData.members.find(m => m.id === userid)
         return user && user.admin === true
+    }
+
+    function IsUserGroupMember() {
+        return GroupData.members.find(m => m.id === C.UserData.id) == null
     }
     
     const chatmessages = [ // placeholder
@@ -46,6 +49,7 @@ export function Group() {
                 data.members.push({ ...data.members[0], admin: false })
                 data.members.push({ ...data.members[0] })
                 SetGroupData(data)
+                document.title = `VocaPlace | ${data.group.group_name}`
                 console.log(data)
             })
         }
@@ -86,7 +90,7 @@ export function Group() {
                 </div>
             </div>
 
-            <div id='chat'>
+            {IsUserGroupMember() && <div id='chat'>
                 <p id='title'>Group Chat</p>
                 <div id='window'>
                         {chatmessages.map((m, i) => {
@@ -106,9 +110,15 @@ export function Group() {
                             </div>)
                         })}
                 </div>
+            </div>}
 
-            </div>
-            <div id='right'>
+            {!IsUserGroupMember() && <div id='hiddenchat'>
+                <p id='title'>Join the group to access the group chat</p>
+                <button className='button'>Request to join the group</button>
+                <p>You will be notified once the group owner accepts your join request.</p>
+            </div>}
+
+            {IsUserGroupMember() && <div id='right'>
                 <div id='user'>
                         <div id='pfp' style={{ backgroundImage: `url(${C.UserData.picture || placeholderpfp})`, height: 80, width: 80 }}></div>
                         <div id='data'>
@@ -134,8 +144,7 @@ export function Group() {
                     </div>}
                     {!ManagingGroup && <button className='button light'>Leave Group</button>}
                 </div>
-            </div>
-
+            </div>}
 
             </div>
            

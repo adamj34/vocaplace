@@ -58,6 +58,8 @@ export default function Notifications() {
                                 }
                             </p>
                         ))}
+                        {Messages.length === 0 && <p id='empty'>There are no new notifications.</p>}
+                        {Messages.length > 0 && <p id='clear' onClick={()=>SetMessages([])}>Clear all</p>}
                     </div>
                 </section>
             }
