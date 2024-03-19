@@ -133,8 +133,8 @@ const updateUser = (userId: string, updateData: { bio?: string, private_profile?
             }
             const pictureData = await t.users.updateUser(userId, { picture: uploadParams.Key });
             data.picture = pictureData.picture;
-            data = pictureToSignedUrl(data);
         }
+        data = pictureToSignedUrl(data);
 
         return {
             success: true,

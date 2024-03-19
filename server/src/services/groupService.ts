@@ -82,6 +82,7 @@ const updateGroup = (userId: string, groupId: number, updateData: { group_name?:
             const pictureData = await t.groups.updateGroup(groupId, { picture: uploadParams.Key });
             data.picture = pictureData.picture;
         }
+        data = pictureToSignedUrl(data);
 
         return {
             success: true,
