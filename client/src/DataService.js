@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const Server = axios.create({
-    baseURL: `http://${window.location.hostname}:8000`,
+    baseURL: `${window.location.protocol}//${window.location.hostname}:8000`,
     withCredentials: true,
     headers: {
         Accept: 'application/json',
@@ -23,7 +23,7 @@ const functions = {
         return res.data
     },
 
-    async UpdateUserData(data) { // expects: keycloak token in header, body {nickname, bio, private_profile, picture}
+    async UpdateUserData(data) {
         const res = await Server.patch(`/user`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -161,6 +161,17 @@ const functions = {
 
     async GetGroupData(groupid) {
         const res = await Server.get(`/groups/${groupid}`)
+        return res.data
+    },
+
+    async SendGroupJoinRequest(groupid) {
+        const res = await Server.post(`/groups/join`, { group_name: '123' })
+        return res.data
+    },
+
+    async RemoveUserFromGroup(groupid, userid) {
+        console.log({ user_id_to_delete: userid })
+        const res = await Server.delete(`/groups/membership/${groupid}`, { user_id_to_delete: '123' })
         return res.data
     },
      

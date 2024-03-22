@@ -28,7 +28,7 @@ export function Groups() {
     const [Groups, SetGroups] = useState([]);
 
     const [NewGroupData, SetNewGroupData] = useState([]);
-    const [NewGroupImagePreview, SetNewGroupImagePreview] = useState(null);
+    const [NewGroupPicturePreview, SetNewGroupPicturePreview] = useState(null);
     const [Submitting, SetSubmitting] = useState(false);
     const [ErrorMessage, SetErrorMessage] = useState('');
     
@@ -40,6 +40,20 @@ export function Groups() {
             })
         }
     }, [C.AppReady])
+
+    function AddNewPicture(file) {
+        if (file && file.type.startsWith('image')) {
+            SetNewGroupPicturePreview(URL.createObjectURL(file))
+            SetNewGroupData({ ...NewGroupData, 'picture': file })
+        }
+    }
+
+    function DeletePicture() {
+        const datawithoutpic = { ...NewGroupData }
+        delete datawithoutpic.picture
+        SetNewGroupData(datawithoutpic)
+        SetNewGroupPicturePreview(null)
+    }
 
     return (
         <div id="Groups">
@@ -78,28 +92,20 @@ export function Groups() {
                             <TextareaAutosize id='bio' className='input' minRows={4} maxLength={300} placeholder='We love learning English!' onChange={(e) => { SetNewGroupData({ ...NewGroupData, bio: e.target.value }) }} ></TextareaAutosize>
                         </div>
                         <div id='field'>
-                            <span>Group Picture {NewGroupData.picture && `(${Math.ceil(NewGroupData.picture.size / 1024)}KB)`}:</span>
-                            <div id="pic">
-                                <label htmlFor="picinput">
-                                    <p id="inputbutton" className="button" onclick="document.getElementById('picinput').click()">Upload</p>
-                                    <input type='file' id='picinput' 
-                                        onChange={(e) => {
-                                            if (e.target.files && e.target.files.length === 1) {
-                                                SetNewGroupImagePreview(URL.createObjectURL(e.target.files[0]))
-                                                SetNewGroupData({ ...NewGroupData, 'picture': e.target.files[0] })
-                                            }
-                                        }}>
-                                    </input>
-                                </label>
+                            <span>Group Picture{NewGroupData.picture && ` (${Math.ceil(NewGroupData.picture.size / 1024)}KB)`}:</span>
+                            <div id="pic-section">
+                                <div id="buttons">
+                                    <label htmlFor="picinput">
+                                        <p id="inputbutton" className="button" onclick="document.getElementById('picinput').click()">Upload New Picture</p>
+                                        <input type='file' id='picinput' key={Date.now()} onChange={(e) => AddNewPicture(e.target.files[0])}></input>
+                                    </label>
+                                    <button type="button" className='button light' id='removepic' onClick={DeletePicture}>Remove Picture</button>
+                                </div>
                                 
-                                
-                                <div id='pfp' style={{ backgroundImage: `url(${NewGroupImagePreview || placeholderpfp})`, height: 60, width: 60 }}></div>
+                                <div id='pfp' style={{ backgroundImage: `url(${NewGroupPicturePreview || placeholderpfp})`}}></div>
                             </div>
                             
                         </div>
-
-                        <p id="error">{ErrorMessage}</p>
-
                         
 
                         <button type='button' className='button' disabled={Submitting} onClick={() => {
@@ -117,12 +123,17 @@ export function Groups() {
                                 console.log(NewGroupData)
                                 DataService.CreateGroup(NewGroupData).then((d) => {
                                     navigate(`/groups/${d.data.id}`)
-                                }).catch(() => {
-                                    SetErrorMessage("Failed to create group!")
+                                }).catch((e) => {
+                                    if (e && e.response.status === 409) {
+                                        SetErrorMessage("Group with that name already exists!")
+                                    } else {
+                                        SetErrorMessage("Failed to create group!")
+                                    }
+                                    SetSubmitting(false)
                                 })
                             }
-                            SetSubmitting(false)
-                        }}>Create Group</button>
+                        }}>{ !Submitting ? 'Create Group' : 'Creating'}</button>
+                        <p id="error">{ErrorMessage}</p>
                     </form>
                 </div>
             </div>

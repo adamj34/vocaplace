@@ -59,11 +59,14 @@ body {
     color: $themecolor;
     box-sizing: border-box;
   }
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: white;
     background-image: none;
     color: $themecolor;
     outline-color: white;
+  }
+  &:disabled {
+    cursor: default;
   }
 }
 
@@ -952,24 +955,42 @@ input[type="file"] {
   }
 
   #columns {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: center;
     gap: 20px;
     #column {
       flex: 1;
       padding: 40px;
-      max-width: 25%;
       box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
       background-color: $darkgray;
       border-radius: 12px;
       background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       #row {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
         align-items: center;
         padding: 10px;
         border-bottom: 2px solid $themecolor;
         margin: 0 20px;
+        gap: 5px;
+        #user {
+          display: grid;
+          grid-template-columns: 1fr 1.5fr;
+          #pfp {
+            justify-self: end;
+          }
+          #username {
+            justify-self: baseline;
+          }
+        }
+        #placement {
+          justify-self: baseline;
+        }
+        #points {
+          justify-self: end;
+        }
+     
         p {
           margin: 0;
           padding: 5px;
@@ -1119,19 +1140,29 @@ input[type="file"] {
             width: 80%
           }
           margin-bottom: 20px;
-          #pic {
+          #pic-section {
             display: flex;
             align-items: center;
             gap: 30px;
-            label {
-              text-align: center;
-              min-width: 50%;
-              #inputbutton {
-                margin: 0;
-                font-size: 90%;
-              }
-              cursor: pointer;
+            #pfp {
+              height: 5.5em;
+              width: 5.5em;
             }
+            #buttons {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              label {
+                text-align: center;
+                min-width: 50%;
+                #inputbutton {
+                  margin: 0;
+                  font-size: 90%;
+                }
+                cursor: pointer;
+              }
+            }
+            
           }
         }
     }
@@ -1188,6 +1219,9 @@ input[type="file"] {
           }
         }
       }
+      #pending-member-list {
+        margin-top: 30px;
+      }
     }
     a {
       text-decoration: none;
@@ -1224,6 +1258,8 @@ input[type="file"] {
         padding: 10px;
         max-height: 400px;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column-reverse;
         #message {
           &:not(:first-of-type) #messagedata {
             margin-top: 20px;
@@ -1265,6 +1301,17 @@ input[type="file"] {
         }
         &::-webkit-scrollbar-thumb {
           background-color: $maingray;
+        }
+      }
+      #input-section {
+        margin-top: 10px;
+        border-top: 3px solid $themecolor;
+        padding: 15px 0 5px 0;
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        gap: 10px;
+        input {
+          min-width: max-content
         }
       }
     }
@@ -1312,15 +1359,16 @@ input[type="file"] {
   gap: 20px;
   min-height: 100vh;
   i {
-    padding: 5px;
+    padding: 3px;
+    margin: 6px;
+    opacity: 0.2;
     background-color: white;
     border-radius: 50%;
     animation: blink 1s infinite;
   }
 
   @keyframes blink {
-    0%, 100% { opacity: 0.2; }
-    50% { opacity: 1; margin-bottom: 30px; }
+    50% { opacity: 1; margin: 3px; padding: 6px; }
   }
   // #one { animation-delay: 0.2s; }
   #two { animation-delay: 0.2s; }

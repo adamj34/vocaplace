@@ -29,12 +29,12 @@ function App() {
   const { keycloak, initialized } = useKeycloak();
 
   useEffect(() => {
-    if (keycloak.authenticated) {
+    if (initialized && keycloak.authenticated) {
       DataService.GetUserData(keycloak.token).then((res) => {
         SetUserData(res.data)
         SetAppReady(true)
       })
-    } else if (initialized) { // keycloak loaded but not logged in
+    } else if (initialized && !keycloak.authenticated) { // keycloak loaded but not logged in
       SetAppReady(true)
     }
   }, [keycloak, initialized])
@@ -50,7 +50,7 @@ function App() {
           
           {keycloak.authenticated && (<>
             <Route path='profile/:id' element={<Profile/>}/>
-            <Route path='groups/:id' element={<Group/>}/>
+            <Route path='groups/:groupid' element={<Group/>}/>
             <Route path='repetitions' element={<Repetitions />} />
             <Route path='repetitions/set' element={<Questions type='repetition'/>} />
             <Route path='units/:unitid/:topicid' element={<Questions type='normal'/>} />

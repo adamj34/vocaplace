@@ -74,7 +74,7 @@ export function Nav() {
                         <span id='username' >{C.UserData.username}</span>
                         <div id='pfp' style={{ backgroundImage: `url(${C.UserData.picture || placeholderpfp})`, height: 40, width:40 }}/>
                     </Link>
-                    <button className="button" onClick={keycloak.logout}>Log out</button>
+                    <button className="button" onClick={() => keycloak.logout({ redirectUri: `${window.location.protocol}//${window.location.host}/` })}>Log out</button>
                 </section>
             </header>
         )

@@ -8,6 +8,7 @@ const notifications = [ // placeholder
     { type: 'friend_request_accepted', friend_name: 'Bajojajo', friend_id: 'dd0ac737-5534-46fd-8715-a28634f8c86b' },
     { type: 'new_friend_request', friend_name: 'Bajojajo', friend_id: 'dd0ac737-5534-46fd-8715-a28634f8c86b' },
     { type: 'streak_reminder' },
+    { type: 'group_name_change', group_name: 'Enghaters', old_group_name: 'Englovers', group_id: '1' },
 ]
 
 export default function Notifications() {
@@ -55,6 +56,11 @@ export default function Notifications() {
                                 }
                                 {msg.type === 'streak_reminder' &&
                                     <span className="disabled">Don't forget about your streak!</span>
+                                }
+                                {msg.type === 'group_name_change' &&
+                                    <Link to={'/groups/' + msg.group_id}>
+                                        Group {msg.old_group_name} has changed name to <span className="color">{msg.group_name}</span>.
+                                    </Link>
                                 }
                             </p>
                         ))}

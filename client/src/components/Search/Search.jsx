@@ -39,8 +39,8 @@ export function Search() {
     return (
         <div id="Search">
             <div id='header'>
-            <h1>Search Results</h1>
-                <p>{Params.get('q')}</p>
+            <h1>Search</h1>
+                <p>Results for {Params.get('q')}.</p>
             </div>
             <div id='data'>
                 <div id='friends'>
@@ -49,7 +49,6 @@ export function Search() {
                         <p>{SearchData.matchedUsers.length} Users</p>
                     </div>
                     <ul id='content'>
-                        {/* {friends.map((x) => {return <ListElement data={x} page='profile' key={x.name}/>})} */}
                         {SearchData.matchedUsers.map((x) => {return <ListElement data={x} page='profile'/>})}
                     </ul>
                 </div>

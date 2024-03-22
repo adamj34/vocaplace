@@ -31,21 +31,21 @@ const initialTopGroupsData = [
 
 export function Ranking() {
     const C = useContext(AppContext);
-    const [meAndFriendsData, setMeAndFriendsData] = useState([]);
-    const [topUsersData, setTopUsersData] = useState([]);
-    const [topGroupsData, setTopGroupData] = useState([]);
+    const [Friends, SetFriends] = useState([]);
+    const [Users, SetUsers] = useState([]);
+    const [Groups, SetGroups] = useState([]);
+    const [Streak, SetStreak] = useState([]);
 
     useEffect(() => {
-        if(C.AppReady){
-        setMeAndFriendsData(meAndFriends);
-        // setTopUsersData(initialTopUsersData);
-        setTopGroupData(initialTopGroupsData)
-        // Geting top 10 users
-        DataService.GetRankingTop().then((res) => {
-            setTopUsersData(res.data);
-        }).catch((err) => {
-            console.log(err);
-        });
+        if (C.AppReady) {
+            SetFriends(meAndFriends);
+            SetGroups(initialTopGroupsData)
+
+            DataService.GetRankingTop().then((res) => {
+                SetUsers(res.data.filter(x=>x.points>0));
+            }).catch((err) => {
+                console.log(err);
+            });
 
         // Geting top 10 groups
         // DataService.GetRankingTopGroups().then((res) => {
@@ -54,12 +54,11 @@ export function Ranking() {
         //     console.log(err);
         // });
 
-        // Geting me and my friends
-        DataService.GetRankingFriends().then((res) => {
-            setMeAndFriendsData(res.data);
-        }).catch((err) => {
-            console.log(err);
-        });    
+            DataService.GetRankingFriends().then((res) => {
+                SetFriends(res.data);
+            }).catch((err) => {
+                console.log(err);
+            });    
         }
     }, [C.AppReady]);
 
@@ -75,7 +74,7 @@ export function Ranking() {
             <div id="columns">
                 <div id="column">
                     <h2>Friends</h2>
-                    {meAndFriendsData.map((user, i) => (
+                    {Friends.map((user, i) => (
                         <Link key={user.id} to={`/profile/${user.id}`}>
 
                         <div key={i} id="row">
@@ -84,7 +83,7 @@ export function Ranking() {
                                 <div id='pfp' style={{ backgroundImage: `url(${user.picture || placeholderpfp})`, height: 30, width:30 }}></div>
                                 <p id="username">{user.username}</p>
                             </div>
-                            <p id="points">{user.points}p</p> 
+                            <p id="points">{user.points} points</p> 
                         </div>
                         </Link>
 
@@ -92,8 +91,8 @@ export function Ranking() {
                 </div>
 
                 <div id="column">
-                    <h2>Users</h2>
-                    {topUsersData.map((user, i) => (
+                    <h2>All Users</h2>
+                    {Users.map((user, i) => (
                         <Link key={user.id} to={`/profile/${user.id}`}>
                         <div  id="row">
                             <p id="placement">{i + 1}</p>
@@ -101,21 +100,38 @@ export function Ranking() {
                                 <div id='pfp' style={{ backgroundImage: `url(${user.picture || placeholderpfp})`, height: 30, width:30 }}></div>
                                 <p id="username">{user.username}</p>
                             </div>
-                            <p id="points">{user.points}p</p>
+                            <p id="points">{user.points} points</p>
                         </div>
                         </Link>
                     ))}
                 </div>
+
+                <div id="column">
+                    <h2>Streak</h2>
+                    {Users.map((user, i) => (
+                        <Link key={user.id} to={`/profile/${user.id}`}>
+                        <div  id="row">
+                            <p id="placement">{i + 1}</p>
+                            <div id="user">
+                                <div id='pfp' style={{ backgroundImage: `url(${user.picture || placeholderpfp})`, height: 30, width:30 }}></div>
+                                <p id="username">{user.username}</p>
+                            </div>
+                            <p id="points">{user.points} days</p>
+                        </div>
+                        </Link>
+                    ))}
+                </div>
+
                 <div id="column">
                     <h2>Groups</h2>
-                    {topGroupsData.map((user, i) => (
+                    {Groups.map((user, i) => (
                         <div key={i} id="row">
                             <p id="placement">{i + 1}</p>
                             <div id="user">
                                 <div id='pfp' style={{ backgroundImage: `url(${user.picture || placeholderpfp})`, height: 30, width:30 }}></div>
                                 <p id="username">{user.username}</p>
                             </div>
-                            <p id="points">{user.points}p</p>
+                            <p id="points">{user.points} points</p>
                         </div>
                     ))}
                 </div>
