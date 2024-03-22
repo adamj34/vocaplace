@@ -37,11 +37,6 @@ const updateGroupSchema = object({
         value => Object.keys(value).length > 0)
 });
 
-const joinGroupSchema = object({
-    body: object({
-        group_name: string().max(50).trim().strict().required(),
-    }).required()
-});
 
 const groupIdSchema = object({
     params: object({
@@ -50,11 +45,9 @@ const groupIdSchema = object({
 });
 
 const deleteMemberSchema = object({
-    body: object({
-        user_id_to_delete: string().uuid().trim().strict().required(),
-    }).required(),
     params: object({
         id: number().integer().positive().required(),  // group id
+        userId: string().uuid().trim().strict().required()
     }).required()
 });
 
@@ -80,7 +73,6 @@ const passAdminRightsSchema = object({
 export {
     createGroupSchema,
     updateGroupSchema,
-    joinGroupSchema,
     groupIdSchema,
     deleteMemberSchema,
     updateMembershipSchema,

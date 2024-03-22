@@ -47,7 +47,7 @@ const deleteGroupPicture = async (req, res) => {
 
 const joinGroup = async (req, res) => {
     try {
-        const response = await groupService.joinGroup(req.userId, req.body.group_name)
+        const response = await groupService.joinGroup(req.userId, +req.params.id)
         res.status(httpStatus.CREATED).json(response);
     } catch (err) {
         logger.error(err, 'Error in joinGroup controller');
@@ -77,7 +77,7 @@ const passAdminRights = async (req, res) => {
 
 const deleteMember = async (req, res) => {
     try {
-        const response = await groupService.deleteMember(req.userId, req.body.user_id_to_delete, +req.params.id)
+        const response = await groupService.deleteMember(req.userId, req.params.userId, +req.params.id)
         res.status(httpStatus.NO_CONTENT).json(response);
     } catch (err) {
         logger.error(err, 'Error in deleteMember controller');

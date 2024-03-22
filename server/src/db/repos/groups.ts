@@ -21,16 +21,6 @@ class GroupsRepository {
             `, value);
     }
 
-    findGroupIdByName(value: { group_name: string; }) {
-        return this.db.oneOrNone(`
-            SELECT
-                id
-            FROM
-                groups
-            WHERE group_name = $<group_name>
-            `, value);
-    }
-
     findMemberByGroupIdAndUserId(value: { user_id: string; group_id: number; }) {
         return this.db.oneOrNone(`
             SELECT

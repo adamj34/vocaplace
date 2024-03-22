@@ -162,16 +162,16 @@ const deleteGroupPicture = (userId: string, groupId: number) => {
     })
 }
 
-const joinGroup = (userId: string, groupName: string) => {
+const joinGroup = (userId: string, groupId: number) => {
     return db.tx(async t => {
-        const groupData = await t.groups.findGroupIdByName({ group_name: groupName });
+        const groupData = await t.groups.findById({ id: groupId });
         if (!groupData) {
             throw errorFactory('404', 'Group not found');
         }
         const members = await t.groups.findMembersByGroupId({ id: groupData.id });
         const isMember = members.some(member => member.user_id === userId);
         if (isMember) {
-            throw errorFactory('23505', `User: ${userId} is already a member of ${groupName} or already sent a request to join this group.`);
+            throw errorFactory('23505', `User: ${userId} is already a member of ${groupData.group_name} or already sent a request to join this group.`);
         }
 
         const data = await t.groups.addMember({ group_id: groupData.id, user_id: userId, admin: false, accepted: false });
@@ -293,7 +293,6 @@ const getGroupInfo = (groupId: number) => {
         const membersData = await Promise.all(
             members.map(async member => {
                 const userData = pictureToSignedUrl(await t.users.findById({ id: member.user_id }));
-                console.log(member)
                 return { ...userData, admin: member.admin, accepted: member.accepted };
             })
         );
