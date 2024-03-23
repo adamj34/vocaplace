@@ -53,7 +53,8 @@ class UsersRepository {
         return this.db.any(`
         SELECT
             g.*,
-            gp.admin
+            gp.admin,
+            gp.accepted
         FROM
             group_membership gp
         JOIN 

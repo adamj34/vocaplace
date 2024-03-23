@@ -44,28 +44,10 @@ const groupIdSchema = object({
     }).required()
 });
 
-const deleteMemberSchema = object({
+const memberOperationsSchema = object({
     params: object({
         id: number().integer().positive().required(),  // group id
         userId: string().uuid().trim().strict().required()
-    }).required()
-});
-
-const updateMembershipSchema = object({
-    body: object({
-        user_id_to_update: string().uuid().trim().strict().required(),
-    }).required(),
-    params: object({
-        id: number().integer().positive().required(),  // group id
-    }).required()
-});
-
-const passAdminRightsSchema = object({
-    body: object({
-        user_id_to_make_admin: string().uuid().trim().strict().required(),
-    }).required(),
-    params: object({
-        id: number().integer().positive().required(),  // group id
     }).required()
 });
 
@@ -74,7 +56,5 @@ export {
     createGroupSchema,
     updateGroupSchema,
     groupIdSchema,
-    deleteMemberSchema,
-    updateMembershipSchema,
-    passAdminRightsSchema
+    memberOperationsSchema,
 };

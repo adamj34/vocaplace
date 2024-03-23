@@ -57,7 +57,7 @@ const joinGroup = async (req, res) => {
 
 const updateMembership = async (req, res) => {
     try {
-        const response = await groupService.updateMembership(req.userId, req.body.user_id_to_update, +req.params.id)
+        const response = await groupService.updateMembership(req.userId, req.params.userId, +req.params.id)
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in acceptMember controller');
@@ -67,7 +67,7 @@ const updateMembership = async (req, res) => {
 
 const passAdminRights = async (req, res) => {
     try {
-        const response = await groupService.passAdminRights(req.userId, req.body.user_id_to_make_admin, +req.params.id)
+        const response = await groupService.passAdminRights(req.userId, req.params.userId, +req.params.id)
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in passAdminRights controller');

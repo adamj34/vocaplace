@@ -37,8 +37,7 @@ app.use(PinoHttp({
         req: req => ({
             method: req.method,
             url: req.url,
-            body: req.raw.body,
-            query: req.query
+            query: req.query,
         }),
         res: res => ({ statusCode: res.statusCode })
     }

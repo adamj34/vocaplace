@@ -35,13 +35,14 @@ const getVisitedUserData = (userId: string, visitedUserId: string) => {
     return db.task(async t => {
         const visitedUser = pictureToSignedUrl(await t.users.findById({ id: visitedUserId }));
         const visitedUserFriends = pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({ id: visitedUserId }));
-        const visitedUserGroups = pictureToSignedUrl(await t.users.findGroupsByUserId({ id: visitedUserId }));
+        const visitedUserGroups = await t.users.findGroupsByUserId({ id: visitedUserId });
+        const visitedUserGroupsAccepted = pictureToSignedUrl(visitedUserGroups.filter(group => group.accepted));
         const userRelationship = await t.user_relationships.checkRelationship({ user1_id: userId, user2_id: visitedUserId });
         return {
             success: true,
             user: visitedUser,
             friends: visitedUserFriends,
-            groups: visitedUserGroups,
+            groups: visitedUserGroupsAccepted,
             relationship: userRelationship
         }
     })
@@ -77,7 +78,7 @@ const deleteProfilePicture = async (userId: string) => {
     const deleteParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: user.picture
-    };
+    }; 
 
     // delete from s3 and if successful from db
     await s3Instance.send(new DeleteObjectCommand(deleteParams));
@@ -163,11 +164,14 @@ const getFriendsData = async (userId: string) => {
 }
 
 const getGroupsData = async (userId: string) => {
-    const groupsData = pictureToSignedUrl(await db.users.findGroupsByUserId({ id: userId }));
+    const groupsData = await db.users.findGroupsByUserId({ id: userId });
+
+    // return only the groups where the user is accepted
+    const groupsDataAccepted = pictureToSignedUrl(groupsData.filter(group => group.accepted));
 
     return {
         success: true,
-        data: groupsData
+        data: groupsDataAccepted
     };
 }
 

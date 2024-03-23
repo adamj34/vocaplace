@@ -183,8 +183,8 @@ const joinGroup = (userId: string, groupId: number) => {
     })
 }
 
-// userId (admin) accepts userIdToBeAccepted to the group
-const updateMembership = (userId: string, userIdToBeAccepted: string, groupId: number) => {
+// userId (admin) accepts userIdToBeUpdated to the group
+const updateMembership = (userId: string, userIdToBeUpdated: string, groupId: number) => {
     return db.tx(async t => {
         const userRequesting = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
         if (!userRequesting || !userRequesting.admin) {
@@ -197,12 +197,12 @@ const updateMembership = (userId: string, userIdToBeAccepted: string, groupId: n
         }
 
         const members = await t.groups.findMembersByGroupId({ id: groupId });
-        const isMember = members.some(member => member.user_id === userIdToBeAccepted);
+        const isMember = members.some(member => member.user_id === userIdToBeUpdated);
         if (!isMember) {
-            throw errorFactory('404', `User: ${userIdToBeAccepted} did not send a request to join this group.`);
+            throw errorFactory('404', `User: ${userIdToBeUpdated} did not send a request to join this group.`);
         }
 
-        await t.groups.updateMembership({ user_id: userIdToBeAccepted, group_id: groupId, accepted: true });
+        await t.groups.updateMembership({ user_id: userIdToBeUpdated, group_id: groupId, accepted: true });
 
         return {
             success: true,
@@ -285,7 +285,7 @@ const getGroupInfo = (groupId: number) => {
     return db.task(async t => {
         const groupData = pictureToSignedUrl(await t.groups.findById({ id: groupId }));
         if (!groupData) {
-            throw errorFactory('404', `Group ${groupId} not found`);
+            throw errorFactory('404', `Group: ${groupId} not found`);
         }
 
         // add members to groupData
