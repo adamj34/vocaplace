@@ -1032,8 +1032,11 @@ input[type="file"] {
     #friends {
       display: flex;
       flex-direction: column;
-      #nofriends {
+      #nofriends, input {
         margin-left: 20px;
+      }
+      input {
+        margin-top: 16px;
       }
       #friendlist {
         display: flex;
@@ -1221,6 +1224,14 @@ input[type="file"] {
       }
       #pending-member-list {
         margin-top: 30px;
+        #member {
+          margin-bottom: 10px;
+          #buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
       }
     }
     a {

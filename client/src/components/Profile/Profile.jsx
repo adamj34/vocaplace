@@ -49,10 +49,11 @@ export function Profile() {
 
     useEffect(() => {
         if (C.AppReady) {
+            SetLoadingProfile(true) // for jumping between profiles
             DataService.GetProfileData(id).then((data)=> {
                 SetProfileData({...data, relationship:SetRelationship(data.relationship, C.UserData.id)})
                 document.title = `VocaPlace | ${data.user.username}`
-                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, left: 0});
                 SetLoadingProfile(false)
             })
         }

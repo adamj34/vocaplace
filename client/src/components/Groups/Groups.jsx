@@ -31,6 +31,7 @@ export function Groups() {
     const [NewGroupPicturePreview, SetNewGroupPicturePreview] = useState(null);
     const [Submitting, SetSubmitting] = useState(false);
     const [ErrorMessage, SetErrorMessage] = useState('');
+    const [SearchQuery, SetSearchQuery] = useState('');
     
     useEffect(() => {
         if (C.AppReady) {
@@ -65,9 +66,10 @@ export function Groups() {
             <div id="content">
                 <div id="grouplist">
                     {Groups.length === 0 && <p>You haven't joined any groups yet.</p>}
+                    {Groups.length > 0 && <input className="input" placeholder="Filter groups" onChange={e => SetSearchQuery(e.target.value)}></input>}
                     {Groups.map((g, i) => {
                         return (
-                            <Link key={i} to={`/groups/${g.id}`}>
+                            g.group_name.toLowerCase().includes(SearchQuery.toLowerCase()) && <Link key={i} to={`/groups/${g.id}`}>
                                 <div id="group">
                                     <div id='pfp' style={{ backgroundImage: `url(${g.picture || placeholderpfp})`, height: 60, minWidth: 60 }}></div>
                                     <div id="groupdata">

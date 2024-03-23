@@ -20,7 +20,7 @@ export function Friends() {
     const [Friends, SetFriends] = useState([]);
     const [FriendRequests, SetFriendRequests] = useState([]);
     const [Updated, SetUpdated] = useState(false);
-    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    const [SearchQuery, SetSearchQuery] = useState('');
     
     useEffect(() => {
         if(C.AppReady && !Updated){
@@ -64,9 +64,10 @@ export function Friends() {
             <div id="content">
                 <div id="friends">
                     {Friends.length === 0 && <p id="nofriends">You have no friends yet.</p>}
+                    {Friends.length > 0 && <input className="input" placeholder="Filter friends" onChange={e => SetSearchQuery(e.target.value)}></input>}
                     <div id="friendlist">
                         {Friends.map((friend) => (
-                            <div key={friend.id} id="friend">
+                            friend.username.toLowerCase().includes(SearchQuery.toLowerCase()) && <div key={friend.id} id="friend">
                                 <Link to={`/profile/${friend.id}`}>
                                     <div id="friend-box">
                                         <div id='pfp' style={{ backgroundImage: `url(${friend.picture || placeholderpfp})`, height: 50, width: 50 }}></div>

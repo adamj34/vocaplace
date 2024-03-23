@@ -1,4 +1,4 @@
 
 export default function Icon(p) {
-    return <i id="icon" className={`fas fa-${p.icon}`}/>
+    return <i id="icon" className={`fas fa-${p.icon}`} onClick={p.onClick} />
 }

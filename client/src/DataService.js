@@ -165,14 +165,19 @@ const functions = {
     },
 
     async SendGroupJoinRequest(groupid) {
-        const res = await Server.post(`/groups/join`, { group_name: '123' })
-        return res.data
+        await Server.post(`/groups/join/${groupid}`)
     },
 
     async RemoveUserFromGroup(groupid, userid) {
-        console.log({ user_id_to_delete: userid })
-        const res = await Server.delete(`/groups/membership/${groupid}`, { user_id_to_delete: '123' })
-        return res.data
+        await Server.delete(`/groups/membership/${groupid}/${userid}`)
+    },
+
+    async AcceptGroupJoinRequest(groupid, userid) {
+        await Server.patch(`/groups/membership/${groupid}/${userid}`)
+    },
+
+    async PassGroupAdmin(groupid, userid) {
+        await Server.patch(`/groups/admin/${groupid}/${userid}`)
     },
      
 }
