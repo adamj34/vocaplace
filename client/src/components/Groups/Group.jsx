@@ -124,6 +124,16 @@ export function Group() {
         }
     }
 
+    function DeleteGroup() {
+        if (window.confirm(`Are you sure you want to delete ${GroupData.group_name}? This cannot be reversed!`)) {
+            DataService.DeleteGroup(groupid).then(() => {
+                navigate('/')
+            }).catch(e => {
+                SetErrorMessage('Failed to delete the group!')
+            })
+        }
+    }
+
     useEffect(() => {
         if (C.AppReady) {
             DataService.GetGroupData(groupid).then((data) => {
@@ -247,6 +257,7 @@ export function Group() {
                             </>}
                     </div>}
                     {!ManagingGroup && <button className='button light' disabled={LeavingGroup} onClick={LeaveGroup}>{!LeavingGroup ? 'Leave Group' : 'Leaving'}</button>}
+                    {ManagingGroup && <button className='button light' onClick={DeleteGroup}>Delete Group</button>}
                 </div>
                 <span id='error'>{ErrorMessage}</span>
             </div>}

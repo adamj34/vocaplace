@@ -1256,6 +1256,10 @@ input[type="file"] {
       border-radius: 12px;
       background-image: linear-gradient($darkgray, $darkgraygradientbottom);
       padding: 10px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-height: 500px;
       #title {
         text-transform: uppercase;
         font-size: 110%;
@@ -1267,10 +1271,10 @@ input[type="file"] {
       }
       #window {
         padding: 10px;
-        max-height: 400px;
         overflow-y: auto;
         display: flex;
         flex-direction: column-reverse;
+        height: 100%;
         #message {
           &:not(:first-of-type) #messagedata {
             margin-top: 20px;

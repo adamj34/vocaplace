@@ -1,83 +1,64 @@
-.login-pf {
-  background: none;
-  height: unset;
-}
-.login-pf body {
-  background-image: url("Background.jpg");
-  background-attachment: fixed;
-  text-transform: unset;
+body {
   color: white;
+  margin: 0;
+  background-color: #303641;
+  background-image: linear-gradient(to bottom right, #303641, #1f2229);
+  background-repeat: none;
+  background-attachment: fixed;
   font-family: "Gill Sans MT";
   letter-spacing: 1px;
   text-align: center;
-}
-.login-pf body .login-pf-page {
-  padding: 10% 10%;
-}
-.login-pf body .login-pf-page #kc-header {
-  display: none;
-}
-.login-pf body .card-pf {
-  border-radius: 20px;
-  padding: 20px 40px;
-  background-image: linear-gradient(to bottom right, #303641, #1f2229);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
-}
-.login-pf body .card-pf .login-pf-header {
-  margin: 0;
-  border-bottom: 3px solid #923b2f;
   text-transform: uppercase;
 }
-.login-pf body .card-pf .login-pf-header h1 {
-  font-size: 18px;
-  margin: 20px;
+body button, body input {
+  font-family: inherit;
+  font-size: 90%;
+  cursor: pointer;
 }
-.login-pf body .card-pf #kc-content {
-  padding: 20px 100px;
+body h1, body h2, body h4 {
+  font-weight: normal;
 }
-.login-pf body .card-pf #kc-content #kc-content-wrapper {
+body #kc-header {
+  padding: 50px 30%;
+  background-image: url("Background.jpg");
+  background-size: cover;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+body #kc-header #kc-header-wrapper {
+  font-size: 200%;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  background-color: #1d2026;
+  background-image: linear-gradient(#1d2026, #12151a);
+  border-radius: 12px;
+  padding: 20px 1%;
+}
+body #kc-form-login, body #kc-register-form {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
-  gap: 30px;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
 }
-.login-pf body .card-pf #kc-content #kc-content-wrapper div:nth-child(3) {
-  flex-basis: 100%;
-}
-.login-pf body .card-pf #kc-content #kc-content-wrapper > div {
-  margin: 0;
-  padding: 20px;
-}
-.login-pf body .card-pf #kc-content #kc-content-wrapper > div p, .login-pf body .card-pf #kc-content #kc-content-wrapper > div label, .login-pf body .card-pf #kc-content #kc-content-wrapper > div button, .login-pf body .card-pf #kc-content #kc-content-wrapper > div input, .login-pf body .card-pf #kc-content #kc-content-wrapper > div h4, .login-pf body .card-pf #kc-content #kc-content-wrapper > div span {
-  font-size: 16px;
-}
-.login-pf body .card-pf #kc-content #kc-content-wrapper > div input {
-  border-color: #1d2026;
-}
-.login-pf body .card-pf #kc-content #kc-content-wrapper > div .pf-c-button {
-  --pf-c-button--after--BorderColor: none;
-  --pf-c-button--after--BorderRadius: none;
-  border-radius: 5px;
-  border-color: blue;
+body #kc-form-login div, body #kc-register-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-input#kc-login, input#kc-register, #kc-info a, #kc-form-buttons > input, #social-github, #social-google {
+input#kc-login, input#kc-register, #kc-info a, #kc-form-buttons > input {
   padding: 12px;
   border: none;
   text-transform: uppercase;
   border-radius: 5px;
-  border-color: #303641;
   background-color: #923b2f;
   background-image: linear-gradient(#923b2f, #7b2e24);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   color: white;
   transition: 0.4s;
   letter-spacing: 1px;
-  text-decoration: none;
-  outline: none;
+  font-size: 100%;
 }
-input#kc-login:hover, input#kc-register:hover, #kc-info a:hover, #kc-form-buttons > input:hover, #social-github:hover, #social-google:hover {
+input#kc-login:hover, input#kc-register:hover, #kc-info a:hover, #kc-form-buttons > input:hover {
   background-color: white;
   background-image: none;
   color: #923b2f;
@@ -177,4 +158,4 @@ a:hover {
 .checkbox > label #rememberMe:checked {
   background-color: red;
   color: green;
-}/*# sourceMappingURL=login.css.map */
+}/*# sourceMappingURL=login copy.css.map */

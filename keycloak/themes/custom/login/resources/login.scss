@@ -5,70 +5,123 @@ $maingraygradientbottom: #1f2229;
 $darkgray: #1d2026;
 $darkgraygradientbottom: #12151a;
 
-body {
-    color: white;
-    margin: 0;
-    background-color: $maingray;
-    background-image: linear-gradient(to bottom right, $maingray, $maingraygradientbottom);
-    background-repeat: none;
-    background-attachment: fixed;
-    font-family: 'Gill Sans MT';
-    letter-spacing: 1px;
-    text-align: center;
-    text-transform: uppercase;
-
-    button, input {
-      font-family: inherit;
-      font-size: 90%;
-      cursor: pointer;
-    }
-    h1, h2, h4 {
-      font-weight: normal;
-    }
-
-    #kc-header {
-        padding: 50px 30%;
-        background-image: url("Background.jpg");
-        background-size:cover;
-        box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-        #kc-header-wrapper {
-            font-size: 200%;
-            box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
-            background-color: $darkgray;
-            background-image: linear-gradient( $darkgray, $darkgraygradientbottom);
-            border-radius: 12px;
-            padding: 20px 1%;
+.login-pf {
+    background: none;
+    height: unset;
+    body {
+        .login-pf-page {
+            padding: 10% 10%;
+            #kc-header {
+                display: none;
+            }
+        }
+        background-image: url('Background.jpg');
+        background-attachment: fixed;
+        text-transform: unset;
+        color: white;
+        font-family: 'Gill Sans MT';
+        letter-spacing: 1px;
+        text-align: center;
+        .card-pf {
+            border-radius: 20px;
+            padding: 20px 40px;
+            background-image: linear-gradient(to bottom right, $maingray, $maingraygradientbottom);
+            box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.2);
+            .login-pf-header {
+                margin: 0;
+                // padding-bottom: 5px;
+                border-bottom: 3px solid $themecolor;
+                text-transform: uppercase;
+                h1 {
+                    font-size: 18px;
+                    margin: 20px;
+                }
+            }
+            #kc-content {
+                padding: 20px 100px;
+                #kc-content-wrapper {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 30px;
+                    div:nth-child(3) {
+                            flex-basis: 100%;
+                        }
+                    >div {
+                        margin: 0;
+                        padding: 20px;
+                        p, label, button, input, h4, span {
+                            font-size: 16px;
+                        }
+                        input {
+                            border-color: $darkgray;
+                        }
+                        a#social-github.pf-c-button.pf-m-control.pf-m-block.kc-social-item.kc-social-gray {
+                            // color: blue;
+                        }
+                        .pf-c-button {
+                            --pf-c-button--after--BorderColor: none;
+                            --pf-c-button--after--BorderRadius: none;
+                            border-radius: 5px;
+                            border-color: blue;
+                        }
+                    }
+                }
+            }
         }
     }
-
-    #kc-form-login, #kc-register-form {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        gap: 10px;
-
-        div {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-    }
-    
 }
 
-input#kc-login, input#kc-register, #kc-info a, #kc-form-buttons>input {
+// body {
+
+//     button, input {
+//       font-family: inherit;
+//       font-size: 90%;
+//       cursor: pointer;
+//     }
+//     h1, h2, h4 {
+//       font-weight: normal;
+//     }
+
+//     // .login-pf-page {
+//     //     #kc-header {
+//     //         display: none;
+//     //     }
+//     //     .card-pf {
+//     //         background: none;
+//     //     }
+//     // }
+
+//     #kc-form-login, #kc-register-form {
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         flex-direction: column;
+//         gap: 10px;
+//         div {
+//             display: flex;
+//             flex-direction: column;
+//             gap: 10px;
+//         }
+//     }
+    
+// }
+
+input#kc-login, input#kc-register, #kc-info a, #kc-form-buttons>input, #social-github, #social-google {
     padding: 12px;
     border: none;
     text-transform: uppercase;
     border-radius: 5px;
+    border-color: $maingray;
     background-color: $themecolor;
     background-image: linear-gradient( $themecolor, $themecolorgradientbottom);
     box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
     color: white;
     transition: 0.4s;
     letter-spacing: 1px;
-    font-size: 100%;
+    text-decoration: none;
+    outline: none;
     &:hover {
       background-color: white;
       background-image: none;

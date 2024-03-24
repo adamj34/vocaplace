@@ -179,6 +179,10 @@ const functions = {
     async PassGroupAdmin(groupid, userid) {
         await Server.patch(`/groups/admin/${groupid}/${userid}`)
     },
+
+    async DeleteGroup(groupid) {
+        await Server.delete(`/groups/${groupid}`)
+    },
      
 }
 
