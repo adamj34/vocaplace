@@ -1,0 +1,492 @@
+[
+    {
+        "topic_id": 1,
+        "content": "Which of the following is a common response to the greeting 'How are you?'",
+        "correct_answers": [
+            "I have been better.",
+            "Fine, thank you."
+        ],
+        "misleading_answers": [
+            "Goodbye!",
+            "Nice to meet you.",
+            "See you later!"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "In what situation is it appropriate to say 'Nice to meet you'?",
+        "correct_answers": [
+            "Introducing yourself."
+        ],
+        "misleading_answers": [
+            "Asking for directions.",
+            "Saying goodbye."
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "How do you greet someone in the evening?",
+        "correct_answers": [
+            "Good evening."
+        ],
+        "misleading_answers": [
+            "Good night.",
+            "Good afternoon.",
+            "Good day."
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "In a formal email, what is a suitable greeting to use when you don't know the recipient's name?",
+        "correct_answers": [
+            "Dear Sir/Madam,"
+        ],
+        "misleading_answers": [
+            "Hey!",
+            "Hi there!",
+            "See you soon."
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "What do you say before going to sleep?",
+        "correct_answers": [
+            "Good night."
+        ],
+        "misleading_answers": [
+            "Good morning.",
+            "Good afternoon.",
+            "Good day."
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "What is a polite way to ask about someone's name?",
+        "correct_answers": [
+            "What is your name?",
+            "May I ask your name?"
+        ],
+        "misleading_answers": [
+            "Who are you?",
+            "What is this?"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "Which question can be used to ask about someone about their interests or hobbies?",
+        "correct_answers": [
+            "What do you do for fun?"
+        ],
+        "misleading_answers": [
+            "How are you?",
+            "What is your name?",
+            "Do you like me?"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "Miło mi cię poznać.",
+        "correct_answers": [
+            "nice to meet you"
+        ],
+        "misleading_answers": [
+            "nice",
+            "cat",
+            "for",
+            "to",
+            "meet",
+            "am",
+            "you"
+        ],
+        "question_type": "order",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "Miło cię widzieć",
+        "correct_answers": [
+            "Nice to see you"
+        ],
+        "misleading_answers": [
+            "Nice",
+            "cat",
+            "for",
+            "to",
+            "meet",
+            "am",
+            "you"
+        ],
+        "question_type": "order",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 1,
+        "content": "How are you _?",
+        "correct_answers": [
+            "doing"
+        ],
+        "misleading_answers": [
+            "doing",
+            "going",
+            "feeling",
+            "being"
+        ],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 2,
+        "content": "Which of these are odd numbers?",
+        "correct_answers": [
+            "sixty five",
+            "eleven"
+        ],
+        "misleading_answers": [
+            "six",
+            "twenty eight",
+            "seventy two"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 2,
+        "content": "Which of these are even numbers?",
+        "correct_answers": [
+            "eighty two",
+            "twelve"
+        ],
+        "misleading_answers": [
+            "seventeen",
+            "thirty seven",
+            "five"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 2,
+        "content": "Which of these numbers are greater than twenty?",
+        "correct_answers": [
+            "thirty one",
+            "one hundred"
+        ],
+        "misleading_answers": [
+            "seven",
+            "twelve",
+            "nineteen"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 2,
+        "content": "How do you say 4 in English?",
+        "correct_answers": [
+            "four"
+        ],
+        "misleading_answers": [
+            "two",
+            "three",
+            "one",
+            "five"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 2,
+        "content": "How do you say 45 in English?",
+        "correct_answers": [
+            "forty five"
+        ],
+        "misleading_answers": [
+            "forty",
+            "hive",
+            "four",
+            "five"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 2,
+        "content": "How do you say 100 in English?",
+        "correct_answers": [
+            "one hundred"
+        ],
+        "misleading_answers": [
+            "one",
+            "two",
+            "hunded",
+            "four"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 3,
+        "content": "What is the first day of the week?",
+        "correct_answers": [
+            "Monday"
+        ],
+        "misleading_answers": [
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 3,
+        "content": "What is the second day of the week?",
+        "correct_answers": [
+            "Tuesday"
+        ],
+        "misleading_answers": [
+            "Monday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 3,
+        "content": "Which days are considered weekend?",
+        "correct_answers": [
+            "Saturday",
+            "Sunday"
+        ],
+        "misleading_answers": [
+            "Tuesday",
+            "Monday",
+            "Thursday",
+            "Wednesday",
+            "Friday"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 3,
+        "content": "Jaki jest dzisiaj dzień?",
+        "correct_answers": [
+            "What day is it today?"
+        ],
+        "misleading_answers": [
+            "What",
+            "day",
+            "month",
+            "is",
+            "today?",
+            "yesterday?",
+            "it",
+            "Which"
+        ],
+        "question_type": "order",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 3,
+        "content": "Put the words in the correct order to translate: 'Jaki jest jutro dzień?'",
+        "correct_answers": [
+            "What day is it tomorrow?"
+        ],
+        "misleading_answers": [
+            "What",
+            "tomorrow?",
+            "day",
+            "month",
+            "is",
+            "today?",
+            "yesterday",
+            "it"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 4,
+        "content": "What is your favorite vacation _?",
+        "correct_answers": [
+            "destination"
+        ],
+        "misleading_answers": [
+            "destination",
+            "world",
+            "land",
+            "cottage"
+        ],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 4,
+        "content": "Which of these are vehicles?",
+        "correct_answers": [
+            "Train",
+            "Car",
+            "Plane"
+        ],
+        "misleading_answers": [
+            "Drawer",
+            "Crane"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 5,
+        "content": "Which of these products come are diary?",
+        "correct_answers": [
+            "Milk",
+            "Cheese"
+        ],
+        "misleading_answers": [
+            "Meat",
+            "Wheat",
+            "Greese"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of these are birds?",
+        "correct_answers": [
+            "Eagle",
+            "Ostrich",
+            "Chicken"
+        ],
+        "misleading_answers": [
+            "Donkey",
+            "Cheetah"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of these animals live underground?",
+        "correct_answers": [
+            "Mole",
+            "Worm"
+        ],
+        "misleading_answers": [
+            "Deer",
+            "Sparrow",
+            "Salmon"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of these are pets?",
+        "correct_answers": [
+            "Hamster",
+            "Cat"
+        ],
+        "misleading_answers": [
+            "Dolphin",
+            "Boar",
+            "Shark"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "What do we call a baby cow?",
+        "correct_answers": [
+            "Foal"
+        ],
+        "misleading_answers": [
+            "Cowlet",
+            "Calf",
+            "Cub",
+            "Pup"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of the following is a large, herbivorous mammal with a trunk?",
+        "correct_answers": [
+            "Elephant"
+        ],
+        "misleading_answers": [
+            "Dolphin",
+            "Giraffe",
+            "Lion",
+            "Hippo"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which bird is known for its ability to imitate human speech?",
+        "correct_answers": [
+            "Parrot"
+        ],
+        "misleading_answers": [
+            "Penguin",
+            "Owl",
+            "Petrel"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of the following is a marine mammal known for its playful behavior and intelligence?",
+        "correct_answers": [
+            "Dolphin",
+            "Porpoise"
+        ],
+        "misleading_answers": [
+            "Shark",
+            "Jellyfish"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which reptile is known for changing color to blend with its surroundings?",
+        "correct_answers": [
+            "Chameleon"
+        ],
+        "misleading_answers": [
+            "Crocodile",
+            "Snake",
+            "Tortoise"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    }
+]
