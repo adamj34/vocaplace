@@ -97,15 +97,30 @@ INITIAL INSERTS
 
 INSERT INTO units (unit, icon) VALUES ('Introduction to English', 'lightbulb');
 
-INSERT INTO topics (unit_id, topic, icon) VALUES (1, 'Greetings', 'hand');
+INSERT INTO topics (unit_id, topic, icon) VALUES (1, 'Basic Greetings and Introductions', 'hand');
 INSERT INTO topics (unit_id, topic, icon) VALUES (1, 'Numbers and Counting', 'calculator');
-INSERT INTO topics (unit_id, topic, icon) VALUES (1, 'Days of the Week', 'calendar-day');
+INSERT INTO topics (unit_id, topic, icon) VALUES (1, 'Time', 'clock');
+INSERT INTO topics (unit_id, topic, icon) VALUES (1, 'Family and Relationships', 'people-group');
 
 INSERT INTO units (unit) VALUES ('Vocabulary Building');
 
 INSERT INTO topics (unit_id, topic, icon) VALUES (2, 'Travel', 'plane');
 INSERT INTO topics (unit_id, topic, icon) VALUES (2, 'Food', 'burger');
 INSERT INTO topics (unit_id, topic, icon) VALUES (2, 'Animals', 'cat');
+INSERT INTO topics (unit_id, topic, icon) VALUES (2, 'Colors and Shapes', 'palette');
+INSERT INTO topics (unit_id, topic, icon) VALUES (2, 'Work', 'briefcase');
+
+-- INSERT INTO units (unit, icon) VALUES ('Grammar Tenses', 'clock');
+
+-- INSERT INTO topics (unit_id, topic, icon) VALUES (3, 'Past', 'clock');
+-- INSERT INTO topics (unit_id, topic, icon) VALUES (3, 'Present', 'clock');
+-- INSERT INTO topics (unit_id, topic, icon) VALUES (3, 'Future', 'clock');
+
+-- INSERT INTO units (unit, icon) VALUES ('Idioms and Expressions', 'language');
+
+-- INSERT INTO units (unit, icon) VALUES ('Culture', 'flag');
+
+-- INSERT INTO topics (unit_id, topic, icon) VALUES (5, 'British', 'mug-hot');
 
 -- INSERT INTO questions (topic_id, content, correct_answers, misleading_answers, question_type, difficulty)
 -- VALUES (1, 'Which of the following is a common response to the greeting "How are you?"', '{"I have been better.", "Fine, thank you."}', '{"Goodbye!", "Nice to meet you.", "See you later!"}', 'pick', 1);
