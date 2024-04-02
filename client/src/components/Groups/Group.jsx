@@ -5,6 +5,7 @@ import DataService from '../../DataService';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import Icon from '../Icon';
 import TextareaAutosize from 'react-textarea-autosize';
+import { usePopup } from '../Popup.tsx';
 
 const chatmessages = [ // placeholder
     { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'joe', content: 'hello there', posted: '14:05' },
@@ -28,6 +29,7 @@ export function Group() {
     const { groupid } = useParams()
     const C = useContext(AppContext);
     const navigate = useNavigate();
+    const popup = usePopup()
 
     const [GroupData, SetGroupData] = useState({});
     const [Members, SetMembers] = useState([]);
@@ -57,6 +59,7 @@ export function Group() {
         if (NewChatMessage) {
             SetSendingChatMessage(true)
             console.log('sending message: ',NewChatMessage)
+            popup('Error','krystian dodaj sockety :(')
             SetNewChatMessage('')
             SetSendingChatMessage(false)
         }
@@ -71,29 +74,28 @@ export function Group() {
     }
 
     function AcceptJoinRequest(userid) {
-        SetErrorMessage('')
         DataService.AcceptGroupJoinRequest(groupid, userid).then(() => {
             const member = PendingMembers.find(x => x.id === userid)
             SetMembers([...Members, member])
             SetPendingMembers(PendingMembers.filter(x => x.id !== userid))
         }).catch(e => {
-            SetErrorMessage('Failed to accept group join request!')
+            console.log(e)
+            popup('Error','Failed to accept group join request due to an unknown error. Please try again later.')
         })
     }
 
     function KickUser(userid) {
-        SetErrorMessage('')
         DataService.RemoveUserFromGroup(groupid, userid).then(() => {
             SetMembers(Members.filter(x => x.id !== userid))
             SetPendingMembers(PendingMembers.filter(x => x.id !== userid))
         }).catch(e => {
-            SetErrorMessage('Failed to remove user!')
+            console.log(e)
+            popup('Error', 'Failed to remove user due to an unknown error. Please try again later.')
         })
     }
 
     function PassAdmin(userid) {
         if (window.confirm(`Are you sure you pass group ownership to ${Members.find(x=>x.id===userid).username}?`)) {
-            SetErrorMessage('')
             DataService.PassGroupAdmin(groupid, userid).then(() => {
                 const newmembers = [...Members]
                 newmembers.find(x => x.id === C.UserData.id).admin = false
@@ -101,7 +103,8 @@ export function Group() {
                 SetMembers(newmembers)
                 SetManagingGroup(false)
             }).catch(e => {
-                SetErrorMessage('Failed to pass group ownership!')
+                console.log(e)
+                popup('Error', 'Failed to pass group ownership due to an unknown error. Please try again later.')
             })
         }
     }
@@ -115,10 +118,11 @@ export function Group() {
                     SetMembers(Members.filter(x => x.id !== C.UserData.id))
                     SetLeavingGroup(false)
                 }).catch(e => {
-                    SetErrorMessage('Failed to leave the group!')
+                    console.log(e)
+                    popup('Error', 'Failed to leave the group due an unknown error. Please try again later.')
                 })
             } else {
-                SetErrorMessage('You must transfer group ownership to another member before leaving the group!')
+                popup('Could not leave group', 'You must transfer group ownership to another member before leaving the group!')
                 SetLeavingGroup(false)
             }
         }
@@ -129,6 +133,7 @@ export function Group() {
             DataService.DeleteGroup(groupid).then(() => {
                 navigate('/')
             }).catch(e => {
+                console.log(e)
                 SetErrorMessage('Failed to delete the group!')
             })
         }

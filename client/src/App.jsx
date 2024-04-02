@@ -19,11 +19,12 @@ import { Groups } from './components/Groups/Groups.jsx';
 import { Ranking } from './components/Ranking/Ranking.jsx';
 import { Questions } from './components/Units/Questions.jsx';
 import { Search } from './components/Search/Search.jsx';
+import { PopupProvider } from './components/Popup.tsx';
 import DataService from "./DataService.js"
 
 export const AppContext = createContext();
 
-function App() {
+export default function App() {
   const [UserData, SetUserData] = useState({});
   const [AppReady, SetAppReady] = useState(false);
   const { keycloak, initialized } = useKeycloak();
@@ -44,31 +45,31 @@ function App() {
     (!AppReady) ? <LoadingScreen/> :
     <div id="App">
       <AppContext.Provider value={{UserData, SetUserData, AppReady}}>
-        <Nav/>
-        <Routes>
-          <Route path='' element={<Home/>}/>
-          
-          {keycloak.authenticated && (<>
-            <Route path='profile/:id' element={<Profile/>}/>
-            <Route path='groups/:groupid' element={<Group/>}/>
-            <Route path='repetitions' element={<Repetitions />} />
-            <Route path='repetitions/set' element={<Questions type='repetition'/>} />
-            <Route path='units/:unitid/:topicid' element={<Questions type='normal'/>} />
-            <Route path='units/:unitid' element={<Topics/>}/>
-            <Route path='units' element={<Units/>}/>
-            <Route path='friends' element={<Friends/>}/>
-            <Route path='groups' element={<Groups/>}/>
-            <Route path='ranking' element={<Ranking />} />
-            <Route path='search' element={<Search />} />
-            {keycloak.hasRealmRole('app-admin') && <Route path='admin' element={<Admin />} />}
-          </>)}
+        <PopupProvider>
+          <Nav/>
+          <Routes>
+            <Route path='' element={<Home/>}/>
+            
+            {keycloak.authenticated && (<>
+              <Route path='profile/:id' element={<Profile/>}/>
+              <Route path='groups/:groupid' element={<Group/>}/>
+              <Route path='repetitions' element={<Repetitions />} />
+              <Route path='repetitions/set' element={<Questions type='repetition'/>} />
+              <Route path='units/:unitid/:topicid' element={<Questions type='normal'/>} />
+              <Route path='units/:unitid' element={<Topics/>}/>
+              <Route path='units' element={<Units/>}/>
+              <Route path='friends' element={<Friends/>}/>
+              <Route path='groups' element={<Groups/>}/>
+              <Route path='ranking' element={<Ranking />} />
+              <Route path='search' element={<Search />} />
+              {keycloak.hasRealmRole('app-admin') && <Route path='admin' element={<Admin />} />}
+            </>)}
 
-          <Route path='*' element={<NotFound/>}/>
-        </Routes>
-        <Footer/>
+            <Route path='*' element={<NotFound/>}/>
+          </Routes>
+          <Footer/>
+        </PopupProvider>
       </AppContext.Provider>
     </div>
   )
 }
-
-export default App;

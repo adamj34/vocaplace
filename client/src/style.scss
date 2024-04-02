@@ -1385,9 +1385,79 @@ input[type="file"] {
   @keyframes blink {
     50% { opacity: 1; margin: 3px; padding: 6px; }
   }
-  // #one { animation-delay: 0.2s; }
   #two { animation-delay: 0.2s; }
   #three { animation-delay: 0.4s; }
+}
+
+
+#Popup {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: $maingray;
+  padding: 10px;
+  border-radius: 12px;
+  max-width: 25%;
+  min-width: 15%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+  box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.3);
+  transition: $transition;
+  &.shown {
+    animation: shake 0.4s;
+  }
+  
+  @keyframes shake {
+      0% {
+        opacity: 0;
+        transform: translateX(0);
+      }
+  
+      25% {
+        transform: translateX(6px);
+      }
+  
+      50% {
+        transform: translateX(-6px);
+        opacity: 1;
+      }
+  
+      75% {
+        transform: translateX(3px);
+      }
+  
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+  &:not(.shown) {
+    opacity: 0;
+    pointer-events: none;
+  }
+  p {
+    margin: 0;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid $darkgray;
+    padding: 10px;
+    gap: 40px;
+    #title {
+      text-transform: uppercase;
+    }
+    #icon {
+      cursor: pointer;
+    }
+  }
+  #message {
+    padding: 10px;
+    padding-top: 0;
+  }
 }
 
 

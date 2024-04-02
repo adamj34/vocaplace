@@ -4,6 +4,8 @@ import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import { Link, useNavigate } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize';
 import DataService from "../../DataService";
+import { usePopup } from "../Popup.tsx";
+import { ValidateGroup } from './ValidateGroup.ts';
 
 
 const placeholder = [
@@ -25,19 +27,18 @@ export function Groups() {
     document.title = `VocaPlace | Groups`
     const C = useContext(AppContext);
     const navigate = useNavigate();
+    const popup = usePopup()
     const [Groups, SetGroups] = useState([]);
 
     const [NewGroupData, SetNewGroupData] = useState([]);
     const [NewGroupPicturePreview, SetNewGroupPicturePreview] = useState(null);
     const [Submitting, SetSubmitting] = useState(false);
-    const [ErrorMessage, SetErrorMessage] = useState('');
     const [SearchQuery, SetSearchQuery] = useState('');
     
     useEffect(() => {
         if (C.AppReady) {
             DataService.GetUserGroups().then((res) => {
                 SetGroups(res.data)
-                console.log(res.data)
             })
         }
     }, [C.AppReady])
@@ -98,7 +99,7 @@ export function Groups() {
                             <div id="pic-section">
                                 <div id="buttons">
                                     <label htmlFor="picinput">
-                                        <p id="inputbutton" className="button" onclick="document.getElementById('picinput').click()">Upload New Picture</p>
+                                        <p id="inputbutton" className="button" onClick={()=>document.getElementById('picinput').click()}>Upload New Picture</p>
                                         <input type='file' id='picinput' key={Date.now()} onChange={(e) => AddNewPicture(e.target.files[0])}></input>
                                     </label>
                                     <button type="button" className='button light' id='removepic' onClick={DeletePicture}>Remove Picture</button>
@@ -112,30 +113,23 @@ export function Groups() {
 
                         <button type='button' className='button' disabled={Submitting} onClick={() => {
                             SetSubmitting(true)
-                            if (!NewGroupData.group_name) {
-                                SetErrorMessage("You must enter group name!")
-                            } else if (NewGroupData.group_name.length < 5 || NewGroupData.group_name.length > 20) {
-                                SetErrorMessage("Group name must contain between 5 and 20 characters!")
-                            } else if (NewGroupData.bio && NewGroupData.bio.length > 100) {
-                                SetErrorMessage("Group description cannot contain more than 100 characters!")
-                            } else if (NewGroupData.picture && NewGroupData.picture.size > 1000000) {
-                                SetErrorMessage("Picture file cannot be bigger than 1MB!")
+                            const validation_error = ValidateGroup(NewGroupData)
+                            if (validation_error) {
+                                popup('Could not create group', validation_error)
+                                SetSubmitting(false)
                             } else {
-                                SetErrorMessage("")
-                                console.log(NewGroupData)
                                 DataService.CreateGroup(NewGroupData).then((d) => {
                                     navigate(`/groups/${d.data.id}`)
                                 }).catch((e) => {
                                     if (e && e.response.status === 409) {
-                                        SetErrorMessage("Group with that name already exists!")
+                                        popup("Failed to create group", "Group with that name already exists! Please choose another name.")
                                     } else {
-                                        SetErrorMessage("Failed to create group!")
+                                        popup("Failed to create group", "Something went wrong. Please try again later.")
                                     }
                                     SetSubmitting(false)
                                 })
                             }
                         }}>{ !Submitting ? 'Create Group' : 'Creating'}</button>
-                        <p id="error">{ErrorMessage}</p>
                     </form>
                 </div>
             </div>
