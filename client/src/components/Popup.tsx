@@ -4,6 +4,7 @@ import Icon from "./Icon";
 type PopupFunction = (title: string, content: string) => void;
 
 const PopupContext = createContext<PopupFunction | undefined>(undefined);
+const max_title_length = 30
 
 export const usePopup = (): PopupFunction => {
     const context = useContext(PopupContext);
@@ -20,7 +21,10 @@ export const PopupProvider: React.FC<{children:ReactNode}> = ({ children }) => {
     const [key, setKey] = useState<number>(0);
 
     const popup: PopupFunction = (title, content) => {
-        setTitle(title);
+        if (title.length > max_title_length) {
+            console.warn(`Popup title string too long (max ${max_title_length} characters). Truncated ${title.length-max_title_length} characters.`)
+        }
+        setTitle(title.slice(0,max_title_length));
         setMessage(content);
         setShown(true);
         setKey(k=>k+1)

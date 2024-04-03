@@ -3,12 +3,14 @@ import { AppContext } from "../../App";
 import DataService from "../../DataService";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
+import { usePopup } from "../Popup.tsx";
 
 
 
 export function Repetitions() {
     document.title = `VocaPlace | Repetitions`
 
+    const popup = usePopup()
     const C = useContext(AppContext);
     const [Repetitions, SetRepetitions] = useState([]);
 
@@ -17,6 +19,10 @@ export function Repetitions() {
             DataService.GetRepetitions().then((data) => {
                 const filtered = data.data.map(unit => {unit.topics = unit.topics.filter(t => t.repetition_questions > 0); return unit}).filter(unit => unit.topics.length > 0) // remove unnecessary units and topics
                 SetRepetitions(filtered)
+            }).catch(e => {
+                console.error(e)
+                popup("Error", "Failed to load repetitions due to an unknown error.")
+
             })
         }
     }, [C.AppReady])

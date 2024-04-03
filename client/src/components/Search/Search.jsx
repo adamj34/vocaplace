@@ -4,6 +4,7 @@ import { AppContext } from '../../App';
 import DataService from '../../DataService';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import Icon from '../Icon';
+import { usePopup } from '../Popup.tsx';
 
 
 function ListElement(p) {
@@ -24,12 +25,16 @@ export function Search() {
     const [ Params ] = useSearchParams();
     const [SearchData, SetSearchData] = useState({matchedGroups:[], matchedUsers:[]})
     const C = useContext(AppContext);
+    const popup = usePopup()
 
     useEffect(() => {
         if (C.AppReady) {
             DataService.GetSearchResults(Params.get('q')).then((data) => {
                 SetSearchData(data.data)
                 document.title = `VocaPlace | ${Params.get('q')}`
+            }).catch(e => {
+                console.log(e)
+                popup("Error", "Failed to load search results due to an unknown error.")
             })
         }
     }, [C.AppReady, Params])

@@ -3,6 +3,7 @@ import DataService from "../../DataService";
 import { AppContext } from '../../App';
 import { Link } from 'react-router-dom';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
+import { usePopup } from '../Popup.tsx';
 
 
 
@@ -30,7 +31,9 @@ const initialTopGroupsData = [
 
 
 export function Ranking() {
+    document.title = `VocaPlace | Ranking`;
     const C = useContext(AppContext);
+    const popup = usePopup()
     const [Friends, SetFriends] = useState([]);
     const [Users, SetUsers] = useState([]);
     const [Groups, SetGroups] = useState([]);
@@ -43,8 +46,9 @@ export function Ranking() {
 
             DataService.GetRankingTop().then((res) => {
                 SetUsers(res.data.filter(x=>x.points>0));
-            }).catch((err) => {
-                console.log(err);
+            }).catch(e => {
+                console.log(e);
+                popup("Error", "Failed to load ranking due to an unknown error.")
             });
 
         // Geting top 10 groups
@@ -56,13 +60,12 @@ export function Ranking() {
 
             DataService.GetRankingFriends().then((res) => {
                 SetFriends(res.data);
-            }).catch((err) => {
-                console.log(err);
+            }).catch(e => {
+                console.log(e);
+                popup("Error", "Failed to load ranking due to an unknown error.")
             });    
         }
     }, [C.AppReady]);
-
-    document.title = `VocaPlace | Revisions`;
 
     return (
         <div id="Ranking">

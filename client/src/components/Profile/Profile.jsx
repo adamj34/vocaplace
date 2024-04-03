@@ -9,6 +9,7 @@ import DataService from '../../DataService';
 import { DateFormat } from '../../helpers/DateFormat';
 import { LoadingScreen } from '../LoadingScreen';
 import TextareaAutosize from 'react-textarea-autosize';
+import { usePopup } from '../Popup.tsx';
 
 function SetRelationship(rel, me) {
     if (!rel) {
@@ -39,12 +40,12 @@ export function Profile() {
     const { id } = useParams()
     const [ProfileData, SetProfileData] = useState({});
     const [LoadingProfile, SetLoadingProfile] = useState(true);
+    const popup = usePopup()
 
     const [EditingProfile, SetEditingProfile] = useState(false);
     const [EditingData, SetEditingData] = useState({});
     const [PicturePreview, SetPicturePreview] = useState(null);
     const [PictureWillBeDeleted, SetPictureWillBeDeleted] = useState(false);
-    const [ErrorMessage, SetErrorMessage] = useState('');
     const [Saving, SetSaving] = useState(false);
 
     useEffect(() => {
@@ -55,6 +56,16 @@ export function Profile() {
                 document.title = `VocaPlace | ${data.user.username}`
                 window.scrollTo({ top: 0, left: 0});
                 SetLoadingProfile(false)
+            }).catch(e => {
+                console.error(e)
+                if (e.response && e.response.status === 404) {
+                    popup('Error', 'User was not found. Please make sure you enter a correct user ID.')
+                } else if (e.response && e.response.status === 422) {
+                    popup('Error', 'Invalid user ID! Please enter a valid user ID.')
+                } else {
+                    popup('Error', 'Failed to load profile due to an unknown error.')
+                }
+                SetLoadingProfile(false)
             })
         }
     }, [C.AppReady, id, C.UserData.id])
@@ -63,31 +74,45 @@ export function Profile() {
     function SendInvite() {
         DataService.SendFriendRequest(id).then((relationship) => {
             SetProfileData({...ProfileData, relationship:SetRelationship(relationship, C.UserData.id)})
-            console.log(relationship)
-        })
-    }
-
-    function AcceptInvite() {
-        DataService.AcceptFriendRequest(id).then((res) => {
-            SetProfileData({ ...ProfileData, relationship: 'friends' })
-        })
-    }
-
-    function DeleteFriend() {
-        DataService.DeleteFriend(id).then((res) => {
-            SetProfileData({...ProfileData, relationship:null})
+        }).catch(e => {
+            console.error(e)
+            popup("Error", "Failed to send a friend request due to an unknown error.")
         })
     }
 
     function CancelInvite() {
-        DataService.CancelFriendRequest(id).then((res) => {
+        DataService.CancelFriendRequest(id).then(() => {
             SetProfileData({ ...ProfileData, relationship: null })
+        }).catch(e => {
+            console.error(e)
+            popup("Error", "Failed to cancel friend request due to an unknown error.")
+        })
+    }
+
+    function AcceptInvite() {
+        DataService.AcceptFriendRequest(id).then(() => {
+            SetProfileData({ ...ProfileData, relationship: 'friends' })
+        }).catch(e => {
+            console.error(e)
+            popup("Error", "Failed to accept friend request due to an unknown error.")
         })
     }
 
     function DeleteInvite() {
-        DataService.DeleteFriendRequest(id).then((res) => {
+        DataService.DeleteFriendRequest(id).then(() => {
             SetProfileData({ ...ProfileData, relationship: null })
+        }).catch(e => {
+            console.error(e)
+            popup("Error", "Failed to delete friend request due to an unknown error.")
+        })
+    }
+
+    function DeleteFriend() {
+        DataService.DeleteFriend(id).then(() => {
+            SetProfileData({...ProfileData, relationship:null})
+        }).catch(e => {
+            console.error(e)
+            popup("Error", "Failed to delete friend due to an unknown error.")
         })
     }
 
@@ -108,8 +133,6 @@ export function Profile() {
     }
 
     function UpdateUserData() {
-        SetErrorMessage('')
-
         if ( Object.keys(EditingData).length > 0 ) { // nothing to update
             if (!EditingData.picture || EditingData.picture.size < 1000000) {
                 SetSaving(true)
@@ -124,7 +147,8 @@ export function Profile() {
                             SetSaving(false)
                             ResetEditor()
                         }).catch((e) => {
-                            SetErrorMessage('There was an error while updating your profile.')
+                            console.error(e)
+                            popup("Error", "Failed to update profile due to an unknown error.")
                             SetSaving(false)
                         })
                     } else {
@@ -132,11 +156,13 @@ export function Profile() {
                         ResetEditor()
                     }   
                 }).catch((e) => {
-                    SetErrorMessage('There was an error while updating your profile.')
+                    console.error(e)
+                    popup("Error", "Failed to update profile due to an unknown error.")
                     SetSaving(false)
                 })
             } else {
-                SetErrorMessage('Picture file has to be smaller than 1MB!')
+                popup("Error", "Picture file cannot be bigger than 1MB! Please upload a smaller file.")
+                SetSaving(false)
             }
         } else {
             if (PictureWillBeDeleted && C.UserData.picture) {
@@ -147,7 +173,8 @@ export function Profile() {
                     SetSaving(false)
                     ResetEditor()
                 }).catch((e) => {
-                    SetErrorMessage('There was an error while updating your profile.')
+                    console.error(e)
+                    popup("Error", "Failed to update profile due to an unknown error.")
                     SetSaving(false)
                 })
             } else {
@@ -161,12 +188,11 @@ export function Profile() {
         SetEditingData({})
         SetPicturePreview(null)
         SetPictureWillBeDeleted(false)
-        SetErrorMessage('')
     }
 
 
     return (
-        LoadingProfile ? <LoadingScreen/>  : <div id="Profile">
+        (LoadingProfile || Object.keys(ProfileData).length === 0) ? <LoadingScreen/> : <div id="Profile">
             <div id='banner'>
                 <div id='left'>
                     <div id='pfp-section'>
@@ -194,7 +220,6 @@ export function Profile() {
                         {EditingProfile && <>
                         <button className='button' onClick={UpdateUserData} disabled={Saving}>{Saving ? 'Saving' : 'Save Changes'}</button>
                         {!Saving && <button className='button light' onClick={ResetEditor}>Discard Changes</button>}
-                        <p>{ErrorMessage}</p>
                         </>}
                     </div> 
                 

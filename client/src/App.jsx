@@ -10,14 +10,14 @@ import { Profile } from './components/Profile/Profile.jsx';
 import { Group } from'./components/Groups/Group.jsx'
 import { Nav } from './components/Nav/Nav.jsx';
 import { Footer } from './components/Nav/Footer.jsx'
-import { Units } from './components/Units/Units.jsx'
-import { Topics } from './components/Units/Topics.jsx';
+import { Units } from './components/Questions/Units.jsx'
+import { Topics } from './components/Questions/Topics.jsx';
 import { Admin } from './components/Admin/Admin.jsx'
 import { Repetitions } from './components/Repetitions/Repetitions.jsx';
 import { Friends } from './components/Friends/Friends.jsx';
 import { Groups } from './components/Groups/Groups.jsx';
 import { Ranking } from './components/Ranking/Ranking.jsx';
-import { Questions } from './components/Units/Questions.jsx';
+import { Questions } from './components/Questions/Questions.jsx';
 import { Search } from './components/Search/Search.jsx';
 import { PopupProvider } from './components/Popup.tsx';
 import DataService from "./DataService.js"
@@ -34,6 +34,9 @@ export default function App() {
       DataService.GetUserData(keycloak.token).then((res) => {
         SetUserData(res.data)
         SetAppReady(true)
+      }).catch(e => {
+        console.error(e)
+        console.warn("Failed to load user data")
       })
     } else if (initialized && !keycloak.authenticated) { // keycloak loaded but not logged in
       SetAppReady(true)

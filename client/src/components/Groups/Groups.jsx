@@ -39,6 +39,9 @@ export function Groups() {
         if (C.AppReady) {
             DataService.GetUserGroups().then((res) => {
                 SetGroups(res.data)
+            }).catch(e => {
+                console.error(e)
+                popup("Error", "Failed to load groups due to an unknown error.")
             })
         }
     }, [C.AppReady])
@@ -115,16 +118,17 @@ export function Groups() {
                             SetSubmitting(true)
                             const validation_error = ValidateGroup(NewGroupData)
                             if (validation_error) {
-                                popup('Could not create group', validation_error)
+                                popup('Error', validation_error)
                                 SetSubmitting(false)
                             } else {
-                                DataService.CreateGroup(NewGroupData).then((d) => {
-                                    navigate(`/groups/${d.data.id}`)
+                                DataService.CreateGroup(NewGroupData).then((res) => {
+                                    navigate(`/groups/${res.data.id}`)
                                 }).catch((e) => {
-                                    if (e && e.response.status === 409) {
-                                        popup("Failed to create group", "Group with that name already exists! Please choose another name.")
+                                    console.error(e)
+                                    if (e.response && e.response.status === 409) {
+                                        popup("Error", "Group with that name already exists! Please choose another name.")
                                     } else {
-                                        popup("Failed to create group", "Something went wrong. Please try again later.")
+                                        popup("Error", "Failed to create group due to an unknown error.")
                                     }
                                     SetSubmitting(false)
                                 })

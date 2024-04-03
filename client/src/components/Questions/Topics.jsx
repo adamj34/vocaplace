@@ -1,9 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
 import ProgressBar from "./ProgressBar";
 import Icon from "../Icon";
+import { usePopup } from "../Popup.tsx";
 
 
 function Button({data}) {
@@ -25,18 +26,28 @@ export function Topics() {
 
     const C = useContext(AppContext);
     const [Topics, SetTopics] = useState([]);
-    const [UnitName, SetUnitName] = useState('');
+    const [UnitName, SetUnitName] = useState('Units');
     const { unitid } = useParams()
     document.title = `VocaPlace | ${UnitName}`
+    const popup = usePopup()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (C.AppReady) {
-            DataService.GetTopics(unitid).then((data) => {
-                const formatted = Object.entries(data.data).map(([topicid, d]) => {
-                    return { topicid, ...d }
-                })
-                SetTopics(formatted)
-                SetUnitName(data.unit)
+            DataService.GetTopics(unitid).then((res) => {
+                if (res.unit) { // unit has questions
+                    const formatted = Object.entries(res.data).map(([topicid, d]) => {
+                        return { topicid, ...d }
+                    })
+                    SetTopics(formatted)
+                    SetUnitName(res.unit)
+                } else {
+                    navigate('/units')
+                    console.warn(`Unit with ID ${unitid} has no topics. Navigating to /units.`)
+                }
+            }).catch(e => {
+                console.error(e)
+                popup("Error", "Failed to load topics due to an unknown error.")
             })
         }
     }, [C.AppReady, unitid])

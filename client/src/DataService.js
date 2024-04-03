@@ -45,14 +45,18 @@ const functions = {
         return res.data
     },
 
+    async GetFriendRequests() {
+        const res = await Server.get(`/relationships/pending/`)
+        return res.data
+    },
+
     async SendFriendRequest(userid) {
         const res = await Server.post(`/relationships/request/friend/${userid}`)
         return res.data.data
     },
 
-    async GetFriendRequests() {
-        const res = await Server.get(`/relationships/pending/`)
-        return res.data
+    async CancelFriendRequest(userid) { // sent
+        await Server.delete(`/relationships/request/sent/friend/${userid}`)
     },
 
     async AcceptFriendRequest(userid) {
@@ -60,17 +64,12 @@ const functions = {
         return true
     },
 
-    async CancelFriendRequest(userid) { // sent
-        await Server.delete(`/relationships/request/sent/friend/${userid}`)
-    },
-
     async DeleteFriendRequest(userid) { // received
         await Server.delete(`/relationships/request/received/friend/${userid}`)
     },
 
     async DeleteFriend(userid) {
-        await Server.delete(`/relationships/friend/${userid}`)
-        return true
+        await Server.delete(`/relationships/friend\/${userid}`)
     },
 
     async GetUnits() {
@@ -100,10 +99,10 @@ const functions = {
         return res.data
     },
 
-    // async GetNotifications() {
-    //     const res = await Server.get(`/user`)
-    //     return res.data
-    // },
+    async GetNotifications() {
+        const res = await Server.get(`/user/notifications`)
+        return res.data
+    },
 
     async SaveQuestionsAnswered(ids) {
         await Server.post(`/questions/answered`, {questionIds:ids})

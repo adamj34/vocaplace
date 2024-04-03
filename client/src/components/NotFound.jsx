@@ -6,7 +6,7 @@ export function NotFound() {
       <div id="NotFound"> 
         <h2>Error 404</h2>
         <h1>Page not found.</h1>
-        <Link to='..' className='hovertext'>Return to the Home Page</Link>
+        <Link to='..' className='hovertext'>Click here to return to the Home Page</Link>
       </div>
     )
   }

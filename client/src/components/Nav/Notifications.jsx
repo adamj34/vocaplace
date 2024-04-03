@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../App";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
+import DataService from "../../DataService";
+import { usePopup } from "../Popup.tsx";
 
 const notifications = [ // placeholder
     { type: 'group_request_accepted', group_name: 'Englovers', group_id: '1' },
@@ -16,14 +18,18 @@ export default function Notifications() {
     const [ShowMessages, SetShowMessages] = useState(false);
     const [Messages, SetMessages] = useState([]);
     const C = useContext(AppContext);
+    const popup = usePopup()
 
     useEffect(() => {
         if (C.AppReady) {
-            // DataService.GetGroupData(id).then((data) => {
-            //     SetGroupData(data)
-            //     console.log(data)
-            // })
-            SetMessages(notifications)
+            // DataService.GetNotifications().then((res) => {
+            //     SetMessages(res.data)
+            //     console.log(res.data)
+            // }).catch(e => {
+            //     console.log(e)
+            //     popup('Error', 'Failed to load notifications due to an unknown error.')
+            // }) 
+            SetMessages(notifications) // temporary
 
         }
     }, [C.AppReady])

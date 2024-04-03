@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
+import { usePopup } from "../Popup.tsx";
 
 const placeholder = [
     { username: "Bill", points: 117 },
@@ -21,33 +22,49 @@ export function Friends() {
     const [FriendRequests, SetFriendRequests] = useState([]);
     const [Updated, SetUpdated] = useState(false);
     const [SearchQuery, SetSearchQuery] = useState('');
+    const popup = usePopup()
     
     useEffect(() => {
         if(C.AppReady && !Updated){
             DataService.GetFriends().then((res) => {
                 SetFriends(res.data);
+            }).catch(e => {
+                console.error(e)
+                popup("Error", "Failed to load friends due to an unknown error.")
             })
             DataService.GetFriendRequests().then((res) => {
                 SetFriendRequests(res.data);
+            }).catch(e => {
+                console.error(e)
+                popup("Error", "Failed to load friend requests due to an unknown error.")
             })
             SetUpdated(true);
         }
     }, [C.AppReady,Updated]);
 
     function AcceptFriendRequest(userid) {
-        DataService.AcceptFriendRequest(userid).then((res) => {
+        DataService.AcceptFriendRequest(userid).then(() => {
             SetUpdated(false);
+        }).catch(e => {
+            console.error(e)
+            popup("Error", "Failed to accept friend request due to an unknown error.")
         })
     }
     function DeclineFriendRequest(userid) {
-        DataService.DeleteFriendRequest(userid).then((res) => {
+        DataService.DeleteFriendRequest(userid).then(() => {
             SetUpdated(false)
+        }).catch(e => {
+            console.error(e)
+            popup("Error", "Failed to delete friend request due to an unknown error.")
         })
     }
     function RemoveFriend(userid, username) {
         if (window.confirm(`Are you sure you want to remove ${username} from friends?`)) {
-            DataService.DeleteFriend(userid).then((res) => {
+            DataService.DeleteFriend(userid).then(() => {
                 SetUpdated(false);   
+            }).catch(e => {
+                console.error(e)
+                popup("Error", "Failed to delete friend due to an unknown error.")
             })
         }
     }

@@ -1,9 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState, useEffect, useReducer } from "react";
 import { AppContext } from "../../App";
 import DataService from "../../DataService";
 import { ShuffleArray } from "../../helpers/ShuffleArray";
 import Icon from "../Icon";
+import { usePopup } from "../Popup.tsx";
 
 function CheckQuestions(checkedstate, DispatchQuestionsData) {
     const correctids = []
@@ -191,6 +192,8 @@ export function Questions({type}) {
     const [Questions, SetQuestions] = useState([]);
     const [Finished, SetFinished] = useState(false);
     const [QuestionsData, DispatchQuestionsData] = useReducer(QuestionsReducer, {})
+    const popup = usePopup()
+    const navigate = useNavigate()
 
     // useEffect(() => {
     //     if (C.AppReady) {
@@ -220,14 +223,28 @@ export function Questions({type}) {
 
     useEffect(() => {
         if (C.AppReady) {
-                DataService.GenerateQuiz(type, unitid, topicid).then((data) => {
-                    const questions = ShuffleArray(data.data)
-                    questions.forEach((q, i) => {
-                        const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
+                DataService.GenerateQuiz(type, unitid, topicid).then((res) => {
+                    if (res.data && ((type === 'normal' && res.data[0].question_id) || (type === 'repetition' && res.data.length > 0))) { // topic has no questions
+                        const questions = ShuffleArray(res.data)
+                        questions.forEach((q, i) => {
+                            const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
 
-                        DispatchQuestionsData({ type: 'INIT', i, answer_options, difficulty: questions[i].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id, question_type: questions[i].question_type })
-                    })
-                    SetQuestions(questions)
+                            DispatchQuestionsData({ type: 'INIT', i, answer_options, difficulty: questions[i].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id, question_type: questions[i].question_type })
+                        })
+                        SetQuestions(questions)
+                    } else {
+                        if (type === 'normal') {
+                            navigate(`/units/${unitid}`)
+                            console.warn(`Topic with ID ${topicid} has no questions. Navigating to /units/${unitid}.`)
+                        } else if (type === 'repetition') {
+                            navigate(`/repetitions`)
+                            console.warn(`Repetition set has no questions. Navigating to /repetitions.`)
+                        }
+                        
+                    }
+                }).catch(e => {
+                    console.error(e)
+                    popup("Error", "Failed to load questions due to an unknown error.")
                 })
         }
     }, [C.AppReady, type, unitid, topicid])
@@ -265,9 +282,15 @@ export function Questions({type}) {
                     if (result.correctids.length > 0) {
                         DataService.SaveQuestionsAnswered(result.correctids).then(()=>{
                             console.log('saved answered')
+                        }).catch(e => {
+                            console.error(e)
+                            popup("Error", "Failed to save answers due to an unknown error.")
                         })
                         DataService.UpdatePoints(result.points).then(() => {
                             console.log('updated points')
+                        }).catch(e => {
+                            console.error(e)
+                            popup("Error", "Failed to update points due to an unknown error.")
                         })
                         console.log('saved')
 
@@ -275,6 +298,8 @@ export function Questions({type}) {
                     if (result.incorrectids.length > 0 && type !== 'repetition') {
                         DataService.SaveRepetitions(result.incorrectids).then(() => {
                             console.log('saved repetitions')
+                        }).catch(e => {
+                            popup("Error", "Failed to save repetitions due to an unknown error.")
                         })
                     }
                     SetFinished(true)

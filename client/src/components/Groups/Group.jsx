@@ -59,7 +59,7 @@ export function Group() {
         if (NewChatMessage) {
             SetSendingChatMessage(true)
             console.log('sending message: ',NewChatMessage)
-            popup('Error','krystian dodaj sockety :(')
+            popup('rip','krystian dodaj sockety >:C')
             SetNewChatMessage('')
             SetSendingChatMessage(false)
         }
@@ -70,6 +70,7 @@ export function Group() {
             SetPendingMembers([...PendingMembers, C.UserData])
         }).catch(e => {
             console.log(e)
+            popup("", "Something went wrong. Please try again later.")
         })
     }
 
@@ -80,7 +81,7 @@ export function Group() {
             SetPendingMembers(PendingMembers.filter(x => x.id !== userid))
         }).catch(e => {
             console.log(e)
-            popup('Error','Failed to accept group join request due to an unknown error. Please try again later.')
+            popup('Failed to accept join request','Something went wrong. Please try again later.')
         })
     }
 
@@ -90,7 +91,7 @@ export function Group() {
             SetPendingMembers(PendingMembers.filter(x => x.id !== userid))
         }).catch(e => {
             console.log(e)
-            popup('Error', 'Failed to remove user due to an unknown error. Please try again later.')
+            popup('Failed to remove user', 'Something went wrong. Please try again later.')
         })
     }
 
@@ -104,7 +105,7 @@ export function Group() {
                 SetManagingGroup(false)
             }).catch(e => {
                 console.log(e)
-                popup('Error', 'Failed to pass group ownership due to an unknown error. Please try again later.')
+                popup('Failed to pass group ownership', 'Failed to pass group ownership due to an unknown error. Please try again later.')
             })
         }
     }

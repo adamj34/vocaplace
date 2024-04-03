@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DataService from "../../DataService";
+import { usePopup } from "../Popup.tsx";
 
 
 function Validate(Data) {
@@ -34,6 +35,7 @@ export function QuestionCreator(p) {
     const [ShowTopics, SetShowTopics] = useState(false);
     const [ShowDifficulty, SetShowDifficulty] = useState(false);
     const [ShowType, SetShowType] = useState(false);
+    const popup = usePopup()
 
     return (
         <div id='creator'>
