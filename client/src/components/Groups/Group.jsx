@@ -6,23 +6,24 @@ import placeholderpfp from '../../images/PlaceholderProfilePic.png'
 import Icon from '../Icon';
 import TextareaAutosize from 'react-textarea-autosize';
 import { usePopup } from '../Popup.tsx';
+import { ValidateGroup } from './ValidateGroup.ts';
 
 const chatmessages = [ // placeholder
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'joe', content: 'hello there', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'general kenobi', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'joe', content: 'bajojajo', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test2', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test3', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'test', content: 'test4', posted: '14:05' },
+    { id: 1, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'hello there', posted: '14:05' },
+    { id: 2, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'general kenobi', posted: '14:05' },
+    { id: 3, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test', posted: '14:05' },
+    { id: 4, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'tada', posted: '14:05' },
+    { id: 5, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test2', posted: '14:05' },
+    { id: 6, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test3', posted: '14:05' },
+    { id: 7, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
+    { id: 8, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test5', posted: '14:05' },
+    { id: 9, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test6', posted: '14:05' },
+    { id: 10, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test7', posted: '14:05' },
+    { id: 11, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test8', posted: '14:05' },
+    { id: 12, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test9', posted: '14:05' },
+    { id: 13, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test10', posted: '14:05' },
+    { id: 14, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test11', posted: '14:05' },
+    { id: 15, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'test12', posted: '14:05' },
 ]
 
 export function Group() {
@@ -34,13 +35,17 @@ export function Group() {
     const [GroupData, SetGroupData] = useState({});
     const [Members, SetMembers] = useState([]);
     const [PendingMembers, SetPendingMembers] = useState([]);
+
     const [ChatMessages, SetChatMessages] = useState([]);
-    const [ManagingGroup, SetManagingGroup] = useState(false);
-    const [UpdatedGroupData, SetUpdatedGroupData] = useState({group_name:GroupData.group_name});
     const [NewChatMessage, SetNewChatMessage] = useState('');
     const [SendingChatMessage, SetSendingChatMessage] = useState(false);
-    const [ErrorMessage, SetErrorMessage] = useState('');
     const [LeavingGroup, SetLeavingGroup] = useState(false);
+
+    const [ManagingGroup, SetManagingGroup] = useState(false);
+    const [UpdatedGroupData, SetUpdatedGroupData] = useState({});
+    const [PicturePreview, SetPicturePreview] = useState(null);
+    const [PictureWillBeDeleted, SetPictureWillBeDeleted] = useState(false);
+    const [Saving, SetSaving] = useState(false);
 
     function IsGroupAdmin(userid) {
         const user = Members.find(m => m.id === userid)
@@ -65,12 +70,17 @@ export function Group() {
         }
     }
 
+    function DeleteChatMessage(id) {
+        SetChatMessages(ChatMessages.filter(m=>m.id!==id))
+        console.log('delete for everyone via socket')
+    }
+
     function RequestToJoinGroup() {
         DataService.SendGroupJoinRequest(groupid).then(() => {
             SetPendingMembers([...PendingMembers, C.UserData])
         }).catch(e => {
-            console.log(e)
-            popup("", "Something went wrong. Please try again later.")
+            console.error(e)
+            popup("Error", "Failed to request to join due to an unknown error.")
         })
     }
 
@@ -80,8 +90,8 @@ export function Group() {
             SetMembers([...Members, member])
             SetPendingMembers(PendingMembers.filter(x => x.id !== userid))
         }).catch(e => {
-            console.log(e)
-            popup('Failed to accept join request','Something went wrong. Please try again later.')
+            console.error(e)
+            popup('Error','Failed to accept join request due to an unknown error.')
         })
     }
 
@@ -90,8 +100,8 @@ export function Group() {
             SetMembers(Members.filter(x => x.id !== userid))
             SetPendingMembers(PendingMembers.filter(x => x.id !== userid))
         }).catch(e => {
-            console.log(e)
-            popup('Failed to remove user', 'Something went wrong. Please try again later.')
+            console.error(e)
+            popup('Error', 'Failed to remove user due to an unknown error.')
         })
     }
 
@@ -103,9 +113,10 @@ export function Group() {
                 newmembers.find(x => x.id === userid).admin = true
                 SetMembers(newmembers)
                 SetManagingGroup(false)
+                popup('Success', `Group ownership was passed to ${Members.find(x => x.id === userid).username}.`)
             }).catch(e => {
-                console.log(e)
-                popup('Failed to pass group ownership', 'Failed to pass group ownership due to an unknown error. Please try again later.')
+                console.error(e)
+                popup('Error', 'Failed to pass group ownership due to an unknown error.')
             })
         }
     }
@@ -119,11 +130,11 @@ export function Group() {
                     SetMembers(Members.filter(x => x.id !== C.UserData.id))
                     SetLeavingGroup(false)
                 }).catch(e => {
-                    console.log(e)
-                    popup('Error', 'Failed to leave the group due an unknown error. Please try again later.')
+                    console.error(e)
+                    popup('Error', 'Failed to leave the group due to an unknown error.')
                 })
             } else {
-                popup('Could not leave group', 'You must transfer group ownership to another member before leaving the group!')
+                popup('Error', 'You must transfer group ownership to another member before leaving the group!')
                 SetLeavingGroup(false)
             }
         }
@@ -134,10 +145,92 @@ export function Group() {
             DataService.DeleteGroup(groupid).then(() => {
                 navigate('/')
             }).catch(e => {
-                console.log(e)
-                SetErrorMessage('Failed to delete the group!')
+                console.error(e)
+                popup('Error', 'Failed to delete the group due to an unknown error.')
             })
         }
+    }
+
+    function UpdateGroupData() {
+        console.log(UpdatedGroupData)
+        if (Object.keys(UpdatedGroupData).length > 0) { // nothing to update
+            if (!UpdatedGroupData.picture || UpdatedGroupData.picture.size < 1000000) {
+                SetSaving(true)
+                const validation_error = ValidateGroup(UpdatedGroupData, true)
+                if (validation_error) {
+                    popup('Error', validation_error)
+                    SetSaving(false)
+                } else {
+                    DataService.UpdateGroupData(groupid, UpdatedGroupData).then((res) => {
+                        SetGroupData(res.data)
+
+                        if (PictureWillBeDeleted) {
+                            DataService.DeleteGroupPicture(groupid).then(() => {
+                                SetGroupData({ ...GroupData, picture: null })
+                                SetSaving(false)
+                                ResetEditor()
+                            }).catch((e) => {
+                                console.error(e)
+                                popup("Error", "Failed to remove group picture due to an unknown error.")
+                                SetSaving(false)
+                            })
+                        } else {
+                            SetSaving(false)
+                            ResetEditor()
+                        }
+                    }).catch((e) => {
+                        console.error(e)
+                        if (e.response && e.response.status === 409) {
+                            popup("Error", "Group with that name already exists! Please choose another name.")
+                        } else {
+                            popup("Error", "Failed to create group due to an unknown error.")
+                        }
+                        SetSaving(false)
+                    })
+                }
+            } else {
+                popup("Error", "Picture file cannot be bigger than 1MB! Please upload a smaller file.")
+                SetSaving(false)
+            }
+        } else {
+            if (PictureWillBeDeleted && GroupData.picture) {
+                SetSaving(true)
+                DataService.DeleteGroupPicture(groupid).then(() => {
+                    SetGroupData({ ...GroupData, picture: null })
+                    SetSaving(false)
+                    ResetEditor()
+                }).catch((e) => {
+                    console.error(e)
+                    popup("Error", "Failed to delete group picture due to an unknown error.")
+                    SetSaving(false)
+                })
+            } else {
+                ResetEditor()
+            }
+        }
+    }
+
+    function AddNewPicture(file) {
+        if (file && file.type.startsWith('image')) {
+            SetPicturePreview(URL.createObjectURL(file))
+            SetUpdatedGroupData({ ...UpdatedGroupData, 'picture': file })
+            SetPictureWillBeDeleted(false)
+        }
+    }
+
+    function DeletePicture() {
+        const datawithoutpic = { ...UpdatedGroupData }
+        delete datawithoutpic.picture
+        SetUpdatedGroupData(datawithoutpic)
+        SetPicturePreview(placeholderpfp)
+        SetPictureWillBeDeleted(true)
+    }
+
+    function ResetEditor() {
+        SetManagingGroup(false)
+        SetUpdatedGroupData({})
+        SetPicturePreview(null)
+        SetPictureWillBeDeleted(false)
     }
 
     useEffect(() => {
@@ -148,9 +241,6 @@ export function Group() {
                 SetPendingMembers(data.members.filter(m => !m.accepted))
                 SetChatMessages(chatmessages.reverse()) // placeholder
                 document.title = `VocaPlace | ${data.group.group_name}`
-                console.log(data)
-                console.log('accepted:', data.members.filter(m => m.accepted))
-                console.log('pending:', data.members.filter(m => !m.accepted))
             }).catch(()=>navigate('/groups'))
         }
     }, [C.AppReady, groupid])
@@ -200,7 +290,8 @@ export function Group() {
                                     or
                                     <button className='button light' onClick={()=>KickUser(u.id)}>Decline</button>
                                 </div>
-                            </div>)
+                            </div>
+                        )
                     })}
                 </div>}
             </div>
@@ -211,7 +302,7 @@ export function Group() {
                         {ChatMessages.map((m, i) => {
                             return (
                             <div id='message' key={i}>
-                                {(i === 0 || ChatMessages[i - 1].username !== m.username) ?
+                                {(i === ChatMessages.length-1 || ChatMessages[i + 1].userid !== m.userid) ?
                                     <div id='messagedata'>
                                     <Link key={i} to={`/profile/${m.id}`}>
                                          <div id="user">
@@ -221,7 +312,7 @@ export function Group() {
                                     </Link>
                                     <p id='time'>{m.posted}</p>
                                 </div> : null}
-                                    <p id='messagecontent'>{m.content} {IsGroupAdmin(C.UserData.id) && <Icon icon='trash'/>}</p>
+                                    <p id='messagecontent'>{m.content} {IsGroupAdmin(C.UserData.id) && <Icon icon='trash' onClick={()=>DeleteChatMessage(m.id)}/>}</p>
                             </div>)
                         })}
                 </div>
@@ -243,7 +334,7 @@ export function Group() {
                         <div id='pfp' style={{ backgroundImage: `url(${C.UserData.picture || placeholderpfp})`, height: 80, width: 80 }}></div>
                         <div id='data'>
                             <p id="username">{C.UserData.username}</p>
-                            <p id='role'>{IsGroupAdmin(C.UserData.userid) ? "Group Owner" : "Group Member"}</p>
+                            <p id='role'>Group {IsGroupAdmin(C.UserData.id) ? "Owner" : "Member"}</p>
                         </div>
                 </div>
                 <div id='buttons'>
@@ -252,20 +343,32 @@ export function Group() {
                             {ManagingGroup && <>
                             <div id='field'>
                                 <label>Group Name:</label>
-                                <input className='input' placeholder={GroupData.group_name} onChange={(e) => { SetUpdatedGroupData({ ...UpdatedGroupData, group_name: e.target.value }) }} />
+                                <input className='input' placeholder={GroupData.group_name} disabled={Saving} onChange={(e) => { SetUpdatedGroupData({ ...UpdatedGroupData, group_name: e.target.value }) }} />
                             </div>
                             <div id='field'>
                                 <label>Group Description:</label>
-                                <TextareaAutosize id='bio' className='input' minRows={4} maxLength={300} placeholder={GroupData.bio} onChange={(e) => { SetUpdatedGroupData({ ...UpdatedGroupData, bio: e.target.value }) }} ></TextareaAutosize>
+                                    <TextareaAutosize id='bio' className='input' minRows={4} maxLength={300} defaultValue={GroupData.bio} disabled={Saving} onChange={(e) => { SetUpdatedGroupData({ ...UpdatedGroupData, bio: e.target.value }) }} ></TextareaAutosize>
                             </div>
-                            <button className='button' onClick={() => { SetManagingGroup(false) }}>Save Changes</button>
-                            <button className='button light' onClick={() => { SetManagingGroup(false) }}>Discard Changes</button>
+                             <div id='field'>
+                                <span>Group Picture{UpdatedGroupData.picture && ` (${Math.ceil(UpdatedGroupData.picture.size / 1024)}KB)`}:</span>
+                                <div id="pic-section">
+                                    <div id="buttons">
+                                        <label htmlFor="picinput" >
+                                            <p id="inputbutton" className="button">Upload New Picture</p>
+                                            <input type='file' id='picinput' key={Date.now()} disabled={Saving} onChange={(e) => AddNewPicture(e.target.files[0])}></input>
+                                        </label>
+                                        <button type="button" className='button light' id='removepic' disabled={Saving} onClick={DeletePicture}>Remove Picture</button>
+                                    </div>
+                                        <div id='pfp' style={{ backgroundImage: `url(${PicturePreview || GroupData.picture || placeholderpfp})` }}></div>
+                                </div>
+                            </div>
+                                <button className='button' onClick={UpdateGroupData} disabled={Saving}>{Saving ? 'Saving' : 'Save Changes'}</button>
+                                <button className='button light' disabled={Saving} onClick={() => { if (Object.keys(UpdatedGroupData).length === 0 || window.confirm("Are you sure? Updated data will be lost.")) { ResetEditor() } }}>Discard Changes</button>
                             </>}
                     </div>}
                     {!ManagingGroup && <button className='button light' disabled={LeavingGroup} onClick={LeaveGroup}>{!LeavingGroup ? 'Leave Group' : 'Leaving'}</button>}
                     {ManagingGroup && <button className='button light' onClick={DeleteGroup}>Delete Group</button>}
                 </div>
-                <span id='error'>{ErrorMessage}</span>
             </div>}
 
             </div>

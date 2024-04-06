@@ -32,12 +32,25 @@ const functions = {
         return res.data
     },
 
+    async UpdateGroupData(groupid, data) {
+        const res = await Server.patch(`/groups/${groupid}`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        })
+        return res.data
+    },
+
     async UpdatePoints(points) {
         await Server.patch(`/user/points`, {points:points})
     },
 
     async DeleteProfilePicture() {
         await Server.delete(`/user/profilePicture`)
+    },
+
+    async DeleteGroupPicture(groupid) {
+        await Server.delete(`/groups/picture/${groupid}`)
     },
 
     async GetFriends() {

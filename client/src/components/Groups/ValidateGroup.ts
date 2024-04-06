@@ -5,10 +5,10 @@ type GroupData = {
     picture?: File;
 };
 
-export function ValidateGroup(data: GroupData): string | null {
+export function ValidateGroup(data: GroupData, updated:boolean): string | null {
     const { group_name, bio, picture } = data;
 
-    if (!group_name || group_name.length < 5 || group_name.length > 20) {
+    if ((!group_name && !updated) || (group_name && (group_name.length < 5 || group_name.length > 20))) {
         return "Group name must contain between 5 and 20 characters! Please enter a valid name."
     }
 

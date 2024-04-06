@@ -68,22 +68,24 @@ export function Groups() {
             </div>
 
             <div id="content">
-                <div id="grouplist">
-                    {Groups.length === 0 && <p>You haven't joined any groups yet.</p>}
+                <div id='groups'>
+                    {Groups.length === 0 && <p id="nogroups">You haven't joined any groups yet.</p>}
                     {Groups.length > 0 && <input className="input" placeholder="Filter groups" onChange={e => SetSearchQuery(e.target.value)}></input>}
-                    {Groups.map((g, i) => {
-                        return (
-                            g.group_name.toLowerCase().includes(SearchQuery.toLowerCase()) && <Link key={i} to={`/groups/${g.id}`}>
-                                <div id="group">
-                                    <div id='pfp' style={{ backgroundImage: `url(${g.picture || placeholderpfp})`, height: 60, minWidth: 60 }}></div>
-                                    <div id="groupdata">
-                                        <h3>{g.group_name} {g.admin && (<i className="fas fa-crown" />)}</h3>
-                                        <p>{g.bio}</p>
+                    <div id="grouplist">
+                        {Groups.map((g, i) => {
+                            return (
+                                g.group_name.toLowerCase().includes(SearchQuery.toLowerCase()) && <Link key={i} to={`/groups/${g.id}`}>
+                                    <div id="group">
+                                        <div id='pfp' style={{ backgroundImage: `url(${g.picture || placeholderpfp})`, height: 60, minWidth: 60 }}></div>
+                                        <div id="groupdata">
+                                            <h3>{g.group_name} {g.admin && (<i className="fas fa-crown" />)}</h3>
+                                            <p>{g.bio}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        )
-                    })}
+                                </Link>
+                            )
+                        })}
+                    </div>
                 </div>
 
                 <div id="groupcreator">
@@ -102,7 +104,7 @@ export function Groups() {
                             <div id="pic-section">
                                 <div id="buttons">
                                     <label htmlFor="picinput">
-                                        <p id="inputbutton" className="button" onClick={()=>document.getElementById('picinput').click()}>Upload New Picture</p>
+                                        <p id="inputbutton" className="button">Upload New Picture</p>
                                         <input type='file' id='picinput' key={Date.now()} onChange={(e) => AddNewPicture(e.target.files[0])}></input>
                                     </label>
                                     <button type="button" className='button light' id='removepic' onClick={DeletePicture}>Remove Picture</button>
@@ -110,7 +112,6 @@ export function Groups() {
                                 
                                 <div id='pfp' style={{ backgroundImage: `url(${NewGroupPicturePreview || placeholderpfp})`}}></div>
                             </div>
-                            
                         </div>
                         
 

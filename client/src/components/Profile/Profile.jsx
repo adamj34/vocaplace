@@ -148,7 +148,7 @@ export function Profile() {
                             ResetEditor()
                         }).catch((e) => {
                             console.error(e)
-                            popup("Error", "Failed to update profile due to an unknown error.")
+                            popup("Error", "Failed to delete profile picture due to an unknown error.")
                             SetSaving(false)
                         })
                     } else {
@@ -174,7 +174,7 @@ export function Profile() {
                     ResetEditor()
                 }).catch((e) => {
                     console.error(e)
-                    popup("Error", "Failed to update profile due to an unknown error.")
+                    popup("Error", "Failed to delete profile picture due to an unknown error.")
                     SetSaving(false)
                 })
             } else {
@@ -219,7 +219,7 @@ export function Profile() {
                         {!EditingProfile && <button className='button' onClick={()=>SetEditingProfile(true)}>Edit Profile</button>}
                         {EditingProfile && <>
                         <button className='button' onClick={UpdateUserData} disabled={Saving}>{Saving ? 'Saving' : 'Save Changes'}</button>
-                        {!Saving && <button className='button light' onClick={ResetEditor}>Discard Changes</button>}
+                            {!Saving && <button className='button light' onClick={() => { if (Object.keys(EditingData).length === 0 || window.confirm("Are you sure? Updated data will be lost.")) { ResetEditor() }}}>Discard Changes</button>}
                         </>}
                     </div> 
                 

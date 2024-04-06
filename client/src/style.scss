@@ -605,6 +605,9 @@ input[type="file"] {
   #list {
     display: grid;
     grid-template-columns: 45% 45%;
+    @media (max-width: 800px) {
+      grid-template-columns: 90%;
+    }
     justify-content: space-around;
     #button {
       a {
@@ -1037,6 +1040,7 @@ input[type="file"] {
       }
       input {
         margin-top: 16px;
+        width: 80%;
       }
       #friendlist {
         display: flex;
@@ -1102,6 +1106,15 @@ input[type="file"] {
         h3 {
           color: $themecolor;
         }
+      }
+    }
+    #groups {
+      #nogroups, input {
+          margin-left: 20px;
+        }
+      input {
+        margin-top: 16px;
+        width: 80%;
       }
     }
     #grouplist {
@@ -1177,7 +1190,7 @@ input[type="file"] {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     gap: 20px;
-    max-height: 1vh;
+    // max-height: 1vh;
 
     #members {
       #title {
@@ -1259,7 +1272,7 @@ input[type="file"] {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      max-height: 500px;
+      max-height: 600px;
       #title {
         text-transform: uppercase;
         font-size: 110%;
@@ -1325,9 +1338,6 @@ input[type="file"] {
         display: grid;
         grid-template-columns: 4fr 1fr;
         gap: 10px;
-        input {
-          min-width: max-content
-        }
       }
     }
 
@@ -1358,9 +1368,37 @@ input[type="file"] {
         flex-direction: column;
         gap: 10px;
         #admin {
+          input, textarea {
+            margin-top: 5px;
+          }
           display: flex;
           flex-direction: column;
           gap: 10px;
+          #pic-section {
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+            border-bottom: 3px solid $maingray;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            #inputbutton {
+              margin-top: 5px;
+              text-align: center;
+              cursor: pointer;
+            }
+            p {
+              margin: 0;
+            }
+            #pfp {
+              height: 80px;
+              width: 80px;
+            }
+          }
+        }
+      }
+      #user {
+        &:hover {
+          color: unset;
         }
       }
     }

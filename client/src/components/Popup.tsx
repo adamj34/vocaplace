@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import Icon from "./Icon";
 
 type PopupFunction = (title: string, content: string) => void;
@@ -29,6 +29,15 @@ export const PopupProvider: React.FC<{children:ReactNode}> = ({ children }) => {
         setShown(true);
         setKey(k=>k+1)
     };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (shown) {
+                setShown(false);
+            }
+        }, Math.max(2000, 50*message.length));
+        return () => clearTimeout(timer);
+    }, [shown, key]);
 
     return (
         <PopupContext.Provider value={popup}>
