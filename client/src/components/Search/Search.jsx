@@ -54,7 +54,7 @@ export function Search() {
                         <p>{SearchData.matchedUsers.length} Users</p>
                     </div>
                     <ul id='content'>
-                        {SearchData.matchedUsers.map((x) => {return <ListElement data={x} page='profile'/>})}
+                        {SearchData.matchedUsers.map((x,i) => {return <ListElement data={x} key={i}  page='profile'/>})}
                     </ul>
                 </div>
                 <div id='groups'>
@@ -63,7 +63,7 @@ export function Search() {
                         <p>{SearchData.matchedGroups.length} Groups</p>
                     </div>
                     <ul id='content'>
-                        {SearchData.matchedGroups.map((x) => { return <ListElement data={x} page='groups' /> })}
+                        {SearchData.matchedGroups.map((x,i) => { return <ListElement data={x} key={i} page='groups' /> })}
                     </ul>
                 </div>
             </div>

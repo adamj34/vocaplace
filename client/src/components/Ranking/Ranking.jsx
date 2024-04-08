@@ -78,7 +78,7 @@ export function Ranking() {
                 <div id="column">
                     <h2>Friends</h2>
                     {Friends.map((user, i) => (
-                        <Link key={user.id} to={`/profile/${user.id}`}>
+                        <Link key={i} to={`/profile/${user.id}`}>
 
                         <div key={i} id="row">
                             <p id="placement">{i + 1}</p>
@@ -96,7 +96,7 @@ export function Ranking() {
                 <div id="column">
                     <h2>All Users</h2>
                     {Users.map((user, i) => (
-                        <Link key={user.id} to={`/profile/${user.id}`}>
+                        <Link key={i} to={`/profile/${user.id}`}>
                         <div  id="row">
                             <p id="placement">{i + 1}</p>
                             <div id="user">
@@ -112,7 +112,7 @@ export function Ranking() {
                 <div id="column">
                     <h2>Streak</h2>
                     {Users.map((user, i) => (
-                        <Link key={user.id} to={`/profile/${user.id}`}>
+                        <Link key={i} to={`/profile/${user.id}`}>
                         <div  id="row">
                             <p id="placement">{i + 1}</p>
                             <div id="user">
