@@ -3,9 +3,11 @@ import { userDataSchema } from '../validation/userIdAndUsernameValidation.js';
 import logger from '../logger/logger';
 import { Server } from 'socket.io';
 
+
+
 const validateUserData = async (token) => {
     const decodedToken = decode(token);
-    const userId = decodedToken.sub; // sub is the user id
+    const userId = decodedToken.sub;
     const username = decodedToken.preferred_username; 
 
     try {
@@ -27,16 +29,11 @@ const initializeSocketServer = (server) => {
         }
     });
 
-    const sendNotification = (socketid, notification) => {
-        io.to(socketid).emit('notification', notification);
-    };
-
     io.on('connection', async (socket) => {
         try {
             const { userId, username } = await validateUserData(socket.handshake.auth.token);
 
             console.log(username, "connected to socket; socket id:", socket.id );
-            sendNotification(socket.id, 'hello :)') // test
 
             socket.on('disconnect', () => {
                 console.log(username, 'disconnected from socket');

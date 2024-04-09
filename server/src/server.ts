@@ -60,8 +60,7 @@ app.use('/groups', groupRouter);
 app.use('/rankings', rankingRouter);
 
 const io = initializeSocketServer(server);
-
-export{io}
+export {io}
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => {
