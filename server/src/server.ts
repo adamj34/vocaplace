@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import PinoHttp from "pino-http";
 import logger from "./logger/logger";
+import http from 'http';
 
 // database imports
 import { db } from "./db/connection/db";
@@ -17,8 +18,10 @@ import searchRouter from "./routes/searchRouter.js";
 import rankingRouter from "./routes/rankingRouter.js";
 
 import keycloak from './Keycloak.js';
+import initializeSocketServer from './socket.js';
 
 const app = express();
+const server = http.createServer(app);
 
 await testConnection(db);
 
@@ -56,7 +59,9 @@ app.use('/questions', questionRouter);
 app.use('/groups', groupRouter);
 app.use('/rankings', rankingRouter);
 
+const io = initializeSocketServer(server);
+
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     logger.info(`Server running on port ${PORT}`);
 }); 

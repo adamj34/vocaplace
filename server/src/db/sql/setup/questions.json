@@ -790,6 +790,191 @@
         "question_type": "pick",
         "difficulty": 1
     },
+    {
+        "topic_id": 6,
+        "content": "Which of the following is a fruit?",
+        "correct_answers": [
+            "Apple"
+        ],
+        "misleading_answers": [
+            "Carrot",
+            "Potato",
+            "Chicken"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of the following is a vegetable?",
+        "correct_answers": [
+            "Carrot"
+        ],
+        "misleading_answers": [
+            "Banana",
+            "Pineapple",
+            "Steak"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "A sweet, frozen dessert made from milk or cream is called _",
+        "correct_answers": [
+            "ice cream", "gelato", "sorbet", "frozen yogurt"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of the following are types of cheese?",
+        "correct_answers": [
+            "Cheddar",
+            "Brie",
+            "Gouda"
+        ],
+        "misleading_answers": [
+            "Lettuce",
+            "Tomato",
+            "Chicken"
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of the following are types of fruit?",
+        "correct_answers": [
+            "Banana",
+            "Strawberry",
+            "Grape"
+        ],
+        "misleading_answers": [
+            "Potato",
+            "Steak",
+            "Bread"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Which of the following are types of dessert?",
+        "correct_answers": [
+            "Cake",
+            "Ice cream"
+        ],
+        "misleading_answers": [
+            "Salad",
+            "Soup",
+            "Pizza"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "Chciałbym zamówić pizzę.",
+        "correct_answers": [
+            "I",
+            "would",
+            "like",
+            "a",
+            "pizza."
+        ],
+        "misleading_answers": [
+            "My",
+            "want",
+            "large",
+            "an"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 6,
+        "content": "Czy mogę prosić o deser?",
+        "correct_answers": [
+            "Can",
+            "I",
+            "have",
+            "a",
+            "dessert?"
+        ],
+        "misleading_answers": [
+            "to",
+            "for",
+            "this",
+            "Will",
+            "disarm?"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 6,
+        "content": "Czy mogę zobaczyć menu, proszę?",
+        "correct_answers": [
+            "Can",
+            "I",
+            "see",
+            "the",
+            "menu,",
+            "please?"
+        ],
+        "misleading_answers": [
+            "order",
+            "like",
+            "to",
+            "watch",
+            "Fridays."
+        ],
+        "question_type": "order",
+        "difficulty": 3
+    },
+    {
+        "topic_id": 6,
+        "content": "You need to _ the vegetables before cooking them.",
+        "correct_answers": [
+            "wash", "peel"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "For _, I would like a piece of chocolate cake.",
+        "correct_answers": [
+            "dessert"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "I always add a pinch of _ to my tea.",
+        "correct_answers": [
+            "sugar"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 6,
+        "content": "To make a salad, you need to wash and chop the _.",
+        "correct_answers": [
+            "vegetables", "fruit", "ingredients"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 2
+    },
 
 
 
@@ -810,17 +995,18 @@
     },
     {
         "topic_id": 7,
-        "content": "Which of these animals live underground?",
+        "content": "Kret żyje pod ziemią.",
         "correct_answers": [
-            "Mole",
-            "Worm"
+            "A", "mole", "lives", "undergroud."
         ],
         "misleading_answers": [
-            "Deer",
-            "Sparrow",
-            "Salmon"
+            "An",
+            "mule",
+            "live",
+            "over",
+            "in"
         ],
-        "question_type": "pick",
+        "question_type": "order",
         "difficulty": 1
     },
     {
@@ -855,30 +1041,21 @@
     },
     {
         "topic_id": 7,
-        "content": "Which of the following is a large, herbivorous mammal with a trunk?",
+        "content": "A large, herbivorous mammal with a trunk is an _.",
         "correct_answers": [
-            "Elephant"
+            "elephant"
         ],
-        "misleading_answers": [
-            "Dolphin",
-            "Giraffe",
-            "Lion",
-            "Hippo"
-        ],
-        "question_type": "pick",
+        "misleading_answers": [],
+        "question_type": "fill",
         "difficulty": 1
     },
     {
         "topic_id": 7,
-        "content": "Which bird is known for its ability to imitate human speech?",
+        "content": "A bird known for its ability to imitate human speech is a _.",
         "correct_answers": [
-            "Parrot"
+            "parrot"
         ],
-        "misleading_answers": [
-            "Penguin",
-            "Owl",
-            "Petrel"
-        ],
+        "misleading_answers": [],
         "question_type": "pick",
         "difficulty": 1
     },
@@ -908,6 +1085,466 @@
             "Tortoise"
         ],
         "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 7,
+        "content": "A young cat is called a _.",
+        "correct_answers": [
+            "kitten"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 7,
+        "content": "The process when a caterpillar transforms into a butterfly is called _.",
+        "correct_answers": [
+            "metamorphosis"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 3
+    },
+    {
+        "topic_id": 7,
+        "content": "What animal symbolizes wisdom in many cultures?",
+        "correct_answers": [
+            "Owl"
+        ],
+        "misleading_answers": [
+            "Fox",
+            "Rabbit",
+            "Dolphin"
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 7,
+        "content": "Kot ma sierść.",
+        "correct_answers": [
+            "The",
+            "cat",
+            "has",
+            "fur."
+        ],
+        "misleading_answers": [
+            "cut",
+            "have",
+            "hair."
+        ],
+        "question_type": "order",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 7,
+        "content": "Delfiny są inteligentnymi ssakami morskimi.",
+        "correct_answers": [
+            "Dolphins",
+            "are",
+            "intelligent",
+            "marine",
+            "mammals."
+        ],
+        "misleading_answers": [
+            "Devils",
+            "is",
+            "have",
+            "mummies.",
+            "reptiles."
+        ],
+        "question_type": "order",
+        "difficulty": 3
+    },
+    {
+        "topic_id": 7,
+        "content": "Wieloryb jest największym zwierzęciem na Ziemi.",
+        "correct_answers": [
+            "Whale",
+            "is",
+            "the",
+            "largest",
+            "animal",
+            "on",
+            "Earth."
+        ],
+        "misleading_answers": [
+            "has",
+            "large",
+            "in",
+            "big"
+        ],
+        "question_type": "order",
+        "difficulty": 3
+    },
+
+
+
+    {
+        "topic_id": 8,
+        "content": "The color of the sun during sunset is _.",
+        "correct_answers": [
+            "orange", "red"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 8,
+        "content": "Ten duży samochód jest czerwony.",
+        "correct_answers": [
+            "This", "big", "car", "is", "red."
+        ],
+        "misleading_answers": [
+            "That",
+            "blue.",
+            "orange.",
+            "small",
+            "tall"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 8,
+        "content": "Which shape has four sides of equal length?",
+        "correct_answers": [
+            "Square"
+        ],
+        "misleading_answers": [
+            "Triangle",
+            "Circle",
+            "Pentagon"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 8,
+        "content": "Which household item often has a cylindrical shape?",
+        "correct_answers": [
+            "Trash can",
+            "Vase"
+        ],
+        "misleading_answers": [
+            "TV",
+            "Couch",
+            "Fridge"
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 8,
+        "content": "Which of the following objects is typically smooth to the touch?",
+        "correct_answers": [
+            "Glass",
+            "Mirror"
+        ],
+        "misleading_answers": [
+            "Sandpaper",
+            "Brick",
+            "Concrete"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 8,
+        "content": "Which object typically has a bumpy texture?",
+        "correct_answers": [
+            "Orange",
+            "Basketball"
+        ],
+        "misleading_answers": [
+            "Paper",
+            "Glass",
+            "Metal"
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 8,
+        "content": "Which material is often described as soft and fluffy?",
+        "correct_answers": [
+            "Cotton",
+            "Feathers"
+        ],
+        "misleading_answers": [
+            "Concrete",
+            "Metal",
+            "Plastic"
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 8,
+        "content": "Which of the following materials is typically described as sleek and shiny?",
+        "correct_answers": [
+            "Metal"
+        ],
+        "misleading_answers": [
+            "Wood",
+            "Cardboard",
+            "Ceramic"
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 8,
+        "content": "Ona nosi żółtą sukienkę.",
+        "correct_answers": [
+            "She",
+            "is",
+            "wearing",
+            "a",
+            "yellow",
+            "dress."
+        ],
+        "misleading_answers": [
+            "wear",
+            "blue",
+            "shirt.",
+            "lovely"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 8,
+        "content": "Tamto drzewo ma okrągłe, zielone liście.",
+        "correct_answers": [
+            "That",
+            "tree",
+            "has",
+            "round",
+            "green",
+            "leaves."
+        ],
+        "misleading_answers": [
+            "This",
+            "long",
+            "yellow",
+            "petals."
+        ],
+        "question_type": "order",
+        "difficulty": 3
+    },
+    {
+        "topic_id": 8,
+        "content": "Ten stół ma długie, prostokątne nogi.",
+        "correct_answers": [
+            "This",
+            "table",
+            "has",
+            "long",
+            "rectangular",
+            "legs."
+        ],
+        "misleading_answers": [
+            "short",
+            "round",
+            "leaks.",
+            "triangular"
+        ],
+        "question_type": "order",
+        "difficulty": 3
+    },
+    {
+        "topic_id": 8,
+        "content": "A triangle has _ sides.",
+        "correct_answers": [
+            "three"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 8,
+        "content": "The kitchen floor has a _ surface.",
+        "correct_answers": [
+            "smooth"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 1
+    },
+
+
+    {
+        "topic_id": 9,
+        "content": "Which of the following is considered an important skill in the workplace?",
+        "correct_answers": [
+            "Communication"
+        ],
+        "misleading_answers": [
+            "Baking cookies",
+            "Playing video games",
+            "Skydiving"
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 9,
+        "content": "The area where employees work together in an office is called a _.",
+        "correct_answers": [
+            "cubicle"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 9,
+        "content": "Which of the following is a common workplace benefit?",
+        "correct_answers": [
+            "Health insurance"
+        ],
+        "misleading_answers": [
+            "Free ice cream on Fridays",
+            "Unlimited vacation days"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 9,
+        "content": "The person responsible for managing employees and operations within a company is called a _.",
+        "correct_answers": [
+            "manager", "boss"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 9,
+        "content": "Ona pracuje w biurze.",
+        "correct_answers": [
+            "She",
+            "works",
+            "in",
+            "the",
+            "office."
+        ],
+        "misleading_answers": [
+            "work", "at", "station", "a"
+        ],
+        "question_type": "order",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 9,
+        "content": "Czy jesteś gotowy na spotkanie?",
+        "correct_answers": [
+            "Are",
+            "you",
+            "ready",
+            "for",
+            "the",
+            "meeting?"
+        ],
+        "misleading_answers": [
+            "at", "aware", "greeting"
+        ],
+        "question_type": "order",
+        "difficulty": 3
+    },
+    {
+        "topic_id": 9,
+        "content": "I have a meeting _ at 10:00.",
+        "correct_answers": [
+            "scheduled"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 9,
+        "content": "Which of the following documents is often required when applying for a job?",
+        "correct_answers": [
+            "Resume",
+            "Cover letter"
+        ],
+        "misleading_answers": [
+            "Grocery list",
+            "Love letter",
+            "Birthday card"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 9,
+        "content": "What would you say if your coworker asks, 'Do you need any help with that task?'",
+        "correct_answers": [
+            "Yes, please.",
+            "No, I've got it, thanks."
+        ],
+        "misleading_answers": [
+            "I'm going home.",
+            "I want a sandwich.",
+            "I'm aware."
+        ],
+        "question_type": "pick",
+        "difficulty": 2
+    },
+    {
+        "topic_id": 9,
+        "content": "What is another word for 'boss'?",
+        "correct_answers": [
+            "Manager",
+            "Supervisor"
+        ],
+        "misleading_answers": [
+            "Employee",
+            "Colleague"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 9,
+        "content": "A 'deadline' refers to the time by which something must be finished or submitted.",
+        "correct_answers": [
+            "True"
+        ],
+        "misleading_answers": [
+            "False"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 9,
+        "content": "What does 'HR' stand for?",
+        "correct_answers": [
+            "Human Resources"
+        ],
+        "misleading_answers": [
+            "High Responsibility",
+            "Home Run"
+        ],
+        "question_type": "pick",
+        "difficulty": 1
+    },
+    {
+        "topic_id": 9,
+        "content": "A _ is a document that summarizes a person's education, work experience, and skills.",
+        "correct_answers": [
+            "resume", "cv"
+        ],
+        "misleading_answers": [],
+        "question_type": "fill",
         "difficulty": 1
     }
 ]

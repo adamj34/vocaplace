@@ -20,6 +20,7 @@ import { Ranking } from './components/Ranking/Ranking.jsx';
 import { Questions } from './components/Questions/Questions.jsx';
 import { Search } from './components/Search/Search.jsx';
 import { PopupProvider } from './components/Popup.tsx';
+import { socket } from './socket.js';
 import DataService from "./DataService.js"
 
 export const AppContext = createContext();
@@ -33,6 +34,8 @@ export default function App() {
     if (initialized && keycloak.authenticated) {
       DataService.GetUserData(keycloak.token).then((res) => {
         SetUserData(res.data)
+        socket.auth = { token: keycloak.token };
+        socket.connect()
         SetAppReady(true)
       }).catch(e => {
         console.error(e)
