@@ -34,7 +34,7 @@ export default function App() {
     if (initialized && keycloak.authenticated) {
       DataService.GetUserData(keycloak.token).then((res) => {
         SetUserData(res.data)
-        socket.auth = { token: keycloak.token };
+        socket.auth = { token: keycloak.token } // add token to socket and connect
         socket.connect()
         SetAppReady(true)
       }).catch(e => {

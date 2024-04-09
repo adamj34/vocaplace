@@ -12,8 +12,8 @@ function ListElement(p) {
         <li>
             <Link to={"../" + p.page + "/" + p.data.id} className='hovertext'>
                 <div id='listitem'>
-                    <img src={p.data.picture || placeholderpfp} height={33} id='profilepic' alt='profilepicture'></img>
-                    <p>{p.data.username || p.data.group_name || 'undefined'}</p>
+                    <img src={p.data.picture || placeholderpfp} height={33} id='pfp' alt='profilepicture'></img>
+                    <p>{p.data.username || p.data.group_name}</p>
                 </div>
             </Link>
         </li>
@@ -51,19 +51,19 @@ export function Search() {
                 <div id='friends'>
                     <div id='title'>
                         <Icon icon='user-friends'/>
-                        <p>{SearchData.matchedUsers.length} Users</p>
+                        <p>{SearchData.matchedUsers.length} User{SearchData.matchedUsers.length !== 1 && 's'}</p>
                     </div>
                     <ul id='content'>
-                        {SearchData.matchedUsers.map((x,i) => {return <ListElement data={x} key={i}  page='profile'/>})}
+                        {SearchData.matchedUsers.map((x,i) => {return <ListElement data={x} key={x.id}  page='profile'/>})}
                     </ul>
                 </div>
                 <div id='groups'>
                     <div id='title'>
                         <Icon icon='people-group'/>
-                        <p>{SearchData.matchedGroups.length} Groups</p>
+                        <p>{SearchData.matchedGroups.length} Group{SearchData.matchedGroups.length !== 1 && 's'}</p>
                     </div>
                     <ul id='content'>
-                        {SearchData.matchedGroups.map((x,i) => { return <ListElement data={x} key={i} page='groups' /> })}
+                        {SearchData.matchedGroups.map((x,i) => { return <ListElement data={x} key={x.id} page='groups' /> })}
                     </ul>
                 </div>
             </div>

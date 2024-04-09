@@ -1,41 +1,35 @@
 import { useState } from "react";
 import DataService from "../../DataService";
 import { usePopup } from "../Popup.tsx";
-
-
-function Validate(Data) {
-    if (!Data.topic || !Data.unit) {
-        return "You must choose a unit and a topic!"
-    } else if (!Data.questionType) {
-        return "You must choose question type!"
-    } else if (!Data.content) {
-        return "You must specify the question content!"
-    } else if (!Data.difficulty) {
-        return "You must choose question difficulty!"
-    } else if (!Data.correctAnswers) {
-        return "You must specify at least one correct answer!"
-    } else if (!Data.misleadingAnswers) {
-        return "You must specify at least one misleading answer!"
-    } else if ((Data.misleadingAnswers.includes("") && Data.questionType != 'fill') || Data.correctAnswers.includes("")) {
-        return "An answer option cannot be empty!"
-    } else if (Data.questionType != 'order' && Data.misleadingAnswers.length + Data.correctAnswers.length > 5) { // answer limit = 5, 10 for type order
-        return "You can only have up to five answer options!"
-    } else if (Data.questionType == 'order' && Data.misleadingAnswers.length + Data.correctAnswers.length > 10) {
-        return "You can only have up to ten answer options!"
-    } else if (Data.questionType == 'fill' && !Data.content.includes("_")) {
-        return "Question content must include a gap (_ symbol)!"
-    }
-}
+import { ValidateQuestion } from './ValidateQuestion.ts';
 
 
 export function QuestionCreator(p) {
     const [Data, SetData] = useState({correctAnswers:[""], misleadingAnswers:[""]}); // one empty answer by default 
-    const [ErrorMessage, SetErrorMessage] = useState("");
     const [Submitting, SetSubmitting] = useState(false);
     const [ShowTopics, SetShowTopics] = useState(false);
     const [ShowDifficulty, SetShowDifficulty] = useState(false);
     const [ShowType, SetShowType] = useState(false);
     const popup = usePopup()
+
+    async function CreateQuestion() {
+        try {
+            SetSubmitting(true)
+            const validation_error = ValidateQuestion(Data, p.GlobalData);
+            if (validation_error) {
+                popup("Error", validation_error);
+                return;
+            }
+            await DataService.AddQuestion(Data);
+            p.SetNeedToUpdateData(true);
+            popup("Success", "Question created!");
+        } catch (e) {
+            console.error(e)
+            popup("Error", "Failed to create new question due to an unknown error.");
+        } finally {
+            SetSubmitting(false);
+        }
+    }
 
     return (
         <div id='creator'>
@@ -45,17 +39,18 @@ export function QuestionCreator(p) {
                     <label>Unit and Topic:</label>
                     <div id='selectfield'>
                         <button className='selectbutton' type='button' onClick={() => SetShowTopics(!ShowTopics)}>{Data.unit || "None"}{Data.topic && Data.unit && " | "}{(Data.topic) || ""}</button>
-                        {ShowTopics && <div id='select' onMouseLeave={() => SetShowTopics(false)}>
+                        {ShowTopics && <div id='select' onMouseLeave={() => SetShowTopics(true)}>
                             <div id='select-scroll'>
                                 {Object.entries(p.GlobalData).map(([u,data],i) => { // to trzeba jakos opakowac w diva
-                                    return (<>
-                                        <div id='topic' className='disabled'>{u}</div>
+                                    return data.topics.length > 0 ?
+                                    (<div key={i}>
+                                        <p id='unit' className='disabled'>{u}</p>
                                         {data.topics.map((t, i) => {
                                             return (
-                                                <div key={i} id='question' className={(t.topic == Data.topic && u == Data.unit) ? 'chosen' : ''} onClick={() => { SetShowTopics(false); SetData({ ...Data, unit: u, topic: t.topic }) }}>{t.topic}</div>
+                                                <p key={i} id='topic' className={(t.topic == Data.topic && u == Data.unit) ? 'chosen' : ''} onClick={() => { SetShowTopics(false); SetData({ ...Data, unit: u, topic: t.topic }) }}>{t.topic}</p>
                                             )
                                         })}
-                                    </>)
+                                    </div>) : null
                                 })}
                             </div>
                         </div>}
@@ -70,7 +65,7 @@ export function QuestionCreator(p) {
                             <div id='select-scroll'>
                                 {['Pick', 'Order', 'Fill'].map((t,i) => { // add 'Connect' later on
                                     return (
-                                        <div key={i} className={t.toLowerCase() == Data.questionType ? 'chosen' : ''} onClick={() => { SetShowType(false); SetData({ ...Data, questionType: t.toLowerCase(), correctAnswers:[""], misleadingAnswers:[""] }) }}>{t}</div> // reset answer on type changed
+                                        <p key={i} className={t.toLowerCase() == Data.questionType ? 'chosen' : ''} onClick={() => { SetShowType(false); SetData({ ...Data, questionType: t.toLowerCase(), correctAnswers:[""], misleadingAnswers:[""] }) }}>{t}</p> // reset answer on type changed
                                     )
                                 })}
                             </div>
@@ -130,7 +125,7 @@ export function QuestionCreator(p) {
                             <div id='select-scroll'>
                                 {[1, 2, 3].map((d,i) => {
                                     return (
-                                        <div key={i} className={d == Data.difficulty ? 'chosen' : ''} onClick={() => { SetShowDifficulty(false); SetData({ ...Data, difficulty: d, }) }}>{d == 1 && 'Easy'}{d == 2 && 'Medium'}{d == 3 && 'Hard'}</div>
+                                        <p key={i} className={d == Data.difficulty ? 'chosen' : ''} onClick={() => { SetShowDifficulty(false); SetData({ ...Data, difficulty: d, }) }}>{d == 1 && 'Easy'}{d == 2 && 'Medium'}{d == 3 && 'Hard'}</p>
                                     )
                                 })}
                             </div>
@@ -138,27 +133,8 @@ export function QuestionCreator(p) {
                     </div>
                 </div>
                 
-                
-
-                <p id="error">{ErrorMessage}</p>
-
                 <div id='buttons'>
-                    <button type='button' className='button' disabled={Submitting} onClick={() => {
-                        SetSubmitting(true)
-                        const validationerror = Validate(Data, p.GlobalData)
-                        if (validationerror) {
-                            SetErrorMessage(validationerror)
-                        } else {
-                            SetErrorMessage("")
-                            DataService.AddQuestion(Data).then(() => {
-                                SetErrorMessage("Question created!")
-                                p.SetNeedToUpdateData(true)
-                            }).catch(() => {
-                                SetErrorMessage("Failed to submit!")
-                            })
-                        }
-                        SetSubmitting(false)
-                    }}>Submit</button>
+                    <button type='button' className='button' disabled={Submitting} onClick={CreateQuestion}>Submit</button>
             </div>
         </form>
     </div>

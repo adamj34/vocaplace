@@ -12,7 +12,7 @@ function CheckQuestions(checkedstate, DispatchQuestionsData) {
     let points = 0
 
     for (let i = 0; i < Object.keys(checkedstate).length; i++) {
-        console.log(checkedstate[i])
+        // console.log(checkedstate[i])
         if (
             (checkedstate[i].question_type === 'pick' && checkedstate[i].selected.sort().toString() === checkedstate[i].correct_answers.sort().toString()) ||
             (checkedstate[i].question_type === 'fill' && checkedstate[i].correct_answers.includes(checkedstate[i].selected[0])) ||
@@ -40,7 +40,7 @@ const QuestionsReducer = (state, action) => {
         case "UPDATESELECTED":
             const updatedstate = {...state}
             updatedstate[action.i].selected = action.selected
-            console.log(action.selected)
+            // console.log(action.selected)
             return updatedstate
         
         case "SETASCORRECT":
@@ -195,32 +195,6 @@ export function Questions({type}) {
     const popup = usePopup()
     const navigate = useNavigate()
 
-    // useEffect(() => {
-    //     if (C.AppReady) {
-    //         if (type == 'normal') {
-    //             DataService.GenerateQuiz(type,unitid,topicid).then((data) => {
-    //                 const questions = ShuffleArray(data.data)
-    //                 questions.forEach((q, i) => {
-    //                     const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-                        
-    //                     DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers:questions[i].correct_answers, question_id:questions[i].question_id, question_type:questions[i].question_type })
-    //                 })
-    //                 SetQuestions(questions)
-    //             })
-    //         } else if (type == 'repetition') {
-    //             console.log('this is a repetition quiz')
-    //             DataService.GenerateQuiz(type).then((data) => {
-    //                 const questions = ShuffleArray(data.data)
-    //                 questions.forEach((q, i) => {
-    //                     const answer_options = ShuffleArray(questions[i].correct_answers.concat(questions[i].misleading_answers))
-    //                     DispatchQuestionsData({ type: 'INIT', i, answer_options,difficulty:questions[i].difficulty, correct_answers: questions[i].correct_answers, question_id: questions[i].question_id })
-    //                 })
-    //                 SetQuestions(questions)
-    //             })
-    //         }
-    //     }
-    // }, [C.AppReady])
-
     useEffect(() => {
         if (C.AppReady) {
                 DataService.GenerateQuiz(type, unitid, topicid).then((res) => {
@@ -276,28 +250,26 @@ export function Questions({type}) {
                 })}
             </div>
             {!Finished && ( 
-                <button id="submitbutton" className="button" onClick={() => { 
+                <button id="submitbutton" className="button" disabled={Finished} onClick={() => { 
                     const result = CheckQuestions(QuestionsData, DispatchQuestionsData)
                     DispatchQuestionsData({ type: "UPDATEPERCENTAGEANDPOINTS", percentage:result.percentage, points:result.points})
                     if (result.correctids.length > 0) {
                         DataService.SaveQuestionsAnswered(result.correctids).then(()=>{
-                            console.log('saved answered')
+                            // console.log('saved answered')
                         }).catch(e => {
                             console.error(e)
                             popup("Error", "Failed to save answers due to an unknown error.")
                         })
                         DataService.UpdatePoints(result.points).then(() => {
-                            console.log('updated points')
+                            // console.log('updated points')
                         }).catch(e => {
                             console.error(e)
                             popup("Error", "Failed to update points due to an unknown error.")
                         })
-                        console.log('saved')
-
                     }
                     if (result.incorrectids.length > 0 && type !== 'repetition') {
                         DataService.SaveRepetitions(result.incorrectids).then(() => {
-                            console.log('saved repetitions')
+                            // console.log('saved repetitions')
                         }).catch(e => {
                             popup("Error", "Failed to save repetitions due to an unknown error.")
                         })

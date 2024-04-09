@@ -740,8 +740,9 @@ input[type="file"] {
       &::-webkit-scrollbar-thumb {
         background-color: $darkgraygradientbottom;
       }
-      div {
+      p {
         padding: 6px;
+        margin: 0;
         margin-right: 10px;
         transition: $transition;
         &:not(.disabled) {
@@ -755,14 +756,10 @@ input[type="file"] {
         }
       }
       #unit {
-        font-size: 110%;
-        text-transform: uppercase;
-      }
-      #topic {
         border-bottom: 2px solid $maingray;
         border-top: 2px solid $maingray;
       }
-      #question {
+      #topic {
         padding-left: 20px;
       }
       #pick {
@@ -875,6 +872,9 @@ input[type="file"] {
   #data {
     display: grid;
     grid-template-columns: 40% 40%;
+    @media (max-width: 800px) {
+        grid-template-columns: 90%;
+      }
     gap: 20px;
     justify-content: center;
 
@@ -906,6 +906,7 @@ input[type="file"] {
       li {
         display: flex;
         align-items: center;
+        width: fit-content;
 
         &:before {
           content: "•";
