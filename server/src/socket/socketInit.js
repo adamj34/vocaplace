@@ -1,12 +1,12 @@
 import { decode } from 'jsonwebtoken';
-import { userDataSchema } from './validation/userIdAndUsernameValidation.js';
-import logger from './logger/logger';
+import { userDataSchema } from '../validation/userIdAndUsernameValidation.js';
+import logger from '../logger/logger';
 import { Server } from 'socket.io';
 
 const validateUserData = async (token) => {
     const decodedToken = decode(token);
-    const userId = decodedToken.sub;
-    const username = decodedToken.preferred_username;
+    const userId = decodedToken.sub; // sub is the user id
+    const username = decodedToken.preferred_username; 
 
     try {
         await userDataSchema.validate({

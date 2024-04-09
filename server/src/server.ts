@@ -18,7 +18,7 @@ import searchRouter from "./routes/searchRouter.js";
 import rankingRouter from "./routes/rankingRouter.js";
 
 import keycloak from './Keycloak.js';
-import initializeSocketServer from './socket.js';
+import initializeSocketServer from './socket/socketInit'
 
 const app = express();
 const server = http.createServer(app);
@@ -60,6 +60,8 @@ app.use('/groups', groupRouter);
 app.use('/rankings', rankingRouter);
 
 const io = initializeSocketServer(server);
+
+export{io}
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => {
