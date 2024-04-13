@@ -60,13 +60,8 @@ app.use('/questions', questionRouter);
 app.use('/groups', groupRouter);
 app.use('/rankings', rankingRouter);
 
-<<<<<<< HEAD
-
-export{io}
-=======
 const io = initializeSocketServer(server);
 export {io}
->>>>>>> c6c04040ac31888fae16cad1d4eb0f3a972cc281
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => {
