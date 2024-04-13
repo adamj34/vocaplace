@@ -50,16 +50,16 @@ app.use(PinoHttp({
 app.use(keycloak.middleware());
 // app.use(keycloak.protect());
 app.use(getUserData);
+const io = initializeSocketServer(server);
 app.use('/search', searchRouter);
 app.use('/user', userRouter);
 app.use('/units', unitRouter);
 app.use('/topics', topicRouter);
-app.use('/relationships', userRelationsRouter);
+app.use('/relationships', userRelationsRouter(io));
 app.use('/questions', questionRouter);
 app.use('/groups', groupRouter);
 app.use('/rankings', rankingRouter);
 
-const io = initializeSocketServer(server);
 
 export{io}
 
