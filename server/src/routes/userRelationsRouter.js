@@ -4,14 +4,14 @@ import validate from '../validation/validateMiddleware.js';
 import { friendRelationSchema } from '../validation/userRelationsValidation.js';
 
 
-module.exports = (io) =>{
+ const userRelationsRouter = (io) =>{
 const router = express.Router();
 
 
 router
-    .get('/check/user/:id', validate(friendRelationSchema), userRelationsController.checkRelationship(io))
+    .get('/check/user/:id', validate(friendRelationSchema), userRelationsController.checkRelationship)
     .get('/pending', userRelationsController.checkPendingRequests)
-    .post('/request/friend/:id', validate(friendRelationSchema), userRelationsController.sendFriendRequest)
+    .post('/request/friend/:id', validate(friendRelationSchema), userRelationsController.sendFriendRequest(io))
     .patch('/accept/friend/:id', validate(friendRelationSchema), userRelationsController.acceptFriendRequest)
     .delete('/request/sent/friend/:id', validate(friendRelationSchema), userRelationsController.deleteSentFriendRequest)
     .delete('/request/received/friend/:id', validate(friendRelationSchema), userRelationsController.deleteReceivedFriendRequest)
@@ -19,3 +19,5 @@ router
 
 return router;
 }
+
+export default userRelationsRouter;

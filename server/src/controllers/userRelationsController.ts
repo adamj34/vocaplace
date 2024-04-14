@@ -1,12 +1,16 @@
 import httpStatus from 'http-status-codes';
 import handleError from '../utils/errorHandler.js';
 import userRelationsService from '../services/userRelationsService';
+
 import logger from '../logger/logger';
 
 
-const sendFriendRequest = async (req, res) => {
+const sendFriendRequest = (io) => async (req, res) => {
     try {
         const response = await userRelationsService.sendFriendRequest(req.userId, req.params.id);
+        await notificationService.sendFriendRequest(req.userId, req.params.id);
+        
+
         res.status(httpStatus.CREATED).json(response);
     } catch (err) {
         logger.error(err, 'Error in sendFriendRequest controller');
@@ -17,6 +21,7 @@ const sendFriendRequest = async (req, res) => {
 const acceptFriendRequest = async (req, res) => {
     try {
         const response = await userRelationsService.acceptFriendRequest(req.userId, req.params.id);
+        
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in acceptFriendRequest controller');
@@ -44,7 +49,7 @@ const deleteSentFriendRequest = async (req, res) => {
     }
 }
 
-const checkRelationship =(io) => async (req, res) => {
+const checkRelationship =  async (req, res) => {
     try {
         const response = await userRelationsService.checkRelationship(req.userId, req.params.id);
         res.status(httpStatus.OK).json(response);

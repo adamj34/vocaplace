@@ -32,7 +32,7 @@ const initializeSocketServer = (server) => {
     io.on('connection', async (socket) => {
         try {
             const { userId, username } = await validateUserData(socket.handshake.auth.token);
-
+            socket.join(userId);
             console.log(username, "connected to socket; socket id:", socket.id );
 
             socket.on('disconnect', () => {

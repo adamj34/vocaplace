@@ -39,6 +39,11 @@ const queries = {
         checkRelationship: sql('user_relationships/check_relationship.sql'),
         deleteRelationship: sql('user_relationships/delete_relationship.sql'),
     },
+    notifications: {
+        add: sql('notifications/add.sql'),
+        get: sql('notifications/get.sql'),
+        delete: sql('notifications/delete.sql'),
+    },
 };
 
 export default queries;

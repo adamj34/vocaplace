@@ -42,27 +42,27 @@ CREATE TABLE IF NOT EXISTS users (
   ongoing_streak INTEGER NOT NULL DEFAULT 0,
   last_active TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  socket TEXT
 );
 
 
--- CREATE TYPE notification_type AS ENUM (
---   'group_request_accepted',
---   'friend_request_accepted',
---   'new_friend_request',
---   'streak_reminder',
---   -- 'group_name_change'
---   'group_admin_received'
--- );
+CREATE TYPE notification_type AS ENUM (
+  'group_request_accepted',
+  'friend_request_accepted',
+  'new_friend_request',
+  'streak_reminder',
+  -- 'group_name_change'
+  'group_admin_received'
+);
 
--- CREATE TABLE IF NOT EXISTS notifications (
---   id SERIAL PRIMARY KEY,
---   user_id UUID NOT NULL REFERENCES users(id),
---   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
---   friend_id REFERENCES users(id),
---   group_id REFERENCES groups(id),
---   UNIQUE(user_id, friend_id, group_id)
--- );
+CREATE TABLE IF NOT EXISTS notifications (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  friend_id REFERENCES users(id),
+  group_id REFERENCES groups(id),
+  notification_type notification_type NOT NULL,
+  UNIQUE(user_id, friend_id, group_id,notification_type)
+);
 
 CREATE TYPE relationship_state AS ENUM (
   'pending_user1_user2',
