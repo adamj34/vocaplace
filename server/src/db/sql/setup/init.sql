@@ -58,10 +58,9 @@ CREATE TABLE IF NOT EXISTS notifications (
   id SERIAL PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  friend_id REFERENCES users(id),
-  group_id REFERENCES groups(id),
+  friend_id REFERENCES users(id) DEFAULT NULL,
+  group_id REFERENCES groups(id) DEFAULT NULL,
   notification_type notification_type NOT NULL,
-  UNIQUE(user_id, friend_id, group_id,notification_type)
 );
 
 CREATE TYPE relationship_state AS ENUM (

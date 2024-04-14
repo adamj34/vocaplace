@@ -14,3 +14,11 @@ class NotificationsRepositiory {
   addNotification(values: { user_id: string; friend_id?: string; group_id?:string; notification_type: string }) {
      return this.db.one(queries.notifications.add, values);
 }
+
+  deleteNotification(values: { user_id: string; friend_id?: string; group_id?:string; notification_type: string }) {
+    return this.db.none(queries.notifications.delete, values);
+  }
+
+}
+
+export default NotificationsRepositiory;
