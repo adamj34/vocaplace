@@ -52,7 +52,7 @@ const deleteSentFriendRequest = async (req, res) => {
     }
 }
 
-const checkRelationship =  async (req, res) => {
+const checkRelationship =  async (req, res) => { 
     try {
         const response = await userRelationsService.checkRelationship(req.userId, req.params.id);
         res.status(httpStatus.OK).json(response);

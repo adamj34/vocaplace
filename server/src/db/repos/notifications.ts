@@ -11,19 +11,19 @@ class NotificationsRepositiory {
     this.pgp = pgp;
   }
 
-  addNotification(values: { user_id: string; friend_id?: string; group_id?:string; notification_type: string }) {
+  addNotification(values: { userId: string; senderId?: string; group_id?:string; type: string }) {
      return this.db.one(queries.notifications.add, values);
 }
 
-  deleteNotification(values: { user_id: string; friend_id?: string; group_id?:string; notification_type: string }) {
+  deleteNotification(values: { userId: string; friend_id?: string; group_id?:string; type: string }) {
     return this.db.none(queries.notifications.delete, values);
   }
 
-  deleteAllNotifications(values: { user_id: string }) {
+  deleteAllNotifications(values: { userId: string }) {
     return this.db.none(queries.notifications.deleteAll, values);
     }
 
-    getNotifications(values: { user_id: string }) {
+    getNotifications(values: { userId: string }) {
         return this.db.any(queries.notifications.get, values);
     }
 

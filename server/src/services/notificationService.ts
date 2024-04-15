@@ -15,14 +15,20 @@ const sendNotification = async (userId: string, io: SocketIOServer,
     console.log("group_id",newNotification.groupId);
     
     const notification = {
-        addresseeId : userId,
+        userId : userId,
         senderId : newNotification.friendId,
         groupId: newNotification.groupId,
         type: newNotification.notificationType
 
     } 
+    db.notifications.addNotification(notification)
+    console.log("Worked------------");
+    
+    const data = await db.notifications.getNotifications({userId})
+    console.log(data);
+    
+    // await io.to(userId).emit("newNotification",{notification})
 
-    await io.to(userId).emit("newNotification",{notification})
     
 }
 
