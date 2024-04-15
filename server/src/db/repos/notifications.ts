@@ -19,6 +19,16 @@ class NotificationsRepositiory {
     return this.db.none(queries.notifications.delete, values);
   }
 
+  deleteAllNotifications(values: { user_id: string }) {
+    return this.db.none(queries.notifications.deleteAll, values);
+    }
+
+    getNotifications(values: { user_id: string }) {
+        return this.db.any(queries.notifications.get, values);
+    }
+
+
+
 }
 
 export default NotificationsRepositiory;

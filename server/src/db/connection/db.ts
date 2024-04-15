@@ -7,6 +7,7 @@ import UsersRepository from '../repos/users.js';
 import UserRelationshipsRepository from '../repos/user_relationships.js';
 import GroupsRepository from '../repos/groups.js';
 import RankingsRepository from '../repos/rankings.js';
+import NotificationsRepositiory from '../repos/notifications.js';
 
 interface IExtendedProtocol extends IDatabase<any, any> {
     users: UsersRepository;
@@ -16,6 +17,7 @@ interface IExtendedProtocol extends IDatabase<any, any> {
     user_relationships: UserRelationshipsRepository;
     groups: GroupsRepository;
     rankings: RankingsRepository;
+    notifications: NotificationsRepositiory;
 }
 
 const initOptions: IInitOptions<IExtendedProtocol> = {
@@ -30,6 +32,7 @@ const initOptions: IInitOptions<IExtendedProtocol> = {
         obj.user_relationships = new UserRelationshipsRepository(obj, pgp);
         obj.groups = new GroupsRepository(obj, pgp);
         obj.rankings = new RankingsRepository(obj, pgp);
+        obj.notifications = new NotificationsRepositiory(obj, pgp);
     }
 };
 
