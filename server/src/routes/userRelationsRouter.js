@@ -12,7 +12,7 @@ router
     .get('/check/user/:id', validate(friendRelationSchema), userRelationsController.checkRelationship)
     .get('/pending', userRelationsController.checkPendingRequests)
     .post('/request/friend/:id', validate(friendRelationSchema), userRelationsController.sendFriendRequest(io))
-    .patch('/accept/friend/:id', validate(friendRelationSchema), userRelationsController.acceptFriendRequest)
+    .patch('/accept/friend/:id', validate(friendRelationSchema), userRelationsController.acceptFriendRequest(io))
     .delete('/request/sent/friend/:id', validate(friendRelationSchema), userRelationsController.deleteSentFriendRequest)
     .delete('/request/received/friend/:id', validate(friendRelationSchema), userRelationsController.deleteReceivedFriendRequest)
     .delete('/friend/:id', validate(friendRelationSchema), userRelationsController.deleteFriend)

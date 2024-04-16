@@ -8,6 +8,7 @@ import logger from '../logger/logger';
 
 
 
+
 const sendFriendRequest = (io) => async (req, res) => {
     try {
         const response = await userRelationsService.sendFriendRequest(req.userId, req.params.id);
@@ -21,9 +22,10 @@ const sendFriendRequest = (io) => async (req, res) => {
     }
 }
 
-const acceptFriendRequest = async (req, res) => {
+const acceptFriendRequest =(io)=> async (req, res) => {
     try {
         const response = await userRelationsService.acceptFriendRequest(req.userId, req.params.id);
+        await notificationService.sendNotification(req.params.id,io, {friendId:req.userId,notification_type:NotificationType.FRIEND_REQUEST_ACCEPTED});
 
         res.status(httpStatus.OK).json(response);
     } catch (err) {
