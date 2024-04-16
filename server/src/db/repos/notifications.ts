@@ -27,6 +27,14 @@ class NotificationsRepositiory {
         return this.db.any(queries.notifications.get, values);
     }
 
+    markAsRead(values: { id: string }) {
+        return this.db.none(queries.notifications.markAsRead, values);
+    }
+
+    markAllAsRead(values: { userId: string }) {
+        return this.db.none(queries.notifications.markAllAsRead, values);
+    }
+
 
 
 }

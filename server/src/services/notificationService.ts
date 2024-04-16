@@ -129,11 +129,43 @@ const deleteAllNotifications = async (userId: string) => {
     }
 }
 
+const markAsRead = async (notificationId: string) => {
+    try {
+        await db.notifications.markAsRead({id: notificationId});
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error("Failed to mark notification as read:", error);
+        return {
+            success: false,
+            error: errorFactory("Failed to mark notification as read", error)
+        };
+    }
+}
+
+const markAllAsRead = async (userId: string) => {
+    try {
+        await db.notifications.markAllAsRead({userId: userId});
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error("Failed to mark all notifications as read:", error);
+        return {
+            success: false,
+            error: errorFactory("Failed to mark all notifications as read", error)
+        };
+    }
+}
+
 
 export default{
     getNotifications,
     sendNotification,
     deleteNotification,
-    deleteAllNotifications
+    deleteAllNotifications,
+    markAsRead,
+    markAllAsRead
 }
 

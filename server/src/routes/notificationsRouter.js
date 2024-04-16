@@ -7,7 +7,9 @@ const router = express.Router()
 router
     .get('/:userId', notificationsController.getNotifications)
     .delete('/:notificationId', notificationsController.deleteNotification)
-    .delete('/:userId', notificationsController.deleteAllNotifications)
+    .delete('/all/:userId', notificationsController.deleteAllNotifications)
+    .patch('/:notificationId', notificationsController.markAsRead)
+    .patch('/all/:userId', notificationsController.markAllAsRead)
     
 
 

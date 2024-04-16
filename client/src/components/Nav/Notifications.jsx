@@ -48,12 +48,30 @@ export default function Notifications() {
         })
     }
 
+    const handleMarkAsRead = (id) => {
+        SetMessages(Messages.map((msg) => msg.id === id ? {...msg, read: true} : msg))
+        DataService.MarkNotificationAsRead(id).then((res) => {
+        }).catch(e => {
+            console.log(e)
+            popup('Error', 'Failed to mark notification as read due to an unknown error.')
+        })
+    }
+
+    const handleMarkAllAsRead = () => {
+        SetMessages(Messages.map((msg) => ({...msg, read: true})))
+        DataService.MarkAllNotificationsAsRead(C.UserData.id).then((res) => {
+        }).catch(e => {
+            console.log(e)
+            popup('Error', 'Failed to mark notifications as read due to an unknown error.')
+        })
+    }
+
 
 
         return (
         <aside id='notifications' onClick={() => SetShowMessages(!ShowMessages)} style={{ marginRight: `${Messages.length.toString().length*6}px` }} className={ShowMessages ? 'open' : ''}>
             <Icon icon='bell'/>
-            {!ShowMessages && Messages.length > 0 && 
+            {Messages.filter((x)=>!x.read).length > 0 && 
                 <p id='count'>{Messages.length}</p>
             }
 
@@ -63,7 +81,7 @@ export default function Notifications() {
                     <p id="title">Notifications</p>
                     <div id="messages">
                         {Messages.map((msg) => (
-                            <div key={msg.id} id='message' onClick={()=>SetMessages(Messages.filter((x,i)=>msg.id!==i))}>
+                            <div key={msg.id} id='message' onClick={()=>handleMarkAsRead(msg.id)}>
                                 {msg.notification_type === 'group_request_accepted' && 
                                     <Link to={'/groups/' + msg.group_id}>
                                         Your request to join <span className="color">{msg.group_name}</span> has been accepted.
@@ -94,7 +112,11 @@ export default function Notifications() {
                             </div>
                         ))}
                         {Messages.length === 0 && <p id='empty'>There are no new notifications.</p>}
-                        {Messages.length > 0 && <p id='clear' onClick={handleClearAll}>Clear all</p>}
+                        {Messages.length > 0 && 
+                            <div>
+                                <p id='clear'onClick={handleMarkAllAsRead}>Mark all as read</p>
+                                <p id='clear' onClick={handleClearAll}>Clear all</p>
+                            </div>}
                     </div>
                 </section>
             }

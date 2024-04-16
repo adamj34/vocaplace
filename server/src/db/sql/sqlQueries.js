@@ -43,6 +43,10 @@ const queries = {
         add: sql('notifications/add.sql'),
         get: sql('notifications/get.sql'),
         delete: sql('notifications/delete.sql'),
+        deleteAll: sql('notifications/delete_all.sql'),
+        markAsRead: sql('notifications/mark_as_read.sql'),
+        markAllAsRead: sql('notifications/mark_all_as_read.sql'),
+        
     },
 };
 

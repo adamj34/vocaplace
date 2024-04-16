@@ -122,7 +122,14 @@ const functions = {
     },
 
     async DeleteNotifications(userid) {
-        await Server.delete(`/notifications/${userid}`)
+        await Server.delete(`/notifications/all/${userid}`)
+    },
+    async MarkNotificationAsRead(notificationid) {
+        await Server.patch(`/notifications/${notificationid}`)
+    },
+
+    async MarkAllNotificationsAsRead(userid) {
+        await Server.patch(`/notifications/all/${userid}`)
     },
 
     async SaveQuestionsAnswered(ids) {

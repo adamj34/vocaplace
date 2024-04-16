@@ -35,8 +35,31 @@ const deleteAllNotifications = async (req, res) => {
     }
 }
 
+const markAsRead = async (req, res) => {
+    try {
+        const response = await notificationService.markAsRead(req.params.notificationId);
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in markAsRead controller');
+        handleError(err, res);
+    }
+}
+
+const markAllAsRead = async (req, res) => {
+    try {
+        const response = await notificationService.markAllAsRead(req.params.userId);
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in markAllAsRead controller');
+        handleError(err, res);
+    }
+}
+
+
 export default {
     getNotifications,
     deleteNotification,
-    deleteAllNotifications
+    deleteAllNotifications,
+    markAsRead,
+    markAllAsRead
 }
