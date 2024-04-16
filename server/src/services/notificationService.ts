@@ -50,7 +50,7 @@ const sendNotification = async (userId: string, io: SocketIOServer,
     newNotification:{
         friendId?:string,
         groupId?:number,
-        notificationType: string
+        notification_type: string
 
     }
 ) =>{
@@ -79,12 +79,12 @@ const sendNotification = async (userId: string, io: SocketIOServer,
         userId: userId,
         senderId: newNotification.friendId,
         groupId: newNotification.groupId,
-        type: newNotification.notificationType,
+        notification_type: newNotification.notification_type,
     };
-    await db.notifications.addNotification(notificationForDB)
+    const dbNotification= await db.notifications.addNotification(notificationForDB)
 
     const fullNotification = {
-        ...notificationForDB,
+        ...dbNotification,
         friend_name: friendName,
         group_name: groupName
     };

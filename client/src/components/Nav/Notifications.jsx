@@ -4,15 +4,9 @@ import { Link } from "react-router-dom";
 import Icon from "../Icon";
 import DataService from "../../DataService";
 import { usePopup } from "../Popup.tsx";
+import {socket} from "../../socket";
 
-const notifications = [ // placeholder
-    { notification_type: 'group_request_accepted', group_name: 'Englovers', group_id: '1' },
-    { notification_type: 'friend_request_accepted', friend_name: 'Bajojajo', friend_id: 'dd0ac737-5534-46fd-8715-a28634f8c86b' },
-    { notification_type: 'new_friend_request', friend_name: 'Bajojajo', friend_id: 'dd0ac737-5534-46fd-8715-a28634f8c86b' },
-    { notification_type: 'streak_reminder' },
-    { notification_type: 'group_name_change', group_name: 'Enghaters', old_group_name: 'Englovers', group_id: '1' },
-    { notification_type: 'group_admin', group_name: 'Englovers', group_id: '1' },
-]
+
 
 export default function Notifications() {
     const [ShowMessages, SetShowMessages] = useState(false);
@@ -24,15 +18,20 @@ export default function Notifications() {
         if (C.AppReady) {
             DataService.GetNotifications(C.UserData.id).then((res) => {
                 SetMessages(res.data)
-                console.log(res.data)
+                socket.on('newNotification', (notification) => {
+                    console.log(notification);
+                    SetMessages(Messages.concat(notification))
+                });
+                console.log(Messages);
             }).catch(e => {
                 console.log(e)
                 popup('Error', 'Failed to load notifications due to an unknown error.')
             }) 
-            SetMessages(notifications) // temporary
 
         }
     }, [C.AppReady])
+
+
 
     return (
         <aside id='notifications' onClick={() => SetShowMessages(!ShowMessages)} style={{ marginRight: `${Messages.length}px` }} className={ShowMessages ? 'open' : ''}>

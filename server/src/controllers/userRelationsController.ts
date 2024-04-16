@@ -11,7 +11,7 @@ import logger from '../logger/logger';
 const sendFriendRequest = (io) => async (req, res) => {
     try {
         const response = await userRelationsService.sendFriendRequest(req.userId, req.params.id);
-        await notificationService.sendNotification(req.params.id,io,{friendId:req.userId,notificationType:NotificationType.NEW_FRIEND_REQUEST});
+        await notificationService.sendNotification(req.params.id,io,{friendId:req.userId,notification_type:NotificationType.NEW_FRIEND_REQUEST});
         
 
         res.status(httpStatus.CREATED).json(response);

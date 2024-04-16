@@ -3,6 +3,6 @@ values (
     ${userId},
     ${senderId},
     ${groupId},
-    ${type}
+    ${notification_type}
 )
 RETURNING *;
