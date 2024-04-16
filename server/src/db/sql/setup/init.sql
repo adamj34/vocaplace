@@ -107,7 +107,8 @@ CREATE TABLE IF NOT EXISTS notifications (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   friend_id UUID REFERENCES users(id) DEFAULT NULL,
   group_id INTEGER REFERENCES groups(id) DEFAULT NULL,
-  notification_type notification_type NOT NULL
+  notification_type notification_type NOT NULL,
+  read BOOLEAN NOT NULL DEFAULT false
 );
 
 

@@ -16,6 +16,7 @@ import topicRouter from "./routes/topicRouter.js";
 import groupRouter from "./routes/groupRouter.js";
 import searchRouter from "./routes/searchRouter.js";
 import rankingRouter from "./routes/rankingRouter.js";
+import notificationsRouter from "./routes/notificationsRouter.js";
 
 import keycloak from './Keycloak.js';
 import initializeSocketServer from './socket/socketInit'
@@ -59,6 +60,7 @@ app.use('/relationships', userRelationsRouter(io));
 app.use('/questions', questionRouter);
 app.use('/groups', groupRouter);
 app.use('/rankings', rankingRouter);
+app.use('/notifications',notificationsRouter );
 
 
 export {io}

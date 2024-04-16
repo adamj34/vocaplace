@@ -112,8 +112,8 @@ const functions = {
         return res.data
     },
 
-    async GetNotifications() {
-        const res = await Server.get(`/user/notifications`)
+    async GetNotifications(userid) {
+        const res = await Server.get(`/notifications/${userid}`)
         return res.data
     },
 
