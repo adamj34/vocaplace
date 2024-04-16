@@ -114,10 +114,26 @@ const deleteNotification = async (notificationId: string) => {
     }
 }
 
+const deleteAllNotifications = async (userId: string) => {
+    try {
+        await db.notifications.deleteAllNotifications({userId: userId});
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error("Failed to delete all notifications:", error);
+        return {
+            success: false,
+            error: errorFactory("Failed to delete all notifications", error)
+        };
+    }
+}
+
 
 export default{
     getNotifications,
     sendNotification,
-    deleteNotification
+    deleteNotification,
+    deleteAllNotifications
 }
 

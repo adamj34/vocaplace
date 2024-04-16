@@ -121,6 +121,10 @@ const functions = {
         await Server.delete(`/notifications/${notificationid}`)
     },
 
+    async DeleteNotifications(userid) {
+        await Server.delete(`/notifications/${userid}`)
+    },
+
     async SaveQuestionsAnswered(ids) {
         await Server.post(`/questions/answered`, {questionIds:ids})
     },

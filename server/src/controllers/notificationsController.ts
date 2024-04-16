@@ -25,7 +25,18 @@ const deleteNotification = async (req, res) => {
     }
 }
 
+const deleteAllNotifications = async (req, res) => {
+    try {
+        const response = await notificationService.deleteAllNotifications(req.params.userId);
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in deleteAllNotifications controller');
+        handleError(err, res);
+    }
+}
+
 export default {
     getNotifications,
-    deleteNotification
+    deleteNotification,
+    deleteAllNotifications
 }

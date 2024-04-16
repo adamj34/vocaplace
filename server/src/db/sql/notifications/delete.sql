@@ -1,3 +1,2 @@
 DELETE FROM notifications
-WHERE id = ${id}
-RETURNING *;
+WHERE id = ${id};

@@ -33,15 +33,20 @@ export default function Notifications() {
     const handleDelete = (msg) => {
             SetMessages(Messages.filter((x,i)=>msg.id!==i))
             DataService.DeleteNotification(msg.id).then((res) => {
-                console.log(res.data)
             }).catch(e => {
                 console.log(e)
                 popup('Error', 'Failed to delete notification due to an unknown error.')
             })
             
         }
-
-
+    const handleClearAll = () => {    
+        SetMessages([])
+        DataService.DeleteNotifications(C.UserData.id).then((res) => {
+        }).catch(e => {
+            console.log(e)
+            popup('Error', 'Failed to delete notifications due to an unknown error.')
+        })
+    }
 
 
 
@@ -85,11 +90,11 @@ export default function Notifications() {
                                         You have been appointed the new group owner of <span className="color">{msg.group_name}</span>.
                                     </Link>
                                 }
-                                <p onClick={(msg)=>(handleDelete)} style={{color:'red'}}>Delete</p>
+                                <p onClick={()=>(handleDelete(msg))} style={{color:'red'}}>Delete</p>
                             </div>
                         ))}
                         {Messages.length === 0 && <p id='empty'>There are no new notifications.</p>}
-                        {Messages.length > 0 && <p id='clear' onClick={()=>SetMessages([])}>Clear all</p>}
+                        {Messages.length > 0 && <p id='clear' onClick={handleClearAll}>Clear all</p>}
                     </div>
                 </section>
             }
