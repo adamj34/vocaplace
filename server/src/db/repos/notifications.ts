@@ -15,7 +15,7 @@ class NotificationsRepositiory {
      return this.db.one(queries.notifications.add, values);
 }
 
-  deleteNotification(values: { userId: string; friend_id?: string; group_id?:string; notification_type: string }) {
+  deleteNotification(values: { id: string }) {
     return this.db.none(queries.notifications.delete, values);
   }
 

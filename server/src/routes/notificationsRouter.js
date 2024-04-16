@@ -6,6 +6,7 @@ const router = express.Router()
 
 router
     .get('/:userId', notificationsController.getNotifications)
+    .delete('/:notificationId', notificationsController.deleteNotification)
     
 
 

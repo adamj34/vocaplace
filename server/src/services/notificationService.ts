@@ -82,6 +82,8 @@ const sendNotification = async (userId: string, io: SocketIOServer,
         notification_type: newNotification.notification_type,
     };
     const dbNotification= await db.notifications.addNotification(notificationForDB)
+    console.log("dbNotification",dbNotification);
+    
 
     const fullNotification = {
         ...dbNotification,
@@ -97,8 +99,25 @@ const sendNotification = async (userId: string, io: SocketIOServer,
     }
 }
 
+const deleteNotification = async (notificationId: string) => {
+    try {
+        await db.notifications.deleteNotification({id: notificationId});
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error("Failed to delete notification:", error);
+        return {
+            success: false,
+            error: errorFactory("Failed to delete notification", error)
+        };
+    }
+}
+
+
 export default{
     getNotifications,
-    sendNotification
+    sendNotification,
+    deleteNotification
 }
 

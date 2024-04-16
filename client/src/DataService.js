@@ -117,6 +117,10 @@ const functions = {
         return res.data
     },
 
+    async DeleteNotification(notificationid) {
+        await Server.delete(`/notifications/${notificationid}`)
+    },
+
     async SaveQuestionsAnswered(ids) {
         await Server.post(`/questions/answered`, {questionIds:ids})
     },

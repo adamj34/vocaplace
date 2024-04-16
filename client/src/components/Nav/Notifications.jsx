@@ -19,9 +19,8 @@ export default function Notifications() {
             DataService.GetNotifications(C.UserData.id).then((res) => {
                 SetMessages(res.data)
                 socket.on('newNotification', (notification) => {
-                    console.log(notification);
-                    SetMessages(Messages.concat(notification))
-                });
+                    SetMessages((prevMessages) => [notification, ...prevMessages]);
+                }); 
                 console.log(Messages);
             }).catch(e => {
                 console.log(e)
@@ -31,10 +30,23 @@ export default function Notifications() {
         }
     }, [C.AppReady])
 
+    const handleDelete = (msg) => {
+            SetMessages(Messages.filter((x,i)=>msg.id!==i))
+            DataService.DeleteNotification(msg.id).then((res) => {
+                console.log(res.data)
+            }).catch(e => {
+                console.log(e)
+                popup('Error', 'Failed to delete notification due to an unknown error.')
+            })
+            
+        }
 
 
-    return (
-        <aside id='notifications' onClick={() => SetShowMessages(!ShowMessages)} style={{ marginRight: `${Messages.length}px` }} className={ShowMessages ? 'open' : ''}>
+
+
+
+        return (
+        <aside id='notifications' onClick={() => SetShowMessages(!ShowMessages)} style={{ marginRight: `${Messages.length.toString().length*6}px` }} className={ShowMessages ? 'open' : ''}>
             <Icon icon='bell'/>
             {!ShowMessages && Messages.length > 0 && 
                 <p id='count'>{Messages.length}</p>
@@ -46,7 +58,7 @@ export default function Notifications() {
                     <p id="title">Notifications</p>
                     <div id="messages">
                         {Messages.map((msg) => (
-                            <p key={msg.id} id='message' onClick={()=>SetMessages(Messages.filter((x,i2)=>msg.id!==i2))}>
+                            <div key={msg.id} id='message' onClick={()=>SetMessages(Messages.filter((x,i)=>msg.id!==i))}>
                                 {msg.notification_type === 'group_request_accepted' && 
                                     <Link to={'/groups/' + msg.group_id}>
                                         Your request to join <span className="color">{msg.group_name}</span> has been accepted.
@@ -73,7 +85,8 @@ export default function Notifications() {
                                         You have been appointed the new group owner of <span className="color">{msg.group_name}</span>.
                                     </Link>
                                 }
-                            </p>
+                                <p onClick={(msg)=>(handleDelete)} style={{color:'red'}}>Delete</p>
+                            </div>
                         ))}
                         {Messages.length === 0 && <p id='empty'>There are no new notifications.</p>}
                         {Messages.length > 0 && <p id='clear' onClick={()=>SetMessages([])}>Clear all</p>}

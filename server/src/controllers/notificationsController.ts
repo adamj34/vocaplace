@@ -14,6 +14,18 @@ const getNotifications = async (req, res) => {
     }
 }
 
+
+const deleteNotification = async (req, res) => {
+    try {
+        const response = await notificationService.deleteNotification(req.params.notificationId);
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in deleteNotification controller');
+        handleError(err, res);
+    }
+}
+
 export default {
-    getNotifications
+    getNotifications,
+    deleteNotification
 }
