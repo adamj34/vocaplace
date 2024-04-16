@@ -21,7 +21,7 @@ const sendNotification = async (userId: string, io: SocketIOServer,
         type: newNotification.notificationType
 
     } 
-    db.notifications.addNotification(notification)
+    await db.notifications.addNotification(notification)
     console.log("Worked------------");
     
     const data = await db.notifications.getNotifications({userId})

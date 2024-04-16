@@ -1,3 +1,3 @@
 SELECT
 * FROM notifications
-WHERE user.id = ${userId};
+WHERE user_id = ${userId};

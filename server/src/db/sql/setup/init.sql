@@ -41,27 +41,10 @@ CREATE TABLE IF NOT EXISTS users (
   points INTEGER NOT NULL DEFAULT 0,
   ongoing_streak INTEGER NOT NULL DEFAULT 0,
   last_active TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 
-CREATE TYPE notification_type AS ENUM (
-  'group_request_accepted',
-  'friend_request_accepted',
-  'new_friend_request',
-  'streak_reminder',
-  -- 'group_name_change'
-  'group_admin_received'
-);
-
-CREATE TABLE IF NOT EXISTS notifications (
-  id SERIAL PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES users(id),
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  friend_id REFERENCES users(id) DEFAULT NULL,
-  group_id REFERENCES groups(id) DEFAULT NULL,
-  notification_type notification_type NOT NULL,
-);
 
 CREATE TYPE relationship_state AS ENUM (
   'pending_user1_user2',
@@ -108,6 +91,23 @@ CREATE TABLE IF NOT EXISTS group_membership (
   accepted BOOLEAN NOT NULL DEFAULT false,
   UNIQUE(user_id, group_id),
   CHECK ((accepted = false AND admin = false) OR accepted = true)
+);
+CREATE TYPE notification_type AS ENUM (
+  'group_request_accepted',
+  'friend_request_accepted',
+  'new_friend_request',
+  'streak_reminder',
+  -- 'group_name_change'
+  'group_admin_received'
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  friend_id UUID REFERENCES users(id) DEFAULT NULL,
+  group_id INTEGER REFERENCES groups(id) DEFAULT NULL,
+  notification_type notification_type NOT NULL
 );
 
 
