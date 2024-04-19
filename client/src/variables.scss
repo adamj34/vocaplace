@@ -12,7 +12,6 @@ $darkgray-gradient: linear-gradient($darkgray, $darkgray-darker);
 @mixin panel {
     @include box-shadow();
     @include border-radius-big();
-    background-color: $darkgray;
     padding: 40px;
     background-image: $darkgray-gradient;
 }
@@ -31,15 +30,3 @@ $darkgray-gradient: linear-gradient($darkgray, $darkgray-darker);
 @mixin transition {
     transition: 0.3s;
 }
-
-// a {
-//     color: inherit;
-//     text-decoration: none;
-// }
-
-// input {
-//     border: none;
-//     outline: none;
-//     background: none;
-//     font-size: 100%;
-// }

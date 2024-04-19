@@ -47,7 +47,7 @@ export function QuestionCreator(p) {
                                         <p id='unit' className='disabled'>{u}</p>
                                         {data.topics.map((t, i) => {
                                             return (
-                                                <p key={i} id='topic' className={(t.topic == Data.topic && u == Data.unit) ? 'chosen' : ''} onClick={() => { SetShowTopics(false); SetData({ ...Data, unit: u, topic: t.topic }) }}>{t.topic}</p>
+                                                <p key={i} id='topic' className={(t.topic === Data.topic && u === Data.unit) ? 'chosen' : ''} onClick={() => { SetShowTopics(false); SetData({ ...Data, unit: u, topic: t.topic }) }}>{t.topic}</p>
                                             )
                                         })}
                                     </div>) : null
@@ -65,7 +65,7 @@ export function QuestionCreator(p) {
                             <div id='select-scroll'>
                                 {['Pick', 'Order', 'Fill'].map((t,i) => { // add 'Connect' later on
                                     return (
-                                        <p key={i} className={t.toLowerCase() == Data.questionType ? 'chosen' : ''} onClick={() => { SetShowType(false); SetData({ ...Data, questionType: t.toLowerCase(), correctAnswers:[""], misleadingAnswers:[""] }) }}>{t}</p> // reset answer on type changed
+                                        <p key={i} className={t.toLowerCase() === Data.questionType ? 'chosen' : ''} onClick={() => { SetShowType(false); SetData({ ...Data, questionType: t.toLowerCase(), correctAnswers:[""], misleadingAnswers:[""] }) }}>{t}</p> // reset answer on type changed
                                     )
                                 })}
                             </div>
@@ -75,10 +75,10 @@ export function QuestionCreator(p) {
 
                 {Data.questionType && (<div id='field'>
                     <label>Question:</label>
-                    <input className='input' placeholder={(Data.questionType == 'connect' && "Connect the words with their meaning in English.") || (Data.questionType == 'order' && "Ona ma psa.") || (Data.questionType == 'pick' && "Which of these are vehicles?") || (Data.questionType == 'fill' && 'The dog quickly _ the thief who tried to enter the house.') || ""} onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
+                    <input className='input' placeholder={(Data.questionType === 'connect' && "Connect the words with their meaning in English.") || (Data.questionType === 'order' && "Ona ma psa.") || (Data.questionType ==='pick' && "Which of these are vehicles?") || (Data.questionType === 'fill' && 'The dog quickly _ the thief who tried to enter the house.') || ""} onChange={(e) => { SetData({ ...Data, content: e.target.value }) }} />
                 </div>)}
 
-                {(Data.questionType == 'pick' || Data.questionType == 'fill') && (<div id='field'>
+                {(Data.questionType === 'pick' || Data.questionType === 'fill') && (<div id='field'>
                     <label>Correct Answers:</label>
                     <div id="answers">
                         <div id="inputs">
@@ -95,12 +95,12 @@ export function QuestionCreator(p) {
                     </div>
                 </div>)}
 
-                {Data.questionType == 'order' && (<div id='field'>
+                {Data.questionType === 'order' && (<div id='field'>
                     <label>Correct Answer:</label>
                     <input className='input' placeholder='She has a dog.' onChange={(e) => { SetData({ ...Data, correctAnswers: e.target.value.split(' ') }) }} />
                 </div>)}
 
-                {(Data.questionType == 'pick' || Data.questionType == 'order') && (<div id='field'>
+                {(Data.questionType === 'pick' || Data.questionType === 'order') && (<div id='field'>
                     <label>Misleading Answers:</label>
                     <div id="answers">
                         <div id="inputs">
@@ -120,12 +120,12 @@ export function QuestionCreator(p) {
                 <div id='field'>
                     <label>Difficulty:</label>
                     <div id='selectfield'>
-                        <button className='selectbutton' type='button' onClick={() => SetShowDifficulty(!ShowDifficulty)}>{(Data.difficulty == 1 && 'Easy') || (Data.difficulty == 2 && 'Medium') || (Data.difficulty == 3 && 'Hard') || "None"}</button>
+                        <button className='selectbutton' type='button' onClick={() => SetShowDifficulty(!ShowDifficulty)}>{(Data.difficulty === 1 && 'Easy') || (Data.difficulty === 2 && 'Medium') || (Data.difficulty === 3 && 'Hard') || "None"}</button>
                         {ShowDifficulty && <div id='select' onMouseLeave={() => SetShowDifficulty(false)}>
                             <div id='select-scroll'>
                                 {[1, 2, 3].map((d,i) => {
                                     return (
-                                        <p key={i} className={d == Data.difficulty ? 'chosen' : ''} onClick={() => { SetShowDifficulty(false); SetData({ ...Data, difficulty: d, }) }}>{d == 1 && 'Easy'}{d == 2 && 'Medium'}{d == 3 && 'Hard'}</p>
+                                        <p key={i} className={d === Data.difficulty ? 'chosen' : ''} onClick={() => { SetShowDifficulty(false); SetData({ ...Data, difficulty: d, }) }}>{d === 1 && 'Easy'}{d === 2 && 'Medium'}{d === 3 && 'Hard'}</p>
                                     )
                                 })}
                             </div>

@@ -55,7 +55,6 @@ export function Admin() {
                 {Created.type === 'topic' && <TopicCreator GlobalData={GlobalData} SetNeedToUpdateData={SetNeedToUpdateData} />}
                 {Created.type === 'question' && <QuestionCreator GlobalData={GlobalData} SetNeedToUpdateData={SetNeedToUpdateData} />}
             </div>
-            <div className='line'></div>
             
         </div>
     )

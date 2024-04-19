@@ -51,7 +51,7 @@ export function TopicCreator(p) {
                         {ShowUnits && <div id='select' onMouseLeave={()=>SetShowUnits(false)}>
                             <div id='select-scroll'>
                                 {units.map((u,i) => {return (
-                                    <p key={i} className={u==Data.unit ? 'chosen' : ''} onClick={()=>{SetShowUnits(!ShowUnits); SetData({...Data, unit:u})}}>{u}</p>
+                                    <p key={i} className={u === Data.unit ? 'chosen' : ''} onClick={()=>{SetShowUnits(!ShowUnits); SetData({...Data, unit:u})}}>{u}</p>
                                 )})}
                             </div>
                         </div>}
@@ -62,9 +62,9 @@ export function TopicCreator(p) {
                     <input className='input' placeholder='Animals' onChange={(e)=>{SetData({...Data, topic:e.target.value})}}/>
                 </div>
                 <div id='field'>
-                    <label>Topic <a href="https://react-icons.github.io/react-icons/icons/fa/">Icon:</a></label>
+                    <label>Topic <a href="https://react-icons.github.io/react-icons/icons/fa/" className="hovertext">Icon:</a></label>
                     <input className='input' placeholder='pen' onChange={(e) => { SetData({ ...Data, icon: e.target.value }) }} />
-                    <span>Icon Preview: <i id='icon' className={"fa-solid fa-"+Data.icon}></i></span>
+                    <span>Icon Preview: <i id='icon' className={"fa-solid fa-"+(Data.icon || 'book')}></i></span>
                 </div>
 
                 <div id='buttons'>

@@ -45,7 +45,7 @@ export function UnitCreator(p) {
                     <input className='input' placeholder='Vocabulary' onChange={(e)=>{SetData({...Data, unit:e.target.value})}}/>
                 </div>
                 <div id='field'>
-                    <label>Unit <a href="https://react-icons.github.io/react-icons/icons/fa/">Icon:</a></label>
+                    <label>Unit <a href="https://react-icons.github.io/react-icons/icons/fa/" className="hovertext">Icon:</a></label>
                     <input className='input' placeholder='pen' onChange={(e) => { SetData({ ...Data, icon: e.target.value }) }} />
                     <span>Icon Preview: <i id='icon' className={"fa-solid fa-"+(Data.icon || 'book')}></i></span>
                 </div>

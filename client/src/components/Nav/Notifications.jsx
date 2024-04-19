@@ -6,7 +6,14 @@ import DataService from "../../DataService";
 import { usePopup } from "../Popup.tsx";
 import {socket} from "../../socket";
 
-
+function BellOffset(unreadmessages) {
+    if (unreadmessages.length > 0) {
+        return (unreadmessages.length.toString().length)*6
+    } else {
+        return 0
+    }
+    
+}
 
 export default function Notifications() {
     const [ShowMessages, SetShowMessages] = useState(false);
@@ -23,7 +30,7 @@ export default function Notifications() {
                 }); 
                 console.log(Messages);
             }).catch(e => {
-                console.log(e)
+                console.error(e)
                 popup('Error', 'Failed to load notifications due to an unknown error.')
             }) 
 
@@ -34,7 +41,7 @@ export default function Notifications() {
             SetMessages(Messages.filter((x,i)=>msg.id!==i))
             DataService.DeleteNotification(msg.id).then((res) => {
             }).catch(e => {
-                console.log(e)
+                console.error(e)
                 popup('Error', 'Failed to delete notification due to an unknown error.')
             })
             
@@ -43,7 +50,7 @@ export default function Notifications() {
         SetMessages([])
         DataService.DeleteNotifications(C.UserData.id).then((res) => {
         }).catch(e => {
-            console.log(e)
+            console.error(e)
             popup('Error', 'Failed to delete notifications due to an unknown error.')
         })
     }
@@ -52,7 +59,7 @@ export default function Notifications() {
         SetMessages(Messages.map((msg) => msg.id === id ? {...msg, read: true} : msg))
         DataService.MarkNotificationAsRead(id).then((res) => {
         }).catch(e => {
-            console.log(e)
+            console.error(e)
             popup('Error', 'Failed to mark notification as read due to an unknown error.')
         })
     }
@@ -61,7 +68,7 @@ export default function Notifications() {
         SetMessages(Messages.map((msg) => ({...msg, read: true})))
         DataService.MarkAllNotificationsAsRead(C.UserData.id).then((res) => {
         }).catch(e => {
-            console.log(e)
+            console.error(e)
             popup('Error', 'Failed to mark notifications as read due to an unknown error.')
         })
     }
@@ -69,8 +76,8 @@ export default function Notifications() {
 
 
         return (
-        <aside id='notifications' onClick={() => SetShowMessages(!ShowMessages)} style={{ marginRight: `${Messages.length.toString().length*6}px` }} className={ShowMessages ? 'open' : ''}>
-            <Icon icon='bell'/>
+        <aside id='notifications'  style={{ marginRight: `${BellOffset(Messages.filter(x=>!x.read))}px` }} className={ShowMessages ? 'open' : ''}>
+            <Icon icon='bell' onClick={() => SetShowMessages(!ShowMessages)} />
             {Messages.filter((x)=>!x.read).length > 0 && 
                 <p id='count'>{Messages.length}</p>
             }
@@ -108,13 +115,14 @@ export default function Notifications() {
                                         You have been appointed the new group owner of <span className="color">{msg.group_name}</span>.
                                     </Link>
                                 }
-                                <p onClick={()=>(handleDelete(msg))} style={{color:'red'}}>Delete</p>
+                                <Icon icon='trash' onClick={() => (handleDelete(msg))} />
+                                {/* <p onClick={()=>(handleDelete(msg))} style={{color:'red'}}>Delete</p> */}
                             </div>
                         ))}
                         {Messages.length === 0 && <p id='empty'>There are no new notifications.</p>}
                         {Messages.length > 0 && 
-                            <div>
-                                <p id='clear'onClick={handleMarkAllAsRead}>Mark all as read</p>
+                            <div id='bottom'>
+                                <p id='markread'onClick={handleMarkAllAsRead}>Mark all as read</p>
                                 <p id='clear' onClick={handleClearAll}>Clear all</p>
                             </div>}
                     </div>

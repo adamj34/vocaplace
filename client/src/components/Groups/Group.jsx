@@ -148,7 +148,6 @@ export function Group() {
     }
 
     function UpdateGroupData() {
-        console.log(UpdatedGroupData)
         if (Object.keys(UpdatedGroupData).length > 0) { // nothing to update
             if (!UpdatedGroupData.picture || UpdatedGroupData.picture.size < 1000000) {
                 SetSaving(true)
@@ -264,8 +263,8 @@ export function Group() {
                                     </div>
                                 </Link>
                                 {ManagingGroup && u.id !== C.UserData.id && <div id='buttons'>
-                                    {IsGroupAdmin(C.UserData.id) && <Icon icon='trash' onClick={() => {if (window.confirm(`Are you sure you want to kick ${u.username} from the group?`)) {KickUser(u.id)}} }/>}
-                                    {IsGroupAdmin(C.UserData.id) && <Icon icon='star' onClick={() => PassAdmin(u.id)}/>}
+                                    {IsGroupAdmin(C.UserData.id) && <Icon icon='trash' className='hovertext' onClick={() => {if (window.confirm(`Are you sure you want to kick ${u.username} from the group?`)) {KickUser(u.id)}} }/>}
+                                    {IsGroupAdmin(C.UserData.id) && <Icon icon='star' className='hovertext' onClick={() => PassAdmin(u.id)}/>}
                                 </div>}
                             </div>)
                     })}
@@ -308,7 +307,7 @@ export function Group() {
                                     </Link>
                                     <p id='time'>{m.posted}</p>
                                 </div> : null}
-                                    <p id='messagecontent'>{m.content} {IsGroupAdmin(C.UserData.id) && <Icon icon='trash' onClick={()=>DeleteChatMessage(m.id)}/>}</p>
+                                    <p id='messagecontent'>{m.content} {IsGroupAdmin(C.UserData.id) && <Icon icon='trash' className='hovertext' onClick={()=>DeleteChatMessage(m.id)}/>}</p>
                             </div>)
                         })}
                 </div>

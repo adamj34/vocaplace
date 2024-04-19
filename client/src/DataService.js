@@ -82,7 +82,7 @@ const functions = {
     },
 
     async DeleteFriend(userid) {
-        await Server.delete(`/relationships/friend\/${userid}`)
+        await Server.delete(`/relationships/friend/${userid}`)
     },
 
     async GetUnits() {
@@ -174,6 +174,16 @@ const functions = {
 
     async GetRankingFriends() {
         const res = await Server.get(`/rankings/friends`)
+        return res.data
+    },
+
+    async GetRankingStreak() {
+        const res = await Server.get(`/rankings/topStreaks`)
+        return res.data
+    },
+
+    async GetRankingGroups() {
+        const res = await Server.get(`/rankings/topGroups`)
         return res.data
     },
 

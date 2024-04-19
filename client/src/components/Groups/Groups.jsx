@@ -8,20 +8,6 @@ import { usePopup } from "../Popup.tsx";
 import { ValidateGroup } from './ValidateGroup.ts';
 
 
-const placeholder = [
-    {
-        "id": 1,
-        "group_name": "Englovers",
-        "bio": "English is the best!",
-        "picture": null
-    },
-    {
-        "id": 2,
-        "group_name": "BestFriends",
-        "bio": "Hello! Join the group and let's study together!",
-        "picture": null
-    }
-]
 
 export function Groups() {
     document.title = `VocaPlace | Groups`

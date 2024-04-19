@@ -48,22 +48,22 @@ export function Nav() {
                     </Link>
                     <nav id='links'>
                         <Link to='units'>
-                            <Icon icon='book'/>
+                            <Icon icon='book' className='hovertext'/>
                         </Link>
                         <Link to='repetitions'>
-                            <Icon icon='brain'/>
+                            <Icon icon='brain' className='hovertext' />
                         </Link>
                         <Link to='friends'>
-                            <Icon icon='user-friends'/>
+                            <Icon icon='user-friends' className='hovertext' />
                         </Link>
                         <Link to='groups'>
-                            <Icon icon='people-group'/>
+                            <Icon icon='people-group' className='hovertext' />
                         </Link>
                         <Link to='ranking'>
-                            <Icon icon='medal'/>
+                            <Icon icon='medal' className='hovertext' />
                         </Link>
                         {keycloak.hasRealmRole('app-admin') && <Link to='admin'>
-                            <Icon icon='id-badge'/>
+                            <Icon icon='id-badge' className='hovertext' />
                         </Link>}
                     </nav>
                     <SearchBar/>
