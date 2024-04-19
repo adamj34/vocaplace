@@ -132,7 +132,7 @@ export default function Notifications() {
                                         Group {msg.old_group_name} has changed name to <span className="color">{msg.group_name}</span>.
                                     </Link>
                                 }
-                                {msg.notification_type === 'group_admin' &&
+                                {msg.notification_type === 'group_admin_received' &&
                                     <Link to={'/groups/' + msg.group_id}>
                                         You have been appointed the new group owner of <span className="color">{msg.group_name}</span>.
                                     </Link>

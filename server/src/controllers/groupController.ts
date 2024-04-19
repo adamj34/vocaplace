@@ -68,9 +68,10 @@ const updateMembership = (io)=> async (req, res) => {
     }
 }
 
-const passAdminRights = async (req, res) => {
+const passAdminRights = (io) => async (req, res) => {
     try {
         const response = await groupService.passAdminRights(req.userId, req.params.userId, +req.params.id)
+        await notificationService.sendNotification(req.params.userId,io,   {groupId: +req.params.id,notification_type: NotificationType.GROUP_ADMIN_RECEIVED})
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in passAdminRights controller');

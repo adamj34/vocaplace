@@ -18,7 +18,7 @@ router
     .delete('/membership/:id/:userId', validate(memberOperationsSchema), groupController.deleteMember)
     .delete('/:id', validate(groupIdSchema), groupController.deleteGroup)
     .patch('/membership/:id/:userId', validate(memberOperationsSchema), groupController.updateMembership(io))
-    .patch('/admin/:id/:userId', validate(memberOperationsSchema), groupController.passAdminRights)
+    .patch('/admin/:id/:userId', validate(memberOperationsSchema), groupController.passAdminRights(io))
     .patch('/:id', upload.single('picture'), validate(updateGroupSchema), groupController.updateGroup)
 return router;
 }
