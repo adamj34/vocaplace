@@ -23,19 +23,28 @@ export default function Notifications() {
 
     useEffect(() => {
         if (C.AppReady) {
-            DataService.GetNotifications(C.UserData.id).then((res) => {
-                SetMessages(res.data)
-                socket.on('newNotification', (notification) => {
-                    SetMessages((prevMessages) => [notification, ...prevMessages]);
-                }); 
-                console.log(Messages);
+            DataService.GetNotifications(C.UserData.id).then(res => {
+                SetMessages(res.data);
             }).catch(e => {
-                console.error(e)
-                popup('Error', 'Failed to load notifications due to an unknown error.')
-            }) 
+                console.error(e);
+                popup('Error', 'Failed to load notifications due to an unknown error.');
+            });
+
+            socket.on('newNotification', notification => {
+                SetMessages(prevMessages => {
+                    if (!prevMessages.some(msg => msg.id === notification.id)) {
+                        return [notification, ...prevMessages];
+                    }
+                    return prevMessages;
+                });
+            });
+
+            socket.on('deleteNotification', notificationId => {
+                SetMessages(prevMessages => prevMessages.filter(msg => msg.id !== notificationId));
+            });
 
         }
-    }, [C.AppReady])
+    }, [C.AppReady]);
 
     const handleDelete = (msg) => {
             SetMessages(Messages.filter((x,i)=>msg.id!==i))

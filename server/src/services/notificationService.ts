@@ -159,6 +159,27 @@ const markAllAsRead = async (userId: string) => {
     }
 }
 
+const deleteSentFriendRequestNotification = async (userId: string, io: SocketIOServer, friendId: string) => {
+    try {
+    const notification = await db.notifications.getNotificationByFriendId({userId,friendId});
+    console.log('deleteSentFriendRequestNotification',notification);
+    await db.notifications.deleteNotification({id:notification.id});
+    
+    await io.to(userId).emit("deleteNotification",notification.id);
+
+    return {
+        success: true
+    };
+} catch (error) {
+    console.error("Failed to delete sent friend request notification:", error);
+    return {
+        success: false,
+        error: errorFactory("Failed to delete sent friend request notification", error)
+    };
+}
+}
+
+
 
 export default{
     getNotifications,
@@ -166,6 +187,7 @@ export default{
     deleteNotification,
     deleteAllNotifications,
     markAsRead,
-    markAllAsRead
+    markAllAsRead,
+    deleteSentFriendRequestNotification
 }
 

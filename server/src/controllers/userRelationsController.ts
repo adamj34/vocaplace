@@ -44,9 +44,11 @@ const deleteReceivedFriendRequest = async (req, res) => {
     }
 }
 
-const deleteSentFriendRequest = async (req, res) => {
+const deleteSentFriendRequest =(io)=> async (req, res) => {
     try {
         const response = await userRelationsService.deleteSentFriendRequest(req.userId, req.params.id);
+        await notificationService.deleteSentFriendRequestNotification(req.params.id,io,req.userId);
+        
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in deleteSentFriendRequest controller');

@@ -34,6 +34,11 @@ class NotificationsRepositiory {
     markAllAsRead(values: { userId: string }) {
         return this.db.none(queries.notifications.markAllAsRead, values);
     }
+    getNotificationByFriendId(values: { userId: string, friendId: string }) {
+      console.log("getNotificationByFriendId notifications.ts",values);
+      
+        return this.db.one(queries.notifications.getByFriendId, values);
+    }
 
 
 
