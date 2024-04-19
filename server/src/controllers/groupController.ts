@@ -2,6 +2,8 @@ import groupService from '../services/groupService';
 import httpStatus from 'http-status-codes';
 import handleError from '../utils/errorHandler.js';
 import logger from '../logger/logger';
+import { NotificationType } from '../db/sql/types/notificationType.js';
+import notificationService from '../services/notificationService';
 
 
 const createGroup = async (req, res) => {
@@ -55,9 +57,10 @@ const joinGroup = async (req, res) => {
     }
 }
 
-const updateMembership = async (req, res) => {
+const updateMembership = (io)=> async (req, res) => {
     try {
         const response = await groupService.updateMembership(req.userId, req.params.userId, +req.params.id)
+        await notificationService.sendNotification(req.params.userId,io,   {groupId: +req.params.id,notification_type: NotificationType.GROUP_REQUEST_ACCEPTED})
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in acceptMember controller');

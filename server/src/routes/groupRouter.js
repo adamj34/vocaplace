@@ -4,8 +4,11 @@ import { createGroupSchema, memberOperationsSchema, updateGroupSchema, groupIdSc
 import validate from '../validation/validateMiddleware.js';
 import upload from '../utils/multerUpload.js';
 
-const router = express.Router();
 
+
+const groupRouter = (io) => {
+
+const router = express.Router();
 
 router
     .get('/:id', validate(groupIdSchema), groupController.getGroupInfo)
@@ -14,8 +17,9 @@ router
     .delete('/picture/:id', validate(groupIdSchema), groupController.deleteGroupPicture)
     .delete('/membership/:id/:userId', validate(memberOperationsSchema), groupController.deleteMember)
     .delete('/:id', validate(groupIdSchema), groupController.deleteGroup)
-    .patch('/membership/:id/:userId', validate(memberOperationsSchema), groupController.updateMembership)
+    .patch('/membership/:id/:userId', validate(memberOperationsSchema), groupController.updateMembership(io))
     .patch('/admin/:id/:userId', validate(memberOperationsSchema), groupController.passAdminRights)
     .patch('/:id', upload.single('picture'), validate(updateGroupSchema), groupController.updateGroup)
-
-export default router;
+return router;
+}
+export default groupRouter;

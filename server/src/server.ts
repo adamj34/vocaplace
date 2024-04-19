@@ -58,7 +58,7 @@ app.use('/units', unitRouter);
 app.use('/topics', topicRouter);
 app.use('/relationships', userRelationsRouter(io));
 app.use('/questions', questionRouter);
-app.use('/groups', groupRouter);
+app.use('/groups', groupRouter(io));
 app.use('/rankings', rankingRouter);
 app.use('/notifications',notificationsRouter );
 
