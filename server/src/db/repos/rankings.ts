@@ -23,6 +23,47 @@ class RankingsRepository {
         `);
     }
 
+    getTopUsersByStreak() {
+        return this.db.any(`
+        SELECT
+            id,
+            username,
+            points,
+            picture,
+            ongoing_streak
+        FROM
+            users
+        ORDER BY ongoing_streak DESC
+        LIMIT 10
+        `);
+    }
+
+    getTopGroups() {
+        return this.db.any(`
+        SELECT
+            groups.id,
+            groups.group_name,
+            groups.bio,
+            groups.picture,
+            AVG(users.points) AS points_avg
+        FROM
+            groups
+        JOIN
+            group_membership
+        ON
+            groups.id = group_membership.group_id
+        JOIN
+            users 
+        ON
+            group_membership.user_id = users.id
+        WHERE 
+            group_membership.accepted = true
+        GROUP BY
+            groups.id
+        LIMIT 10
+        `);
+    }
+
 }
 
 

@@ -11,6 +11,22 @@ const getTopUsersRanking = async () => {
     };
 };
 
+const getTopUsersRankingByStreak = async () => {
+    const ranking = pictureToSignedUrl(await db.rankings.getTopUsersByStreak());
+    return {
+        success: true,
+        data: ranking
+    };
+}
+
+const getTopGroupsRanking = async () => {
+    const ranking = pictureToSignedUrl(await db.rankings.getTopGroups());
+    return {
+        success: true,
+        data: ranking
+    };
+}
+
 const getFriendsRanking = (userId: string) => {
     return db.task(async t => {
         const friendsData = pictureToSignedUrl(await t.user_relationships.findFriendsByUserId({ id: userId }));
@@ -25,7 +41,10 @@ const getFriendsRanking = (userId: string) => {
     })
 };
 
+
 export default {
     getTopUsersRanking,
-    getFriendsRanking
+    getFriendsRanking,
+    getTopUsersRankingByStreak,
+    getTopGroupsRanking
 };

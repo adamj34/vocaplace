@@ -14,6 +14,26 @@ const getTopUsersRanking = async (_req, res) => {
     }
 }
 
+const getTopUsersRankingByStreak = async (_req, res) => {
+    try {
+        const response = await rankingService.getTopUsersRankingByStreak();
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in getTopUsersRankingByStreak controller');
+        handleError(err, res)
+    }
+}
+
+const getTopGroupsRanking = async (req, res) => {
+    try {
+        const response = await rankingService.getTopGroupsRanking();
+        res.status(httpStatus.OK).json(response);
+    } catch (err) {
+        logger.error(err, 'Error in getTopGroupsRanking controller');
+        handleError(err, res)
+    }
+}
+
 const getFriendsRanking = async (req, res) => {
     try {
         const response = await rankingService.getFriendsRanking(req.userId);
@@ -26,5 +46,7 @@ const getFriendsRanking = async (req, res) => {
 
 export default {
     getTopUsersRanking,
-    getFriendsRanking
+    getFriendsRanking,
+    getTopUsersRankingByStreak,
+    getTopGroupsRanking
 }

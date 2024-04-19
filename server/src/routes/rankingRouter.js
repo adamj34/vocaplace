@@ -5,6 +5,8 @@ const router = express.Router();
 
 router
     .get('/top', rankingController.getTopUsersRanking)
+    .get('/topStreaks', rankingController.getTopUsersRankingByStreak)
+    .get('/topGroups', rankingController.getTopGroupsRanking)
     .get('/friends', rankingController.getFriendsRanking);
 
 
