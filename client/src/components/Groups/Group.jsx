@@ -9,21 +9,17 @@ import { usePopup } from '../Popup.tsx';
 import { ValidateGroup } from './ValidateGroup.ts';
 
 const chatmessages = [ // placeholder
-    { id: 1, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'hello there', posted: '14:05' },
-    { id: 2, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'general kenobi', posted: '14:05' },
-    { id: 3, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test', posted: '14:05' },
-    { id: 4, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'tada', posted: '14:05' },
-    { id: 5, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test2', posted: '14:05' },
-    { id: 6, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test3', posted: '14:05' },
-    { id: 7, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test4', posted: '14:05' },
-    { id: 8, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test5', posted: '14:05' },
-    { id: 9, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test6', posted: '14:05' },
-    { id: 10, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test7', posted: '14:05' },
-    { id: 11, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test8', posted: '14:05' },
-    { id: 12, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test9', posted: '14:05' },
-    { id: 13, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test10', posted: '14:05' },
-    { id: 14, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'test11', posted: '14:05' },
-    { id: 15, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'bajojajo', content: 'test12', posted: '14:05' },
+    { id: 1, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: "Hi there!", posted: '14:05' },
+    { id: 2, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: "How's your English learning going?", posted: '14:07' },
+    { id: 3, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: "Hey! It's going pretty well, thanks for asking. How about you?", posted: '14:11' },
+    { id: 4, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: "Not bad, but I'm struggling a bit with pronunciation. Do you have any tips?", posted: '14:12' },
+    { id: 5, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'Sure thing!', posted: '14:13' },
+    { id: 6, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'One thing that helped me is listening to native speakers and trying to mimic their accent.', posted: '14:16' },
+    { id: 7, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: 'That makes sense.', posted: '14:17' },
+    { id: 8, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: 'Any specific resources you recommend for that?', posted: '14:28' },
+    { id: 9, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: "Yeah!", posted: '14:33' },
+    { id: 10, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'I like watching TED talks or listening to podcasts.', posted: '14:34' },
+    { id: 11, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: "They usually have a variety of accents, so it's good practice.", posted: '14:35' },
 ]
 
 export function Group() {
