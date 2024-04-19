@@ -29,26 +29,38 @@ export default function Notifications() {
                 console.error(e);
                 popup('Error', 'Failed to load notifications due to an unknown error.');
             });
-
-            socket.on('newNotification', notification => {
+    
+            const handleNewNotification = notification => {
                 SetMessages(prevMessages => {
                     if (!prevMessages.some(msg => msg.id === notification.id)) {
                         return [notification, ...prevMessages];
                     }
                     return prevMessages;
                 });
-            });
-
-            socket.on('deleteNotification', notificationId => {
+            };
+    
+            const handleDeleteNotification = notificationId => {
                 SetMessages(prevMessages => prevMessages.filter(msg => msg.id !== notificationId));
-            });
-
+            };
+    
+            socket.on('newNotification', handleNewNotification);
+            socket.on('deleteNotification', handleDeleteNotification);
+    
+            return () => {
+                socket.off('newNotification', handleNewNotification);
+                socket.off('deleteNotification', handleDeleteNotification);
+            };
         }
     }, [C.AppReady]);
 
-    const handleDelete = (msg) => {
-            SetMessages(Messages.filter((x,i)=>msg.id!==i))
-            DataService.DeleteNotification(msg.id).then((res) => {
+    const handleDelete = (id) => {
+            
+            console.log(Messages);
+            DataService.DeleteNotification(id).then((res) => {
+                SetMessages(prevMessages => {
+                    const filteredMessages = prevMessages.filter(message => message.id !== id);
+                    return filteredMessages;
+                });
             }).catch(e => {
                 console.error(e)
                 popup('Error', 'Failed to delete notification due to an unknown error.')
@@ -56,8 +68,8 @@ export default function Notifications() {
             
         }
     const handleClearAll = () => {    
-        SetMessages([])
         DataService.DeleteNotifications(C.UserData.id).then((res) => {
+            SetMessages([])
         }).catch(e => {
             console.error(e)
             popup('Error', 'Failed to delete notifications due to an unknown error.')
@@ -65,8 +77,8 @@ export default function Notifications() {
     }
 
     const handleMarkAsRead = (id) => {
-        SetMessages(Messages.map((msg) => msg.id === id ? {...msg, read: true} : msg))
         DataService.MarkNotificationAsRead(id).then((res) => {
+            SetMessages(Messages.map((msg) => msg.id === id ? {...msg, read: true} : msg))
         }).catch(e => {
             console.error(e)
             popup('Error', 'Failed to mark notification as read due to an unknown error.')
@@ -74,8 +86,8 @@ export default function Notifications() {
     }
 
     const handleMarkAllAsRead = () => {
-        SetMessages(Messages.map((msg) => ({...msg, read: true})))
         DataService.MarkAllNotificationsAsRead(C.UserData.id).then((res) => {
+            SetMessages(Messages.map((msg) => ({...msg, read: true})))
         }).catch(e => {
             console.error(e)
             popup('Error', 'Failed to mark notifications as read due to an unknown error.')
@@ -97,7 +109,8 @@ export default function Notifications() {
                     <p id="title">Notifications</p>
                     <div id="messages">
                         {Messages.map((msg) => (
-                            <div key={msg.id} id='message' onClick={()=>handleMarkAsRead(msg.id)}>
+                            <div key={msg.id} id='message' >
+                                <div id="message-content" onClick={()=>handleMarkAsRead(msg.id)}>
                                 {msg.notification_type === 'group_request_accepted' && 
                                     <Link to={'/groups/' + msg.group_id}>
                                         Your request to join <span className="color">{msg.group_name}</span> has been accepted.
@@ -124,8 +137,9 @@ export default function Notifications() {
                                         You have been appointed the new group owner of <span className="color">{msg.group_name}</span>.
                                     </Link>
                                 }
-                                <Icon icon='trash' onClick={() => (handleDelete(msg))} />
-                                {/* <p onClick={()=>(handleDelete(msg))} style={{color:'red'}}>Delete</p> */}
+                                </div>
+                                
+                                <Icon icon='trash' onClick={() => handleDelete(msg.id)} />
                             </div>
                         ))}
                         {Messages.length === 0 && <p id='empty'>There are no new notifications.</p>}
