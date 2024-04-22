@@ -33,7 +33,7 @@ export function Search() {
                 SetSearchData(data.data)
                 document.title = `VocaPlace | ${Params.get('q')}`
             }).catch(e => {
-                console.log(e)
+                console.error(e)
                 popup("Error", "Failed to load search results due to an unknown error.")
             })
         }

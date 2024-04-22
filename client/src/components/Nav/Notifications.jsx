@@ -55,7 +55,6 @@ export default function Notifications() {
 
     const handleDelete = (id) => {
             
-            console.log(Messages);
             DataService.DeleteNotification(id).then((res) => {
                 SetMessages(prevMessages => {
                     const filteredMessages = prevMessages.filter(message => message.id !== id);
