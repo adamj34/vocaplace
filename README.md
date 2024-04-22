@@ -27,7 +27,6 @@
   * Ranking i czat grupowy
 * Globalny ranking
 * Panel administratora
-  * Tworzenie działów (unit), tematów (topic) i pytań (question)
-  * Zarządzanie grupami i użytkownikami
+  * Tworzenie działów (units), tematów (topics) i pytań (questions)
 * Powiadomienia o zaproszeniach do znajomych i grup
 * Wyszukiwanie użytkowników i grup
