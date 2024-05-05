@@ -1,14 +1,20 @@
 version: '3.9'
-# name: vocaplace
+name: vocaplace
 
 services:
-  # client: # commented for development
-  #   build: client
-  #   ports:
-  #     - '3000:3000'
-  #   depends_on:
-  #     - server
-  #     - keycloak
+
+  client:
+    build: client
+    ports:
+      - '3000:3000'
+    environment:
+      - REACT_APP_SERVER_PORT=8000
+      - REACT_APP_KEYCLOAK_PORT=8080
+      - REACT_APP_KEYCLOAK_REALM=react-app
+      - REACT_APP_KEYCLOAK_CLIENT_ID=app-frontend
+    depends_on:
+      - server
+      - keycloak
 
   server:
     build: ./server
@@ -23,6 +29,10 @@ services:
       - DB_SERVICE_NAME=db
       - NODE_ENV=development
       - PORT=8000
+      - KEYCLOAK_PORT=8080
+      - KEYCLOAK_REALM=react-app
+      - KEYCLOAK_CLIENT_ID=app-backend
+      - KEYCLOAK_REALM_PUBLIC_KEY=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApwGevzUGP555SMHPKbDlZFAjbyzH9EIEq4JJa7qH5tm4tCUZJBIDfroZClrkPpDJ32ZP+j+Pv4aLLVZx//v3ungrxKZVO7SIZjaO/qt6a1CDzjRhRMR/wxWZiqpfxEvzCfScNR9DmzfatSip9Z8jgEzaFk3TXin49F0BPCsbqG/f2DXmwbGKoaM8Eh0+2WaD4OnlmTB04AJVmaKx23z30imtf+0nCu+gcoLGKzZkVH2lZOXqXIP66xTGwuN981Hl5j52I0XDXZaU3xlfdp1agLNQcHd7M7TeyzHS3xVmusJbzDacktptg21JF7+9FEFLTw9youRH6eEwKaqxRsX0qwIDAQAB
     develop:
       watch:
         - action: sync

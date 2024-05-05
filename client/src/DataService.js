@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+const server_port = process.env.REACT_APP_SERVER_PORT || 8000;
+
 const Server = axios.create({
-    baseURL: `${window.location.protocol}//${window.location.hostname}:8000`,
+    baseURL: `${window.location.protocol}//${window.location.hostname}:${server_port}`,
     withCredentials: true,
     headers: {
         Accept: 'application/json',
