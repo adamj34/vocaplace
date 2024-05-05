@@ -2,7 +2,7 @@ import { decode } from 'jsonwebtoken';
 import { userDataSchema } from '../validation/userIdAndUsernameValidation.js';
 import logger from '../logger/logger';
 import { Server } from 'socket.io';
-
+const client_port = process.env.CLIENT_PORT || 3000;
 
 
 const validateUserData = async (token) => {
@@ -25,7 +25,7 @@ const validateUserData = async (token) => {
 const initializeSocketServer = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: "http://localhost:3000"
+            origin: `http://localhost:${client_port}`
         }
     });
 

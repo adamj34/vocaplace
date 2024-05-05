@@ -24,6 +24,9 @@ import initializeSocketServer from './socket/socketInit'
 const app = express();
 const server = http.createServer(app);
 
+const client_port = process.env.CLIENT_PORT || 3000;
+const keycloak_port = process.env.KEYCLOAK_PORT || 8080;
+
 await testConnection(db);
 
 // server configuration
@@ -31,7 +34,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'http://localhost:8080']
+    origin: [`http://localhost:${client_port}`, `http://localhost:${keycloak_port}`]
 }))
 
 // logger configuration
@@ -50,7 +53,6 @@ app.use(PinoHttp({
 const io = initializeSocketServer(server);
 
 app.use(keycloak.middleware());
-// app.use(keycloak.protect());
 app.use(getUserData);
 app.use('/search', searchRouter);
 app.use('/user', userRouter);
@@ -65,7 +67,7 @@ app.use('/notifications',notificationsRouter );
 
 export {io}
 
-const PORT = process.env.PORT || 8000;
-server.listen(PORT, () => {
-    logger.info(`Server running on port ${PORT}`);
+const server_port = process.env.SERVER_PORT || 8000;
+server.listen(server_port, () => {
+    logger.info(`Server running on port ${server_port}`);
 }); 
