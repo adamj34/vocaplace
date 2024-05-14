@@ -20,6 +20,10 @@ router
     .patch('/membership/:id/:userId', validate(memberOperationsSchema), groupController.updateMembership(io))
     .patch('/admin/:id/:userId', validate(memberOperationsSchema), groupController.passAdminRights(io))
     .patch('/:id', upload.single('picture'), validate(updateGroupSchema), groupController.updateGroup)
+    // Messages
+    .get('/messages/:id', validate(groupIdSchema), groupController.getGroupMessages)
+    .post('/message/:id', validate(groupIdSchema), groupController.sendGroupMessage)
+    .delete('/message/:id', validate(groupIdSchema), groupController.deleteGroupMessage)
 return router;
 }
 export default groupRouter;

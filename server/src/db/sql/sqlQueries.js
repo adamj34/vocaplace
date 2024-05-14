@@ -49,6 +49,12 @@ const queries = {
         getByFriendId: sql('notifications/get_by_friend_id.sql')
         
     },
+    messages: {
+        add: sql('messages/add.sql'),
+        get: sql('messages/get.sql'),
+        delete: sql('messages/delete.sql'),
+    },
+
 };
 
 export default queries;
