@@ -222,6 +222,16 @@ const functions = {
     async DeleteGroup(groupid) {
         await Server.delete(`/groups/${groupid}`)
     },
+    GetGroupMessages(groupid) {
+        return Server.get(`/groups/messages/${groupid}`)
+    },
+    SendGroupMessage(groupid, message) {
+        return Server.post(`/groups/message/${groupid}`, message)
+    },
+    
+    async DeleteGroupMessage(groupid, messageid) {
+        await Server.delete(`/groups/message/${groupid}/${messageid}`)
+    }
      
 }
 

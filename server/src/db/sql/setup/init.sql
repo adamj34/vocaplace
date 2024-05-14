@@ -112,6 +112,15 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 
+CREATE TABLE IF NOT EXISTS group_messages (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id),
+  group_id INTEGER NOT NULL REFERENCES groups(id),
+  message TEXT NOT NULL CHECK (CHAR_LENGTH(message) <= 500),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
 /* 
 INITIAL INSERTS
 */
