@@ -1,2 +1,2 @@
-DELETE FROM messages
+DELETE  FROM messages
 WHERE id = ${id};

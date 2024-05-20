@@ -1,4 +1,5 @@
 import { db, pgp } from "../db/connection/db";
+import { Server as SocketIOServer } from 'socket.io';
 import { errorFactory } from "../utils/errorFactory.js";
 import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { s3Instance, PictureFolder } from "../cloud/s3Client"
@@ -211,7 +212,8 @@ const updateMembership = (userId: string, userIdToBeUpdated: string, groupId: nu
     })
 }
 
-const deleteMember = (userId: string, userIdToBeDeleted: string, groupId: number) => {
+const deleteMember = (userId: string, userIdToBeDeleted: string, groupId: number,io:SocketIOServer) => {
+    
     return db.task(async t => {
         //check if group exits
         const groupData = await t.groups.findById({ id: groupId });
@@ -281,7 +283,7 @@ const passAdminRights = (userId: string, userIdToBeAdmin: string, groupId: numbe
     })
 }
 
-const getGroupInfo = (groupId: number) => {
+const getGroupInfo = (groupId: number,userId:string) => {
     return db.task(async t => {
         const groupData = pictureToSignedUrl(await t.groups.findById({ id: groupId }));
         if (!groupData) {
@@ -297,10 +299,13 @@ const getGroupInfo = (groupId: number) => {
             })
         );
 
+        const messages = await db.messages.getMessages({ groupId });
+
         return {
             success: true,
             group: groupData,
-            members: membersData
+            members: membersData,
+            messages
         };
     })
 }

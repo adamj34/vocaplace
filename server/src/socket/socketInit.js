@@ -35,6 +35,16 @@ const initializeSocketServer = (server) => {
             socket.join(userId);
             console.log(username, "connected to socket; socket id:", socket.id );
 
+            socket.on('joinGroupChat', (groupId) => {
+                socket.join(groupId);
+                console.log(username, 'joined chat:', groupId);
+            });
+
+            socket.on('leaveGroupChat', (groupId) => {
+                socket.leave(groupId);
+                console.log(username, 'left chat:', groupId);
+            });
+
             socket.on('disconnect', () => {
                 console.log(username, 'disconnected from socket');
             });

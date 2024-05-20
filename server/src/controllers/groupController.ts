@@ -79,9 +79,9 @@ const passAdminRights = (io) => async (req, res) => {
     }
 }
 
-const deleteMember = async (req, res) => {
+const deleteMember =(io) =>async (req, res) => {
     try {
-        const response = await groupService.deleteMember(req.userId, req.params.userId, +req.params.id)
+        const response = await groupService.deleteMember(req.userId, req.params.userId, +req.params.id,io)
         res.status(httpStatus.NO_CONTENT).json(response);
     } catch (err) {
         logger.error(err, 'Error in deleteMember controller');
@@ -91,7 +91,8 @@ const deleteMember = async (req, res) => {
 
 const getGroupInfo = async (req, res) => {
     try {
-        const response = await groupService.getGroupInfo(+req.params.id)
+        const userId = req.userId;
+        const response = await groupService.getGroupInfo(+req.params.id, userId)
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in getGroupInfo controller');

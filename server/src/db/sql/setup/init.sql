@@ -37,10 +37,9 @@ CREATE TABLE IF NOT EXISTS users (
   username TEXT UNIQUE NOT NULL,
   bio TEXT CHECK (CHAR_LENGTH(bio) <= 500),
   picture TEXT,
-  private_profile BOOLEAN NOT NULL DEFAULT false,
   points INTEGER NOT NULL DEFAULT 0,
   ongoing_streak INTEGER NOT NULL DEFAULT 0,
-  last_active TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_practice_day TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -112,7 +111,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 
-CREATE TABLE IF NOT EXISTS group_messages (
+CREATE TABLE IF NOT EXISTS messages (
   id SERIAL PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id),
   group_id INTEGER NOT NULL REFERENCES groups(id),

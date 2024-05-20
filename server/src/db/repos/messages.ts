@@ -11,16 +11,20 @@ class MessagesRepositiory {
     this.pgp = pgp;
   }
 
-  addMessage(values: { userId: string; groupId: string; message: string }) {
+  addMessage(values: { userId: string; groupId: number; message: string }) {
     return this.db.one(queries.messages.add, values);
   }
 
-  deleteMessage(values: { id: string }) {
+  deleteMessage(values: { id: number }) {
     return this.db.none(queries.messages.delete, values);
   }
 
-  getMessages(values: { groupId: string }) {
+  getMessages(values: { groupId: number }) {
     return this.db.any(queries.messages.get, values);
+  }
+
+  findById(value: {id:number}){
+    return this.db.one(queries.messages.findById,value)
   }
 }
 

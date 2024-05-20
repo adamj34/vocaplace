@@ -53,6 +53,7 @@ const queries = {
         add: sql('messages/add.sql'),
         get: sql('messages/get.sql'),
         delete: sql('messages/delete.sql'),
+        findById: sql('messages/find_by_id.sql'),
     },
 
 };

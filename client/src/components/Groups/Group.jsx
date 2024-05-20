@@ -7,20 +7,9 @@ import Icon from '../Icon';
 import TextareaAutosize from 'react-textarea-autosize';
 import { usePopup } from '../Popup.tsx';
 import { ValidateGroup } from './ValidateGroup.ts';
+import { socket } from '../../socket.js';
 
-const chatmessages = [ // placeholder
-    { id: 1, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: "Hi there!", posted: '14:05' },
-    { id: 2, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: "How's your English learning going?", posted: '14:07' },
-    { id: 3, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: "Hey! It's going pretty well, thanks for asking. How about you?", posted: '14:11' },
-    { id: 4, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: "Not bad, but I'm struggling a bit with pronunciation. Do you have any tips?", posted: '14:12' },
-    { id: 5, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'Sure thing!', posted: '14:13' },
-    { id: 6, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'One thing that helped me is listening to native speakers and trying to mimic their accent.', posted: '14:16' },
-    { id: 7, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: 'That makes sense.', posted: '14:17' },
-    { id: 8, userid: 'dd0ac737-5534-46fd-8715-a28634f8c86b', username: 'test', content: 'Any specific resources you recommend for that?', posted: '14:28' },
-    { id: 9, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: "Yeah!", posted: '14:33' },
-    { id: 10, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: 'I like watching TED talks or listening to podcasts.', posted: '14:34' },
-    { id: 11, userid: 'a3b53c8d-f4d4-471c-98db-36061f5da067', username: 'admin', content: "They usually have a variety of accents, so it's good practice.", posted: '14:35' },
-]
+
 
 export function Group() {
     const { groupid } = useParams()
@@ -49,27 +38,46 @@ export function Group() {
     }
 
     function IsUserGroupMember() {
-        return Members.find(m => m.id === C.UserData.id)
+        
+        return Members.find(m => m.id === C.UserData.id && m.accepted )
     }
 
     function IsUserPendingMember() {
         return PendingMembers.find(m => m.id === C.UserData.id)
     }
 
+    function isMyMessage(messageid) {
+        return ChatMessages.find(m => m.id === messageid && m.user_id === C.UserData.id)
+    }
+
     function SendChatMessage() {
         if (NewChatMessage) {
             SetSendingChatMessage(true)
-            console.log('sending message: ',NewChatMessage)
-            popup('rip','krystian dodaj sockety >:C')
+            DataService.SendGroupMessage(groupid, {message:NewChatMessage,groupId:groupid}).then((res) => {
+                const user = Members.find(u => u.id === res.data.user_id)
+                SetChatMessages([{...res.data, user}, ...ChatMessages])
+            }).catch(e => {
+                console.error(e)
+                popup('Error', 'Failed to send message due to an unknown error.')
+            })
+            console.log(ChatMessages);
+            popup('Info','Message was sent')
             SetNewChatMessage('')
             SetSendingChatMessage(false)
         }
     }
 
     function DeleteChatMessage(id) {
-        SetChatMessages(ChatMessages.filter(m=>m.id!==id))
-        console.log('delete for everyone via socket')
+        DataService.DeleteGroupMessage(id).then(() => {
+            SetChatMessages(ChatMessages.filter(m => m.id !== id))
+        }).catch(e => {
+            console.error(e)
+            popup('Error', 'Failed to delete message due to an unfknown error.')
+        })
+
     }
+
+       
 
     function RequestToJoinGroup() {
         DataService.SendGroupJoinRequest(groupid).then(() => {
@@ -228,15 +236,43 @@ export function Group() {
         SetPictureWillBeDeleted(false)
     }
 
+
     useEffect(() => {
         if (C.AppReady) {
             DataService.GetGroupData(groupid).then((data) => {
                 SetGroupData(data.group)
                 SetMembers(data.members.filter(m=>m.accepted))
                 SetPendingMembers(data.members.filter(m => !m.accepted))
-                SetChatMessages(chatmessages.reverse()) // placeholder
+                socket.emit('joinGroupChat', groupid)
+                socket.on('newMessage', (message) => {
+                    SetChatMessages(previous => [message, ...previous])
+                })
+                socket.on('deleteMessage', (messageid) => {
+                    SetChatMessages(previous => previous.filter(m => m.id !== messageid))
+                })
+                socket.on('newMember', (member) => {
+                    // handleNewMember(member)
+                })
+                socket.on('deleteMember', (memberid) => {
+                    // handleDeleteMember(memberid)
+                })
+                socket.on('newAdmin', (memberid) => {
+                    // handleNewAdmin(memberid)
+                })
+                socket.on('deleteGroup', () => {
+                    navigate('/groups')
+                })
+                SetChatMessages(data.messages.reverse())
                 document.title = `VocaPlace | ${data.group.group_name}`
-            }).catch(()=>navigate('/groups'))
+            }).catch((e)=>{
+                console.error(e)
+                navigate('/groups')
+            })
+                
+        }
+
+        return () => {
+            socket.emit('leaveGroupChat', groupid)
         }
     }, [C.AppReady, groupid])
 
@@ -297,17 +333,17 @@ export function Group() {
                         {ChatMessages.map((m, i) => {
                             return (
                             <div id='message' key={i}>
-                                {(i === ChatMessages.length-1 || ChatMessages[i + 1].userid !== m.userid) ?
+                                {(i === ChatMessages.length-1 || ChatMessages[i + 1].user_id !== m.user_id) ?
                                     <div id='messagedata'>
-                                    <Link key={i} to={`/profile/${m.id}`}>
+                                    <Link key={i} to={`/profile/${m.user_id}`}>
                                          <div id="user">
                                             <div id='pfp' style={{ backgroundImage: `url(${m.picture || placeholderpfp})`, height: 30, width: 30 }}></div>
-                                            <p id="username">{m.username} {m.admin && (<i className="fas fa-crown" />)}</p>
+                                            <p id="username">{m.username || "Deleted Member"} {m.admin && (<i className="fas fa-crown" />)|| ""}</p>
                                         </div>
                                     </Link>
-                                    <p id='time'>{m.posted}</p>
+                                    <p id='time'>{m.created_at}</p>
                                 </div> : null}
-                                    <p id='messagecontent'>{m.content} {IsGroupAdmin(C.UserData.id) && <Icon icon='trash' className='hovertext' onClick={()=>DeleteChatMessage(m.id)}/>}</p>
+                                    <p id='messagecontent'>{m.message} {(isMyMessage(m.id) || IsGroupAdmin(C.UserData.id)) && <Icon icon='trash' className='hovertext' onClick={() => DeleteChatMessage(m.id)}/>}</p>
                             </div>)
                         })}
                 </div>

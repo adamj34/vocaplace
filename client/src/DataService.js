@@ -200,6 +200,9 @@ const functions = {
 
     async GetGroupData(groupid) {
         const res = await Server.get(`/groups/${groupid}`)
+        console.log(
+            res.data
+        );
         return res.data
     },
 
@@ -222,15 +225,16 @@ const functions = {
     async DeleteGroup(groupid) {
         await Server.delete(`/groups/${groupid}`)
     },
-    GetGroupMessages(groupid) {
-        return Server.get(`/groups/messages/${groupid}`)
+    async GetGroupMessages(groupid) {
+        return await Server.get(`/groups/messages/${groupid}`)
     },
-    SendGroupMessage(groupid, message) {
-        return Server.post(`/groups/message/${groupid}`, message)
+    async SendGroupMessage(groupid, data) {
+        const res = await Server.post(`/groups/message/${groupid}`, data)
+        return res.data
     },
     
     async DeleteGroupMessage(messageid) {
-        await Server.delete(`/groups/message/${messageid}`)
+        return await Server.delete(`/groups/message/${messageid}`)
     }
      
 }

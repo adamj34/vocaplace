@@ -3,19 +3,11 @@ import messageService from "../services/messageService";
 import logger from "../logger/logger";
 import  handleError  from '../utils/errorHandler.js';
 
-const getMessages = async (req, res) => {
-    try {
-        const response = await messageService.getMessages(req.params.userId);
-        res.status(httpStatus.OK).json(response);
-    } catch (err) {
-        logger.error(err, 'Error in getMessages controller');
-        handleError(err, res);
-    }
-}
 
-const addMessage = async (req, res) => {
+
+const addMessage = (io)=> async (req, res) => {
     try {
-        const response = await messageService.addMessage(req.userId, req.io, req.body);
+        const response = await messageService.addMessage(req.userId, io, req.body);
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in addMessage controller');
@@ -23,9 +15,9 @@ const addMessage = async (req, res) => {
     }
 }
 
-const deleteMessage = async (req, res) => {
+const deleteMessage =(io)=> async (req, res) => {
     try {
-        const response = await messageService.deleteMessage(req.params.notificationId);
+        const response = await messageService.deleteMessage(req.params.id,io, req.userId);
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in deleteMessage controller');
@@ -34,7 +26,6 @@ const deleteMessage = async (req, res) => {
 }
 
 export default {
-    getMessages,
     addMessage,
     deleteMessage
 }
