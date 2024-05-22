@@ -40,6 +40,10 @@ class NotificationsRepositiory {
         return this.db.one(queries.notifications.getByFriendId, values);
     }
 
+    deleteByGroupId(values: { id: string }) {
+        return this.db.none(queries.notifications.deleteByGroupId, values);
+    }
+
 
 
 }

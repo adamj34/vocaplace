@@ -27,9 +27,9 @@ const updateGroup = async (req, res) => {
     }
 }
 
-const deleteGroup = async (req, res) => {
+const deleteGroup =(io) => async (req, res) => {
     try {
-        const response = await groupService.deleteGroup(req.userId, +req.params.id)
+        const response = await groupService.deleteGroup(req.userId, +req.params.id,io)
         res.status(httpStatus.NO_CONTENT).json(response);
     } catch (err) {
         logger.error(err, 'Error in deleteGroup controller');
@@ -37,7 +37,7 @@ const deleteGroup = async (req, res) => {
     }
 }
 
-const deleteGroupPicture = async (req, res) => {
+const deleteGroupPicture =async (req, res) => {
     try {
         const response = await groupService.deleteGroupPicture(req.userId, +req.params.id)
         res.status(httpStatus.NO_CONTENT).json(response);
@@ -47,9 +47,10 @@ const deleteGroupPicture = async (req, res) => {
     }
 }
 
-const joinGroup = async (req, res) => {
+const joinGroup =(io) => async (req, res) => {
     try {
-        const response = await groupService.joinGroup(req.userId, +req.params.id)
+        
+        const response = await groupService.joinGroup(req.userId, +req.params.id,io)
         res.status(httpStatus.CREATED).json(response);
     } catch (err) {
         logger.error(err, 'Error in joinGroup controller');
@@ -59,8 +60,9 @@ const joinGroup = async (req, res) => {
 
 const updateMembership = (io)=> async (req, res) => {
     try {
-        const response = await groupService.updateMembership(req.userId, req.params.userId, +req.params.id)
+        const response = await groupService.updateMembership(req.userId, req.params.userId, +req.params.id,io)
         await notificationService.sendNotification(req.params.userId,io,   {groupId: +req.params.id,notification_type: NotificationType.GROUP_REQUEST_ACCEPTED})
+        
         res.status(httpStatus.OK).json(response);
     } catch (err) {
         logger.error(err, 'Error in acceptMember controller');
@@ -70,7 +72,7 @@ const updateMembership = (io)=> async (req, res) => {
 
 const passAdminRights = (io) => async (req, res) => {
     try {
-        const response = await groupService.passAdminRights(req.userId, req.params.userId, +req.params.id)
+        const response = await groupService.passAdminRights(req.userId, req.params.userId, +req.params.id,io)
         await notificationService.sendNotification(req.params.userId,io,   {groupId: +req.params.id,notification_type: NotificationType.GROUP_ADMIN_RECEIVED})
         res.status(httpStatus.OK).json(response);
     } catch (err) {

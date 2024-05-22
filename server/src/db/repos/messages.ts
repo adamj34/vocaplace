@@ -26,6 +26,9 @@ class MessagesRepositiory {
   findById(value: {id:number}){
     return this.db.one(queries.messages.findById,value)
   }
+  deleteByGroupId(value: { id: number; }) {
+    return this.db.none(queries.messages.deleteByGroupId, value);
+  }
 }
 
 export default MessagesRepositiory;

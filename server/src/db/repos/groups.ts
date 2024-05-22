@@ -71,6 +71,10 @@ class GroupsRepository {
         return this.db.none('DELETE FROM group_membership WHERE group_id = $<group_id> AND user_id = $<user_id>', values);
     }
 
+    removeMembersByGroupId(value: { id: number; }) {
+        return this.db.none('DELETE FROM group_membership WHERE group_id = $<id>', value);
+    }
+
     updateMembership(values: { user_id: string; group_id: number; accepted: boolean; }) {
         return this.db.one('UPDATE group_membership SET accepted = $<accepted> WHERE group_id = $<group_id> AND user_id = $<user_id> RETURNING *', values);
     }

@@ -2,6 +2,8 @@ import { decode } from 'jsonwebtoken';
 import { userDataSchema } from '../validation/userIdAndUsernameValidation.js';
 import logger from '../logger/logger';
 import { Server } from 'socket.io';
+
+import { db, pgp } from "../db/connection/db";
 const client_port = process.env.CLIENT_PORT || 3000;
 
 
@@ -35,12 +37,18 @@ const initializeSocketServer = (server) => {
             socket.join(userId);
             console.log(username, "connected to socket; socket id:", socket.id );
 
-            socket.on('joinGroupChat', (groupId) => {
+            socket.on('connectToGroupChat', async (groupId) => {
+                const userInGroup =  await db.groups.findMemberByGroupIdAndUserId({group_id: groupId,user_id: userId })
+                if (!userInGroup) {
+                    console.log(username, 'tried to join chat:', groupId, 'but is not a member of the group');
+                    return;
+                }
                 socket.join(groupId);
                 console.log(username, 'joined chat:', groupId);
             });
 
             socket.on('leaveGroupChat', (groupId) => {
+
                 socket.leave(groupId);
                 console.log(username, 'left chat:', groupId);
             });

@@ -46,7 +46,8 @@ const queries = {
         deleteAll: sql('notifications/delete_all.sql'),
         markAsRead: sql('notifications/mark_as_read.sql'),
         markAllAsRead: sql('notifications/mark_all_as_read.sql'),
-        getByFriendId: sql('notifications/get_by_friend_id.sql')
+        getByFriendId: sql('notifications/get_by_friend_id.sql'),
+        deleteByGroupId: sql('notifications/delete_by_group_id.sql'),
         
     },
     messages: {
@@ -54,6 +55,7 @@ const queries = {
         get: sql('messages/get.sql'),
         delete: sql('messages/delete.sql'),
         findById: sql('messages/find_by_id.sql'),
+        deleteByGroupId: sql('messages/delete_by_group_id.sql'),
     },
 
 };

@@ -14,10 +14,10 @@ const router = express.Router();
 router
     .get('/:id', validate(groupIdSchema), groupController.getGroupInfo)
     .post('/', upload.single('picture'), validate(createGroupSchema), groupController.createGroup)
-    .post('/join/:id', validate(groupIdSchema), groupController.joinGroup)
+    .post('/join/:id', validate(groupIdSchema), groupController.joinGroup(io))
     .delete('/picture/:id', validate(groupIdSchema), groupController.deleteGroupPicture)
     .delete('/membership/:id/:userId', validate(memberOperationsSchema), groupController.deleteMember(io))
-    .delete('/:id', validate(groupIdSchema), groupController.deleteGroup)
+    .delete('/:id', validate(groupIdSchema), groupController.deleteGroup(io))
     .patch('/membership/:id/:userId', validate(memberOperationsSchema), groupController.updateMembership(io))
     .patch('/admin/:id/:userId', validate(memberOperationsSchema), groupController.passAdminRights(io))
     .patch('/:id', upload.single('picture'), validate(updateGroupSchema), groupController.updateGroup)

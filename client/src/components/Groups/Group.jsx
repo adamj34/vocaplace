@@ -241,23 +241,78 @@ export function Group() {
         if (C.AppReady) {
             DataService.GetGroupData(groupid).then((data) => {
                 SetGroupData(data.group)
-                SetMembers(data.members.filter(m=>m.accepted))
-                SetPendingMembers(data.members.filter(m => !m.accepted))
-                socket.emit('joinGroupChat', groupid)
+                const groupmembers = data.members.filter(m => m.accepted)
+                const pendingmembers = data.members.filter(m => !m.accepted)
+                SetMembers(groupmembers)
+                SetPendingMembers(pendingmembers)
+                
+
+                if (IsUserGroupMember()) {
+                socket.emit('connectToGroupChat', groupid)
+                } 
+                
                 socket.on('newMessage', (message) => {
-                    SetChatMessages(previous => [message, ...previous])
+                    console.log("I GOT A NEW MESSAGE", message);
+                    SetChatMessages(previousMessages => [message, ...previousMessages]);
                 })
-                socket.on('deleteMessage', (messageid) => {
-                    SetChatMessages(previous => previous.filter(m => m.id !== messageid))
+                socket.on('deleteMessage', (messageId) => {
+                    SetChatMessages(previousMessages => previousMessages.filter(m => m.id !== messageId));
                 })
-                socket.on('newMember', (member) => {
-                    // handleNewMember(member)
+              
+                socket.on('joinGroup', (user) => {
+                    SetPendingMembers(previousMembers => [...previousMembers, user]);
                 })
-                socket.on('deleteMember', (memberid) => {
-                    // handleDeleteMember(memberid)
+                socket.on('acceptMember', (userId) => {
+                    const newMember = PendingMembers.find(x => x.id === userId)
+                    if (newMember) {
+                        SetMembers(previousMembers => [...previousMembers, newMember])
+                        SetPendingMembers(previousPending => previousPending.filter(x => x.id !== userId))
+                    }
+                    if (userId === C.UserData.id) {
+                        popup('Success', 'Your join request was accepted!')
+                    }
+                    
                 })
-                socket.on('newAdmin', (memberid) => {
-                    // handleNewAdmin(memberid)
+                ///Socket events sent directly to the specific user when user does not have access to the group chat
+                socket.on('IGotAccepted', (groupId) => {
+                    if (groupId == groupid) {
+                    SetMembers(previousMembers => [...previousMembers, C.UserData])
+                    SetPendingMembers(previousPending => previousPending.filter(x => x.id !== C.UserData.id))
+                        if (window.location.pathname === `/groups/${groupId}`) {
+                            window.location.reload()
+                        }
+                
+                    }
+                })
+                socket.on('IGotRejected', (groupId) => {
+                    if (groupId == groupid) {
+                    SetMembers(previousMembers => previousMembers.filter(m => m.id !== C.UserData.id));    
+                    SetPendingMembers(previousPending => previousPending.filter(m => m.id !== C.UserData.id))
+                    }
+                }
+                )
+                ////////////////////
+                socket.on('deleteMember', (userId) => {
+                    SetMembers(previousMembers => previousMembers.filter(m => m.id !== userId));
+                    SetPendingMembers(previousPending => previousPending.filter(m => m.id !== userId));
+                    if (userId === C.UserData.id) {
+                        popup('Info', 'You were removed from the group.')
+                        socket.emit('leaveGroupChat', groupid)
+                        socket.off('newMessage')
+                        socket.off('deleteMessage')
+                        socket.off('joinGroup')
+                        socket.off('acceptMember')
+                        socket.off('deleteMember')
+                        socket.off('newAdmin')
+                        socket.off('deleteGroup')
+                        
+                    }
+                })
+                socket.on('newAdmin', (userId) => {
+                    const newmembers = [...Members]
+                    newmembers.find(x => x.id === C.UserData.id).admin = false
+                    newmembers.find(x => x.id === userId).admin = true
+                    SetMembers(newmembers)
                 })
                 socket.on('deleteGroup', () => {
                     navigate('/groups')
@@ -273,6 +328,14 @@ export function Group() {
 
         return () => {
             socket.emit('leaveGroupChat', groupid)
+            socket.off('newMessage')
+            socket.off('deleteMessage')
+            socket.off('joinGroup')
+            socket.off('acceptMember')
+            socket.off('deleteMember')
+            socket.off('newAdmin')
+            socket.off('deleteGroup')
+
         }
     }, [C.AppReady, groupid])
 

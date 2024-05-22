@@ -46,10 +46,10 @@ export default function Notifications() {
             socket.on('newNotification', handleNewNotification);
             socket.on('deleteNotification', handleDeleteNotification);
     
-            // return () => {
-            //     socket.off('newNotification', handleNewNotification);
-            //     socket.off('deleteNotification', handleDeleteNotification);
-            // };
+            return () => {
+                socket.off('newNotification', handleNewNotification);
+                socket.off('deleteNotification', handleDeleteNotification);
+            };
         }
     }, [C.AppReady, C.UserData.id, popup]);
 
