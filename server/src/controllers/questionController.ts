@@ -1,4 +1,5 @@
 import questionService from '../services/questionService';
+import userService from '../services/userService';
 import httpStatus from 'http-status-codes';
 import handleError from '../utils/errorHandler.js';
 import logger from '../logger/logger';
@@ -26,7 +27,9 @@ const getQuiz = async (req, res) => {
 
 const addToAnswered = async (req, res) => {
     try {
-        const response = await questionService.addToAnswered(req.userId, req.body.questionIds);
+        const userId = req.userId;
+        const response = await questionService.addToAnswered(userId, req.body.questionIds);
+
         res.status(httpStatus.CREATED).json(response);
     } catch (err) {
         logger.error(err, 'Error in addToAnswered controller');
@@ -36,7 +39,9 @@ const addToAnswered = async (req, res) => {
 
 const addToRepetition = async (req, res) => {
     try {
+        const userId = req.userId;
         const response = await questionService.addToRepetition(req.userId, req.body.questionIds);
+        userService.updateLastPracticeDay(userId);
         res.status(httpStatus.CREATED).json(response);
     } catch (err) {
         logger.error(err, 'Error in addToRepetition controller');

@@ -1,6 +1,7 @@
 import queries from "../sql/sqlQueries.js";
 import { IDatabase, IMain } from 'pg-promise';
 import { pgp } from "../connection/db";
+import { string } from "yup";
 
 
 class UsersRepository {
@@ -9,6 +10,10 @@ class UsersRepository {
     constructor(db, pgp) {
         this.db = db;
         this.pgp = pgp;
+    }
+
+    getAll() {
+        return this.db.any(queries.users.all);
     }
 
     add(values: { id: string; username: string; }) {
@@ -74,6 +79,37 @@ class UsersRepository {
         WHERE username ILIKE $1
         `, ['%' + value.searchPhrase + '%']);
     }
+
+    resetUsersStreak(value: { ids: string[]; }) {
+        return this.db.none(`
+        UPDATE
+            users
+        SET
+        ongoing_streak = 0
+        WHERE id IN ($1:csv)
+        `, [value.ids]);
+    }
+
+    incrementUsersStreak(value: { ids: string[]; }){
+        return this.db.none(`
+        UPDATE
+            users
+        SET
+            ongoing_streak = ongoing_streak + 1
+        WHERE id IN ($1:csv)
+        `, [value.ids]);
+    } 
+
+    updateLastPracticeDay(value: { id: string; }) {
+        return this.db.none(`
+        UPDATE
+            users
+        SET
+            last_practice_day = NOW()
+        WHERE id = $<id>
+        `, value);
+    }
+
 }
 
 export default UsersRepository;

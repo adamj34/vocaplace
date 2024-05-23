@@ -85,6 +85,8 @@ const getVisitedUserData = async (req, res) => {
     }
 }
 
+
+
 export default {
     getUserData,
     deleteUser,

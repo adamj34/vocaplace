@@ -3,6 +3,8 @@ import cors from "cors";
 import PinoHttp from "pino-http";
 import logger from "./logger/logger";
 import http from 'http';
+import cron from 'node-cron';
+
 
 // database imports
 import { db } from "./db/connection/db";
@@ -17,6 +19,8 @@ import groupRouter from "./routes/groupRouter.js";
 import searchRouter from "./routes/searchRouter.js";
 import rankingRouter from "./routes/rankingRouter.js";
 import notificationsRouter from "./routes/notificationsRouter.js";
+import userService from "./services/userService";
+
 
 import keycloak from './Keycloak.js';
 import initializeSocketServer from './socket/socketInit'
@@ -63,6 +67,20 @@ app.use('/questions', questionRouter);
 app.use('/groups', groupRouter(io));
 app.use('/rankings', rankingRouter);
 app.use('/notifications',notificationsRouter );
+
+
+
+
+cron.schedule('0 0 * * *', async () => {
+    const localTime = new Date().toLocaleString();
+    console.log(`Running cron job at local time: ${localTime}`);
+    try {
+        await userService.updateUsersStreaks();
+        logger.info('Successfully updated user streaks.');
+    } catch (error) {
+        logger.error('Error updating user streaks:', error);
+    }
+});
 
 
 export {io}
