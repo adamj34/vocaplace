@@ -247,7 +247,7 @@ export function Group() {
                 SetPendingMembers(pendingmembers)
                 
 
-                if (IsUserGroupMember()) {
+                if (groupmembers.find(m => m.id === C.UserData.id)) {
                 socket.emit('connectToGroupChat', groupid)
                 } 
                 
@@ -275,6 +275,7 @@ export function Group() {
                 })
                 ///Socket events sent directly to the specific user when user does not have access to the group chat
                 socket.on('IGotAccepted', (groupId) => {
+                    console.log("I GOT ACCEPTED", groupId);
                     if (groupId == groupid) {
                     SetMembers(previousMembers => [...previousMembers, C.UserData])
                     SetPendingMembers(previousPending => previousPending.filter(x => x.id !== C.UserData.id))
@@ -301,19 +302,35 @@ export function Group() {
                         socket.off('newMessage')
                         socket.off('deleteMessage')
                         socket.off('joinGroup')
-                        socket.off('acceptMember')
+                        socket.off('acceptMember')  
                         socket.off('deleteMember')
                         socket.off('newAdmin')
                         socket.off('deleteGroup')
                         
                     }
                 })
-                socket.on('newAdmin', (userId) => {
-                    const newmembers = [...Members]
-                    newmembers.find(x => x.id === C.UserData.id).admin = false
-                    newmembers.find(x => x.id === userId).admin = true
-                    SetMembers(newmembers)
+                
+                    socket.on('newAdmin', (userid) => {
+                        SetMembers(prevMembers => {
+                            const newmembers = [...prevMembers];
+                            const previousAdmin = newmembers.find(x => x.admin === true);
+                            const newAdminUser = newmembers.find(x => x.id === userid);
+            
+                            if (previousAdmin) {
+                                previousAdmin.admin = false;
+                            }
+            
+                            if (newAdminUser) {
+                                newAdminUser.admin = true;
+                            }
+                             newmembers.map(x => x.id === C.UserData.id ? previousAdmin : x);
+                            newmembers.map(x => x.id === userid ? newAdminUser : x);
+
+            
+                            return newmembers;
+                        });
                 })
+            
                 socket.on('deleteGroup', () => {
                     navigate('/groups')
                 })
