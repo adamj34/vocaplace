@@ -29,7 +29,7 @@ const addToAnswered = async (req, res) => {
     try {
         const userId = req.userId;
         const response = await questionService.addToAnswered(userId, req.body.questionIds);
-
+        userService.updateLastPracticeDay(userId);
         res.status(httpStatus.CREATED).json(response);
     } catch (err) {
         logger.error(err, 'Error in addToAnswered controller');
