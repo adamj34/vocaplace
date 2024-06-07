@@ -10,7 +10,7 @@ const client_port = process.env.CLIENT_PORT || 3000;
 const validateUserData = async (token) => {
     const decodedToken = decode(token);
     const userId = decodedToken.sub;
-    const username = decodedToken.preferred_username; 
+    const username = decodedToken.preferred_username;
 
     try {
         await userDataSchema.validate({
@@ -35,10 +35,10 @@ const initializeSocketServer = (server) => {
         try {
             const { userId, username } = await validateUserData(socket.handshake.auth.token);
             socket.join(userId);
-            console.log(username, "connected to socket; socket id:", socket.id );
+            console.log(username, "connected to socket; socket id:", socket.id);
 
             socket.on('connectToGroupChat', async (groupId) => {
-                const userInGroup =  await db.groups.findMemberByGroupIdAndUserId({group_id: groupId,user_id: userId })
+                const userInGroup = await db.groups.findMemberByGroupIdAndUserId({ group_id: groupId, user_id: userId })
                 if (!userInGroup) {
                     console.log(username, 'tried to join chat:', groupId, 'but is not a member of the group');
                     return;

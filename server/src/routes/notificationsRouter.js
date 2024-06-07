@@ -10,7 +10,6 @@ router
     .delete('/all/:userId', notificationsController.deleteAllNotifications)
     .patch('/:notificationId', notificationsController.markAsRead)
     .patch('/all/:userId', notificationsController.markAllAsRead)
+
     
-
-
 export default router

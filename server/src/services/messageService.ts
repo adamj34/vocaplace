@@ -7,13 +7,13 @@ import { pictureToSignedUrl } from "../cloud/cloudFrontClient"
 
 
 const addMessage = async (userId: string, io: SocketIOServer,
-    newMessage:{
+    newMessage: {
         groupId: number,
         message: string
     }
 ) => {
     try {
-        const member =  await db.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: newMessage.groupId });
+        const member = await db.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: newMessage.groupId });
         if (!member || !member.accepted) {
             throw errorFactory('403', `User: ${userId} is not a member of group: ${newMessage.groupId}`);
         }
@@ -25,14 +25,14 @@ const addMessage = async (userId: string, io: SocketIOServer,
         }
 
         const dbMessage = await db.messages.addMessage(message);
-        const user =pictureToSignedUrl(await db.users.findById({ id: userId }));
+        const user = pictureToSignedUrl(await db.users.findById({ id: userId }));
         const messageWithUser = {
             ...dbMessage,
             picture: user.picture,
             username: user.username,
             admin: member.admin
         }
-        
+
         await io.to(newMessage.groupId.toString()).emit('newMessage', messageWithUser);
 
         return {
@@ -48,28 +48,28 @@ const addMessage = async (userId: string, io: SocketIOServer,
     }
 }
 
-const deleteMessage = async (messageId: number,io:SocketIOServer , userId: string) => {
+const deleteMessage = async (messageId: number, io: SocketIOServer, userId: string) => {
     try {
-        
-        console.log(messageId,"type",typeof(messageId));
+
+        console.log(messageId, "type", typeof (messageId));
         const message = await db.messages.findById({ id: messageId });
-        
+
         if (!message) {
             throw errorFactory('404', `Message: ${messageId} not found`);
         }
         const groupData = await db.groups.findById({ id: message.group_id });
-        
+
 
         const userDeleting = await db.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupData.id });
-        
+
         if (!userDeleting || (!userDeleting.admin && userDeleting.user_id !== message.user_id)) {
             throw errorFactory('403', `User: ${userId} is not allowed to delete message: ${messageId} in group: ${groupData.id}`);
         }
-        
-         
-        
-        
-        
+
+
+
+
+
         await db.messages.deleteMessage({ id: messageId });
         io.to(groupData.id.toString()).emit('deleteMessage', messageId);
 
@@ -86,7 +86,7 @@ const deleteMessage = async (messageId: number,io:SocketIOServer , userId: strin
 }
 
 export default {
-    
+
     addMessage,
     deleteMessage
 }

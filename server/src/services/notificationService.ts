@@ -5,16 +5,16 @@ import { group } from 'console';
 
 
 const getNotifications = async (userId: string) => {
-    const notifications = await db.notifications.getNotifications({userId});
-    
+    const notifications = await db.notifications.getNotifications({ userId });
+
     const enhancedNotifications = await notifications.reduce(async (accPromise, notification) => {
-        const acc = await accPromise;  
+        const acc = await accPromise;
         let friendName = null;
         let groupName = null;
 
         if (notification.friend_id) {
             try {
-                const friend = await db.users.findById({id: notification.friend_id});
+                const friend = await db.users.findById({ id: notification.friend_id });
                 friendName = friend ? friend.username : null;
             } catch (error) {
                 console.error("Failed to find friend by ID:", error);
@@ -23,7 +23,7 @@ const getNotifications = async (userId: string) => {
 
         if (notification.group_id) {
             try {
-                const group = await db.groups.findById({id: notification.group_id});
+                const group = await db.groups.findById({ id: notification.group_id });
                 groupName = group ? group.group_name : null;
             } catch (error) {
                 console.error("Failed to find group by ID:", error);
@@ -47,19 +47,19 @@ const getNotifications = async (userId: string) => {
 
 
 const sendNotification = async (userId: string, io: SocketIOServer,
-    newNotification:{
-        friendId?:string,
-        groupId?:number,
+    newNotification: {
+        friendId?: string,
+        groupId?: number,
         notification_type: string
 
     }
-) =>{
+) => {
     let friendName = null;
     let groupName = null;
 
     if (newNotification.friendId) {
         try {
-            const friend = await db.users.findById({id:newNotification.friendId});
+            const friend = await db.users.findById({ id: newNotification.friendId });
             friendName = friend ? friend.username : null;
         } catch (error) {
             console.error("Failed to find friend by ID:", error);
@@ -68,7 +68,7 @@ const sendNotification = async (userId: string, io: SocketIOServer,
 
     if (newNotification.groupId) {
         try {
-            const group = await db.groups.findById({id:newNotification.groupId});
+            const group = await db.groups.findById({ id: newNotification.groupId });
             groupName = group ? group.group_name : null;
         } catch (error) {
             console.error("Failed to find group by ID:", error);
@@ -81,17 +81,17 @@ const sendNotification = async (userId: string, io: SocketIOServer,
         groupId: newNotification.groupId,
         notification_type: newNotification.notification_type,
     };
-    const dbNotification= await db.notifications.addNotification(notificationForDB)
-    console.log("dbNotification",dbNotification);
-    
+    const dbNotification = await db.notifications.addNotification(notificationForDB)
+    console.log("dbNotification", dbNotification);
+
 
     const fullNotification = {
         ...dbNotification,
         friend_name: friendName,
         group_name: groupName
     };
-    
-    await io.to(userId).emit("newNotification",fullNotification)
+
+    await io.to(userId).emit("newNotification", fullNotification)
 
     return {
         success: true,
@@ -101,7 +101,7 @@ const sendNotification = async (userId: string, io: SocketIOServer,
 
 const deleteNotification = async (notificationId: string) => {
     try {
-        await db.notifications.deleteNotification({id: notificationId});
+        await db.notifications.deleteNotification({ id: notificationId });
         return {
             success: true
         };
@@ -116,7 +116,7 @@ const deleteNotification = async (notificationId: string) => {
 
 const deleteAllNotifications = async (userId: string) => {
     try {
-        await db.notifications.deleteAllNotifications({userId: userId});
+        await db.notifications.deleteAllNotifications({ userId: userId });
         return {
             success: true
         };
@@ -131,7 +131,7 @@ const deleteAllNotifications = async (userId: string) => {
 
 const markAsRead = async (notificationId: string) => {
     try {
-        await db.notifications.markAsRead({id: notificationId});
+        await db.notifications.markAsRead({ id: notificationId });
         return {
             success: true
         };
@@ -146,7 +146,7 @@ const markAsRead = async (notificationId: string) => {
 
 const markAllAsRead = async (userId: string) => {
     try {
-        await db.notifications.markAllAsRead({userId: userId});
+        await db.notifications.markAllAsRead({ userId: userId });
         return {
             success: true
         };
@@ -161,27 +161,27 @@ const markAllAsRead = async (userId: string) => {
 
 const deleteSentFriendRequestNotification = async (userId: string, io: SocketIOServer, friendId: string) => {
     try {
-    const notification = await db.notifications.getNotificationByFriendId({userId,friendId});
-    console.log('deleteSentFriendRequestNotification',notification);
-    await db.notifications.deleteNotification({id:notification.id});
-    
-    await io.to(userId).emit("deleteNotification",notification.id);
+        const notification = await db.notifications.getNotificationByFriendId({ userId, friendId });
+        console.log('deleteSentFriendRequestNotification', notification);
+        await db.notifications.deleteNotification({ id: notification.id });
 
-    return {
-        success: true
-    };
-} catch (error) {
-    console.error("Failed to delete sent friend request notification:", error);
-    return {
-        success: false,
-        error: errorFactory("Failed to delete sent friend request notification", error)
-    };
+        await io.to(userId).emit("deleteNotification", notification.id);
+
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error("Failed to delete sent friend request notification:", error);
+        return {
+            success: false,
+            error: errorFactory("Failed to delete sent friend request notification", error)
+        };
+    }
 }
-}
 
 
 
-export default{
+export default {
     getNotifications,
     sendNotification,
     deleteNotification,

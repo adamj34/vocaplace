@@ -57,6 +57,7 @@ app.use(PinoHttp({
 const io = initializeSocketServer(server);
 
 app.use(keycloak.middleware());
+app.use(keycloak.protect());
 app.use(getUserData);
 app.use('/search', searchRouter);
 app.use('/user', userRouter);
@@ -66,9 +67,7 @@ app.use('/relationships', userRelationsRouter(io));
 app.use('/questions', questionRouter);
 app.use('/groups', groupRouter(io));
 app.use('/rankings', rankingRouter);
-app.use('/notifications',notificationsRouter );
-
-
+app.use('/notifications', notificationsRouter);
 
 
 cron.schedule('0 0 * * *', async () => {
@@ -83,7 +82,7 @@ cron.schedule('0 0 * * *', async () => {
 });
 
 
-export {io}
+export { io }
 
 const server_port = process.env.SERVER_PORT || 8000;
 server.listen(server_port, () => {

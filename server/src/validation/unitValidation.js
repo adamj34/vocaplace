@@ -6,7 +6,6 @@ const createUnitSchema = object({
         unit:
             string()
             .max(50)
-            // .matches(/^[^\d]*$/, 'Unit should not consist only of numbers') // (ten regex zabrania liczb (np test123 nie przechodzi))
             .trim()
             .strict()
             .required(),

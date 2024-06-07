@@ -93,7 +93,7 @@ const updateGroup = (userId: string, groupId: number, updateData: { group_name?:
     })
 }
 
-const deleteGroup = (userId: string, groupId: number,io:SocketIOServer) => {
+const deleteGroup = (userId: string, groupId: number, io: SocketIOServer) => {
     return db.tx(async t => {
         const groupData = await t.groups.findById({ id: groupId });
         if (!groupData) {
@@ -120,8 +120,8 @@ const deleteGroup = (userId: string, groupId: number,io:SocketIOServer) => {
             }
         }
         await t.notifications.deleteByGroupId({ id: groupId });
-        await t.groups.removeMembersByGroupId({  id: groupId });
-        await t.messages.deleteByGroupId({ id:groupId });
+        await t.groups.removeMembersByGroupId({ id: groupId });
+        await t.messages.deleteByGroupId({ id: groupId });
         await t.groups.deleteGroup({ id: groupId });
         io.to(groupId.toString()).emit('deleteGroup');
 
@@ -167,7 +167,7 @@ const deleteGroupPicture = (userId: string, groupId: number) => {
     })
 }
 
-const joinGroup = (userId: string, groupId: number,io: SocketIOServer) => {
+const joinGroup = (userId: string, groupId: number, io: SocketIOServer) => {
     return db.tx(async t => {
         const groupData = await t.groups.findById({ id: groupId });
         if (!groupData) {
@@ -192,7 +192,7 @@ const joinGroup = (userId: string, groupId: number,io: SocketIOServer) => {
 }
 
 // userId (admin) accepts userIdToBeUpdated to the group
-const updateMembership = (userId: string, userIdToBeUpdated: string, groupId: number,io:SocketIOServer) => {
+const updateMembership = (userId: string, userIdToBeUpdated: string, groupId: number, io: SocketIOServer) => {
     return db.tx(async t => {
         const userRequesting = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
         if (!userRequesting || !userRequesting.admin) {
@@ -211,7 +211,7 @@ const updateMembership = (userId: string, userIdToBeUpdated: string, groupId: nu
         }
 
         await t.groups.updateMembership({ user_id: userIdToBeUpdated, group_id: groupId, accepted: true });
-        io.to(groupId.toString()).emit('acceptMember',  userIdToBeUpdated);
+        io.to(groupId.toString()).emit('acceptMember', userIdToBeUpdated);
         io.to(userIdToBeUpdated).emit('IGotAccepted', groupId);
 
         return {
@@ -221,8 +221,8 @@ const updateMembership = (userId: string, userIdToBeUpdated: string, groupId: nu
     })
 }
 
-const deleteMember = (userId: string, userIdToBeDeleted: string, groupId: number,io:SocketIOServer) => {
-    
+const deleteMember = (userId: string, userIdToBeDeleted: string, groupId: number, io: SocketIOServer) => {
+
     return db.task(async t => {
         //check if group exits
         const groupData = await t.groups.findById({ id: groupId });
@@ -266,7 +266,7 @@ const deleteMember = (userId: string, userIdToBeDeleted: string, groupId: number
     })
 }
 
-const passAdminRights = (userId: string, userIdToBeAdmin: string, groupId: number,io:SocketIOServer) => {
+const passAdminRights = (userId: string, userIdToBeAdmin: string, groupId: number, io: SocketIOServer) => {
     return db.tx(async t => {
         const userRequesting = await t.groups.findMemberByGroupIdAndUserId({ user_id: userId, group_id: groupId });
         if (!userRequesting || !userRequesting.admin) {
@@ -287,7 +287,7 @@ const passAdminRights = (userId: string, userIdToBeAdmin: string, groupId: numbe
         await t.groups.updateAdminStatus({ user_id: userId, group_id: groupId, admin: false });
         await t.groups.updateAdminStatus({ user_id: userIdToBeAdmin, group_id: groupId, admin: true });
 
-        io.to(groupId.toString()).emit('newAdmin',  userIdToBeAdmin);
+        io.to(groupId.toString()).emit('newAdmin', userIdToBeAdmin);
 
         return {
             success: true,
@@ -296,7 +296,7 @@ const passAdminRights = (userId: string, userIdToBeAdmin: string, groupId: numbe
     })
 }
 
-const getGroupInfo = (groupId: number,userId:string) => {
+const getGroupInfo = (groupId: number, userId: string) => {
     return db.task(async t => {
         const groupData = pictureToSignedUrl(await t.groups.findById({ id: groupId }));
         if (!groupData) {

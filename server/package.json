@@ -8,7 +8,7 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsx src/server.ts",
-    "dev": "tsx ./src/db/sql/setup/insertQuestions.ts && tsx --env-file=.aws.env --watch-path=./src/cloud --watch-path=./src/controllers --watch-path=./src/db --watch-path=./src/routes --watch-path=./src/services --watch-path=./src/utils --watch-path=./src/validation ./src/server.ts"
+    "dev": "tsx ./src/db/sql/setup/insertQuestions.ts && tsx --env-file=.aws.env --watch-path=./src/cloud --watch-path=./src/controllers --watch-path=./src/db --watch-path=./src/routes --watch-path=./src/services --watch-path=./src/utils --watch-path=./src/validation --watch-path ./src/server.ts ./src/server.ts"
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.523.0",

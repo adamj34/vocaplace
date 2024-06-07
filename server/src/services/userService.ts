@@ -78,7 +78,7 @@ const deleteProfilePicture = async (userId: string) => {
     const deleteParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: user.picture
-    }; 
+    };
 
     // delete from s3 and if successful from db
     await s3Instance.send(new DeleteObjectCommand(deleteParams));
@@ -177,22 +177,22 @@ const getGroupsData = async (userId: string) => {
 
 const updateUsersStreaks = async () => {
     const users = await db.users.getAll();
-    const usersThatNeedStreakReset = users.filter(user =>  user.last_practice_day < new Date(Date.now() - 86400000));
-    const usersThatNeedStreakIncrement = users.filter(user =>  user.last_practice_day > new Date(Date.now() - 86400000));
+    const usersThatNeedStreakReset = users.filter(user => user.last_practice_day < new Date(Date.now() - 86400000));
+    const usersThatNeedStreakIncrement = users.filter(user => user.last_practice_day > new Date(Date.now() - 86400000));
     if (usersThatNeedStreakReset.length != 0) {
-        await db.users.resetUsersStreak({ids: usersThatNeedStreakReset.map(user => user.id)});
+        await db.users.resetUsersStreak({ ids: usersThatNeedStreakReset.map(user => user.id) });
 
     }
-    if (usersThatNeedStreakIncrement.length != 0){
-        await db.users.incrementUsersStreak({ids: usersThatNeedStreakIncrement.map(user => user.id)});
+    if (usersThatNeedStreakIncrement.length != 0) {
+        await db.users.incrementUsersStreak({ ids: usersThatNeedStreakIncrement.map(user => user.id) });
 
     }
-    
+
 }
 
 const updateLastPracticeDay = async (userId: string) => {
     try {
-    await db.users.updateLastPracticeDay({ id: userId });
+        await db.users.updateLastPracticeDay({ id: userId });
     }
     catch (err) {
         throw errorFactory('500', 'Error updating last practice day in userService');

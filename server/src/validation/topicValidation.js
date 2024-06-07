@@ -6,14 +6,12 @@ const createTopicSchema = object({
         topic:
             string()
             .max(50)
-            // .matches(/^[^\d]*$/, 'Topic should not consist only of numbers')
             .trim()
             .strict()
             .required(),
         unit: 
             string()
             .max(50)
-            // .matches(/^[^\d]*$/, 'Unit should not consist only of numbers')
             .trim()
             .strict()
             .required(),

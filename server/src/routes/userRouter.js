@@ -15,7 +15,6 @@ router
     .patch('/points', validate(updatePointsSchema), userController.updatePoints)
     .delete('/', userController.deleteUser)
     .delete('/profilePicture', userController.deleteProfilePicture)
-    
 
 
 export default router;
