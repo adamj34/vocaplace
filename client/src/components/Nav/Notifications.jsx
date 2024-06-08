@@ -51,7 +51,7 @@ export default function Notifications() {
                 socket.off('deleteNotification', handleDeleteNotification);
             };
         }
-    }, [C.AppReady, C.UserData.id, popup]);
+    }, [C.AppReady, C.UserData.id]);
 
     const handleDelete = (id) => {
             

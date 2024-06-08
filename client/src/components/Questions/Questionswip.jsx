@@ -158,7 +158,7 @@ export function Questions({type}) {
                 SetCorrectQuestions(Array(formatted.length).fill(false))
             }).catch(e => {
                 console.error(e)
-                opup("Error", "Failed to load questions due to an unknown error.")
+                popup("Error", "Failed to load questions due to an unknown error.")
             })
         }
     }, [C.AppReady])

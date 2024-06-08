@@ -142,6 +142,9 @@ export function Group() {
                 SetLeavingGroup(false)
             }
         }
+        else {
+            SetLeavingGroup(false)
+        }
     }
 
     function DeleteGroup() {
