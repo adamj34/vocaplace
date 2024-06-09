@@ -1,0 +1,4549 @@
+{
+	"info": {
+		"_postman_id": "30c525be-1f8f-4e4f-b959-f61c84a18b71",
+		"name": "VocaPlace",
+		"description": "Vocaplace RESTapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31183617",
+		"_collection_link": "https://bold-eclipse-449177.postman.co/workspace/Vocaplace-workspace~3962cade-e4d3-4be5-8899-084e9d9e363f/collection/31183617-30c525be-1f8f-4e4f-b959-f61c84a18b71?action=share&source=collection_link&creator=31183617"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "user update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the 'success' field\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Id field in the response data should exist and be a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"\r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.data.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id field should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is within an acceptable range\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "postman-cloud:///1eee5584-85e0-4cb0-b053-5aee26371b14",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "new new new new",
+									"type": "text"
+								},
+								{
+									"key": "private_profile",
+									"value": "true",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user"
+							]
+						},
+						"description": "ALL fields sent in the body will be updated except for picture if it's set to null."
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/trash/Pictures/Screenshots/Zrzut ekranu 2023-12-05 112330.png"
+										},
+										{
+											"key": "bio",
+											"value": "new new new",
+											"type": "text"
+										},
+										{
+											"key": "private_profile",
+											"value": "true",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "private_profile",
+											"value": "true",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "784"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"310-T1z1EQKjUWP9m+Yz7ik2B1BuFYA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:09:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"username\": \"q\",\n        \"bio\": \"new new new\",\n        \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/fd294f9dd32b5fa2fea06c560bb503c6b6a9de98bb5322b3146ab2a2ea2a303f1710785391113?Expires=1710871792&Key-Pair-Id=K3ADYJR92CMAGL&Signature=iSRDBMgJQc1Wm28n6xuyZgWbzafPG-0EyrMUz2UAruI02M2jXlYKhPDK7q~bkgVn~hbLR6o7Tji8U7jC~vqrT83Xu1fPKximR4Nfxk4U0Fky7kcIOYa-jyRV-Hgg0ViZMhZzitS0Q3UK7Ydda98zg0EgX1hsi4CSry18r5FgLzeCHe4Ot1R3Mty5xPLpke9aHuXnQ4c8jWNLE-Q-bguU9AaaGJPDoHtso0OW0GnZz7bVB9ejpptD9JiBs3u0azkeiQ530gySG03fdwv3pyN6XF3EEA6MOAcFmWhM3p-89YMj~sjEWVJwIT0DRK9H1iBqc~E~7bKIjd4fz~S3n5h0gQ__\",\n        \"private_profile\": true,\n        \"points\": 0,\n        \"ongoing_streak\": 0,\n        \"last_active\": \"2024-02-27T10:34:38.609Z\",\n        \"created_at\": \"2024-02-27T10:34:38.609Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "user get data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "784"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"310-Dmd4Ke3ThYFpbCtI07+6tLTiy5U\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:10:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"username\": \"q\",\n        \"bio\": \"new new new\",\n        \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/fd294f9dd32b5fa2fea06c560bb503c6b6a9de98bb5322b3146ab2a2ea2a303f1710785391113?Expires=1710871836&Key-Pair-Id=K3ADYJR92CMAGL&Signature=B7cc05gTHLQju6rh~ThXl61qf92iFE7QM2AAnHeAD~NrZKBbqW8xXBS3gCrA2li48Z-fty2K2EAw68tgq8KNIfWc9qiiZDT8T2idqOmxDFYr6u0GYedvMhCcloC~S9hXnjJM2v8CP3q4vnn4Z0NcTLJnNucHK-jpEYsfccg5yUlntHv6z11LbDpp6pFW2eUncrsvXUM57Iau9WpQs~d9rMmi-8ABMexsLL6j1LZHrn9lwlqU25r2Ro57eRqKAP-BdOjVM1FP7qYFxPjABfVTOihc6qxlAu7SWO9yWPMsl1jQQcW5lK9RgVc0dOxxvk5GA9CMOqKVy~4FF1NBONETyA__\",\n        \"private_profile\": true,\n        \"points\": 0,\n        \"ongoing_streak\": 0,\n        \"last_active\": \"2024-02-27T10:34:38.609Z\",\n        \"created_at\": \"2024-02-27T10:34:38.609Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "profile pic delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user/profilePicture",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"profilePicture"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/user/profilePicture",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"profilePicture"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:22:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/user/profilePicture",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"profilePicture"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "101"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"65-cF8Ra8MWL7HHSl1k6PR7pOBrDNs\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:22:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"NotFoundError\",\n    \"reason\": \"Resource not found\",\n    \"message\": \"No profile picture to delete found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "user visited get data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user/visit/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"visit",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+									"description": "visited userId"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 v1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/user/visit/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"visit",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+											"description": "visited userId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1163"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48b-J3USm7H6NerRdWKEdlXEqU/FHrw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:34:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"user\": {\n        \"id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"username\": \"admin\",\n        \"bio\": null,\n        \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/04cf43ce07d78ed60c635df42fa3f0412a4792fc50c0c7e8a3a84660439c9af9?Expires=1710873286&Key-Pair-Id=K3ADYJR92CMAGL&Signature=h40Fapaxj4Mvw8Uh91YGBiJUNUS7h68eKHAM3BN2sTe6OF3vYSQtfpY3DamJcL1iEPGmAhmItIkzU8C5EeIgbhhUG~YRepv57pJ217bUOVCHk2h6GX5qZqJzBVEbXpz0I9n7wFGrUBgQA7oT2ZftUSXZJmYYwrV72NsDQXNBg48giHsROkRodmH4eEYI1~YWXn49oi-Kzgwa0-XQJgW7y5i8O5fEtaQVFkkM4Ez6b5qIAw0ZkhoP8RjH9Pkk2f0bssgbhTN6J1KieXSqB~tNtt4iRREu7pJ32sfGb74crlJ6VLZSl~6s0~6tOgn9UXb2DE3ZTHINlj28FHmRqmLRew__\",\n        \"private_profile\": false,\n        \"points\": 0,\n        \"ongoing_streak\": 0,\n        \"last_active\": \"2024-02-27T12:42:48.576Z\",\n        \"created_at\": \"2024-02-27T12:42:48.576Z\"\n    },\n    \"friends\": [\n        {\n            \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n            \"username\": \"q\",\n            \"bio\": \"new new new\",\n            \"picture\": null,\n            \"private_profile\": true,\n            \"points\": 3,\n            \"ongoing_streak\": 0,\n            \"last_active\": \"2024-02-27T10:34:38.609Z\",\n            \"created_at\": \"2024-02-27T10:34:38.609Z\"\n        }\n    ],\n    \"groups\": [],\n    \"relationship\": {\n        \"user1_id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"user2_id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"relationship\": \"friends\"\n    }\n}"
+						},
+						{
+							"name": "200 v2",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/user/visit/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"visit",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+											"description": "visited userId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1538"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"602-Q/7uPzBxIiXhLLo0XZJJG0th/Hk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Mar 2024 12:18:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"user\": {\n        \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"username\": \"q\",\n        \"bio\": \"new new new\",\n        \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/fd294f9dd32b5fa2fea06c560bb503c6b6a9de98bb5322b3146ab2a2ea2a303f?Expires=1711282697&Key-Pair-Id=K3ADYJR92CMAGL&Signature=hps2eLVxfEr3aKPDUqhfPDTw8-T00j4o-beGl7YmNaIXdjKIoTCNL3DWgo4Vbq8qQBgfWJcPs-CtD9Sdv-EXSFE3O0r91BRvqFtuXFAG7ZDsmm3NLmFmGiuPTtLaldylIMPIrY4GnwgZ8AM1eiWo9s65SE1zZ6gc2Fu4MtcgAnZSJlybWG-XxtoAIotrZdQcjOX6JYh7sy1zrHBBb8cwVi8V6WAdtlXmsN3JLeCuJh6CHp8zehx2ROno4sv81DMyW0XPVbJjP7k-3-9sLx0g4VBiYVSh7b4RYQESqogf4Vn4OfdsI6kESffUsLEEbY8bt0dMtD74Z2XSS-eKBaveOQ__\",\n        \"private_profile\": false,\n        \"points\": 0,\n        \"ongoing_streak\": 0,\n        \"last_active\": \"2024-03-18T22:59:09.831Z\",\n        \"created_at\": \"2024-03-18T22:59:09.831Z\"\n    },\n    \"friends\": [],\n    \"groups\": [\n        {\n            \"id\": 3,\n            \"group_name\": \"group_11\",\n            \"bio\": \"new biooooo\",\n            \"picture\": null,\n            \"admin\": true,\n            \"accepted\": true\n        },\n        {\n            \"id\": 4,\n            \"group_name\": \"new groupp\",\n            \"bio\": \"bio patchedddddddddd\",\n            \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/group_pictures/4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a?Expires=1711282697&Key-Pair-Id=K3ADYJR92CMAGL&Signature=SsC6-W5QouOlzvpGzPJ-w-oJFGoHiWy7E01AXguusBrWHipDCkY3Fc6om31W6QrUqfYr445U~jBIUEGrnx51fEBOkBwa~-7qGotKapawtaGEhpSb5dyK7rCtNn9FMJTjX5Shx3ccVhur8mkWQ1CqY7MqEKQZqlGDkFASy-JR~~Gh9bWa~9AsfwQNm4wCgYtXINdmIjyBS-M2ObePpQ~buHcX~7cUKUh18D-zD~Nlj5KkQDCpU06O-lNxy5-3~EREutD6LwAb6waaW9jOABdPGNThBkAWGxrApc8wxAzUcVcyYUn2jjM8Xb8q~1Y0d1suix9-5ap-TRV9KV6LMCFhWg__\",\n            \"admin\": false,\n            \"accepted\": true\n        }\n    ],\n    \"relationship\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "points update",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"points\": 6\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/user/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"points"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"points\": 6\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/user/points",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"points"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24-inoGLrCbd+jGRGoLbysJQs7JVGM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:20:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"points\": 3\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "user get friends",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user/friends",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"friends"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/user/friends",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"friends"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "769"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"301-QkOcN8Eh2K1xEVRVmvaRUhtqtPY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:35:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n            \"username\": \"admin\",\n            \"bio\": null,\n            \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/04cf43ce07d78ed60c635df42fa3f0412a4792fc50c0c7e8a3a84660439c9af9?Expires=1710873316&Key-Pair-Id=K3ADYJR92CMAGL&Signature=GrVGMA9KNDNZG9QFjBTdYdFzNTSNc~9h8DZi5JFxRhrWL098-M~HsOt9exgGNeUSDOlV4O8n~cqiiCTNIcbYsOvK7SG9bMtgJkf7JPbOn9a4HyF4BNJU1rgWGrhu~w5Cz3GBNsRTtiTZZUVNI71vkLqWrhSXNgbcKjDgaznRynV2HSNVeC2aiaIY3LKBCMgTRP7Ca0W-9VIQBZ~zotFhaRrv3ChlCzxSwtRTr92RI09suHH5-O7gIm0KnzowKAW4EqQ6mrLaqqD4YyEIWkxKsQpSkLg0wtRQ-IMRasDXgIyVRc4nnJYt009Tzx4wlnAlokI-En52dTsc8L9QHZarpg__\",\n            \"private_profile\": false,\n            \"points\": 0,\n            \"ongoing_streak\": 0,\n            \"last_active\": \"2024-02-27T12:42:48.576Z\",\n            \"created_at\": \"2024-02-27T12:42:48.576Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "user group belonging",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/user/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"groups"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/user/groups",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"groups"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "747"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2eb-i0WstlwiXeg0BSBH/q4yxz7koWU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Mar 2024 12:13:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 3,\n            \"group_name\": \"group_11\",\n            \"bio\": \"new biooooo\",\n            \"picture\": null,\n            \"admin\": true,\n            \"accepted\": true\n        },\n        {\n            \"id\": 4,\n            \"group_name\": \"new groupp\",\n            \"bio\": \"bio patchedddddddddd\",\n            \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/group_pictures/4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a?Expires=1711282421&Key-Pair-Id=K3ADYJR92CMAGL&Signature=dBQOkqC1JeO9lwhExqybpUoiLT541E2DCOuWGcZrmWSRZdcqOWSjgDC1mEEhDcw9DOBGOh-ky3Kx5DfrEvyw2M3ScfA-JjRugFzolZWBReRfB59QiJ-SvP~T5YYy50Au8Sx89d8IxUEVB8bHvTeKxrAlSz8NGLM1eOQl6YyFclwhlER3Q-KSpx1MVtVjefaRpadMPoJzivn56GBYDfglvbEchKlfBdKzqwfUEBDG0i-TqHPhed5AVd52OZqIMzUn8H7pQSrcWGZ9CaZS1~292Uw7h~N0e2z2R1sc67Ed7PSCvgLGA~xGly9Lu36qvTQINGrIgNaLkNVhMVz9YTDrAQ__\",\n            \"admin\": false,\n            \"accepted\": true\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "Requests pertaining to users"
+		},
+		{
+			"name": "relationships",
+			"item": [
+				{
+					"name": "friend delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/relationships/friend/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"relationships",
+								"friend",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"description": "userId we want to delete"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/relationships/friend/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"friend",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "a3b53c8d-f4d4-471c-98db-36061f5da067"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "150"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"96-SChMLXltbKhOUCsiWpwRSUI19Tg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:35:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"user1_id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"user2_id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"relationship\": \"friends\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "friendship request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/relationships/request/friend/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"relationships",
+								"request",
+								"friend",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"description": "userId we want to add to friends"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/relationships/request/friend/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"request",
+										"friend",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "a3b53c8d-f4d4-471c-98db-36061f5da067"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a2-xK5zXs/TzDP3FL6xtMxC6ArwTCY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:50:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"user1_id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"user2_id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"relationship\": \"pending_user1_user2\"\n    }\n}"
+						},
+						{
+							"name": "422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/relationships/request/friend/a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"request",
+										"friend",
+										"a3b53c8d-f4d4-471c-98db-36061f5da067"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "156"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9c-G2GLFzBvEpq6V2YCrKMlWReV2L0\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:50:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"FriendshipConstraintError\",\n    \"reason\": \"Friendship constraints violated\",\n    \"message\": \"You are already friends or have a pending request with this user\"\n}"
+						}
+					]
+				},
+				{
+					"name": "accept friend",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/relationships/accept/friend/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"relationships",
+								"accept",
+								"friend",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"description": "userId we want to accept "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/relationships/accept/friend/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"accept",
+										"friend",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "a3b53c8d-f4d4-471c-98db-36061f5da067"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "150"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"96-SChMLXltbKhOUCsiWpwRSUI19Tg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:29:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"user1_id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"user2_id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"relationship\": \"friends\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete sent friend request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/relationships/request/sent/friend/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"relationships",
+								"request",
+								"sent",
+								"friend",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"description": "userId to whom friend request was sent"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8000/relationships/request/sent/friend/a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"request",
+										"sent",
+										"friend",
+										"a3b53c8d-f4d4-471c-98db-36061f5da067"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "79"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4f-CwxL3fMk5PlPKYBMK/8K8dvJgRc\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:27:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"NoDataError\",\n    \"reason\": \"Expected resource not present in the database\"\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8000/relationships/request/sent/friend/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"request",
+										"sent",
+										"friend",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "a3b53c8d-f4d4-471c-98db-36061f5da067"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a2-xK5zXs/TzDP3FL6xtMxC6ArwTCY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:51:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"user1_id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"user2_id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"relationship\": \"pending_user1_user2\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete received friend request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/relationships/request/received/friend/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"relationships",
+								"request",
+								"received",
+								"friend",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"description": "userId from whom the request was received"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/relationships/request/received/friend/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"request",
+										"received",
+										"friend",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "a3b53c8d-f4d4-471c-98db-36061f5da067"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a2-2Ir5WqWdnVMEtFz8eGtdlmpOCPY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:52:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"user1_id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"user2_id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"relationship\": \"pending_user2_user1\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "user get pending requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/relationships/pending",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"relationships",
+								"pending"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/relationships/pending",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"pending"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "769"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"301-ZtK0KOhmlGBtEUBIVMuQdOQzjcs\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:26:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n            \"username\": \"admin\",\n            \"bio\": null,\n            \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/04cf43ce07d78ed60c635df42fa3f0412a4792fc50c0c7e8a3a84660439c9af9?Expires=1710872775&Key-Pair-Id=K3ADYJR92CMAGL&Signature=cChoADZY1Wts49F8m2k~wUCy~Qr7n9PAFB6r1ahY8F8vhJ1R94YtF-924kaGD4KSurcpsnzVhHoMAzGAw4awAghSHPEkkE3XQD9nUscnkaOq7nHiN7qNZz4M1~qe49kk6XMgY2wcZ6Db~nKODJL471UjN5qgBcXh-CH3w3lJoxKxaMFfGOmwvBisa7LsSRQyInBMQV0ED2M0HausxxCu7hbuCSq-b4pzXZbzyyFS-MPoDqMTuHPIcsGFLjic3VO9ji1aVWtDMugvgQWFUun6JXovWxFcOgGIN4HO8S4YW3AT8p0Ns4~hUJBp2dkR3-DryxOU0hcfvTw0wvUtjH0JGQ__\",\n            \"private_profile\": false,\n            \"points\": 0,\n            \"ongoing_streak\": 0,\n            \"last_active\": \"2024-02-27T12:42:48.576Z\",\n            \"created_at\": \"2024-02-27T12:42:48.576Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "relationship status check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/relationships/check/user/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"relationships",
+								"check",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"description": "userId we want to check relationship with"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/relationships/check/user/a3b53c8d-f4d4-471c-98db-36061f5da067",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"relationships",
+										"check",
+										"user",
+										"a3b53c8d-f4d4-471c-98db-36061f5da067"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a2-2Ir5WqWdnVMEtFz8eGtdlmpOCPY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:26:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"user1_id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n        \"user2_id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n        \"relationship\": \"pending_user2_user1\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Requests pertaining to users' relationships"
+		},
+		{
+			"name": "groups",
+			"item": [
+				{
+					"name": "group create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "group_name",
+									"value": "group_11",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "new biooooo",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/C:/Users/trash/Pictures/Screenshots/Zrzut ekranu 2024-01-12 193226.png",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "group_name",
+											"value": "group_1",
+											"type": "text"
+										},
+										{
+											"key": "bio",
+											"value": "new biooooo",
+											"type": "text"
+										},
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/trash/Pictures/Screenshots/Zrzut ekranu 2023-12-27 100030.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/groups",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "60"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3c-JpV0MJ+8NlVGhroCco6v5DKBjoQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 18:54:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"NotUniqueError\",\n    \"reason\": \"Resource already exists\"\n}"
+						},
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "group_name",
+											"value": "group_11",
+											"type": "text"
+										},
+										{
+											"key": "bio",
+											"value": "new biooooo",
+											"type": "text"
+										},
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/trash/Pictures/Screenshots/Zrzut ekranu 2024-01-12 193226.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/groups",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "169"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a9-2bb7CXqWER1jy9HuTQd+Vd94z2E\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 19:06:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 16,\n        \"group_name\": \"group_11\",\n        \"bio\": \"new biooooo\",\n        \"picture\": \"group_pictures/b17ef6d19c7a5b1ee83b907c595526dcb1eb06db8227d650d5dda0a9f4ce8cd9\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "group join",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"    pm.expect(pm.response.to.have.status(201));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is present and has a boolean value\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property('success').that.is.a('boolean');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Err object is present with statusCode, reason, and name fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.err).to.exist.and.to.be.an('object');\r",
+									"    pm.expect(responseData.err.statusCode).to.exist;\r",
+									"    pm.expect(responseData.err.reason).to.exist;\r",
+									"    pm.expect(responseData.err.name).to.exist;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"StatusCode is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.err.statusCode).to.be.a('number').and.to.satisfy((statusCode) => statusCode >= 0, \"StatusCode should be a non-negative integer\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/groups/join/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								"join",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5",
+									"description": "groupId we want to join"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"group_name\": \"group_11\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/groups/join",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										"join"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "157"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9d-8y5rysKudy26CpdGz45VHv19gAE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 19:59:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"NotUniqueError\",\n    \"reason\": \"Resource already exists\",\n    \"message\": \"User is already a member of this group or already sent a request to join this group.\"\n}"
+						},
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"name": "Content-Type",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/groups/join/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										"join",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5",
+											"description": "groupId we want to join"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "38"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26-52Mpfyx9AMrR1Wvgykr8CLNN0M0\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 22 Mar 2024 20:52:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"group_id\": 5\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "group get data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/groups/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5",
+									"description": "groupId"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/groups/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4",
+											"description": "groupId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "604"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25c-N8v5yeL4uBlQ4eJo+LTu2SJwaR0\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2024 15:19:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"group\": {\n        \"id\": 4,\n        \"group_name\": \"Students\",\n        \"bio\": \"idk\",\n        \"picture\": null\n    },\n    \"members\": [\n        {\n            \"id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n            \"username\": \"admin\",\n            \"bio\": null,\n            \"picture\": null,\n            \"private_profile\": false,\n            \"points\": 0,\n            \"ongoing_streak\": 0,\n            \"last_active\": \"2024-03-19T15:11:09.260Z\",\n            \"created_at\": \"2024-03-19T15:11:09.260Z\",\n            \"admin\": true,\n            \"accepted\": true\n        },\n        {\n            \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n            \"username\": \"q\",\n            \"bio\": null,\n            \"picture\": null,\n            \"private_profile\": false,\n            \"points\": 0,\n            \"ongoing_streak\": 0,\n            \"last_active\": \"2024-03-18T22:59:09.831Z\",\n            \"created_at\": \"2024-03-18T22:59:09.831Z\",\n            \"admin\": false,\n            \"accepted\": false\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "group membership delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/groups/membership/:id/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								"membership",
+								":id",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5",
+									"description": "groupId"
+								},
+								{
+									"key": "userId",
+									"value": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+									"description": "user we want to delete"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/groups/membership/:id/:userId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										"membership",
+										":id",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5",
+											"description": "groupId"
+										},
+										{
+											"key": "userId",
+											"value": "85bd406b-1ec1-47a9-ae9a-599d53d2b46b",
+											"description": "user we want to delete"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 22 Mar 2024 21:17:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "group membership update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/groups/membership/:id/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								"membership",
+								":id",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4",
+									"description": "groupId"
+								},
+								{
+									"key": "userId",
+									"value": "301e25b6-03ed-4f9c-b25b-4e4f3fee1f07",
+									"description": "user to be accepted to the group"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/groups/membership/:id/:userId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										"membership",
+										":id",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4",
+											"description": "groupId"
+										},
+										{
+											"key": "userId",
+											"value": "301e25b6-03ed-4f9c-b25b-4e4f3fee1f07",
+											"description": "user to be accepted to the group"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Mar 2024 10:59:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "group picture delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/groups/picture/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								"picture",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4",
+									"description": "groupId"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/groups/picture/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										"picture",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "16",
+											"description": "groupId"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:13:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "group update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "group_name",
+									"value": "new groupp",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "bio patchedddddddddd",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/C:/Users/trash/Pictures/Screenshots/asm.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/groups/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4",
+									"description": "group id"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "group_name",
+											"value": "new groupp",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "bio",
+											"value": "bio patchedddddddddd",
+											"type": "text"
+										},
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/trash/Pictures/Screenshots/Zrzut ekranu 2024-01-13 183200.png",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/groups/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3",
+											"description": "group id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b3-YXHXLm0td0D4zr223WG4nYfRrPk\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 19:10:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 3,\n        \"group_name\": \"new groupp\",\n        \"bio\": \"bio patchedddddddddd\",\n        \"picture\": \"group_pictures/fd294f9dd32b5fa2fea06c560bb503c6b6a9de98bb5322b3146ab2a2ea2a303f\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "group delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/groups/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "403",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/groups/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "17"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "117"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"75-X9+i1NlTrQhi3GFAkwTqh9zeTIA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 22:48:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"NoAccessError\",\n    \"reason\": \"User has no access to the resource\",\n    \"message\": \"User is not an admin of this group\"\n}"
+						},
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/groups/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Mar 2024 20:34:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "group pass admin rights",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/groups/admin/:id/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"groups",
+								"admin",
+								":id",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4",
+									"description": "groupId"
+								},
+								{
+									"key": "userId",
+									"value": "301e25b6-03ed-4f9c-b25b-4e4f3fee1f07",
+									"description": "userId that will become an admin"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/groups/admin/:id/:userId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"groups",
+										"admin",
+										":id",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4",
+											"description": "groupId"
+										},
+										{
+											"key": "userId",
+											"value": "301e25b6-03ed-4f9c-b25b-4e4f3fee1f07",
+											"description": "userId that will become an admin"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Mar 2024 11:06:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": null\n}"
+						}
+					]
+				}
+			],
+			"description": "Requests pertaining to groups"
+		},
+		{
+			"name": "rankings",
+			"item": [
+				{
+					"name": "top 10 users ranking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/rankings/top",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rankings",
+								"top"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/rankings/top",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"rankings",
+										"top"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "721"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d1-VxUo/HiXLtxlI83wOBuFS7B1Ok8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:15:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n            \"username\": \"q\",\n            \"points\": 3,\n            \"picture\": null\n        },\n        {\n            \"id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n            \"username\": \"admin\",\n            \"points\": 0,\n            \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/04cf43ce07d78ed60c635df42fa3f0412a4792fc50c0c7e8a3a84660439c9af9?Expires=1710879316&Key-Pair-Id=K3ADYJR92CMAGL&Signature=H4XT-0BeytqAEOrDGkhPNboLNz-QjuyjiP~xEL~0ghW34XYn62Zzloi3bzyvKq~JoT7DLG1D4Z5DBNhDB1nHJ1NlAZvQHy2IT6u7VECNHGqQutUUc7T3bAu91ZhG3oi32o9bec97yfuFed1klKOUxHigSNhGAPU2rdvwLRyQ0-3HyiNP1pvPkA-icR3Zg2VCfrU9oXEsOSckKHQGnTtuvrU2D5vrr1GQXU7wlyjkrhLOIgRMp2UWNXnoeMR0-VOrPojwV3zVAsPy79EqVITr0a8p7hdyDBTKFRPRaYRBiNSn-tROsIME7hWYhgaKH3q8Y7Zp9c6xbV-G3-WdidKU2Q__\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "friends ranking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/rankings/friends",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rankings",
+								"friends"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/rankings/friends",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"rankings",
+										"friends"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "255"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ff-n1YBm2zV1UawmpRi7jGOxVJA5bo\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:15:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n            \"username\": \"q\",\n            \"bio\": \"new new new\",\n            \"picture\": null,\n            \"private_profile\": true,\n            \"points\": 3,\n            \"ongoing_streak\": 0,\n            \"last_active\": \"2024-02-27T10:34:38.609Z\",\n            \"created_at\": \"2024-02-27T10:34:38.609Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "top streak",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/rankings/topStreaks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rankings",
+								"topStreaks"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/rankings/topStreak",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"rankings",
+										"topStreak"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "131"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"83-AnSntfEz8jiwkFbrFQ2qaR7WQFg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Apr 2024 15:45:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": \"85bd406b-1ec1-47a9-ae9a-599d53d2b46b\",\n            \"username\": \"q\",\n            \"points\": 0,\n            \"picture\": null,\n            \"ongoing_streak\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "top groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/rankings/topGroups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rankings",
+								"topGroups"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/rankings/topGroups",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"rankings",
+										"topGroups"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "127"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7f-lDCYmVemInKEx1p8sr33UCMSmOo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Apr 2024 16:21:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"group_name\": \"group_11\",\n            \"bio\": \"new biooooo\",\n            \"picture\": null,\n            \"points_avg\": \"6.0000000000000000\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "Requests pertaining to users' ranking"
+		},
+		{
+			"name": "questions",
+			"item": [
+				{
+					"name": "answered questions add",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionIds\": [6,2,3,3,7,5,10,11]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/questions/answered",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"questions",
+								"answered"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"questionIds\": [6,2,3,3,7,5,10,11]\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/questions/answered",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"questions",
+										"answered"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:18:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "question add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"questions"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"topic\": \"Days of the Week\",\r\n    \"unit\": \"Introduction to English\",\r\n    \"content\": \"What is the third day of the week?\",\r\n    \"correctAnswers\": [\"Wednesday\"],\r\n    \"misleadingAnswers\": [\"Monday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"],\r\n    \"questionType\": \"pick\",\r\n    \"difficulty\": 2\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/questions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"questions"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "33"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21-MNlK7bcG6zy3xOLY3O2MgEYvmQE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:20:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 26\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "repetition create",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/questions/repetition",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"questions",
+								"repetition"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/questions/repetition",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"questions",
+										"repetition"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "625"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"271-dLecj9BvY0lpNzgmhrKa0MtO1Qc\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:23:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"question_id\": 5,\n            \"content\": \"What do you say before going to sleep?\",\n            \"correct_answers\": [\n                \"Good night.\"\n            ],\n            \"misleading_answers\": [\n                \"Good morning.\",\n                \"Good afternoon.\",\n                \"Good day.\"\n            ],\n            \"question_type\": \"pick\",\n            \"difficulty\": 1\n        },\n        {\n            \"question_id\": 10,\n            \"content\": \"Which of these numbers are greater than twenty?\",\n            \"correct_answers\": [\n                \"thirty one\",\n                \"one hundred\"\n            ],\n            \"misleading_answers\": [\n                \"seven\",\n                \"twelve\",\n                \"nineteen\"\n            ],\n            \"question_type\": \"pick\",\n            \"difficulty\": 1\n        },\n        {\n            \"question_id\": 11,\n            \"content\": \"How do you say 4 in English?\",\n            \"correct_answers\": [\n                \"four\"\n            ],\n            \"misleading_answers\": [\n                \"two\",\n                \"three\",\n                \"one\",\n                \"five\"\n            ],\n            \"question_type\": \"pick\",\n            \"difficulty\": 1\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "repetition add",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionIds\": [10, 5, 11]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/questions/repetition",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"questions",
+								"repetition"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"questionIds\": [10, 5, 11]\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/questions/repetition",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"questions",
+										"repetition"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ng1iKOQSNw2obB7yJyIC6RDUM6g\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:22:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "quiz get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/questions/quiz/?unitId=1&topicId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"questions",
+								"quiz",
+								""
+							],
+							"query": [
+								{
+									"key": "unitId",
+									"value": "1"
+								},
+								{
+									"key": "topicId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/questions/quiz/?unitId=1&topicId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"questions",
+										"quiz",
+										""
+									],
+									"query": [
+										{
+											"key": "unitId",
+											"value": "1"
+										},
+										{
+											"key": "topicId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1917"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"77d-TW8GBAYYlas/3FaecBQXWJUsN8k\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:23:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"answeredQuestions\": [\n            {\n                \"question_id\": 2,\n                \"content\": \"In what situation is it appropriate to say \\\"Nice to meet you\\\"?\",\n                \"correct_answers\": [\n                    \"Introducing yourself.\"\n                ],\n                \"misleading_answers\": [\n                    \"Asking for directions.\",\n                    \"Saying goodbye.\"\n                ],\n                \"question_type\": \"pick\",\n                \"difficulty\": 1,\n                \"is_answered\": true\n            },\n            {\n                \"question_id\": 3,\n                \"content\": \"How do you greet someone in the evening?\",\n                \"correct_answers\": [\n                    \"Good evening.\"\n                ],\n                \"misleading_answers\": [\n                    \"Good night.\",\n                    \"Good afternoon.\",\n                    \"Good day.\"\n                ],\n                \"question_type\": \"pick\",\n                \"difficulty\": 1,\n                \"is_answered\": true\n            },\n            {\n                \"question_id\": 5,\n                \"content\": \"What do you say before going to sleep?\",\n                \"correct_answers\": [\n                    \"Good night.\"\n                ],\n                \"misleading_answers\": [\n                    \"Good morning.\",\n                    \"Good afternoon.\",\n                    \"Good day.\"\n                ],\n                \"question_type\": \"pick\",\n                \"difficulty\": 1,\n                \"is_answered\": true\n            },\n            {\n                \"question_id\": 6,\n                \"content\": \"What is a polite way to ask about someone's name?\",\n                \"correct_answers\": [\n                    \"What is your name?\",\n                    \"May I ask your name?\"\n                ],\n                \"misleading_answers\": [\n                    \"Who are you?\",\n                    \"What is this?\"\n                ],\n                \"question_type\": \"pick\",\n                \"difficulty\": 1,\n                \"is_answered\": true\n            },\n            {\n                \"question_id\": 7,\n                \"content\": \"Which question can be used to ask about someone about their interests or hobbies?\",\n                \"correct_answers\": [\n                    \"What do you do for fun?\"\n                ],\n                \"misleading_answers\": [\n                    \"How are you?\",\n                    \"What is your name?\",\n                    \"Do you like me?\"\n                ],\n                \"question_type\": \"pick\",\n                \"difficulty\": 1,\n                \"is_answered\": true\n            }\n        ],\n        \"unansweredQuestions\": [\n            {\n                \"question_id\": 1,\n                \"content\": \"Which of the following is a common response to the greeting \\\"How are you?\\\"\",\n                \"correct_answers\": [\n                    \"I have been better.\",\n                    \"Fine, thank you.\"\n                ],\n                \"misleading_answers\": [\n                    \"Goodbye!\",\n                    \"Nice to meet you.\",\n                    \"See you later!\"\n                ],\n                \"question_type\": \"pick\",\n                \"difficulty\": 1,\n                \"is_answered\": false\n            },\n            {\n                \"question_id\": 4,\n                \"content\": \"In a formal email, what is a suitable greeting to use when you don't know the recipient's name?\",\n                \"correct_answers\": [\n                    \"Dear Sir/Madam,\"\n                ],\n                \"misleading_answers\": [\n                    \"Hey!\",\n                    \"Hi there!\",\n                    \"See you soon.\"\n                ],\n                \"question_type\": \"pick\",\n                \"difficulty\": 1,\n                \"is_answered\": false\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "repetition overview",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/questions/repetition/overview",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"questions",
+								"repetition",
+								"overview"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/questions/repetition/overview",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"questions",
+										"repetition",
+										"overview"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "767"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2ff-wDeMNyn8TgJK5BBUqQi71MLJNg0\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:24:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"unit_id\": 2,\n            \"unit\": \"Vocabulary Building\",\n            \"unit_icon\": null,\n            \"topics\": [\n                {\n                    \"topic_id\": 4,\n                    \"topic\": \"Travel\",\n                    \"topic_icon\": null,\n                    \"total_questions\": 1,\n                    \"repetition_questions\": 0\n                },\n                {\n                    \"topic_id\": 6,\n                    \"topic\": \"Animals\",\n                    \"topic_icon\": null,\n                    \"total_questions\": 8,\n                    \"repetition_questions\": 0\n                },\n                {\n                    \"topic_id\": 5,\n                    \"topic\": \"Food\",\n                    \"topic_icon\": null,\n                    \"total_questions\": 1,\n                    \"repetition_questions\": 0\n                }\n            ]\n        },\n        {\n            \"unit_id\": 1,\n            \"unit\": \"Introduction to English\",\n            \"unit_icon\": null,\n            \"topics\": [\n                {\n                    \"topic_id\": 2,\n                    \"topic\": \"Numbers and Counting\",\n                    \"topic_icon\": null,\n                    \"total_questions\": 4,\n                    \"repetition_questions\": 2\n                },\n                {\n                    \"topic_id\": 3,\n                    \"topic\": \"Days of the Week\",\n                    \"topic_icon\": null,\n                    \"total_questions\": 5,\n                    \"repetition_questions\": 0\n                },\n                {\n                    \"topic_id\": 1,\n                    \"topic\": \"Greetings\",\n                    \"topic_icon\": null,\n                    \"total_questions\": 7,\n                    \"repetition_questions\": 1\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "Requests pertaining to everything questions related (including repetitions)"
+		},
+		{
+			"name": "units_and_topics",
+			"item": [
+				{
+					"name": "unit add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "unit",
+									"value": "Grammar",
+									"type": "text"
+								},
+								{
+									"key": "icon",
+									"value": "icon string i guess",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/units",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"units"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "units all general overview",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/units/overview",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"units",
+								"overview"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/units/overview",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"units",
+										"overview"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "652"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28c-vkCadytz7ArF/Oz3tkQ4j3g79kI\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:27:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"1\": {\n            \"unit\": \"Introduction to English\",\n            \"unit_icon\": null,\n            \"topics\": [\n                {\n                    \"topic_id\": 2,\n                    \"topic\": \"Numbers and Counting\",\n                    \"topic_icon\": null,\n                    \"question_ids\": [\n                        8,\n                        9,\n                        10,\n                        11\n                    ]\n                },\n                {\n                    \"topic_id\": 3,\n                    \"topic\": \"Days of the Week\",\n                    \"topic_icon\": null,\n                    \"question_ids\": [\n                        12,\n                        13,\n                        14,\n                        25,\n                        26\n                    ]\n                },\n                {\n                    \"topic_id\": 1,\n                    \"topic\": \"Greetings\",\n                    \"topic_icon\": null,\n                    \"question_ids\": [\n                        1,\n                        2,\n                        3,\n                        4,\n                        5,\n                        6,\n                        7\n                    ]\n                }\n            ]\n        },\n        \"2\": {\n            \"unit\": \"Vocabulary Building\",\n            \"unit_icon\": null,\n            \"topics\": [\n                {\n                    \"topic_id\": 4,\n                    \"topic\": \"Travel\",\n                    \"topic_icon\": null,\n                    \"question_ids\": [\n                        15\n                    ]\n                },\n                {\n                    \"topic_id\": 6,\n                    \"topic\": \"Animals\",\n                    \"topic_icon\": null,\n                    \"question_ids\": [\n                        17,\n                        18,\n                        19,\n                        20,\n                        21,\n                        22,\n                        23,\n                        24\n                    ]\n                },\n                {\n                    \"topic_id\": 5,\n                    \"topic\": \"Food\",\n                    \"topic_icon\": null,\n                    \"question_ids\": [\n                        16\n                    ]\n                }\n            ]\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "unit progress all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/units/progress",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"units",
+								"progress"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/units/progress",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"units",
+										"progress"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "265"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"109-iLwPKwCue50d2E/cSggPcr2AYwE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:27:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"1\": {\n            \"unit\": \"Introduction to English\",\n            \"unit_icon\": null,\n            \"completion_ratio\": \"0.44\",\n            \"created_at\": \"2024-02-27T10:15:14.822Z\"\n        },\n        \"2\": {\n            \"unit\": \"Vocabulary Building\",\n            \"unit_icon\": null,\n            \"completion_ratio\": \"0.00\",\n            \"created_at\": \"2024-02-27T10:15:14.831Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "unit get detailed progress",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/units/progress/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"units",
+								"progress",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/units/progress/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"units",
+										"progress",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "410"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"19a-0t+XRfd5jgE2QWQLx7wxHiWtf3o\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:28:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"unit\": \"Introduction to English\",\n    \"data\": {\n        \"1\": {\n            \"topic\": \"Greetings\",\n            \"topic_icon\": null,\n            \"created_at\": \"2024-02-27T10:15:14.825Z\",\n            \"completion_ratio\": 0.7142857142857143\n        },\n        \"2\": {\n            \"topic\": \"Numbers and Counting\",\n            \"topic_icon\": null,\n            \"created_at\": \"2024-02-27T10:15:14.828Z\",\n            \"completion_ratio\": 0.5\n        },\n        \"3\": {\n            \"topic\": \"Days of the Week\",\n            \"topic_icon\": null,\n            \"created_at\": \"2024-02-27T10:15:14.830Z\",\n            \"completion_ratio\": 0\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "topic add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "topic",
+									"value": "mock topiccc",
+									"type": "text"
+								},
+								{
+									"key": "unit",
+									"value": "Vocabulary Buildingggg",
+									"type": "text"
+								},
+								{
+									"key": "icon",
+									"value": "icon str",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/topics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "topic",
+											"value": "mock topiccc",
+											"type": "text"
+										},
+										{
+											"key": "unit",
+											"value": "Vocabulary Building",
+											"type": "text"
+										},
+										{
+											"key": "icon",
+											"value": "icon str",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/topics",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"topics"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "119"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"77-vENkOFVsQa1YF9f8PsCBxB817Ew\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:29:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 7,\n        \"unit_id\": 2,\n        \"topic\": \"mock topiccc\",\n        \"icon\": null,\n        \"created_at\": \"2024-03-18T20:29:08.389Z\"\n    }\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "topic",
+											"value": "mock topiccc",
+											"type": "text"
+										},
+										{
+											"key": "unit",
+											"value": "Vocabulary Buildingggg",
+											"type": "text"
+										},
+										{
+											"key": "icon",
+											"value": "icon str",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/topics",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"topics"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "81"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"51-PuY5gyQ6iX1ddV+nAmnB0AlMBTo\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Mar 2024 20:30:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"NotFoundError\",\n    \"reason\": \"Resource not found\",\n    \"message\": \"Unit not found\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Requests pertaining to units and topics"
+		},
+		{
+			"name": "search users and groups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/search?searchPhrase=m",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "searchPhrase",
+							"value": "m"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/search?searchPhrase=m",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "searchPhrase",
+									"value": "m"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "771"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"303-5ce+JYYO+FKQZ8dBoHOsqmQ0ox4\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 18 Mar 2024 20:27:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"data\": {\n        \"matchedUsers\": [\n            {\n                \"id\": \"a3b53c8d-f4d4-471c-98db-36061f5da067\",\n                \"username\": \"admin\",\n                \"picture\": \"https://d1aohkjwpwshlb.cloudfront.net/profile_pictures/04cf43ce07d78ed60c635df42fa3f0412a4792fc50c0c7e8a3a84660439c9af9?Expires=1710880028&Key-Pair-Id=K3ADYJR92CMAGL&Signature=cFz35wiy5ljPK73edBcQRyApbcBkOdnmZPMp0SVnW30XrfvQxULuiKuHeNM9uD~sicf1Nq1AFHbz3HBmHgWQ1eS7WVwN26AKo6VvnU5Nh0fe3i3fOOKk1JK5vTlMGmREIs4VrjvKcdAmYU0lXlARlu1gZtAI8wOiUpCV9-gJPxrvg-axzRcOpSbTYe5ONodvRamh0MYP2pl~0QlC3W1Yac7UwZA2C8QugqTL54bYOXfeR3ZjzG~RDuoR2XahPcwc13TYY0Op4LjImp8ZN-ws~v-0eniI6~kj4mUYmYC5br-RSXVjZK2RiBRdC6q9eTEcMVneuHtL4TnWG5F-gHpebg__\"\n            }\n        ],\n        \"matchedGroups\": [\n            {\n                \"id\": 9,\n                \"group_name\": \"new groupppcmmm\",\n                \"picture\": null\n            },\n            {\n                \"id\": 10,\n                \"group_name\": \"new groupppcmmmmm\",\n                \"picture\": null\n            }\n        ]\n    }\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "redirect_uri",
+				"value": "http://localhost:3000/*",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "http://localhost:8080/realms/react-app/protocol/openid-connect/auth",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:8080/realms/react-app/protocol/openid-connect/token",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "app-frontend",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
