@@ -312,13 +312,15 @@ const getGroupInfo = (groupId: number, userId: string) => {
             })
         );
 
-        const messages = await db.messages.getMessages({ groupId });
+        const messages =pictureToSignedUrl(await db.messages.getMessages({ groupId }));
+        
+        
 
         return {
             success: true,
             group: groupData,
             members: membersData,
-            messages
+            messages 
         };
     })
 }

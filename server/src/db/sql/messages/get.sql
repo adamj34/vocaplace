@@ -9,4 +9,5 @@ SELECT m.id,
 FROM messages m
 left JOIN users u on m.user_id = u.id
 left JOIN group_membership gm on m.group_id = gm.group_id and m.user_id = gm.user_id
-WHERE m.group_id = ${groupId};
+WHERE m.group_id = ${groupId}
+order by m.created_at desc;
