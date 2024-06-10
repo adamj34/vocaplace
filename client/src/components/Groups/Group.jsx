@@ -337,7 +337,7 @@ export function Group() {
                 socket.on('deleteGroup', () => {
                     navigate('/groups')
                 })
-                SetChatMessages(data.messages.reverse())
+                SetChatMessages(data.messages)
                 document.title = `VocaPlace | ${data.group.group_name}`
             }).catch((e)=>{
                 console.error(e)
