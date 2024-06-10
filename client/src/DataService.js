@@ -200,9 +200,6 @@ const functions = {
 
     async GetGroupData(groupid) {
         const res = await Server.get(`/groups/${groupid}`)
-        console.log(
-            res.data
-        );
         return res.data
     },
 
