@@ -32,7 +32,7 @@
 ![login](https://github.com/user-attachments/assets/530ae3ec-10c9-4658-86be-572457464a43)
 ![home2](https://github.com/user-attachments/assets/cbe6ba7f-99bb-4578-8ca4-73d1e12cd982)   
 <br/><br/>
-* Creating user profile
+* Creating/editing user profile
 ![profile](https://github.com/user-attachments/assets/027c909d-032f-4f6f-8219-222511c9f032)
 <br/><br/>
 * Solving quizzes with various question types and difficulty levels and real-time progress tracking
